@@ -1,27 +1,37 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using Zenject;
 
-public class DragAndDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IEndDragHandler, IDragHandler
+public class DragAndDrop : MonoBehaviour 
 {
-    public void OnBeginDrag(PointerEventData eventData)
+    private bool _isDragging;
+    private (float, float)[,] _boardPositions = new (float, float)[8,8];
+
+    public void Start()
     {
-        Debug.Log("Beginning to drag");
+        for (int i = 0; i < 8; i++)
+            for (int j = 0; j < 8; j++)
+                _boardPositions[i, j] = (i + 0.5f, j + 0.5f);
     }
 
-    public void OnDrag(PointerEventData eventData)
+    public void OnMouseDown()
     {
-        Debug.Log("Dragging");
+        _isDragging = true;
+    }
+    public void OnMouseUp()
+    {
+        _isDragging = false;
+    }
+    public void Update()
+    {
+        if (_isDragging)
+        {
+            Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
+            transform.Translate(mousePosition);
+        }
     }
 
-    public void OnEndDrag(PointerEventData eventData)
-    {
-        Debug.Log("EndDrag");
-    }
-
-    public void OnPointerDown(PointerEventData eventData)
-    {
-        Debug.Log("OnPointerDown");
-    }
 }

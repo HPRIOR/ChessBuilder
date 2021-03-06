@@ -3,29 +3,42 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
+using System;
 
 public class BoardController : MonoBehaviour
 {
     public GameObject tilePrefab;
-    IBoardGenerator _boardGenerator;
+    IBoardGenerator _boardLogicGenerator;
     IBoardRenderer _boardRenderer;
     IPieceGanerator _pieceGenerator;
-    ITile[,] _board;
+    public ITile[,] Board { get; private set; }
 
     [Inject]
-    public void Constructor(IBoardRenderer boardRenderer, IBoardGenerator boardLogic, IPieceGanerator pieceGenerator)
+    private void Constructor(IBoardRenderer boardRenderer, IBoardGenerator boardLogicGenerator, IPieceGanerator pieceGenerator)
     {
         _boardRenderer = boardRenderer;
-        _boardGenerator = boardLogic;
+        _boardLogicGenerator = boardLogicGenerator;
         _pieceGenerator = pieceGenerator;
     }
     
-    public void Start()
+    private void Start()
     {
-        _board = _boardGenerator.GenerateBoard();
-        _boardRenderer.RenderBoard(_board, tilePrefab);
-        foreach (var tile in _board)
+        Board = _boardLogicGenerator.GenerateBoard();
+        _boardRenderer.RenderBoard(Board, tilePrefab);
+        foreach (var tile in Board)
             _pieceGenerator.GeneratorPiece(tile);
     }
+
+    public IDictionary<PieceType, IBoardPosition[]> EvaluateBoardMoves()
+    {
+        throw new NotImplementedException();
+    }
+
+    public ITile[,] UpdateBoardState(PieceType piece, IBoardPosition newBoardPosition)
+    {
+        throw new NotImplementedException();
+    }
+
+
 
 }

@@ -12,18 +12,18 @@ public class PieceGenerator : IPieceGanerator
     }
     IDictionary<PieceType, string> _piecePrefabLocations = new Dictionary<PieceType, string>()
     {
-        { PieceType.DarkKing, "Assets/Prefabs/Pieces/DarkKing.prefab"},
-        { PieceType.DarkQueen, "Assets/Prefabs/Pieces/DarkQueen.prefab"},
-        { PieceType.DarkRook, "Assets/Prefabs/Pieces/DarkRook.prefab"},
-        { PieceType.DarkBishop, "Assets/Prefabs/Pieces/DarkBishop.prefab"},
-        { PieceType.DarkKnight, "Assets/Prefabs/Pieces/DarKnight.prefab"},
-        { PieceType.DarkPawn, "Assets/Prefabs/Pieces/DarkPawn.prefab"},
-        { PieceType.LightKing, "Assets/Prefabs/Pieces/LightKing.prefab"},
-        { PieceType.LightQueen, "Assets/Prefabs/Pieces/LightQueen.prefab"},
-        { PieceType.LightRook, "Assets/Prefabs/Pieces/LightRook.prefab"},
-        { PieceType.LightBishop, "Assets/Prefabs/Pieces/LightBishop.prefab"},
-        { PieceType.LightKnight, "Assets/Prefabs/Pieces/LightKnight.prefab"},
-        { PieceType.LightPawn, "Assets/Prefabs/Pieces/LightPawn.prefab"},
+        { PieceType.BlackKing, "Assets/Prefabs/Pieces/BlackKing.prefab"},
+        { PieceType.BlackQueen, "Assets/Prefabs/Pieces/BlackQueen.prefab"},
+        { PieceType.BlackRook, "Assets/Prefabs/Pieces/BlackRook.prefab"},
+        { PieceType.BlackBishop, "Assets/Prefabs/Pieces/BlackBishop.prefab"},
+        { PieceType.BlackKnight, "Assets/Prefabs/Pieces/BlackKnight.prefab"},
+        { PieceType.BlackPawn, "Assets/Prefabs/Pieces/BlackPawn.prefab"},
+        { PieceType.WhiteKing, "Assets/Prefabs/Pieces/WhiteKing.prefab"},
+        { PieceType.WhiteQueen, "Assets/Prefabs/Pieces/WhiteQueen.prefab"},
+        { PieceType.WhiteRook, "Assets/Prefabs/Pieces/WhiteRook.prefab"},
+        { PieceType.WhiteBishop, "Assets/Prefabs/Pieces/WhiteBishop.prefab"},
+        { PieceType.WhiteKnight, "Assets/Prefabs/Pieces/WhiteKnight.prefab"},
+        { PieceType.WhitePawn, "Assets/Prefabs/Pieces/WhitePawn.prefab"},
 
     };
     public void GeneratorPiece(ITile tile)

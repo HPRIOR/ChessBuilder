@@ -9,7 +9,7 @@ public class BoardRenderer : IBoardRenderer
 {
     public void RenderBoard(ITile[,] board, GameObject tilePrefab)
     {
-        var boardParent = GameObject.FindGameObjectsWithTag("BoardRenderParentObject").FirstOrDefault();
+        var boardParent = new GameObject("BoardRender"); 
         var lightDarkColourSwitch = true;
         var greenColour = new Color32(118, 150, 86, 255);
         var creamColour = new Color32(238, 238, 210, 255);

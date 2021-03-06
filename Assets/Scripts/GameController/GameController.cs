@@ -6,10 +6,12 @@ using UnityEngine;
 
 public class GameController : MonoBehaviour
 {
-    public PieceColour Turn { get; private set; } = PieceColour.White;
+    // will need to reference the board controller do evaluate draw/win 
+    // checkmate not check mate 
+    public void EvaluateGame()
+    {
 
-    public void ChangeTurn() =>
-        _ = Turn == PieceColour.White ? Turn = PieceColour.Black : PieceColour.White;
-    
+    }
+       
     
 }

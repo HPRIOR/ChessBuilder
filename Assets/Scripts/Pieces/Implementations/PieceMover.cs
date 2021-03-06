@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class PieceMover : MonoBehaviour
 {
+    private PieceColour turn = PieceColour.White;
     private GameController _gameController;
     private BoardController _boardController;
     private HashSet<PieceType> _blackPieces = new HashSet<PieceType>()
@@ -16,6 +17,7 @@ public class PieceMover : MonoBehaviour
         PieceType.BlackRook,
         PieceType.BlackKnight
     };
+
     private HashSet<PieceType> _whitePieces = new HashSet<PieceType>()
     {
         PieceType.WhiteBishop,
@@ -26,30 +28,38 @@ public class PieceMover : MonoBehaviour
         PieceType.WhiteKnight
     };
 
-    // Start is called before the first frame update
     void Start()
     {
         _gameController = GetComponent<GameController>();
         _boardController = GetComponent<BoardController>();
-
     }
 
     // references _boardController.PossibleMoves + _gameController.Turn
-    private bool CanMove(PieceType pieceType, IBoardPosition destination)
+    private bool CanMove(IPieceInfo pieceInfo, IBoardPosition destination)
     {
         var pieceColoursTurn =
-            _gameController.Turn == PieceColour.White & _whitePieces.Contains(pieceType)
-            || _gameController.Turn == PieceColour.Black & _blackPieces.Contains(pieceType);
+            turn == PieceColour.White & _whitePieces.Contains(pieceInfo.PieceType)
+            || turn == PieceColour.Black & _blackPieces.Contains(pieceInfo.PieceType);
 
-        throw new NotImplementedException();
+        if (!pieceColoursTurn) return false;
+        if (_boardController.PossibleMoves[pieceInfo].Length == 0) return false;
+        return true;
     }
-
 
     // signals to caller that move has taken place (used by drag and drop) while updating board state
-    public bool Move(PieceType piece, IBoardPosition previousBoardPosition, IBoardPosition newBoardPosition)
+    public bool Move(IPieceInfo pieceInfo, IBoardPosition newBoardPosition)
     {
-        throw new NotImplementedException();
+        if (!CanMove(pieceInfo, newBoardPosition)) return false;
+        pieceInfo.boardPosition = newBoardPosition;
+        _boardController.UpdateBoardState(pieceInfo, newBoardPosition);
+        _boardController.EvaluateBoardMoves();
+        _gameController.EvaluateGame();
+        return true;
     }
+
+    public void ChangeTurn() =>
+        _ = turn == PieceColour.White ? turn = PieceColour.Black : PieceColour.White;
+
 
 }
  

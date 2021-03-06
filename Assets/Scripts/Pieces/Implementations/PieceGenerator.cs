@@ -39,7 +39,10 @@ public class PieceGenerator : IPieceGanerator
 
         // generate piece info
         piece.AddComponent<PieceInfo>();
-        piece.GetComponent<PieceInfo>().PieceType = tile.CurrentPiece;
+        var pieceInfo = piece.GetComponent<PieceInfo>();
+        pieceInfo.PieceType = tile.CurrentPiece;
+        pieceInfo.boardPosition = tile.BoardPosition;
+        
     }
 
    

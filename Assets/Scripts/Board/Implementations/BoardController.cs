@@ -32,12 +32,6 @@ public class BoardController : MonoBehaviour
             _pieceGenerator.GeneratorPiece(tile);
     }
 
-    // will be called onces per successful move and creates a dictionary indicating all legal moves 
-    public IDictionary<PieceType, IBoardPosition[]> EvaluateBoardMoves()
-    {
-        throw new NotImplementedException();
-    }
-
     public ITile[,] UpdateBoardState(PieceType piece, IBoardPosition previousBoardPosition, IBoardPosition newBoardPosition)
     {
         throw new NotImplementedException();

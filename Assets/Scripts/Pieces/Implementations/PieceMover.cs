@@ -48,11 +48,13 @@ public class PieceMover : MonoBehaviour
     // signals to caller that move has taken place (used by drag and drop) while updating board state
     public bool Move(PieceType piece, IBoardPosition previousBoardPosition, IBoardPosition newBoardPosition)
     {
+        throw new NotImplementedException()
+    }
+
+     // will be called onces per successful move and creates a dictionary indicating all legal moves 
+    public IDictionary<PieceType, IBoardPosition[]> EvaluateBoardMoves()
+    {
         throw new NotImplementedException();
     }
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+
 }

@@ -15,7 +15,7 @@ public class BoardInitialiser : IBoardGenerator
                     PieceType.None
                     );
             }
-        board[0, 0].CurrentPiece = PieceType.DarkKing;
+        board[0, 0].CurrentPiece = PieceType.BlackKing;
         return board;
     }
 

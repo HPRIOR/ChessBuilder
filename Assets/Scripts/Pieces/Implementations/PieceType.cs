@@ -4,17 +4,17 @@ using UnityEngine;
 
 public enum PieceType
 {
-    DarkKing,
-    DarkQueen,
-    DarkRook,
-    DarkBishop,
-    DarkKnight,
-    DarkPawn,
-    LightKing,
-    LightQueen,
-    LightRook,
-    LightBishop,
-    LightKnight,
-    LightPawn,
+    BlackKing,
+    BlackQueen,
+    BlackRook,
+    BlackBishop,
+    BlackKnight,
+    BlackPawn,
+    WhiteKing,
+    WhiteQueen,
+    WhiteRook,
+    WhiteBishop,
+    WhiteKnight,
+    WhitePawn,
     None
 }

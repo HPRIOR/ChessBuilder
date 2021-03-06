@@ -9,12 +9,10 @@ using Zenject;
 public class DragAndDrop : MonoBehaviour 
 {
     private bool _isDragging;
-    private GameController _gameController;
     private PieceInfo _pieceInfo;
     
     private void Start()
     {
-        _gameController = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
         _pieceInfo = GetComponent<PieceInfo>();
     }
 

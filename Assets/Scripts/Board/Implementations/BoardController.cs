@@ -33,14 +33,14 @@ public class BoardController : MonoBehaviour
     }
 
     // will be called onces per successful move and creates a dictionary indicating all legal moves 
-    public IDictionary<IPieceInfo, IBoardPosition[]> EvaluateBoardMoves()
+    public void EvaluateBoardMoves()
     {
-        throw new NotImplementedException();
+        // update possible moves dict
     }
 
-    public ITile[,] UpdateBoardState(IPieceInfo pieceInfo, IBoardPosition newBoardPosition)
+    public void UpdateBoardState(IPieceInfo pieceInfo, IBoardPosition newBoardPosition)
     {
-        throw new NotImplementedException();
+        // update Tile[,] Board
     }
 
 

@@ -35,7 +35,7 @@ public class PieceMover : MonoBehaviour
     }
 
     // references _boardController.PossibleMoves + _gameController.Turn
-    private bool CanMove(IPieceInfo pieceInfo, IBoardPosition destination)
+    private bool CanMove(IPieceInfo pieceInfo)
     {
         var pieceColoursTurn =
             turn == PieceColour.White & _whitePieces.Contains(pieceInfo.PieceType)
@@ -49,7 +49,7 @@ public class PieceMover : MonoBehaviour
     // signals to caller that move has taken place (used by drag and drop) while updating board state
     public bool Move(IPieceInfo pieceInfo, IBoardPosition newBoardPosition)
     {
-        if (!CanMove(pieceInfo, newBoardPosition)) return false;
+        if (!CanMove(pieceInfo)) return false;
         pieceInfo.boardPosition = newBoardPosition;
         _boardController.UpdateBoardState(pieceInfo, newBoardPosition);
         _boardController.EvaluateBoardMoves();

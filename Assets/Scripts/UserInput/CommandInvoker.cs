@@ -13,7 +13,7 @@ public class CommandInvoker : MonoBehaviour
     }
     private void Update()
     {
-        if (currentCommand is not null)
+        if (currentCommand != null)
         {
             currentCommand.Execute();
             commandBuffer.Add(currentCommand);

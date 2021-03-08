@@ -9,11 +9,10 @@ using Zenject;
 public class DragAndDrop : MonoBehaviour 
 {
     private bool _isDragging;
-    private PieceInfo _pieceInfo;
-    
+    private Piece _pieceComponent;
     private void Start()
     {
-        _pieceInfo = GetComponent<PieceInfo>();
+        _pieceComponent = GetComponent<Piece>();
     }
 
     private void OnMouseDown()

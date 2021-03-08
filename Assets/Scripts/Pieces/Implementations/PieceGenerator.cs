@@ -40,7 +40,7 @@ public class PieceGenerator : IPieceGanerator
         // generate piece info TODO replace me with IPiece
         pieceGameObject.AddComponent<Piece>();
         var pieceComponent = pieceGameObject.GetComponent<Piece>();
-        pieceComponent.PieceTile = tile;
+        pieceComponent.Tile = tile;
         
     }
 

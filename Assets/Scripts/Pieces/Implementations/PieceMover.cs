@@ -41,16 +41,17 @@ public class PieceMover : MonoBehaviour
             || turn == PieceColour.Black & _blackPieces.Contains(pieceInfo.PieceType);
 
         if (!pieceColoursTurn) return false;
-        if (_boardController.PossibleMoves[pieceInfo].Length == 0) return false;
+        //if (_boardController.PossibleMoves[pieceInfo].Length == 0) return false;
         return true;
     }
 
-    public void Move(IPieceInfo pieceInfo, IBoardPosition newBoardPosition)
+    public void Move(IPiece piece, IBoardPosition newBoardPosition)
     {
-        pieceInfo.boardPosition = newBoardPosition;
-        _boardController.UpdateBoardState(pieceInfo, newBoardPosition);
-        _boardController.EvaluateBoardMoves();
-        _gameController.EvaluateGame();
+    }
+
+    public Move GetMoveData(IPiece piece, IBoardPosition newBoardPosition)
+    {
+        throw new NotImplementedException();
     }
 
     public void ChangeTurn() =>

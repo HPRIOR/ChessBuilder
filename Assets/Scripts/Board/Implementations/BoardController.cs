@@ -12,7 +12,7 @@ public class BoardController : MonoBehaviour
     IBoardRenderer _boardRenderer;
     IPieceGanerator _pieceGenerator;
     public ITile[,] Board { get; private set; }
-    public IDictionary<ITile, ITile[]> PossibleMoves { get; private set; }
+    public IDictionary<ITile, HashSet<ITile>> PossibleMoves { get; private set; }
    
 
     [Inject]
@@ -33,22 +33,14 @@ public class BoardController : MonoBehaviour
             _pieceGenerator.GeneratorPiece(tile);
     }
 
-    public void GetTileAt(IBoardPosition boardPosition)
-    {
-
-    }
+    public ITile GetTileAt(IBoardPosition boardPosition) =>
+        Board[boardPosition.X, boardPosition.Y];
+    
 
     // will be called onces per successful move and creates a dictionary indicating all legal moves 
     public void EvaluateBoardMoves()
     {
         // update possible moves dict
     }
-
-    public void UpdateBoardState(IPieceInfo pieceInfo, IBoardPosition newBoardPosition)
-    {
-        // update Tile[,] Board
-    }
-
-
 
 }

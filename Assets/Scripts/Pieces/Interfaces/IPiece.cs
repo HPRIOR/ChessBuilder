@@ -4,6 +4,6 @@ using UnityEngine;
 
 public interface IPiece  
 {
-    ITile PieceTile { get; set; }
+    ITile Tile { get; set; }
 
 }

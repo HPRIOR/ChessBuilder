@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class PieceMover : MonoBehaviour
 {
-    private PieceColour turn = PieceColour.White;
     private GameController _gameController;
     private BoardController _boardController;
     private HashSet<PieceType> _blackPieces = new HashSet<PieceType>()
@@ -34,28 +33,40 @@ public class PieceMover : MonoBehaviour
         _boardController = GetComponent<BoardController>();
     }
 
-    public bool CanMove(IPieceInfo pieceInfo)
+    public bool CanMove(IPiece piece, IBoardPosition boardPosition)
     {
         var pieceColoursTurn =
-            turn == PieceColour.White & _whitePieces.Contains(pieceInfo.PieceType)
-            || turn == PieceColour.Black & _blackPieces.Contains(pieceInfo.PieceType);
-
+            _gameController.Turn == PieceColour.White & _whitePieces.Contains(piece.Tile.CurrentPiece)
+            || _gameController.Turn == PieceColour.Black & _blackPieces.Contains(piece.Tile.CurrentPiece);
         if (!pieceColoursTurn) return false;
-        //if (_boardController.PossibleMoves[pieceInfo].Length == 0) return false;
-        return true;
+        
+        //check for valid moves
+        if (_boardController.PossibleMoves[piece.Tile].Count == 0) return false;
+        var targetTile = _boardController.GetTileAt(boardPosition);
+        return _boardController.PossibleMoves[targetTile].Contains(targetTile);
     }
 
     public void Move(IPiece piece, IBoardPosition newBoardPosition)
     {
+        // update piece information on Board
+        var movedToTile = _boardController.GetTileAt(newBoardPosition);
+        movedToTile.CurrentPiece = piece.Tile.CurrentPiece;
+
+        // update tile information on piece 
+        piece.Tile.CurrentPiece = PieceType.None;
+        piece.Tile = movedToTile;
+
+        _boardController.EvaluateBoardMoves();
+
     }
 
     public Move GetMoveData(IPiece piece, IBoardPosition newBoardPosition)
     {
-        throw new NotImplementedException();
+        var movedToTile = _boardController.GetTileAt(newBoardPosition);
+        var movedFromTile = piece.Tile;
+        return new Move(movedFromTile, movedToTile);
     }
 
-    public void ChangeTurn() =>
-        _ = turn == PieceColour.White ? turn = PieceColour.Black : PieceColour.White;
 
 
 }

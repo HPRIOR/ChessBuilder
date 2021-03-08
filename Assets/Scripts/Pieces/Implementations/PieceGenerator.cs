@@ -30,18 +30,17 @@ public class PieceGenerator : IPieceGanerator
     {
         if (tile.CurrentPiece == PieceType.None) return;
         var prefab = AssetDatabase.LoadAssetAtPath(_piecePrefabLocations[tile.CurrentPiece], typeof(GameObject));
-        var piece = (GameObject)GameObject.Instantiate(prefab);
+        var pieceGameObject = (GameObject)GameObject.Instantiate(prefab);
 
-        piece.transform.position = tile.BoardPosition.Position;
-        piece.transform.parent = _pieceParent.transform;
+        pieceGameObject.transform.position = tile.BoardPosition.Position;
+        pieceGameObject.transform.parent = _pieceParent.transform;
 
-        piece.GetComponent<SpriteRenderer>().sortingOrder = 1;
+        pieceGameObject.GetComponent<SpriteRenderer>().sortingOrder = 1;
 
-        // generate piece info
-        piece.AddComponent<PieceInfo>();
-        var pieceInfo = piece.GetComponent<PieceInfo>();
-        pieceInfo.PieceType = tile.CurrentPiece;
-        pieceInfo.boardPosition = tile.BoardPosition;
+        // generate piece info TODO replace me with IPiece
+        pieceGameObject.AddComponent<Piece>();
+        var pieceComponent = pieceGameObject.GetComponent<Piece>();
+        pieceComponent.PieceTile = tile;
         
     }
 

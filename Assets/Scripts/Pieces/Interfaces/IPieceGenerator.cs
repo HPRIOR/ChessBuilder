@@ -4,5 +4,5 @@ using UnityEngine;
 
 public interface IPieceGanerator
 {
-    void GeneratorPiece(ITile tile);
+    void GeneratePeice(ITile tile, PieceType pieceType);
 }

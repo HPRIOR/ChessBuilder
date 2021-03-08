@@ -9,16 +9,14 @@ public class BoardController : MonoBehaviour
 {
     public GameObject tilePrefab;
     IBoardGenerator _boardLogicGenerator;
-    IBoardRenderer _boardRenderer;
     IPieceGanerator _pieceGenerator;
     public ITile[,] Board { get; private set; }
     public IDictionary<ITile, HashSet<ITile>> PossibleMoves { get; private set; }
    
 
     [Inject]
-    private void Constructor(IBoardRenderer boardRenderer, IBoardGenerator boardLogicGenerator, IPieceGanerator pieceGenerator)
+    private void Constructor(IBoardGenerator boardLogicGenerator, IPieceGanerator pieceGenerator)
     {
-        _boardRenderer = boardRenderer;
         _boardLogicGenerator = boardLogicGenerator;
         _pieceGenerator = pieceGenerator;
     }
@@ -26,18 +24,14 @@ public class BoardController : MonoBehaviour
     private void Start()
     {
         Board = _boardLogicGenerator.GenerateBoard();
-        //PossibleMoves = EvaluateBoardMoves();
-        _boardRenderer.RenderBoard(Board, tilePrefab);
+        EvaluateBoardMoves();
        
-        foreach (var tile in Board)
-            _pieceGenerator.GeneratorPiece(tile);
     }
 
     public ITile GetTileAt(IBoardPosition boardPosition) =>
         Board[boardPosition.X, boardPosition.Y];
     
 
-    // will be called onces per successful move and creates a dictionary indicating all legal moves 
     public void EvaluateBoardMoves()
     {
         // update possible moves dict

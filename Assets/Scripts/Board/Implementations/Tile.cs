@@ -4,12 +4,23 @@ using UnityEngine;
 
 public class Tile : ITile
 {
-    public PieceType CurrentPiece { get; set; }
+    public GameObject CurrentPiece { get; set; }
     public IBoardPosition BoardPosition { get; set; }
 
-    public Tile(BoardPosition boardPosition, PieceType currentPiece)
+    public Tile(BoardPosition boardPosition, GameObject currentPiece)
     {
         BoardPosition = boardPosition;
         CurrentPiece = currentPiece;
+    }
+
+    public Tile(BoardPosition boardPosition)
+    {
+        BoardPosition = boardPosition;
+        CurrentPiece = null;
+    }
+
+    public object Clone()
+    {
+        return new Tile(new BoardPosition(BoardPosition.X, BoardPosition.Y), CurrentPiece);
     }
 }

@@ -14,6 +14,7 @@ public class BoardPosition: IBoardPosition
         Position = new Vector2(x + 0.5f, y + 0.5f);
     }
 
+    // TODO
     public string GetAlgabraicNotation() => X.ToString() + Y.ToString();
 
 }

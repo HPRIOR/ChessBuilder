@@ -11,11 +11,10 @@ public class BoardInitialiser : IBoardGenerator
             for (int j = 0; j < 8; j++)
             {
                 board[i, j] = new Tile(
-                    new BoardPosition(i, j),
-                    PieceType.None
+                    new BoardPosition(i, j)
                     );
             }
-        board[0, 0].CurrentPiece = PieceType.BlackKing;
+
         return board;
     }
 

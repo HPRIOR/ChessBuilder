@@ -26,21 +26,23 @@ public class PieceGenerator : IPieceGanerator
         { PieceType.WhitePawn, "Assets/Prefabs/Pieces/WhitePawn.prefab"},
 
     };
-    public void GeneratorPiece(ITile tile)
+    public void GeneratePeice(ITile tile, PieceType pieceType)
     {
-        if (tile.CurrentPiece == PieceType.None) return;
-        var prefab = AssetDatabase.LoadAssetAtPath(_piecePrefabLocations[tile.CurrentPiece], typeof(GameObject));
+        if (pieceType == PieceType.None) return;
+        var prefab = AssetDatabase.LoadAssetAtPath(_piecePrefabLocations[pieceType], typeof(GameObject));
         var pieceGameObject = (GameObject)GameObject.Instantiate(prefab);
+        tile.CurrentPiece = pieceGameObject;
 
         pieceGameObject.transform.position = tile.BoardPosition.Position;
         pieceGameObject.transform.parent = _pieceParent.transform;
 
         pieceGameObject.GetComponent<SpriteRenderer>().sortingOrder = 1;
-
-        // generate piece info TODO replace me with IPiece
+        
         pieceGameObject.AddComponent<Piece>();
         var pieceComponent = pieceGameObject.GetComponent<Piece>();
-        pieceComponent.Tile = tile;
+        pieceComponent.boardPosition = tile.BoardPosition;
+        pieceComponent.pieceType = pieceType;
+        pieceComponent.pieceColour = pieceType.ToString().StartsWith("Black") ? PieceColour.Black : PieceColour.White;
         
     }
 

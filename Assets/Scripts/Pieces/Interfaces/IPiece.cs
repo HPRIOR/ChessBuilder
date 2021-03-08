@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IPiece  
+public interface IPiece
 {
-    ITile Tile { get; set; }
+    IBoardPosition boardPosition { get; set; }
+    PieceColour pieceColour { get; set; }
+    PieceType pieceType { get; set; }
 
 }

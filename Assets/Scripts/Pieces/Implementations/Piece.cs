@@ -4,11 +4,10 @@ using UnityEngine;
 
 public class Piece : MonoBehaviour, IPiece
 {
-    public ITile Tile { get; set; }
+    public IBoardPosition boardPosition { get; set; }
 
-    private void Update()
-    {
-        if (Tile.CurrentPiece == PieceType.None)
-            Destroy(gameObject);
-    }
+    public PieceColour pieceColour { get; set; }
+
+    public PieceType pieceType { get; set; }
+
 }

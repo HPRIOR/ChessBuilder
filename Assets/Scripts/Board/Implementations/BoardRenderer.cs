@@ -5,10 +5,17 @@ using UnityEngine;
 using Zenject;
 
 
-public class BoardRenderer : IBoardRenderer
+// separate this into another class that doesn't depend on tiles so it can be executed indipendantly
+public class BoardRenderer : MonoBehaviour, IBoardRenderer
 {
-    public void RenderBoard(ITile[,] board, GameObject tilePrefab)
+    public GameObject tilePrefab;
+    private void Start()
     {
+        RenderBoard();
+    }
+    public void RenderBoard()
+    {
+        var board = CreateBoardPositions(); 
         var boardParent = new GameObject("BoardRender"); 
         var lightDarkColourSwitch = true;
         var greenColour = new Color32(118, 150, 86, 255);
@@ -19,7 +26,7 @@ public class BoardRenderer : IBoardRenderer
             // Instantiate tile prefab under BoardRender GameObject
             var currentTile = GameObject.Instantiate(tilePrefab);
             currentTile.transform.parent = boardParent.transform;
-            currentTile.transform.position = boardTile.BoardPosition.Position;
+            currentTile.transform.position = new Vector2(boardTile.Item1, boardTile.Item2);
             
             // Change light and dark squares 
             var spriteRenderer = currentTile.GetComponent<SpriteRenderer>();
@@ -33,5 +40,15 @@ public class BoardRenderer : IBoardRenderer
             count += 1;
         } 
         
+    }
+
+    private (float X, float Y)[,] CreateBoardPositions()
+    {
+        var board = new (float X, float Y)[8, 8];
+        for (int i = 0; i < 8; i++)
+            for (int j = 0; j < 8; j++)
+                board[i, j] = (i + 0.5f, j + 0.5f);
+        return board;
+
     }
 }

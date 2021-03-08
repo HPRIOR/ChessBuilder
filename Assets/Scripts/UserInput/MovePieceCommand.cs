@@ -21,11 +21,6 @@ public class MovePieceCommand : ICommand
         throw new System.NotImplementedException();
     }
 
-    public bool IsValidCommand()
-    {
-        throw new System.NotImplementedException();
-    }
-
     public void Undo()
     {
         throw new System.NotImplementedException();

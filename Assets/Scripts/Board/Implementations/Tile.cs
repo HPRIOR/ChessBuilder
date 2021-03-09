@@ -18,9 +18,4 @@ public class Tile : ITile
         BoardPosition = boardPosition;
         CurrentPiece = null;
     }
-
-    public object Clone()
-    {
-        return new Tile(new BoardPosition(BoardPosition.X, BoardPosition.Y), CurrentPiece);
-    }
 }

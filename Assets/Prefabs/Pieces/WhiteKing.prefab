@@ -10,9 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 2190831775688467650}
   - component: {fileID: 5109337334695842393}
-  - component: {fileID: -4085117982115260219}
+  - component: {fileID: 5200242324460586778}
+  - component: {fileID: 1430540044111030730}
   m_Layer: 0
-  m_Name: LightKing
+  m_Name: WhiteKing
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -82,7 +83,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &-4085117982115260219
+--- !u!114 &5200242324460586778
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -91,7 +92,32 @@ MonoBehaviour:
   m_GameObject: {fileID: 7965207604631457960}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 40921e106da76bb44a28c3c0865b7a18, type: 3}
+  m_Script: {fileID: 11500000, guid: 78551d8c21949c04db6ba0a474536c37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pieceColour: 1
+--- !u!61 &1430540044111030730
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7965207604631457960}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 2.4, y: 2.4}
+    newSize: {x: 2.4, y: 2.4}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 2.4, y: 2.4}
+  m_EdgeRadius: 0

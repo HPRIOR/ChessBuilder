@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class BoardInitialiser : IBoardGenerator
 {
-    public Tile[,] GenerateBoard()
+    public ITile[,] GenerateBoard()
     {
-        Tile[,] board = new Tile[8, 8];
+        var board = new Tile[8, 8];
         for (int i = 0; i < 8; i++)
             for (int j = 0; j < 8; j++)
             {

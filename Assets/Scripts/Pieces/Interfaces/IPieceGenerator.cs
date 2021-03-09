@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IPieceGanerator
+public interface IPieceGenerator
 {
-    void GeneratePeice(ITile tile, PieceType pieceType);
+    void GeneratePiece(ITile tile, PieceType pieceType);
 }

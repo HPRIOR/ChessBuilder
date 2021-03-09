@@ -1,12 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public struct BoardPosition: IBoardPosition
+public struct BoardPosition : IBoardPosition
 {
     public int X { get; }
     public int Y { get; }
     public Vector2 Position { get; }
+
     public BoardPosition(int x, int y)
     {
         X = x;
@@ -16,5 +15,4 @@ public struct BoardPosition: IBoardPosition
 
     // TODO
     public string GetAlgabraicNotation() => X.ToString() + Y.ToString();
-
 }

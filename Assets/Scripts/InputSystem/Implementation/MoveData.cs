@@ -1,10 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class MoveData : IMoveData
 {
-    private static GameController _gameController = 
+    private static GameController _gameController =
         GameObject
         .FindGameObjectWithTag("GameController")
         .GetComponent<GameController>();
@@ -13,8 +11,8 @@ public class MoveData : IMoveData
     public IBoardPosition DestinationBoardPosition { get; }
     public GameObject DisplacedPiece { get; }
     public GameObject MovedPiece { get; }
-    public IPiece MovedPieceComponent {get;}
-    
+    public IPiece MovedPieceComponent { get; }
+
     public MoveData(GameObject movedPiece, IBoardPosition destination)
     {
         MovedPiece = movedPiece;
@@ -23,6 +21,5 @@ public class MoveData : IMoveData
 
         DisplacedPiece = _gameController.GetTileAt(destination).CurrentPiece;
         DestinationBoardPosition = destination;
-
     }
 }

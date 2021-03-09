@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using Zenject;
+﻿using Zenject;
 
 public class GameControllerInstaller : MonoInstaller<GameControllerInstaller>
 {
@@ -10,6 +7,5 @@ public class GameControllerInstaller : MonoInstaller<GameControllerInstaller>
         Container.Bind<IBoardRenderer>().To<BoardRenderer>().AsTransient();
         Container.Bind<IBoardGenerator>().To<BoardInitialiser>().AsTransient();
         Container.Bind<IPieceGenerator>().To<PieceGenerator>().AsSingle();
-        
     }
 }

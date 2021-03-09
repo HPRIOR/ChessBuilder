@@ -1,16 +1,17 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
 public class PieceGenerator : IPieceGenerator
 {
-    GameObject _pieceParent;
+    private GameObject _pieceParent;
+
     public PieceGenerator()
     {
         _pieceParent = new GameObject("Pieces");
     }
-    IDictionary<PieceType, string> _piecePrefabLocations = new Dictionary<PieceType, string>()
+
+    private IDictionary<PieceType, string> _piecePrefabLocations = new Dictionary<PieceType, string>()
     {
         { PieceType.BlackKing, "Assets/Prefabs/Pieces/BlackKing.prefab"},
         { PieceType.BlackQueen, "Assets/Prefabs/Pieces/BlackQueen.prefab"},
@@ -24,8 +25,8 @@ public class PieceGenerator : IPieceGenerator
         { PieceType.WhiteBishop, "Assets/Prefabs/Pieces/WhiteBishop.prefab"},
         { PieceType.WhiteKnight, "Assets/Prefabs/Pieces/WhiteKnight.prefab"},
         { PieceType.WhitePawn, "Assets/Prefabs/Pieces/WhitePawn.prefab"},
-
     };
+
     public void GeneratePiece(ITile tile, PieceType pieceType)
     {
         if (pieceType == PieceType.None) return;
@@ -37,14 +38,11 @@ public class PieceGenerator : IPieceGenerator
         pieceGameObject.transform.parent = _pieceParent.transform;
 
         pieceGameObject.GetComponent<SpriteRenderer>().sortingOrder = 1;
-        
+
         pieceGameObject.AddComponent<Piece>();
         var pieceComponent = pieceGameObject.GetComponent<Piece>();
         pieceComponent.boardPosition = tile.BoardPosition;
         pieceComponent.pieceType = pieceType;
         pieceComponent.pieceColour = pieceType.ToString().StartsWith("Black") ? PieceColour.Black : PieceColour.White;
-        
     }
-
-   
 }

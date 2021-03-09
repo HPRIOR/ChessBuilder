@@ -1,11 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using Zenject;
+﻿using UnityEngine;
 
 public class MovePieceCommand : ICommand
 {
-    private static GameController _gameController 
+    private static GameController _gameController
         = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
 
     private static IPieceMover _pieceMover = new PieceMover();
@@ -27,7 +24,7 @@ public class MovePieceCommand : ICommand
             destination
         );
     }
-    
+
     public void Execute()
     {
         _pieceMover.Move(_piece, _destination);
@@ -46,7 +43,5 @@ public class MovePieceCommand : ICommand
     public void Undo()
     {
         _pieceMover.UndoMove(_moveData);
-        
     }
 }
-

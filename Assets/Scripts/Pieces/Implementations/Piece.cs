@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Piece : MonoBehaviour, IPiece
 {
@@ -9,5 +7,4 @@ public class Piece : MonoBehaviour, IPiece
     public PieceColour pieceColour { get; set; }
 
     public PieceType pieceType { get; set; }
-
 }

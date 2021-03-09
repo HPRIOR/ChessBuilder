@@ -1,17 +1,15 @@
-﻿using System.Linq;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
-using System;
 
 public class GameController : MonoBehaviour
 {
-    IBoardGenerator _boardLogicGenerator;
-    IPieceGenerator _pieceGenerator;
+    private IBoardGenerator _boardLogicGenerator;
+    private IPieceGenerator _pieceGenerator;
     public ITile[,] Board { get; private set; }
     public IDictionary<ITile, IBoardPosition> PossibleMoves { get; private set; }
     public PieceColour Turn { get; private set; } = PieceColour.White;
+
     private void Start()
     {
         Board = _boardLogicGenerator.GenerateBoard();
@@ -26,13 +24,13 @@ public class GameController : MonoBehaviour
         _boardLogicGenerator = boardLogicGenerator;
         _pieceGenerator = pieceGenerator;
     }
-    
-    // mate/check/draw 
+
+    // mate/check/draw
     public void EvaluateGame()
     {
-
     }
-     public void EvaluateBoardMoves()
+
+    public void EvaluateBoardMoves()
     {
         // update possible moves dict
     }
@@ -40,10 +38,6 @@ public class GameController : MonoBehaviour
     public void ChangeTurn() =>
         _ = Turn == PieceColour.White ? Turn = PieceColour.Black : Turn = PieceColour.White;
 
-    
     public ITile GetTileAt(IBoardPosition boardPosition) =>
         Board[boardPosition.X, boardPosition.Y];
-    
-
-   
 }

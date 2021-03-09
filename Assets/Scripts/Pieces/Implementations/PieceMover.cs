@@ -9,7 +9,7 @@ public class PieceMover : IPieceMover
 
     public void Move(GameObject piece, IBoardPosition toDestination)
     {
-        // move game object 
+        // move game object
         UpdatePiecesOnMove(piece, toDestination);
         UpdateBoardOnMove(piece, toDestination);
     }
@@ -59,7 +59,5 @@ public class PieceMover : IPieceMover
 
         vacatedTile.CurrentPiece = moveData.MovedPiece;
         destinationTile.CurrentPiece = moveData.DisplacedPiece;
-
-        
     }
 }

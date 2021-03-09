@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class BoardInitialiser : IBoardGenerator
+﻿public class BoardInitialiser : IBoardGenerator
 {
     public ITile[,] GenerateBoard()
     {
@@ -17,6 +13,4 @@ public class BoardInitialiser : IBoardGenerator
 
         return board;
     }
-
-    
 }

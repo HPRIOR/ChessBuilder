@@ -1,10 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class CommandInvoker : MonoBehaviour
 {
-
     /*
      * player 1/2 logic could be implemented here
      * instead of the piece mover switching between moves two buffers are kept and commands are invoked from it in turn
@@ -16,6 +14,7 @@ public class CommandInvoker : MonoBehaviour
     {
         commandBuffer = new Stack<ICommand>();
     }
+
     private void Update()
     {
         if (currentCommand != null && currentCommand.IsValid())
@@ -32,6 +31,4 @@ public class CommandInvoker : MonoBehaviour
     {
         if (commandBuffer.Count > 0) commandBuffer.Pop().Undo();
     }
- 
-
 }

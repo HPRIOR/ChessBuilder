@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using UnityEngine;
-using UnityEngine.EventSystems;
-using Zenject;
+﻿using UnityEngine;
 
-public class DragAndDrop : MonoBehaviour 
+public class DragAndDrop : MonoBehaviour
 {
     private CommandInvoker _commandInvoker;
     private bool _isDragging;
+
     private void Start()
     {
         _commandInvoker = GameObject.FindGameObjectWithTag("InputSystem").GetComponent<CommandInvoker>();
@@ -17,17 +12,20 @@ public class DragAndDrop : MonoBehaviour
 
     private void OnMouseDown()
     {
-       _isDragging = true;
+        gameObject.GetComponent<SpriteRenderer>().sortingOrder = 2;
+        _isDragging = true;
     }
+
     private void OnMouseUp()
     {
+        gameObject.GetComponent<SpriteRenderer>().sortingOrder = 1;
         var currentMousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         var nearestBoardPosition = GetNearestBoardPosition(currentMousePosition);
 
         _commandInvoker.AddCommand(new MovePieceCommand(gameObject, nearestBoardPosition));
-        //SnapToNearestTile(nearestBoardPosition);
         _isDragging = false;
     }
+
     private void Update()
     {
         if (_isDragging)
@@ -38,8 +36,7 @@ public class DragAndDrop : MonoBehaviour
     }
 
     private IBoardPosition GetNearestBoardPosition(Vector2 position) =>
-        new BoardPosition(ConvertAxisToNearestBoardIndex(position.x), ConvertAxisToNearestBoardIndex(position.y)); 
-    
+        new BoardPosition(ConvertAxisToNearestBoardIndex(position.x), ConvertAxisToNearestBoardIndex(position.y));
 
     private int ConvertAxisToNearestBoardIndex(float axis)
     {
@@ -47,10 +44,4 @@ public class DragAndDrop : MonoBehaviour
         if (axis < 0.5) return 0;
         return (int)axis;
     }
-
-    private void SnapToNearestTile(IBoardPosition currentBoardPosition)
-    {
-        transform.position = currentBoardPosition.Position;
-    }
-
 }

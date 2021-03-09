@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 
-public interface IPieceMover 
+public interface IPieceMover
 {
     void Move(GameObject piece, IBoardPosition toDestination);
-    void UndoMove(IMoveData moveData);
 
+    void UndoMove(IMoveData moveData);
 }

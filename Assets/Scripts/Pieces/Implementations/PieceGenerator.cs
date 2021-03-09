@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-public class PieceGenerator : IPieceGanerator
+public class PieceGenerator : IPieceGenerator
 {
     GameObject _pieceParent;
     public PieceGenerator()
@@ -26,7 +26,7 @@ public class PieceGenerator : IPieceGanerator
         { PieceType.WhitePawn, "Assets/Prefabs/Pieces/WhitePawn.prefab"},
 
     };
-    public void GeneratePeice(ITile tile, PieceType pieceType)
+    public void GeneratePiece(ITile tile, PieceType pieceType)
     {
         if (pieceType == PieceType.None) return;
         var prefab = AssetDatabase.LoadAssetAtPath(_piecePrefabLocations[pieceType], typeof(GameObject));

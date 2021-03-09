@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BoardPosition: IBoardPosition
+public struct BoardPosition: IBoardPosition
 {
     public int X { get; }
     public int Y { get; }

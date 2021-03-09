@@ -9,6 +9,7 @@ public class GameControllerInstaller : MonoInstaller<GameControllerInstaller>
     {
         Container.Bind<IBoardRenderer>().To<BoardRenderer>().AsTransient();
         Container.Bind<IBoardGenerator>().To<BoardInitialiser>().AsTransient();
-        Container.Bind<IPieceGanerator>().To<PieceGenerator>().AsTransient();
+        Container.Bind<IPieceGenerator>().To<PieceGenerator>().AsSingle();
+        
     }
 }

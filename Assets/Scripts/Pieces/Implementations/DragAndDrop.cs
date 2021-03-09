@@ -8,11 +8,11 @@ using Zenject;
 
 public class DragAndDrop : MonoBehaviour 
 {
+    private CommandInvoker _commandInvoker;
     private bool _isDragging;
-    private Piece _pieceComponent;
     private void Start()
     {
-        _pieceComponent = GetComponent<Piece>();
+        _commandInvoker = GameObject.FindGameObjectWithTag("InputSystem").GetComponent<CommandInvoker>();
     }
 
     private void OnMouseDown()
@@ -23,7 +23,9 @@ public class DragAndDrop : MonoBehaviour
     {
         var currentMousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         var nearestBoardPosition = GetNearestBoardPosition(currentMousePosition);
-        SnapToNearestTile(nearestBoardPosition);
+
+        _commandInvoker.AddCommand(new MovePieceCommand(gameObject, nearestBoardPosition));
+        //SnapToNearestTile(nearestBoardPosition);
         _isDragging = false;
     }
     private void Update()

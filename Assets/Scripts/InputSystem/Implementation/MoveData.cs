@@ -19,7 +19,7 @@ public class MoveData : IMoveData
         MovedPieceComponent = movedPiece.GetComponent<Piece>();
         InitialBoardPosition = MovedPieceComponent.BoardPosition;
 
-        DisplacedPiece = _gameController.GetTileAt(destination).CurrentPiece;
+        DisplacedPiece = _gameController.GetTileAt(destination).CurrentPiece?.gameObject;
         DestinationBoardPosition = destination;
     }
 }

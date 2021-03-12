@@ -15,9 +15,10 @@ public class PieceInjector
         _pieceFactory = pieceFactory;
     }
 
-    public void CreatePieceOf(PieceType pieceType, IBoardPosition atBoardPosition)
+    public void CreatePieceOf(PieceType pieceType, IBoardPosition BoardPosition)
     {
-        _pieceFactory.Create(pieceType, atBoardPosition);
+        var piece = _pieceFactory.Create(pieceType, BoardPosition);
+        _gameController.GetTileAt(BoardPosition).CurrentPiece = piece;
     }
 }
 

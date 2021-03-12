@@ -3,5 +3,5 @@
 public interface ITile
 {
     IBoardPosition BoardPosition { get; set; }
-    GameObject CurrentPiece { get; set; }
+    Piece CurrentPiece { get; set; }
 }

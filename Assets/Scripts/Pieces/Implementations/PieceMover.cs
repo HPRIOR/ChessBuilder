@@ -20,7 +20,7 @@ public class PieceMover : IPieceMover
         var destinationTile = _gameController.GetTileAt(destination);
 
         vacatedTile.CurrentPiece = null;
-        destinationTile.CurrentPiece = piece;
+        destinationTile.CurrentPiece = piece.GetComponent<Piece>();
     }
 
     // must be called before UpdateBoardOnMove
@@ -31,7 +31,7 @@ public class PieceMover : IPieceMover
         var displacedPiece = _gameController.GetTileAt(destination).CurrentPiece;
         if (displacedPiece != null & displacedPiece != piece)
         {
-            displacedPiece.SetActive(false);
+            displacedPiece.gameObject.SetActive(false);
         }
     }
 
@@ -57,7 +57,7 @@ public class PieceMover : IPieceMover
         var vacatedTile = _gameController.GetTileAt(moveData.InitialBoardPosition);
         var destinationTile = _gameController.GetTileAt(moveData.DestinationBoardPosition);
 
-        vacatedTile.CurrentPiece = moveData.MovedPiece;
-        destinationTile.CurrentPiece = moveData.DisplacedPiece;
+        vacatedTile.CurrentPiece = moveData.MovedPiece.GetComponent<Piece>();
+        destinationTile.CurrentPiece = moveData.DisplacedPiece?.GetComponent<Piece>();
     }
 }

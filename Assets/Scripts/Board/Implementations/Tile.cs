@@ -2,10 +2,10 @@
 
 public class Tile : ITile
 {
-    public GameObject CurrentPiece { get; set; }
+    public Piece CurrentPiece { get; set; }
     public IBoardPosition BoardPosition { get; set; }
 
-    public Tile(BoardPosition boardPosition, GameObject currentPiece)
+    public Tile(BoardPosition boardPosition, Piece currentPiece)
     {
         BoardPosition = boardPosition;
         CurrentPiece = currentPiece;

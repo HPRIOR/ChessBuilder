@@ -15,16 +15,14 @@ public class MoveValidator : IMoveValidator
 
     public bool ValidateMove(GameObject piece, IBoardPosition destination)
     {
-        
         if ((Vector2)piece.transform.position == destination.Position) return false;
-
         return true;
+
+        // return PieceCanMove(piece, destination);
     }
 
-    private void PieceCanMove(GameObject piece, IBoardPosition destination)
-    {
-
-    }
+    private bool PieceCanMove(GameObject piece, IBoardPosition destination) =>
+        _gameController.PossibleMoves[piece].Contains(destination);
 
 
 

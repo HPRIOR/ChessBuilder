@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using UnityEngine;
 
-public interface IMoveValidator
+public interface IBoardState
 {
-    bool ValidateMove(GameObject piece, IBoardPosition destination);
+    ITile[,] Board { get; }
+
+    ITile GetTileAt(IBoardPosition boardPosition);
 }

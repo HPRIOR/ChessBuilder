@@ -16,7 +16,7 @@ public class PieceMover : IPieceMover
 
     private void UpdateBoardOnMove(GameObject piece, IBoardPosition destination)
     {
-        var vacatedTile = _gameController.GetTileAt(piece.GetComponent<Piece>().boardPosition);
+        var vacatedTile = _gameController.GetTileAt(piece.GetComponent<Piece>().BoardPosition);
         var destinationTile = _gameController.GetTileAt(destination);
 
         vacatedTile.CurrentPiece = null;
@@ -27,7 +27,7 @@ public class PieceMover : IPieceMover
     private void UpdatePiecesOnMove(GameObject piece, IBoardPosition destination)
     {
         piece.transform.position = destination.Position;
-        piece.GetComponent<Piece>().boardPosition = destination;
+        piece.GetComponent<Piece>().BoardPosition = destination;
         var displacedPiece = _gameController.GetTileAt(destination).CurrentPiece;
         if (displacedPiece != null & displacedPiece != piece)
         {
@@ -49,7 +49,7 @@ public class PieceMover : IPieceMover
         // activate moved piece and move back to original position
         moveData.MovedPiece.SetActive(true);
         moveData.MovedPiece.transform.position = moveData.InitialBoardPosition.Position;
-        moveData.MovedPieceComponent.boardPosition = moveData.InitialBoardPosition;
+        moveData.MovedPieceComponent.BoardPosition = moveData.InitialBoardPosition;
     }
 
     private void UpdateBoardOnUndo(IMoveData moveData)

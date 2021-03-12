@@ -1,15 +1,15 @@
 ﻿using UnityEngine;
+using Zenject;
 
 public class InputTester : MonoBehaviour
 {
-    private CommandInvoker _commandInvoker;
-
-    // Start is called before the first frame update
-    private void Start()
+    private ICommandInvoker _commandInvoker;
+    [Inject]
+    public void Construct(ICommandInvoker commandInvoker)
     {
-        _commandInvoker = GetComponent<CommandInvoker>();
+        _commandInvoker = commandInvoker;
     }
-
+    
     // Update is called once per frame
     private void Update()
     {

@@ -6,5 +6,5 @@ public interface IMoveData
     IBoardPosition DestinationBoardPosition { get; }
     GameObject DisplacedPiece { get; }
     GameObject MovedPiece { get; }
-    IPiece MovedPieceComponent { get; }
+    Piece MovedPieceComponent { get; }
 }

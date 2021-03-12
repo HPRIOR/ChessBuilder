@@ -11,13 +11,13 @@ public class MoveData : IMoveData
     public IBoardPosition DestinationBoardPosition { get; }
     public GameObject DisplacedPiece { get; }
     public GameObject MovedPiece { get; }
-    public IPiece MovedPieceComponent { get; }
+    public Piece MovedPieceComponent { get; }
 
     public MoveData(GameObject movedPiece, IBoardPosition destination)
     {
         MovedPiece = movedPiece;
         MovedPieceComponent = movedPiece.GetComponent<Piece>();
-        InitialBoardPosition = MovedPieceComponent.boardPosition;
+        InitialBoardPosition = MovedPieceComponent.BoardPosition;
 
         DisplacedPiece = _gameController.GetTileAt(destination).CurrentPiece;
         DestinationBoardPosition = destination;

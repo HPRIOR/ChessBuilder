@@ -15,7 +15,7 @@ public class MovePieceCommand : ICommand
 
     public MovePieceCommand(GameObject piece, IBoardPosition destination)
     {
-        _fromTile = _gameController.GetTileAt(piece.GetComponent<Piece>().boardPosition);
+        _fromTile = _gameController.GetTileAt(piece.GetComponent<Piece>().BoardPosition);
         _toTile = _gameController.GetTileAt(destination);
         _piece = piece;
         _destination = destination;

@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using UnityEngine;
 
-public interface IMoveValidator
+public interface ICommandInvoker
 {
-    bool ValidateMove(GameObject piece, IBoardPosition destination);
+    void AddCommand(ICommand command);
+    void RollBackCommand();
+    void UndoCommand();
 }

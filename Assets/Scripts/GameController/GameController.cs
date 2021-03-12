@@ -5,24 +5,28 @@ using Zenject;
 public class GameController : MonoBehaviour
 {
     private IBoardGenerator _boardLogicGenerator;
-    private IPieceGenerator _pieceGenerator;
+    //private IPieceGenerator _pieceGenerator;
     public ITile[,] Board { get; private set; }
-    public IDictionary<ITile, IBoardPosition> PossibleMoves { get; private set; }
+    public IDictionary<GameObject, HashSet<IBoardPosition>> PossibleMoves { get; private set; }
     public PieceColour Turn { get; private set; } = PieceColour.White;
+    public ICommandInvoker _commandInvoker;
+    public PieceInjector pieceInjector;
 
     private void Start()
     {
         Board = _boardLogicGenerator.GenerateBoard();
-        _pieceGenerator.GeneratePiece(Board[0, 0], PieceType.BlackKing);
-        _pieceGenerator.GeneratePiece(Board[7, 7], PieceType.WhiteKing);
+        pieceInjector.CreatePieceOf(PieceType.WhiteKing, new BoardPosition(0, 0));
+        pieceInjector.CreatePieceOf(PieceType.BlackKing, new BoardPosition(7, 7));
         EvaluateBoardMoves();
     }
 
     [Inject]
-    private void Constructor(IBoardGenerator boardLogicGenerator, IPieceGenerator pieceGenerator)
+    private void Constructor(IBoardGenerator boardLogicGenerator, ICommandInvoker commandInvoker, PieceInjector pieceInjector)
     {
         _boardLogicGenerator = boardLogicGenerator;
-        _pieceGenerator = pieceGenerator;
+        //_pieceGenerator = pieceGenerator;
+        _commandInvoker = commandInvoker;
+        this.pieceInjector = pieceInjector;
     }
 
     // mate/check/draw

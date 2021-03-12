@@ -1,34 +1,34 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class CommandInvoker : MonoBehaviour
-{
+public class CommandInvoker : ICommandInvoker
+{ 
     /*
      * player 1/2 logic could be implemented here
      * instead of the piece mover switching between moves two buffers are kept and commands are invoked from it in turn
      */
-    private ICommand currentCommand;
     private Stack<ICommand> commandBuffer;
 
-    private void Start()
+    public CommandInvoker()
     {
         commandBuffer = new Stack<ICommand>();
     }
 
-    private void Update()
+    public void AddCommand(ICommand command)
     {
-        if (currentCommand != null && currentCommand.IsValid())
+        if (command.IsValid())
         {
-            currentCommand.Execute();
-            commandBuffer.Push(currentCommand);
-            currentCommand = null;
+            command.Execute();
+            commandBuffer.Push(command);
         }
     }
-
-    public void AddCommand(ICommand command) => currentCommand = command;
-
     public void RollBackCommand()
     {
         if (commandBuffer.Count > 0) commandBuffer.Pop().Undo();
+    }
+
+    public void UndoCommand()
+    {
+        throw new System.NotImplementedException();
     }
 }

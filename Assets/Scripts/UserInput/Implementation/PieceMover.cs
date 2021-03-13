@@ -29,7 +29,7 @@ public class PieceMover : IPieceMover
         piece.transform.position = destination.Position;
         piece.GetComponent<Piece>().BoardPosition = destination;
         var displacedPiece = _gameController.GetTileAt(destination).CurrentPiece;
-        if (displacedPiece != null & displacedPiece != piece)
+        if (displacedPiece != null & displacedPiece?.gameObject != piece.gameObject)
         {
             displacedPiece.gameObject.SetActive(false);
         }

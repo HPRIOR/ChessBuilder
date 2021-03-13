@@ -24,7 +24,6 @@ public class GameController : MonoBehaviour
     private void Constructor(IBoardGenerator boardLogicGenerator, ICommandInvoker commandInvoker, PieceInjector pieceInjector)
     {
         _boardLogicGenerator = boardLogicGenerator;
-        //_pieceGenerator = pieceGenerator;
         _commandInvoker = commandInvoker;
         this.pieceInjector = pieceInjector;
     }

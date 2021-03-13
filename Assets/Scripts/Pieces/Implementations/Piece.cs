@@ -36,13 +36,13 @@ public class Piece : MonoBehaviour
         _movePieceCommandFactory = movePieceCommandFactory;
 
     }
-    public void OnMouseDown()
+    private void OnMouseDown()
     {
         _spriteRenderer.sortingOrder = 2;
         _isDragging = true;
     }
 
-    public void OnMouseUp()
+    private void OnMouseUp()
     {
         _spriteRenderer.sortingOrder = 1;
         var currentMousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -52,7 +52,7 @@ public class Piece : MonoBehaviour
         _isDragging = false;
     }
 
-    public void Update()
+    private void Update()
     {
         if (_isDragging)
         {

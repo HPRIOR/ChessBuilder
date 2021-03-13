@@ -1,25 +1,27 @@
 ﻿using UnityEngine;
+using Zenject;
 
 public class MoveData : IMoveData
 {
-    private static GameController _gameController =
-        GameObject
-        .FindGameObjectWithTag("GameController")
-        .GetComponent<GameController>();
+   
+    public IBoardPosition InitialBoardPosition { get; private set; }
+    public IBoardPosition DestinationBoardPosition { get;  private set;}
+    public GameObject DisplacedPiece { get;  private set;}
+    public GameObject MovedPiece { get;  private set;}
+    public Piece MovedPieceComponent { get;  private set;}
+    private IBoardState _boardState;
 
-    public IBoardPosition InitialBoardPosition { get; }
-    public IBoardPosition DestinationBoardPosition { get; }
-    public GameObject DisplacedPiece { get; }
-    public GameObject MovedPiece { get; }
-    public Piece MovedPieceComponent { get; }
-
-    public MoveData(GameObject movedPiece, IBoardPosition destination)
+    [Inject]
+    public void Construct(GameObject movedPiece, IBoardPosition destination, IBoardState boardState)
     {
+        _boardState = boardState;
         MovedPiece = movedPiece;
         MovedPieceComponent = movedPiece.GetComponent<Piece>();
         InitialBoardPosition = MovedPieceComponent.BoardPosition;
 
-        DisplacedPiece = _gameController.GetTileAt(destination).CurrentPiece?.gameObject;
+        DisplacedPiece = _boardState.GetTileAt(destination).CurrentPiece?.gameObject;
         DestinationBoardPosition = destination;
     }
+
+    public class Factory : PlaceholderFactory<GameObject, IBoardPosition, MoveData> { }
 }

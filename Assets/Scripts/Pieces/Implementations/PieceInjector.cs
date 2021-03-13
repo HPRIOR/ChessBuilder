@@ -7,18 +7,19 @@ using UnityEngine;
 
 public class PieceInjector
 {
-    GameController _gameController = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
+    IBoardState _boardState;
     private readonly Piece.Factory _pieceFactory;
 
-    public PieceInjector(Piece.Factory pieceFactory)
+    public PieceInjector(Piece.Factory pieceFactory, IBoardState boardState)
     {
+        _boardState = boardState;
         _pieceFactory = pieceFactory;
     }
 
     public void CreatePieceOf(PieceType pieceType, IBoardPosition BoardPosition)
     {
         var piece = _pieceFactory.Create(pieceType, BoardPosition);
-        _gameController.GetTileAt(BoardPosition).CurrentPiece = piece;
+        _boardState.GetTileAt(BoardPosition).CurrentPiece = piece;
     }
 }
 

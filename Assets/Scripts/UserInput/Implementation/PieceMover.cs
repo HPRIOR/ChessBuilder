@@ -2,10 +2,12 @@
 
 public class PieceMover : IPieceMover
 {
-    private static GameController _gameController =
-        GameObject
-        .FindGameObjectWithTag("GameController")
-        .GetComponent<GameController>();
+    private static IBoardState _boardState;
+
+    public PieceMover(IBoardState boardState)
+    {
+        _boardState = boardState;
+    }
 
     public void Move(GameObject piece, IBoardPosition toDestination)
     {
@@ -16,8 +18,8 @@ public class PieceMover : IPieceMover
 
     private void UpdateBoardOnMove(GameObject piece, IBoardPosition destination)
     {
-        var vacatedTile = _gameController.GetTileAt(piece.GetComponent<Piece>().BoardPosition);
-        var destinationTile = _gameController.GetTileAt(destination);
+        var vacatedTile = _boardState.GetTileAt(piece.GetComponent<Piece>().BoardPosition);
+        var destinationTile = _boardState.GetTileAt(destination);
 
         vacatedTile.CurrentPiece = null;
         destinationTile.CurrentPiece = piece.GetComponent<Piece>();
@@ -28,7 +30,7 @@ public class PieceMover : IPieceMover
     {
         piece.transform.position = destination.Position;
         piece.GetComponent<Piece>().BoardPosition = destination;
-        var displacedPiece = _gameController.GetTileAt(destination).CurrentPiece;
+        var displacedPiece = _boardState.GetTileAt(destination).CurrentPiece;
         if (displacedPiece != null & displacedPiece?.gameObject != piece.gameObject)
         {
             displacedPiece.gameObject.SetActive(false);
@@ -54,8 +56,8 @@ public class PieceMover : IPieceMover
 
     private void UpdateBoardOnUndo(IMoveData moveData)
     {
-        var vacatedTile = _gameController.GetTileAt(moveData.InitialBoardPosition);
-        var destinationTile = _gameController.GetTileAt(moveData.DestinationBoardPosition);
+        var vacatedTile = _boardState.GetTileAt(moveData.InitialBoardPosition);
+        var destinationTile = _boardState.GetTileAt(moveData.DestinationBoardPosition);
 
         vacatedTile.CurrentPiece = moveData.MovedPiece.GetComponent<Piece>();
         destinationTile.CurrentPiece = moveData.DisplacedPiece?.GetComponent<Piece>();

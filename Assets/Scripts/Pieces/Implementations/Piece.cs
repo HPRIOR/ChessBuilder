@@ -5,13 +5,15 @@ using Zenject;
 
 public class Piece : MonoBehaviour
 {
-    private static IDictionary<PieceType, string> _spriteAssetMap = PieceSpriteAssetManager.PieceSpriteMap; 
     public IBoardPosition BoardPosition { get; set; }
     public PieceColour PieceColour { get; set; }
     public PieceType PieceType { get; set; }
+    
     private ICommandInvoker _commandInvoker;
+    private static IDictionary<PieceType, string> _spriteAssetMap = PieceSpriteAssetManager.PieceSpriteMap; 
     private bool _isDragging;
     private SpriteRenderer _spriteRenderer;
+    private static MovePieceCommandFactory _movePieceCommandFactory;
 
     private void Start()
     {
@@ -22,11 +24,16 @@ public class Piece : MonoBehaviour
     }
 
     [Inject]
-    public void Construct(PieceType pieceType, IBoardPosition boardPosition, ICommandInvoker commandInvoker)
+    public void Construct(
+        PieceType pieceType,
+        IBoardPosition boardPosition, 
+        ICommandInvoker commandInvoker, 
+        MovePieceCommandFactory movePieceCommandFactory)
     {
         PieceType = pieceType;
         BoardPosition = boardPosition;
         _commandInvoker = commandInvoker;
+        _movePieceCommandFactory = movePieceCommandFactory;
 
     }
     public void OnMouseDown()
@@ -41,7 +48,7 @@ public class Piece : MonoBehaviour
         var currentMousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         var nearestBoardPosition = GetNearestBoardPosition(currentMousePosition);
 
-        _commandInvoker.AddCommand(new MovePieceCommand(gameObject, nearestBoardPosition));
+        _commandInvoker.AddCommand(_movePieceCommandFactory.Create(gameObject, nearestBoardPosition));
         _isDragging = false;
     }
 

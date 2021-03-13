@@ -10,6 +10,7 @@ public class GameInstaller : MonoInstaller
     public override void InstallBindings()
     {
         Container.Bind<IBoardGenerator>().To<BoardInitialiser>().AsTransient();
-        Container.Bind<PieceInjector>().AsSingle(); 
+        Container.Bind<PieceInjector>().AsSingle();
+        Container.Bind<IBoardState>().To<BoardState>().AsSingle();
     }
 }

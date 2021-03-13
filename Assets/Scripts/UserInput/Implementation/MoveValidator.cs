@@ -7,12 +7,7 @@ using UnityEngine;
 
 public class MoveValidator : IMoveValidator
 {
-    private static GameController _gameController =
-        GameObject
-        .FindGameObjectWithTag("GameController")
-        .GetComponent<GameController>();
-
-
+    
     public bool ValidateMove(GameObject piece, IBoardPosition destination)
     {
         if ((Vector2)piece.transform.position == destination.Position) return false;
@@ -21,8 +16,8 @@ public class MoveValidator : IMoveValidator
         // return PieceCanMove(piece, destination);
     }
 
-    private bool PieceCanMove(GameObject piece, IBoardPosition destination) =>
-        _gameController.PossibleMoves[piece].Contains(destination);
+    private bool PieceCanMove(GameObject piece, IBoardPosition destination) => true;
+        //_gameController.PossibleMoves[piece].Contains(destination);
 
 
 

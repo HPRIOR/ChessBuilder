@@ -11,7 +11,7 @@ public class Game : MonoBehaviour
     private IBoardState _boardState;
 
     [Inject]
-    public void Construct( IBoardState boardState)
+    public void Construct(IBoardState boardState)
     {
         _boardState = boardState;
     }

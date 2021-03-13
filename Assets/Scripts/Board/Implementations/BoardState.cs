@@ -17,4 +17,5 @@ public class BoardState : IBoardState
 
     public ITile GetTileAt(IBoardPosition boardPosition) =>
         Board[boardPosition.X, boardPosition.Y];
+
 }

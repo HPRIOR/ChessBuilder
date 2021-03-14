@@ -13,8 +13,6 @@ public class MoveDataFactory
         _moveDataFactory = moveDataFactory;
     }
 
-    public IMoveData CreateMoveData(GameObject piece, IBoardPosition destination)
-    {
-        return _moveDataFactory.Create(piece, destination);
-    }
+    public IMoveData CreateMoveData(GameObject piece, IBoardPosition destination) =>
+        _moveDataFactory.Create(piece, destination);
 }

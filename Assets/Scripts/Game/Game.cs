@@ -9,10 +9,10 @@ using UnityEngine;
 public class Game : MonoBehaviour
 {
     private IBoardState _boardState;
-    private PieceInjector _pieceInjector;
+    private IPieceSpawner _pieceInjector;
 
     [Inject]
-    public void Construct(IBoardState boardState, PieceInjector pieceInjector)
+    public void Construct(IBoardState boardState, IPieceSpawner pieceInjector)
     {
         _boardState = boardState;
         _pieceInjector = pieceInjector;

@@ -5,12 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-public class PieceInjector
+public class PieceSpawner : IPieceSpawner
 {
     IBoardState _boardState;
     private readonly Piece.Factory _pieceFactory;
 
-    public PieceInjector(Piece.Factory pieceFactory, IBoardState boardState)
+    public PieceSpawner(Piece.Factory pieceFactory, IBoardState boardState)
     {
         _boardState = boardState;
         _pieceFactory = pieceFactory;

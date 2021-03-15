@@ -12,7 +12,6 @@ public class MoveCommandInstaller : MonoInstaller
     {
         Container.BindInterfacesTo<MovePieceCommandFactory>().AsSingle();
         Container.Bind<MovePieceCommandFactory>().AsSingle();
-        Container.Bind<IPieceMover>().To<PieceMover>().AsSingle();
         Container.BindFactory<GameObject, IBoardPosition, MovePieceCommand, MovePieceCommand.Factory>().FromNew();
     }
 }

@@ -10,6 +10,7 @@ public class Piece : MonoBehaviour
     public PieceType PieceType { get; set; }
     
     private ICommandInvoker _commandInvoker;
+    // Todo: make the PieceSpriteAssetManager a scriptable object 
     private static IDictionary<PieceType, string> _spriteAssetMap = PieceSpriteAssetManager.PieceSpriteMap; 
     private bool _isDragging;
     private SpriteRenderer _spriteRenderer;

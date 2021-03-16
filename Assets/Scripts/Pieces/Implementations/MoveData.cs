@@ -10,8 +10,7 @@ public class MoveData : IMoveData
     public GameObject MovedPiece { get;  private set;}
     public Piece MovedPieceComponent { get;  private set;}
 
-    [Inject]
-    public void Construct(GameObject movedPiece, IBoardPosition destination, IBoardState boardState)
+    public MoveData(GameObject movedPiece, IBoardPosition destination, IBoardState boardState)
     {
         MovedPiece = movedPiece;
         MovedPieceComponent = movedPiece.GetComponent<Piece>();

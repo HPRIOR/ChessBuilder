@@ -8,7 +8,14 @@ public class DragAndDrop : MonoBehaviour
 
     private ICommandInvoker _commandInvoker;
     private bool _isDragging;
+    private SpriteRenderer _spriteRenderer;
     private static DragAndDropCommandFactory _dragAndDropCommandFactory;
+
+    private void Start()
+    {
+        _spriteRenderer = GetComponent<SpriteRenderer>();
+    }
+
     [Inject]
     public void Construct(
         ICommandInvoker commandInvoker,
@@ -20,11 +27,13 @@ public class DragAndDrop : MonoBehaviour
     }
     private void OnMouseDown()
     {
+        _spriteRenderer.sortingOrder = 2;
         _isDragging = true;
     }
     
     private void OnMouseUp()
     {
+        _spriteRenderer.sortingOrder = 1;
         var currentMousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         var nearestBoardPosition = GetNearestBoardPosition(currentMousePosition);
 

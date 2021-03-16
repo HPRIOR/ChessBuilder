@@ -19,7 +19,7 @@ public class PieceSpawner : IPieceSpawner
     public void CreatePieceOf(PieceType pieceType, IBoardPosition BoardPosition)
     {
         var piece = _pieceFactory.Create(pieceType, BoardPosition);
-        _boardState.GetTileAt(BoardPosition).CurrentPiece = piece;
+        _boardState.GetTileAt(BoardPosition).CurrentPiece = piece.gameObject;
     }
 }
 

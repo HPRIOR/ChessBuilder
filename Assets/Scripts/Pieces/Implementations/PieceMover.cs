@@ -22,7 +22,7 @@ public class PieceMover : IPieceMover
         var destinationTile = _boardState.GetTileAt(destination);
 
         vacatedTile.CurrentPiece = null;
-        destinationTile.CurrentPiece = piece.GetComponent<Piece>();
+        destinationTile.CurrentPiece = piece;
     }
 
     // must be called before UpdateBoardOnMove
@@ -59,7 +59,7 @@ public class PieceMover : IPieceMover
         var vacatedTile = _boardState.GetTileAt(moveData.InitialBoardPosition);
         var destinationTile = _boardState.GetTileAt(moveData.DestinationBoardPosition);
 
-        vacatedTile.CurrentPiece = moveData.MovedPiece.GetComponent<Piece>();
-        destinationTile.CurrentPiece = moveData.DisplacedPiece?.GetComponent<Piece>();
+        vacatedTile.CurrentPiece = moveData.MovedPiece;
+        destinationTile.CurrentPiece = moveData.DisplacedPiece;
     }
 }

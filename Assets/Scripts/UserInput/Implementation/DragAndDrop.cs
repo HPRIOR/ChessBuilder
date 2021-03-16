@@ -17,9 +17,7 @@ public class DragAndDrop : MonoBehaviour
     }
 
     [Inject]
-    public void Construct(
-        ICommandInvoker commandInvoker,
-        DragAndDropCommandFactory movePieceCommandFactory)
+    public void Construct(ICommandInvoker commandInvoker, DragAndDropCommandFactory movePieceCommandFactory)
     {
         _commandInvoker = commandInvoker;
         _dragAndDropCommandFactory = movePieceCommandFactory;

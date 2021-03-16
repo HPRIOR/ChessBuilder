@@ -10,7 +10,6 @@ public class MoveDataInstaller : MonoInstaller
 {
     public override void InstallBindings()
     {
-        Container.BindInterfacesTo<MoveDataFactory>().AsSingle();
         Container.Bind<MoveDataFactory>().AsSingle();
         Container.BindFactory<GameObject, IBoardPosition, MoveData, MoveData.Factory>().FromNew();
     }

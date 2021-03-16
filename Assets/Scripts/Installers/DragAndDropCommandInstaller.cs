@@ -10,7 +10,6 @@ public class DragAndDropCommandInstaller : MonoInstaller
 {
     public override void InstallBindings()
     {
-        Container.BindInterfacesTo<DragAndDropCommandFactory>().AsSingle();
         Container.Bind<DragAndDropCommandFactory>().AsSingle();
         Container.BindFactory<GameObject, IBoardPosition, DragAndDropCommand, DragAndDropCommand.Factory>().FromNew();
     }

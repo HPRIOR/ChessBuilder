@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1381010476188015897}
   - component: {fileID: 1755317552734103105}
   - component: {fileID: 367804189204216184}
+  - component: {fileID: 2145387064949525281}
   m_Layer: 0
   m_Name: PiecePrefab
   m_TagString: Untagged
@@ -48,6 +49,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -121,3 +123,15 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.5, y: 0.5}
   m_EdgeRadius: 0
+--- !u!114 &2145387064949525281
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 113403390612853870}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9b2d29b2d71a8f4c92047cb07100d91, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

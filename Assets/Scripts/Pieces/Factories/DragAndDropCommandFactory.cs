@@ -5,16 +5,16 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-public class MovePieceCommandFactory
+public class DragAndDropCommandFactory
 {
-    private MovePieceCommand.Factory _movePieceCommandFactory;
+    private DragAndDropCommand.Factory _movePieceCommandFactory;
     
-    public MovePieceCommandFactory(MovePieceCommand.Factory movePieceCommandFactory)
+    public DragAndDropCommandFactory(DragAndDropCommand.Factory movePieceCommandFactory)
     {
         _movePieceCommandFactory = movePieceCommandFactory;
     }
 
-    public MovePieceCommand Create(GameObject piece, IBoardPosition destination)
+    public DragAndDropCommand Create(GameObject piece, IBoardPosition destination)
     {
         return _movePieceCommandFactory.Create(piece, destination);
     }

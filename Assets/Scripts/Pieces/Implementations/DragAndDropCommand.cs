@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using Zenject;
 
-public class MovePieceCommand : ICommand
+public class DragAndDropCommand : ICommand
 {
     private static MoveDataFactory _moveDataFactory;
     private static IPieceMover _pieceMover;
@@ -10,8 +10,7 @@ public class MovePieceCommand : ICommand
     private GameObject _piece;
     private IBoardPosition _destination;
 
-    [Inject]
-    public void Construct(
+    public DragAndDropCommand(
         GameObject piece,
         IBoardPosition destination,
         MoveDataFactory moveDataFactory,
@@ -40,5 +39,5 @@ public class MovePieceCommand : ICommand
         _pieceMover.UndoMove(_moveData);
     }
 
-    public class Factory : PlaceholderFactory<GameObject, IBoardPosition, MovePieceCommand> { }
+    public class Factory : PlaceholderFactory<GameObject, IBoardPosition, DragAndDropCommand> { }
 }

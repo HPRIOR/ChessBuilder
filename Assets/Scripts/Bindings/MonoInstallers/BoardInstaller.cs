@@ -9,7 +9,6 @@ public class BoardInstaller : MonoInstaller
 {
     public override void InstallBindings()
     {
-        BoardRendererInstaller.Install(Container);
         BoardGeneratorInstaller.Install(Container);
         BoardStateInstaller.Install(Container);
     }

@@ -7,7 +7,7 @@ public class BoardGeneratorInstaller : Installer<BoardGeneratorInstaller>
 {
     public override void InstallBindings()
     {
-        Container.Bind<IBoardGenerator>().To<BoardInitialiser>().AsTransient();
+        Container.Bind<IBoardGenerator>().To<BoardInitialiser>().AsSingle();
     }
 
 }

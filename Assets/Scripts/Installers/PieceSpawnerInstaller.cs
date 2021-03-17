@@ -8,7 +8,6 @@ public class PieceSpawnerInstaller : MonoInstaller
     public override void InstallBindings()
     {
         Container.Bind<IPieceSpawner>().To<PieceSpawner>().AsSingle();
-        Container.Bind<ICommandInvoker>().To<CommandInvoker>().AsSingle();
         Container.BindFactory<PieceType, IBoardPosition, Piece, Piece.Factory>().FromComponentInNewPrefab(piecePrefab);
     }
 

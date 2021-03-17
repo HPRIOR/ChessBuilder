@@ -5,11 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using Zenject;
 
-public class GameInstaller : MonoInstaller
+public class BoardStateInstaller: MonoInstaller
 {
     public override void InstallBindings()
     {
-        Container.Bind<IBoardGenerator>().To<BoardInitialiser>().AsTransient();
         Container.Bind<IBoardState>().To<BoardState>().AsSingle();
     }
 }

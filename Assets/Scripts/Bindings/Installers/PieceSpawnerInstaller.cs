@@ -1,9 +1,10 @@
-﻿using UnityEngine;
+﻿using UnityEditor;
+using UnityEngine;
 using Zenject;
 
-public class PieceSpawnerInstaller : MonoInstaller
+public class PieceSpawnerInstaller : Installer<PieceSpawnerInstaller>
 {
-    public GameObject piecePrefab;
+    private GameObject piecePrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Pieces/PiecePrefab.prefab");
 
     public override void InstallBindings()
     {

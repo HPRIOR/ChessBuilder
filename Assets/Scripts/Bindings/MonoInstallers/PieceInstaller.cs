@@ -5,10 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using Zenject;
 
-public class CommandInvokerInstaller : MonoInstaller
+public class PieceInstaller : MonoInstaller
 {
     public override void InstallBindings()
     {
-        Container.Bind<ICommandInvoker>().To<CommandInvoker>().AsSingle();
+        PieceSpawnerInstaller.Install(Container);
+        PieceMoverInstaller.Install(Container);
     }
 }

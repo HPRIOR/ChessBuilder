@@ -1,6 +1,6 @@
 ﻿using Zenject;
 
-public class PieceMoverInstaller : MonoInstaller
+public class PieceMoverInstaller : Installer<PieceMoverInstaller>
 {
     public override void InstallBindings()
     {

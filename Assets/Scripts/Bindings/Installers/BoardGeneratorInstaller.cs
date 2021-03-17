@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
-public class BoardGeneratorInstaller : MonoInstaller
+public class BoardGeneratorInstaller : Installer<BoardGeneratorInstaller>
 {
     public override void InstallBindings()
     {

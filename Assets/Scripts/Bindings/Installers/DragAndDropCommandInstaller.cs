@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using Zenject;
 
-public class DragAndDropCommandInstaller : MonoInstaller
+public class DragAndDropCommandInstaller : Installer<DragAndDropCommandInstaller>
 {
     public override void InstallBindings()
     {

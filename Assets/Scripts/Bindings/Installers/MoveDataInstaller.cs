@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using Zenject;
 
-public class MoveDataInstaller : MonoInstaller
+public class MoveDataInstaller : Installer<MoveDataInstaller>
 {
     public override void InstallBindings()
     {

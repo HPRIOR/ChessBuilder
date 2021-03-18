@@ -9,6 +9,7 @@ public class BoardStateInstaller: Installer<BoardStateInstaller>
 {
     public override void InstallBindings()
     {
+        Container.Bind<IBoardGenerator>().To<BoardGenerator>().AsSingle();
         Container.Bind<IBoardState>().To<BoardState>().AsSingle();
     }
 }

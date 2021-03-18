@@ -9,7 +9,6 @@ public class BoardState : IBoardState
 {
     public ITile[,] Board { get; private set; }
 
-    [Inject]
     public BoardState(IBoardGenerator boardGenerator)
     {
         Board = boardGenerator.GenerateBoard();

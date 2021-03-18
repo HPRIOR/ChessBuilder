@@ -1,4 +1,4 @@
-﻿public class BoardInitialiser : IBoardGenerator
+﻿public class BoardGenerator : IBoardGenerator
 {
     public ITile[,] GenerateBoard()
     {

@@ -7,13 +7,29 @@ public class BoardStateTests : ZenjectUnitTestFixture
     [SetUp]
     public void Init()
     {
-        BoardGeneratorInstaller.Install(Container);
+        BoardStateInstaller.Install(Container);
     }
+
     [Test]
     public void TestBinding()
     {
-        IBoardGenerator boardGenerator = Container.Resolve<IBoardGenerator>();
+        IBoardState boardState = Container.Resolve<IBoardState>();
 
-        Assert.NotNull(boardGenerator);
+        Assert.NotNull(boardState);
+    }
+
+    [Test]
+    public void TestResolveToClass()
+    {
+        BoardState boardState = Container.Resolve<IBoardState>() as BoardState;
+
+        Assert.IsNotNull(boardState);
+    }
+
+
+    A
+    public void MyTestMethod()
+    {
+
     }
 }

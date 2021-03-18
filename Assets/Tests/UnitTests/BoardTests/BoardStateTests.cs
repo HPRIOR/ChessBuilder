@@ -1,5 +1,6 @@
 using Zenject;
 using NUnit.Framework;
+using UnityEngine;
 
 [TestFixture]
 public class BoardStateTests : ZenjectUnitTestFixture
@@ -71,4 +72,16 @@ public class BoardStateTests : ZenjectUnitTestFixture
         var boardState = GetBoardState();
         Assert.IsNull(boardState.GetTileAt(new BoardPosition(x, y)).CurrentPiece);
     }
+
+    [Test]
+    public void TilesAreAtCorrentPositions(
+        [Values(0, 1, 2, 3, 4, 5, 6, 7)] int x, [Values(0, 1, 2, 3, 4, 5, 6, 7)] int y
+        )
+    {
+        var boardState = GetBoardState();
+        Assert.AreEqual(boardState.GetTileAt(new BoardPosition(x, y)).BoardPosition.Position, new Vector2(x + 0.5f, y + 0.5f));
+    }
+
+
+
 }

@@ -7,14 +7,18 @@ using System.Threading.Tasks;
 
 public class BoardState : IBoardState
 {
-    public ITile[,] Board { get; private set; }
+    private ITile[,] _board;
+    private ITile[,] _mirroredBoard;
 
     public BoardState(IBoardGenerator boardGenerator)
     {
-        Board = boardGenerator.GenerateBoard();
+        _board = boardGenerator.GenerateBoard();
+        _mirroredBoard = boardGenerator.RotateBoard(_board);
     }
 
     public ITile GetTileAt(IBoardPosition boardPosition) =>
-        Board[boardPosition.X, boardPosition.Y];
+        _board[boardPosition.X, boardPosition.Y];
 
+    public ITile GetMirroredTileAt(IBoardPosition boardPosition) =>
+        _mirroredBoard[boardPosition.X, boardPosition.Y];
 }

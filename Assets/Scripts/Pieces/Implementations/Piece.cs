@@ -22,6 +22,8 @@ public class Piece : MonoBehaviour
         gameObject.transform.position = BoardPosition.Position;
     }
 
+    public IEnumerable<IBoardPosition> GetPossibleMoves() => possibleMoveGenerator.GetPossibleBoardMoves(gameObject);
+
     [Inject]
     public void Construct(PieceType pieceType, IBoardPosition boardPosition, IPossibleMoveGeneratorFactory possibleMoveGeneratorFactory)
     {

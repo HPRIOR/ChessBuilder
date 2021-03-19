@@ -7,5 +7,6 @@ using UnityEngine;
 
 public interface IPossibleBoardMovesGenerator
 {
-    IDictionary<GameObject, HashSet<IBoardPosition>> PossibleMoves();
+    IDictionary<GameObject, HashSet<IBoardPosition>> PossibleMoves { get; }
+    void GeneratePossibleMoves();
 }

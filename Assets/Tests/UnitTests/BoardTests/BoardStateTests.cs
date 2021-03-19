@@ -79,7 +79,7 @@ public class BoardStateTests : ZenjectUnitTestFixture
         )
     {
         var boardState = GetBoardState();
-        Assert.AreEqual(boardState.GetTileAt(new BoardPosition(x, y)).BoardPosition.Position, new Vector2(x + 0.5f, y + 0.5f));
+        Assert.AreEqual(boardState.GetTileAt(new BoardPosition(x, y)).BoardPosition.Vector, new Vector2(x + 0.5f, y + 0.5f));
     }
 
 

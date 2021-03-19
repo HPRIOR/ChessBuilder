@@ -28,7 +28,7 @@ public class PieceMover : IPieceMover
     // must be called before UpdateBoardOnMove
     private void UpdatePiecesOnMove(GameObject piece, IBoardPosition destination)
     {
-        piece.transform.position = destination.Position;
+        piece.transform.position = destination.Vector;
         piece.GetComponent<Piece>().BoardPosition = destination;
         var displacedPiece = _boardState.GetTileAt(destination).CurrentPiece;
         if (displacedPiece != null & displacedPiece?.gameObject != piece.gameObject)
@@ -50,7 +50,7 @@ public class PieceMover : IPieceMover
 
         // activate moved piece and move back to original position
         moveData.MovedPiece.SetActive(true);
-        moveData.MovedPiece.transform.position = moveData.InitialBoardPosition.Position;
+        moveData.MovedPiece.transform.position = moveData.InitialBoardPosition.Vector;
         moveData.MovedPieceComponent.BoardPosition = moveData.InitialBoardPosition;
     }
 

@@ -4,7 +4,7 @@ public interface IBoardPosition
 {
     int X { get; }
     int Y { get; }
-    Vector2 Position { get; }
+    Vector2 Vector { get; }
 
     string GetAlgabraicNotation();
 }

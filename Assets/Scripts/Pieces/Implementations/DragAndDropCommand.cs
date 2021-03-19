@@ -38,7 +38,7 @@ public class DragAndDropCommand : ICommand
             return true;
         else
         {
-            _piece.transform.position = _piece.GetComponent<Piece>().BoardPosition.Position;
+            _piece.transform.position = _piece.GetComponent<Piece>().BoardPosition.Vector;
             return false;
         }
     }

@@ -20,7 +20,7 @@ public class MoveValidator : IMoveValidator
     
     public bool ValidateMove(GameObject piece, IBoardPosition destination)
     {
-        if ((Vector2)piece.transform.position == destination.Position) return false;
+        if ((Vector2)piece.transform.position == destination.Vector) return false;
         return _possibleBoardMovesGenerator.PossibleMoves[piece].Contains(destination);
     }
 

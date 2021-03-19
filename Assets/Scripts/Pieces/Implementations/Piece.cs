@@ -13,10 +13,10 @@ public class Piece : MonoBehaviour
 
     private void Start()
     {
-        gameObject.transform.parent = GameObject.FindGameObjectWithTag("Pieces").transform;
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _spriteRenderer.sprite = AssetDatabase.LoadAssetAtPath<Sprite>(PieceInfo.SpriteAsset);
-        gameObject.transform.position = BoardPosition.Position;
+        gameObject.transform.parent = GameObject.FindGameObjectWithTag("Pieces").transform;
+        gameObject.transform.position = BoardPosition.Vector;
     }
 
     public IEnumerable<IBoardPosition> GetPossiblePieceMoves() => possibleMoveGenerator.GetPossiblePieceMoves(gameObject);

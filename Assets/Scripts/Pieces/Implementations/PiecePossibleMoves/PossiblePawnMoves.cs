@@ -10,7 +10,7 @@ public class PossiblePawnMoves : AbstractPossibleMoveGenerator
 
     public PossiblePawnMoves(IBoardState boardState) : base(boardState){}
 
-    public override IEnumerable<IBoardPosition> PossibleBoardMoves(GameObject piece)
+    public override IEnumerable<IBoardPosition> GetPossibleBoardMoves(GameObject piece)
     {
 
         var pieceComponent = piece.GetComponent<Piece>();

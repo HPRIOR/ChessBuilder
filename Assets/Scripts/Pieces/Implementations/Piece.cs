@@ -32,7 +32,6 @@ public class Piece : MonoBehaviour
 
     public IEnumerable<IBoardPosition> GetPossiblePieceMoves() => possibleMoveGenerator.GetPossiblePieceMoves(gameObject);
 
-
     public class Factory : PlaceholderFactory<IPieceInfo, IBoardPosition, Piece> { }
 
 }

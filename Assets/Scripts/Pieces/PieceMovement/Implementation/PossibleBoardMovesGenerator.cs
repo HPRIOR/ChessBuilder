@@ -22,7 +22,7 @@ public class PossibleBoardMovesGenerator : IPossibleBoardMovesGenerator
         PossibleMoves = activeGameObjects
             .ToDictionary(
                 go => go, 
-                go => new HashSet<IBoardPosition>(go.GetComponent<Piece>().GetPossiblePieceMoves())
+                go => new HashSet<IBoardPosition>(go.GetComponent<Piece>().GetPossibleMoves())
                 );
     }
 

@@ -5,6 +5,7 @@ public class DragAndDropCommand : ICommand
 {
     private static MoveDataFactory _moveDataFactory;
     private static IPieceMover _pieceMover;
+    private static IMoveValidator _moveValidator;
 
     private IMoveData _moveData;
     private GameObject _piece;
@@ -14,13 +15,15 @@ public class DragAndDropCommand : ICommand
         GameObject piece,
         IBoardPosition destination,
         MoveDataFactory moveDataFactory,
-        IPieceMover pieceMover
+        IPieceMover pieceMover,
+        IMoveValidator moveValidator
         ) 
     {
         _moveDataFactory = moveDataFactory;
         _pieceMover = pieceMover;
         _piece = piece;
         _destination = destination;
+        _moveValidator = moveValidator;
         _moveData = _moveDataFactory.CreateMoveData(piece, destination);
     }
 
@@ -31,7 +34,13 @@ public class DragAndDropCommand : ICommand
 
     public bool IsValid()
     {
-        return true;
+        if (_moveValidator.ValidateMove(_piece, _destination))
+            return true;
+        else
+        {
+            _piece.transform.position = _piece.GetComponent<Piece>().BoardPosition.Position;
+            return false;
+        }
     }
 
     public void Undo()

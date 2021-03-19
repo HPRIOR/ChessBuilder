@@ -15,7 +15,7 @@ public class PossiblePawnMoves : AbstractPossibleMoveGenerator
 
         var pieceComponent = piece.GetComponent<Piece>();
         var originPosition = pieceComponent.BoardPosition;
-        var pieceColour = pieceComponent.PieceColour;
+        var pieceColour = pieceComponent.PieceInfo.PieceColour;
 
         var potentialMoves = new List<IBoardPosition>();
 
@@ -23,15 +23,6 @@ public class PossiblePawnMoves : AbstractPossibleMoveGenerator
         
         var originX = GetOriginPositionBasedOn(pieceColour, originPosition.X);
         var originY = GetOriginPositionBasedOn(pieceColour, originPosition.Y);
-
-
-
-        Debug.Log(originX);
-
-        Debug.Log(originY);
-
-
-
 
         if (originY == 7) return potentialMoves; // allow to change piece
 

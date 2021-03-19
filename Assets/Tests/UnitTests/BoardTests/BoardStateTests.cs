@@ -34,7 +34,7 @@ public class BoardStateTests : ZenjectUnitTestFixture
     {
         IBoardState boardState = Container.Resolve<IBoardState>();
 
-        Assert.IsNotNull(boardState.Board);
+        Assert.IsNotNull(boardState.GetTileAt(new BoardPosition(0,0)));
     }
 
     [Test]
@@ -42,7 +42,7 @@ public class BoardStateTests : ZenjectUnitTestFixture
     {
         var boardState = GetBoardState();
 
-        Assert.AreEqual(64, boardState.Board.Length);
+        Assert.DoesNotThrow(() => boardState.GetTileAt(new BoardPosition(7,7)));
 
     }
 
@@ -52,7 +52,7 @@ public class BoardStateTests : ZenjectUnitTestFixture
         )
     {
         var boardState = GetBoardState();
-        Assert.AreEqual(new BoardPosition(x, y), boardState.Board[x, y].BoardPosition);
+        Assert.AreEqual(new BoardPosition(x, y), boardState.GetTileAt(new BoardPosition(x, y)).BoardPosition);
     }
 
     [Test]
@@ -83,5 +83,14 @@ public class BoardStateTests : ZenjectUnitTestFixture
     }
 
 
+    [Test]
+    public void BoardRotatesCorrectly()
+    {
+        var boardState = GetBoardState();
 
+        Assert.AreEqual(boardState.GetMirroredTileAt(new BoardPosition(0,0)), boardState.GetTileAt(new BoardPosition(7, 7)));
+        Assert.AreEqual(boardState.GetMirroredTileAt(new BoardPosition(1,1)), boardState.GetTileAt(new BoardPosition(6, 6)));
+        Assert.AreEqual(boardState.GetMirroredTileAt(new BoardPosition(4,6)), boardState.GetTileAt(new BoardPosition(3, 1)));
+        Assert.AreEqual(boardState.GetMirroredTileAt(new BoardPosition(3,2)), boardState.GetTileAt(new BoardPosition(4, 5)));
+    }
 }

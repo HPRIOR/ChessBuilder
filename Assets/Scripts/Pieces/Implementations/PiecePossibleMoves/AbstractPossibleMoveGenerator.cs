@@ -19,7 +19,7 @@ public abstract class AbstractPossibleMoveGenerator : IPossibleMoveGenerator
         return (x, y) => _boardState.GetMirroredTileAt(new BoardPosition(x, y));
     }
 
-    protected bool TileContainsPieceOfOpposingColourOrIsEmpty(ITile tile, PieceColour originColour) =>
+    protected bool TileContainsPieceOfOpposingColour(ITile tile, PieceColour originColour) =>
         tile.CurrentPiece?.GetComponent<Piece>()?.PieceInfo.PieceColour == originColour;
 
 

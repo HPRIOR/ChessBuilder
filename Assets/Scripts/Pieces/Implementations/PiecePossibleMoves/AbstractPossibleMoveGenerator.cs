@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-public abstract class AbstractPossibleMoveGenerator : IPossibleMoveGenerator
+public abstract class AbstractPossibleMoveGenerator : IPieceMoveGenerator
 {
     private IBoardState _boardState;
     public AbstractPossibleMoveGenerator(IBoardState boardState)

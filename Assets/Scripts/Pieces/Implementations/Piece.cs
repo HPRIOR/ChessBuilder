@@ -7,7 +7,7 @@ public class Piece : MonoBehaviour
 {
     public IBoardPosition BoardPosition { get; set; }
     public IPieceInfo PieceInfo { get; private set; }
-    public IPossibleMoveGenerator possibleMoveGenerator;
+    public IPieceMoveGenerator possibleMoveGenerator;
 
     private SpriteRenderer _spriteRenderer;
 

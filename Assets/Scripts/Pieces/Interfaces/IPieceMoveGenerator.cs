@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-public interface IPossibleMoveGenerator
+public interface IPieceMoveGenerator
 {
     IEnumerable<IBoardPosition> GetPossiblePieceMoves(GameObject piece);
 

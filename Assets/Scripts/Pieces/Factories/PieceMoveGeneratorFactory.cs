@@ -11,7 +11,7 @@ public class PieceMoveGeneratorFactory : IPieceMoveGeneratorFactory
         _boardState = boardState;
     }
 
-    public IPossibleMoveGenerator GetPossibleMoveGenerator(PieceType pieceType) =>
+    public IPieceMoveGenerator GetPossibleMoveGenerator(PieceType pieceType) =>
         pieceType switch
         {
             var pawn when pawn == PieceType.BlackPawn || pawn == PieceType.WhitePawn => new PossiblePawnMoves(_boardState),

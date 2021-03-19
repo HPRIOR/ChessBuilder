@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-public class NullPossibleMoveGenerator : IPossibleMoveGenerator
+public class NullPossibleMoveGenerator : IPieceMoveGenerator
 {
     public IEnumerable<IBoardPosition> GetPossiblePieceMoves(GameObject piece) => new List<IBoardPosition>();
 }

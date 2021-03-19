@@ -20,11 +20,11 @@ public abstract class AbstractPossibleMoveGenerator : IPossibleMoveGenerator
     }
 
     protected bool TileContainsPieceOfOpposingColourOrIsEmpty(ITile tile, PieceColour originColour) =>
-        tile.CurrentPiece.GetComponent<Piece>()?.PieceColour == originColour;
+        tile.CurrentPiece?.GetComponent<Piece>()?.PieceColour == originColour;
 
 
     protected int GetOriginPositionBasedOn(PieceColour pieceColour, int coord) =>
         pieceColour == PieceColour.White ? coord : Math.Abs(coord - 7);
 
-    public abstract IEnumerable<IBoardPosition> GetPossibleBoardMoves(GameObject piece);
+    public abstract IEnumerable<IBoardPosition> GetPossiblePieceMoves(GameObject piece);
 }

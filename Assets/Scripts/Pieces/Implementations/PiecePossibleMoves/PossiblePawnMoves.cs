@@ -10,7 +10,7 @@ public class PossiblePawnMoves : AbstractPossibleMoveGenerator
 
     public PossiblePawnMoves(IBoardState boardState) : base(boardState){}
 
-    public override IEnumerable<IBoardPosition> GetPossibleBoardMoves(GameObject piece)
+    public override IEnumerable<IBoardPosition> GetPossiblePieceMoves(GameObject piece)
     {
 
         var pieceComponent = piece.GetComponent<Piece>();
@@ -23,6 +23,15 @@ public class PossiblePawnMoves : AbstractPossibleMoveGenerator
         
         var originX = GetOriginPositionBasedOn(pieceColour, originPosition.X);
         var originY = GetOriginPositionBasedOn(pieceColour, originPosition.Y);
+
+
+
+        Debug.Log(originX);
+
+        Debug.Log(originY);
+
+
+
 
         if (originY == 7) return potentialMoves; // allow to change piece
 
@@ -42,7 +51,7 @@ public class PossiblePawnMoves : AbstractPossibleMoveGenerator
                     );
         }
 
-        if (originX <= 7)
+        if (originX < 7)
         {
             var topRightTile = GetTileAt(originX + 1, originY + 1);
             if (TileContainsPieceOfOpposingColourOrIsEmpty(topRightTile, pieceColour))
@@ -50,6 +59,7 @@ public class PossiblePawnMoves : AbstractPossibleMoveGenerator
                     GetTileAt(originX + 1, originY + 1).BoardPosition
                     );
         }
+        Debug.Log(potentialMoves.Count);
         return potentialMoves;
     }
 }

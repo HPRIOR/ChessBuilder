@@ -9,6 +9,6 @@ public class PossibleMoveGeneratorFactoryInstaller : Installer<PossibleMoveGener
 {
     public override void InstallBindings()
     {
-        Container.Bind<IPossibleMoveGeneratorFactory>().To<PossibleMoveGeneratorFactory>().AsSingle();
+        Container.Bind<IPieceMoveGeneratorFactory>().To<PieceMoveGeneratorFactory>().AsSingle();
     }
 }

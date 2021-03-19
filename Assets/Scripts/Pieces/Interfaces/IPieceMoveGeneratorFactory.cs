@@ -1,4 +1,4 @@
-﻿public interface IPossibleMoveGeneratorFactory
+﻿public interface IPieceMoveGeneratorFactory
 {
     IPossibleMoveGenerator GetPossibleMoveGenerator(PieceType pieceType);
 }

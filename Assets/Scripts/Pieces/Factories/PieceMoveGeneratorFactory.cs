@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PossibleMoveGeneratorFactory : IPossibleMoveGeneratorFactory
+public class PieceMoveGeneratorFactory : IPieceMoveGeneratorFactory
 {
     private IBoardState _boardState;
 
-    public PossibleMoveGeneratorFactory(IBoardState boardState)
+    public PieceMoveGeneratorFactory(IBoardState boardState)
     {
         _boardState = boardState;
     }

@@ -22,11 +22,11 @@ public class Piece : MonoBehaviour
     public IEnumerable<IBoardPosition> GetPossiblePieceMoves() => possibleMoveGenerator.GetPossiblePieceMoves(gameObject);
 
     [Inject]
-    public void Construct(IPieceInfo pieceInfo, IBoardPosition boardPosition, IPossibleMoveGeneratorFactory possibleMoveGeneratorFactory)
+    public void Construct(IPieceInfo pieceInfo, IBoardPosition boardPosition, IPieceMoveGeneratorFactory pieceMoveGeneratorFactory)
     {
         PieceInfo = pieceInfo;
         BoardPosition = boardPosition;
-        possibleMoveGenerator = possibleMoveGeneratorFactory.GetPossibleMoveGenerator(PieceInfo.PieceType);
+        possibleMoveGenerator = pieceMoveGeneratorFactory.GetPossibleMoveGenerator(PieceInfo.PieceType);
     }
     
     public class Factory : PlaceholderFactory<IPieceInfo, IBoardPosition, Piece> { }

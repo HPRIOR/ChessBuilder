@@ -1,4 +1,6 @@
-﻿public class BoardGenerator : IBoardGenerator
+﻿using UnityEngine;
+
+public class BoardGenerator : IBoardGenerator
 {
     public ITile[,] GenerateBoard()
     {
@@ -16,12 +18,11 @@
 
     public ITile[,] RotateBoard(ITile[,] board)
     {
-        var result = new Tile[8, 8];
+        var result = new ITile[8, 8];
 
-        for (int iEnd = 8, iStart = 0; iStart < 8; iStart++, iEnd--)
-            for (int jEnd = 8, jStart = 0; jEnd < 8; jStart++, jEnd--)
-                result[iStart, jStart] = board[iEnd, jEnd] as Tile;
-
+        for (int iEnd = 7, iStart = 0; iStart < 8; iStart++, iEnd--)
+            for (int jEnd = 7, jStart = 0; jStart < 8; jStart++, jEnd--)
+                result[iStart, jStart] = board[iEnd, jEnd];
         return result;
     }
 }

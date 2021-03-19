@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 public interface IBoardState
 {
-    ITile[,] Board { get; }
 
     ITile GetTileAt(IBoardPosition boardPosition);
+    ITile GetMirroredTileAt(IBoardPosition boardPosition);
 }

@@ -8,20 +8,21 @@ using UnityEngine;
 public class PossibleBoardMovesGenerator : IPossibleBoardMovesGenerator
 {
     private readonly IBoardState _boardState;
+    public  IDictionary<GameObject, HashSet<IBoardPosition>> PossibleMoves { get; private set; }
 
     public PossibleBoardMovesGenerator(IBoardState boardState)
     {
         _boardState = boardState;
     }
 
-    public IDictionary<GameObject, HashSet<IBoardPosition>> PossibleMoves()
+    public void GeneratePossibleMoves()
     {
         var activeGameObjects = GetActiveGameObject();
         var activePieceComponents = activeGameObjects.ToList().Select(go => go.GetComponent<Piece>());
-        return activeGameObjects
+        PossibleMoves = activeGameObjects
             .ToDictionary(
                 go => go, 
-                go => new HashSet<IBoardPosition>(go.GetComponent<Piece>().GetPossibleMoves())
+                go => new HashSet<IBoardPosition>(go.GetComponent<Piece>().GetPossiblePieceMoves())
                 );
     }
 

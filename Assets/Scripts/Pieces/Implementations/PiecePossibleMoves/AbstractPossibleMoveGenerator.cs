@@ -26,5 +26,5 @@ public abstract class AbstractPossibleMoveGenerator : IPossibleMoveGenerator
     protected int GetOriginPositionBasedOn(PieceColour pieceColour, int coord) =>
         pieceColour == PieceColour.White ? coord : Math.Abs(coord - 7);
 
-    public abstract IEnumerable<IBoardPosition> PossibleBoardMoves(GameObject piece);
+    public abstract IEnumerable<IBoardPosition> GetPossibleBoardMoves(GameObject piece);
 }

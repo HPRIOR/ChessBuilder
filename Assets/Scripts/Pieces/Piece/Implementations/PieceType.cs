@@ -12,5 +12,4 @@
     WhiteBishop,
     WhiteKnight,
     WhitePawn,
-    None
 }

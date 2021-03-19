@@ -16,10 +16,10 @@ public class PieceSpawner : IPieceSpawner
         _pieceFactory = pieceFactory;
     }
 
-    public void CreatePieceOf(PieceType pieceType, IBoardPosition BoardPosition)
+    public void CreatePieceOf(PieceType pieceType, IBoardPosition boardPosition)
     {
-        var piece = _pieceFactory.Create(pieceType, BoardPosition);
-        _boardState.GetTileAt(BoardPosition).CurrentPiece = piece.gameObject;
+        var piece = _pieceFactory.Create(pieceType, new PieceInfo(pieceType), boardPosition);
+        _boardState.GetTileAt(boardPosition).CurrentPiece = piece.gameObject;
     }
 }
 

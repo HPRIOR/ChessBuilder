@@ -9,19 +9,19 @@ using Zenject;
 public class MoveValidator : IMoveValidator
 {
     private IBoardState _boardState;
+    private IPossibleBoardMovesGenerator _possibleBoardMovesGenerator;
 
     [Inject]
-    public MoveValidator(IBoardState boardState)
+    public MoveValidator(IBoardState boardState, IPossibleBoardMovesGenerator possibleBoardMovesGenerator)
     {
         _boardState = boardState;
+        _possibleBoardMovesGenerator = possibleBoardMovesGenerator;
     }
     
     public bool ValidateMove(GameObject piece, IBoardPosition destination)
     {
         if ((Vector2)piece.transform.position == destination.Position) return false;
-        return true;
-
-        // return PieceCanMove(piece, destination);
+        return _possibleBoardMovesGenerator.PossibleMoves[piece].Contains(destination);
     }
 
     public bool ValidateMove(IBoardPosition origin, IBoardPosition destination)
@@ -32,10 +32,4 @@ public class MoveValidator : IMoveValidator
         }
         return true;
     }
-
-    private bool PieceCanMove(GameObject piece, IBoardPosition destination) => true;
-        //_gameController.PossibleMoves[piece].Contains(destination);
-
-
-
 }

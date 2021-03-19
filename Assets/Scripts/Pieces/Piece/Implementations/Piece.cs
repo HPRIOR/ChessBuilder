@@ -6,8 +6,8 @@ using Zenject;
 public class Piece : MonoBehaviour
 {
     public IBoardPosition BoardPosition { get; set; }
-    public IPieceInfo PieceInfo { get; private set; }
-    public IPieceMoveGenerator possibleMoveGenerator;
+    public IPieceInfo Info { get; private set; }
+    private IPieceMoveGenerator _possibleMoveGenerator;
     private SpriteRenderer _spriteRenderer;
 
     [Inject]
@@ -17,20 +17,20 @@ public class Piece : MonoBehaviour
             IPieceMoveGeneratorFactory pieceMoveGeneratorFactory
             )
     {
-        PieceInfo = pieceInfo;
+        Info = pieceInfo;
         BoardPosition = boardPosition;
-        possibleMoveGenerator = pieceMoveGeneratorFactory.GetPossibleMoveGenerator(PieceInfo.PieceType);
+        _possibleMoveGenerator = pieceMoveGeneratorFactory.GetPossibleMoveGenerator(Info.PieceType);
     }
 
     private void Start()
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();
-        _spriteRenderer.sprite = AssetDatabase.LoadAssetAtPath<Sprite>(PieceInfo.SpriteAsset);
-        gameObject.transform.parent = GameObject.FindGameObjectWithTag("Pieces").transform;
+        _spriteRenderer.sprite = AssetDatabase.LoadAssetAtPath<Sprite>(Info.SpriteAsset);
+        gameObject.transform.parent = GameObject.FindGameObjectWithTag("Pieces")?.transform;
         gameObject.transform.position = BoardPosition.Vector;
     }
 
-    public IEnumerable<IBoardPosition> GetPossiblePieceMoves() => possibleMoveGenerator.GetPossiblePieceMoves(gameObject);
+    public IEnumerable<IBoardPosition> GetPossibleMoves() => _possibleMoveGenerator.GetPossiblePieceMoves(gameObject);
 
     public class Factory : PlaceholderFactory<IPieceInfo, IBoardPosition, Piece> { }
 

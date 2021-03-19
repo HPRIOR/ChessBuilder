@@ -20,7 +20,7 @@ public abstract class AbstractPossibleMoveGenerator : IPieceMoveGenerator
     }
 
     protected bool TileContainsPieceOfOpposingColour(ITile tile, PieceColour originColour) =>
-        tile.CurrentPiece?.GetComponent<Piece>()?.PieceInfo.PieceColour == originColour;
+        tile.CurrentPiece?.GetComponent<Piece>()?.Info.PieceColour == originColour;
 
 
     protected int GetOriginPositionBasedOn(PieceColour pieceColour, int coord) =>

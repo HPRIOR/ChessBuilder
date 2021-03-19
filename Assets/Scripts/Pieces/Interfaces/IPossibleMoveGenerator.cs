@@ -7,6 +7,6 @@ using UnityEngine;
 
 public interface IPossibleMoveGenerator
 {
-    IEnumerable<IBoardPosition> GetPossibleBoardMoves(GameObject piece);
+    IEnumerable<IBoardPosition> GetPossiblePieceMoves(GameObject piece);
 
 }

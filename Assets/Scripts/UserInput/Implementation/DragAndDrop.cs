@@ -17,10 +17,10 @@ public class DragAndDrop : MonoBehaviour
     }
 
     [Inject]
-    public void Construct(ICommandInvoker commandInvoker, DragAndDropCommandFactory movePieceCommandFactory)
+    public void Construct(ICommandInvoker commandInvoker, DragAndDropCommandFactory dragAndDropCommandFactory)
     {
         _commandInvoker = commandInvoker;
-        _dragAndDropCommandFactory = movePieceCommandFactory;
+        _dragAndDropCommandFactory = dragAndDropCommandFactory;
 
     }
     private void OnMouseDown()

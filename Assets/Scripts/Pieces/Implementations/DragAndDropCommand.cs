@@ -6,7 +6,6 @@ public class DragAndDropCommand : ICommand
     private static MoveDataFactory _moveDataFactory;
     private static IPieceMover _pieceMover;
     private static IMoveValidator _moveValidator;
-
     private IMoveData _moveData;
     private GameObject _piece;
     private IBoardPosition _destination;
@@ -20,11 +19,13 @@ public class DragAndDropCommand : ICommand
         ) 
     {
         _moveDataFactory = moveDataFactory;
-        _pieceMover = pieceMover;
+        _moveData = _moveDataFactory.CreateMoveData(piece, destination);
+        
         _piece = piece;
         _destination = destination;
+        
         _moveValidator = moveValidator;
-        _moveData = _moveDataFactory.CreateMoveData(piece, destination);
+        _pieceMover = pieceMover;
     }
 
     public void Execute()

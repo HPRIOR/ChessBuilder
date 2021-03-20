@@ -3,9 +3,6 @@ using System.Collections;
 using UnityEngine.TestTools;
 using NUnit.Framework;
 using UnityEngine;
-using UnityEditor;
-using System.Collections.Generic;
-using System.Linq;
 
 public class PieceSpawnerTests : ZenjectIntegrationTestFixture
 {
@@ -29,7 +26,6 @@ public class PieceSpawnerTests : ZenjectIntegrationTestFixture
 
         PostInstall();
     }
-
 
     [UnityTest]
     public IEnumerator PiecesSpawnInCorrectPosition(
@@ -66,7 +62,6 @@ public class PieceSpawnerTests : ZenjectIntegrationTestFixture
         Assert.AreEqual(piece, _boardState.GetTileAt(new BoardPosition(x, y)).CurrentPiece.GetComponent<Piece>());
     }
 
-
     [UnityTest]
     public IEnumerator PiecesSpawnWithPossibleMoveGenerator([Values] PieceType pieceType)
     {
@@ -75,7 +70,6 @@ public class PieceSpawnerTests : ZenjectIntegrationTestFixture
         yield return null;
         Assert.IsNotNull(piece.GetPossibleMoves());
     }
-
 
     [UnityTest]
     public IEnumerator PiecesSpawnAtCorrectVector(
@@ -87,12 +81,4 @@ public class PieceSpawnerTests : ZenjectIntegrationTestFixture
         yield return null;
         Assert.AreEqual(new Vector2(x + 0.5f, y + 0.5f), piece.BoardPosition.Vector);
     }
-
-
-
-
-
-
-
-
 }

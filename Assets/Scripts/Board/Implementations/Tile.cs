@@ -16,4 +16,7 @@ public class Tile : ITile
         BoardPosition = boardPosition;
         CurrentPiece = null;
     }
+
+    public override string ToString() => $"Tile at ({BoardPosition.X}, {BoardPosition.Y}) containing" +
+        $" {CurrentPiece?.GetComponent<Piece>().Info.PieceType}";
 }

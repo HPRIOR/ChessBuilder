@@ -15,4 +15,9 @@ public class PieceInfo : IPieceInfo
     public string SpriteAsset { get; }
     public PieceType PieceType { get; }
     public PieceColour PieceColour { get; }
+
+    public override string ToString() =>
+        $"PieceType: {PieceType} \n" +
+        $"PieceColour: {PieceColour}";
+    
 }

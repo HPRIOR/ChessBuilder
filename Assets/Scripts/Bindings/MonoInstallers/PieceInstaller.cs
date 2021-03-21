@@ -11,7 +11,7 @@ public class PieceInstaller : MonoInstaller
     {
         PieceSpawnerInstaller.Install(Container);
         PieceMoverInstaller.Install(Container);
-        PossibleMoveGeneratorFactoryInstaller.Install(Container);
+        PieceMoveGeneratorFactoryInstaller.Install(Container);
         PossibleBoardMovesGeneratorInstaller.Install(Container);
         MoveValidatorInstaller.Install(Container);
     }

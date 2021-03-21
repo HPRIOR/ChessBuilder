@@ -34,4 +34,6 @@ public class Piece : MonoBehaviour
 
     public class Factory : PlaceholderFactory<IPieceInfo, IBoardPosition, Piece> { }
 
+    public override string ToString() => $"{Info}\n{BoardPosition}\n";
+
 }

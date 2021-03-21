@@ -18,4 +18,11 @@ public struct BoardPosition : IBoardPosition
 
     // TODO
     public string GetAlgabraicNotation() => X.ToString() + Y.ToString();
+
+    public override string ToString()
+    {
+        return $"Coordinates: {X}, {Y} \n" +
+            $"Vector: {Vector} \n" +
+            $"Algabraic Notation: {GetAlgabraicNotation()}";
+    }
 }

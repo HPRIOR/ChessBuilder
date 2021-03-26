@@ -80,7 +80,7 @@ public class PossibleRookMovesTests : PossibleMovesTestBase
             IList<IBoardPosition> unreachableTiles = new List<IBoardPosition>()
             {
                 new BoardPosition(x, 7), new BoardPosition(y, 7)
-            };
+            }.Select(GetRelativePosition).ToList();
 
             HashSet<IBoardPosition> reachableTiles = new HashSet<IBoardPosition>(possibleMoves);
 
@@ -114,7 +114,10 @@ public class PossibleRookMovesTests : PossibleMovesTestBase
             var possibleMoves = rookMoveGenerator.GetPossiblePieceMoves(rookGameObject);
 
             var reachableTile = new HashSet<IBoardPosition>(possibleMoves);
-            var unreachableTiles = new HashSet<IBoardPosition>() {  new BoardPosition(7, y), new BoardPosition(x, 7)};
+            var unreachableTiles = 
+                new HashSet<IBoardPosition>(
+                    new List<IBoardPosition>(){ new BoardPosition(7, y), new BoardPosition(x, 7)}
+                    .Select(GetRelativePosition));
 
             Assert.IsFalse(reachableTile.Overlaps(unreachableTiles));
         }

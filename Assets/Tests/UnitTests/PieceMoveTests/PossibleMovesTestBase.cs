@@ -78,7 +78,7 @@ public class PossibleMovesTestBase : ZenjectUnitTestFixture
     /// </summary>
     /// <param name="boardPosition"></param>
     /// <returns></returns>
-    protected IBoardPosition GetRelativePosition(IBoardPosition boardPosition) =>
+    protected IBoardPosition RelativePositionToTestedPiece(IBoardPosition boardPosition) =>
         TestedPieceColour == PieceColour.White ? boardPosition : GetMirroredBoardPosition(boardPosition);
 
    
@@ -92,12 +92,12 @@ public class PossibleMovesTestBase : ZenjectUnitTestFixture
     private PieceColour GetPieceColourFrom(PieceType pieceType) => 
         pieceType.ToString().StartsWith("White") ? PieceColour.White : PieceColour.Black;
 
-    protected IEnumerable<IBoardPosition> GetBoardPositionPassed(IBoardPosition boardPosition, Direction direction)
+    protected IEnumerable<IBoardPosition> GetPositionsIncludingAndPassed(IBoardPosition boardPosition, Direction direction)
     {
-        if (boardPosition.X > 7 || boardPosition.Y > 7) return new List<IBoardPosition>();
+        if (boardPosition.X > 7 || boardPosition.X < 0 || boardPosition.Y > 7 || boardPosition.Y < 0) return new List<IBoardPosition>();
         var nextBoardPosition =
             new BoardPosition(boardPosition.X + Move.In(direction).X, boardPosition.Y + Move.In(direction).Y);
-        return GetBoardPositionPassed(nextBoardPosition, direction)
+        return GetPositionsIncludingAndPassed(nextBoardPosition, direction)
             .Concat(new List<IBoardPosition>() { boardPosition });
     }
 

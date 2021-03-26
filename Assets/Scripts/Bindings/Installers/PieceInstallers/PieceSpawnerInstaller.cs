@@ -4,7 +4,7 @@ using Zenject;
 
 public class PieceSpawnerInstaller : Installer<PieceSpawnerInstaller>
 {
-    private GameObject piecePrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Pieces/PiecePrefab.prefab");
+    private readonly GameObject piecePrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Pieces/PiecePrefab.prefab");
 
     public override void InstallBindings()
     {

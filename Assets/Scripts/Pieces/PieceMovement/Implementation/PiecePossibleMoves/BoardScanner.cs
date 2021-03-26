@@ -8,7 +8,7 @@ using Zenject;
 public class BoardScanner : IBoardScanner
 {
     private readonly IBoardEval _boardEval;
-    private readonly IBoardPositionTranslator _positionTranslator;
+    private readonly IPositionTranslator _positionTranslator;
 
     public BoardScanner(
         PieceColour pieceColour, 

@@ -13,7 +13,7 @@ public class BoardPositionTranslatorFactory : IPositionTranslatorFactory
         _boardPositionTranslatorFactory = boardPositionTranslatorFactory;
     }
 
-    public IBoardPositionTranslator Create(PieceColour pieceColour) =>
+    public IPositionTranslator Create(PieceColour pieceColour) =>
         _boardPositionTranslatorFactory.Create(pieceColour);
 
 }

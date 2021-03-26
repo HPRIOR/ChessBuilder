@@ -6,5 +6,5 @@ using System.Threading.Tasks;
 
 public interface IPositionTranslatorFactory
 {
-    IBoardPositionTranslator Create(PieceColour pieceColour);
+    IPositionTranslator Create(PieceColour pieceColour);
 }

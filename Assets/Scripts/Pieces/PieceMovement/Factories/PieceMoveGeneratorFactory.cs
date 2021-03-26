@@ -7,8 +7,8 @@ public class PieceMoveGeneratorFactory : IPieceMoveGeneratorFactory
     private readonly IBoardEval _whiteBoardEval;
     private readonly IBoardEval _blackBoardEval;
     
-    private readonly IBoardPositionTranslator _whitePositionTranslator;
-    private readonly IBoardPositionTranslator _blackPositionTranslator;
+    private readonly IPositionTranslator _whitePositionTranslator;
+    private readonly IPositionTranslator _blackPositionTranslator;
 
     private readonly IBoardScanner _whiteBoardScanner;
     private readonly IBoardScanner _blackBoardScanner;
@@ -55,7 +55,7 @@ public class PieceMoveGeneratorFactory : IPieceMoveGeneratorFactory
         ? _whiteBoardScanner 
         : _blackBoardScanner;
 
-    private IBoardPositionTranslator GetPositionTranslatorWith(PieceColour pieceColour) =>
+    private IPositionTranslator GetPositionTranslatorWith(PieceColour pieceColour) =>
         pieceColour == PieceColour.White
         ? _whitePositionTranslator
         : _blackPositionTranslator;

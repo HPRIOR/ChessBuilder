@@ -7,10 +7,10 @@ using UnityEngine;
 
 public class PossiblePawnMoves : IPieceMoveGenerator
 {
-    private readonly IBoardPositionTranslator _boardPositionTransator;
+    private readonly IPositionTranslator _boardPositionTransator;
     private readonly IBoardEval _boardEval;
 
-    public PossiblePawnMoves(IBoardPositionTranslator boardPositionTranslator, IBoardEval boardEval) 
+    public PossiblePawnMoves(IPositionTranslator boardPositionTranslator, IBoardEval boardEval) 
     {
         _boardPositionTransator = boardPositionTranslator;
         _boardEval = boardEval;

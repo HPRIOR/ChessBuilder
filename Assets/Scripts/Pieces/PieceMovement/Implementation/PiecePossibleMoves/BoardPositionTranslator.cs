@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Zenject;
 
-public class BoardPositionTranslator : IBoardPositionTranslator
+public class BoardPositionTranslator : IPositionTranslator
 {
     private readonly PieceColour _pieceColour;
     private readonly IBoardState _boardState;

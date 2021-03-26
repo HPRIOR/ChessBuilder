@@ -7,11 +7,11 @@ using Zenject;
 public class PossibleRookMoves : IPieceMoveGenerator 
 {
     private readonly IBoardScanner _boardScanner;
-    private readonly IBoardPositionTranslator _boardPositionTranslator;
+    private readonly IPositionTranslator _boardPositionTranslator;
 
     public PossibleRookMoves(
         IBoardScanner boardScanner,
-        IBoardPositionTranslator boardPositionTranslator)
+        IPositionTranslator boardPositionTranslator)
     {
         _boardScanner = boardScanner;
         _boardPositionTranslator = boardPositionTranslator;

@@ -2,44 +2,31 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Zenject;
 
-public class PossibleRookMoves : AbstractPossibleMoveGenerator
+public class PossibleRookMoves : IPieceMoveGenerator 
 {
-    public PossibleRookMoves(IBoardState boardState) : base(boardState) { }
+    private readonly IBoardScanner _boardScanner;
+    private readonly IBoardPositionTranslator _boardPositionTranslator;
 
-    public override IEnumerable<IBoardPosition> GetPossiblePieceMoves(GameObject piece)
+    public PossibleRookMoves(
+        IBoardScanner boardScanner,
+        IBoardPositionTranslator boardPositionTranslator)
+    {
+        _boardScanner = boardScanner;
+        _boardPositionTranslator = boardPositionTranslator;
+    }
+
+    public IEnumerable<IBoardPosition> GetPossiblePieceMoves(GameObject piece)
     {
         var pieceComponent = piece.GetComponent<Piece>();
         var originalPosition = pieceComponent.BoardPosition;
         var pieceColour = pieceComponent.Info.PieceColour;
 
-        Func<IBoardPosition, ITile> GetTileAt = GetTileRetrievingFunctionFor(pieceColour);
-
-        var relativePosition = GetOriginPositionBasedOn(pieceColour, originalPosition);
-
-        Func<IBoardPosition, bool> cannotMoveInDirectionPredicate =
-            p =>
-            {
-                var x = p.X; var y = p.Y;
-                return 0 > x || x > 7 || 0 > y || y > 7 || TileContainsFreindlyPiece(GetTileAt(p), pieceColour);
-            };
-
-        Func<IBoardPosition, bool> tileContainsOpposingPiece = p => TileContainsOpposingPiece(GetTileAt(p), pieceColour);
-
+        var relativePosition = _boardPositionTranslator.GetRelativePosition(originalPosition);
         var possibleDirections = new List<Direction>() { Direction.N, Direction.E, Direction.S, Direction.W };
 
-        return possibleDirections
-            .SelectMany(direction => 
-            ScanIn(
-                direction, 
-                relativePosition, 
-                cannotMoveInDirectionPredicate, 
-                tileContainsOpposingPiece));
+        return possibleDirections.SelectMany(direction => _boardScanner.ScanIn(direction, relativePosition));
     }
-
-    // this could be simplified using composition
-    // methods of another class could be could which would fullfill the function of the abstractpossiblemovesgenerator
-    // a constructor argument for this class would take in a piececolour and determine what the function returns 
-    // BoardScanner, TileEvaluator
 
 }

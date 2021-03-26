@@ -5,47 +5,50 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-public class PossiblePawnMoves : AbstractPossibleMoveGenerator
+public class PossiblePawnMoves : IPieceMoveGenerator
 {
+    private readonly IBoardPositionTranslator _boardPositionTransator;
+    private readonly IBoardEval _boardEval;
 
-    public PossiblePawnMoves(IBoardState boardState) : base(boardState) { }
+    public PossiblePawnMoves(IBoardPositionTranslator boardPositionTranslator, IBoardEval boardEval) 
+    {
+        _boardPositionTransator = boardPositionTranslator;
+        _boardEval = boardEval;
+    }
+   
 
-    public override IEnumerable<IBoardPosition> GetPossiblePieceMoves(GameObject piece)
+
+    public IEnumerable<IBoardPosition> GetPossiblePieceMoves(GameObject piece)
     {
 
         var pieceComponent = piece.GetComponent<Piece>();
         var piecePosition = pieceComponent.BoardPosition;
-        var pieceColour = pieceComponent.Info.PieceColour;
-
         var potentialMoves = new List<IBoardPosition>();
 
-        Func<IBoardPosition, ITile> GetTileAt = GetTileRetrievingFunctionFor(pieceColour);
-
-        // make get origin position return a position and use this with MoveInDirection.North
-        var originPosition = GetOriginPositionBasedOn(pieceColour, piecePosition);
+        var originPosition = _boardPositionTransator.GetRelativePosition(piecePosition);
 
         if (originPosition.Y == 7) return potentialMoves; // allow to change piece
 
-        if (GetTileAt(originPosition.Add(Move.In(Direction.N))).CurrentPiece == null)
+        if (_boardPositionTransator.GetRelativeTileAt(originPosition.Add(Move.In(Direction.N))).CurrentPiece == null)
             potentialMoves.Add(
-                GetTileAt(originPosition.Add(Move.In(Direction.N))).BoardPosition
+                _boardPositionTransator.GetRelativeTileAt(originPosition.Add(Move.In(Direction.N))).BoardPosition
                 );
 
         if (originPosition.X > 0)
         {
-            var topLeftTile = GetTileAt(originPosition.Add(Move.In(Direction.NW)));
-            if (TileContainsOpposingPiece(topLeftTile, pieceColour))
+            var topLeftTile = _boardPositionTransator.GetRelativeTileAt(originPosition.Add(Move.In(Direction.NW)));
+            if (_boardEval.OpposingPieceIn(topLeftTile))
                 potentialMoves.Add(
-                    GetTileAt(originPosition.Add(Move.In(Direction.NW))).BoardPosition
+                    _boardPositionTransator.GetRelativeTileAt(originPosition.Add(Move.In(Direction.NW))).BoardPosition
                     );
         }
 
         if (originPosition.X < 7)
         {
-            var topRightTile = GetTileAt(originPosition.Add(Move.In(Direction.NE)));
-            if (TileContainsOpposingPiece(topRightTile, pieceColour))
+            var topRightTile = _boardPositionTransator.GetRelativeTileAt(originPosition.Add(Move.In(Direction.NE)));
+            if (_boardEval.OpposingPieceIn(topRightTile))
                 potentialMoves.Add(
-                    GetTileAt(originPosition.Add(Move.In(Direction.NE))).BoardPosition
+                    _boardPositionTransator.GetRelativeTileAt(originPosition.Add(Move.In(Direction.NE))).BoardPosition
                     );
         }
 

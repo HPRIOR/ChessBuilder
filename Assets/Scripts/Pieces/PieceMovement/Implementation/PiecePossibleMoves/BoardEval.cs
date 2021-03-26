@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Zenject;
 
 public class BoardEval : IBoardEval
 {
@@ -17,4 +18,6 @@ public class BoardEval : IBoardEval
 
     public bool OpposingPieceIn(ITile tile) => 
         tile.CurrentPiece is null ? false : tile.CurrentPiece.GetComponent<Piece>().Info.PieceColour != _pieceColour;
+
+    public class Factory : PlaceholderFactory<PieceColour, BoardEval> { }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Zenject;
 
 public class BoardPositionTranslator : IBoardPositionTranslator
 {
@@ -22,4 +23,6 @@ public class BoardPositionTranslator : IBoardPositionTranslator
         _pieceColour == PieceColour.White 
         ? _boardState.GetTileAt(boardPosition) 
         : _boardState.GetMirroredTileAt(boardPosition);
+
+    public class Factory: PlaceholderFactory<PieceColour, BoardPositionTranslator> { }
 }

@@ -3,23 +3,30 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Zenject;
 
 public class BoardScanner : IBoardScanner
 {
     private readonly IBoardEval _boardEval;
-    private readonly IBoardPositionTranslator _boardPositionTranslator;
+    private readonly IBoardPositionTranslator _positionTranslator;
 
-    public BoardScanner(IBoardEval boardEval, IBoardPositionTranslator boardPositionTranslator)
+    public BoardScanner(
+        PieceColour pieceColour, 
+        IBoardEvalFactory boardEvalFactory, 
+        IPositionTranslatorFactory positionTranslatorFactory)
     {
-        _boardEval = boardEval;
-        _boardPositionTranslator = boardPositionTranslator;
+        _boardEval = boardEvalFactory.Create(pieceColour);
+        _positionTranslator = positionTranslatorFactory.Create(pieceColour);
     }
     public IEnumerable<IBoardPosition> ScanIn(Direction direction, IBoardPosition currentPosition)
     {
         var newPosition = currentPosition.Add(Move.In(direction));
-        if (PieceCannotMoveTo(newPosition)) return new List<IBoardPosition>();
-        if (TileContainsOpposingPieceAt(newPosition)) return new List<IBoardPosition>() { newPosition };
-        return ScanIn(direction, newPosition).Concat(new List<IBoardPosition>() { newPosition });
+        if (PieceCannotMoveTo(newPosition)) 
+            return new List<IBoardPosition>();
+        if (TileContainsOpposingPieceAt(newPosition)) 
+            return new List<IBoardPosition>() { _positionTranslator.GetRelativePosition(newPosition)};
+        return ScanIn(direction, newPosition)
+            .Concat(new List<IBoardPosition>() { _positionTranslator.GetRelativePosition(newPosition)});
     }
 
     private bool PieceCannotMoveTo(IBoardPosition boardPosition)
@@ -29,8 +36,10 @@ public class BoardScanner : IBoardScanner
     }
 
     private bool TileContainsOpposingPieceAt(IBoardPosition boardPosition) =>
-        _boardEval.OpposingPieceIn(_boardPositionTranslator.GetRelativeTileAt(boardPosition));
+        _boardEval.OpposingPieceIn(_positionTranslator.GetRelativeTileAt(boardPosition));
 
     private bool TileContainsFriendlyPieceAt(IBoardPosition boardPosition) =>
-        _boardEval.FriendlyPieceIn(_boardPositionTranslator.GetRelativeTileAt(boardPosition));
+        _boardEval.FriendlyPieceIn(_positionTranslator.GetRelativeTileAt(boardPosition));
+
+    public class Factory : PlaceholderFactory<PieceColour, BoardScanner> { }
 }

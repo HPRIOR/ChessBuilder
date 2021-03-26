@@ -12,19 +12,45 @@ public abstract class AbstractPossibleMoveGenerator : IPieceMoveGenerator
     {
         _boardState = boardState;
     }
-    protected Func<int, int, ITile> GetTileRetrievingFunctionBasedOn(PieceColour pieceColour)
+    protected Func<IBoardPosition, ITile> GetTileRetrievingFunctionFor(PieceColour pieceColour)
     {
         if (pieceColour == PieceColour.White)
-            return (x, y) => _boardState.GetTileAt(new BoardPosition(x, y));
-        return (x, y) => _boardState.GetMirroredTileAt(new BoardPosition(x, y));
+            return position => _boardState.GetTileAt(position);
+        return position => _boardState.GetMirroredTileAt(position);
     }
 
-    protected bool TileContainsPieceOfOpposingColour(ITile tile, PieceColour originColour) =>
-        tile.CurrentPiece is null ?  false : tile.CurrentPiece.GetComponent<Piece>().Info.PieceColour != originColour;
+    protected bool TileContainsOpposingPiece(ITile tile, PieceColour originColour) =>
+        tile.CurrentPiece is null ? false : tile.CurrentPiece.GetComponent<Piece>().Info.PieceColour != originColour;
 
+    protected bool TileContainsFreindlyPiece(ITile tile, PieceColour originColour) =>
+        tile.CurrentPiece is null ? false : tile.CurrentPiece.GetComponent<Piece>().Info.PieceColour == originColour;
 
-    protected int GetOriginPositionBasedOn(PieceColour pieceColour, int coord) =>
-        pieceColour == PieceColour.White ? coord : Math.Abs(coord - 7);
+    protected IBoardPosition GetOriginPositionBasedOn(PieceColour pieceColour, IBoardPosition position) =>
+        pieceColour == PieceColour.White ? position : new BoardPosition(Math.Abs(position.X - 7), Math.Abs(position.Y - 7));
+
 
     public abstract IEnumerable<IBoardPosition> GetPossiblePieceMoves(GameObject piece);
+
+
+    protected IEnumerable<IBoardPosition> ScanIn(
+           Direction direction,
+           IBoardPosition currentPosition, 
+           Func<IBoardPosition, bool> pieceCannotMoveTo,
+           Func<IBoardPosition, bool> tileContainsOpposingPieceAt
+           )
+    {
+        var newPosition = currentPosition.Add(Move.In(direction));
+        if (pieceCannotMoveTo(newPosition))
+            return new List<IBoardPosition>();
+        if (tileContainsOpposingPieceAt(newPosition))
+            return new List<IBoardPosition>() { newPosition };
+        return ScanIn(
+            direction, 
+            newPosition,
+            pieceCannotMoveTo,
+            tileContainsOpposingPieceAt   
+            )
+            .Concat(new List<IBoardPosition>() { newPosition });
+    }
+
 }

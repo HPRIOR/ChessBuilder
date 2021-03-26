@@ -18,6 +18,14 @@ public class PieceSpawner : IPieceSpawner
 
     public Piece CreatePieceOf(PieceType pieceType, IBoardPosition boardPosition)
     {
+        if (_boardState.GetTileAt(boardPosition).CurrentPiece != null)
+        {
+            throw new PieceSpawnException(
+                $"Tried to spawn {pieceType} at ({boardPosition.X},{boardPosition.Y}) " +
+                $"which already contained" +
+                $" {_boardState.GetTileAt(boardPosition).CurrentPiece.GetComponent<Piece>().Info.PieceType}"
+                );
+        }
         var piece = _pieceFactory.Create(new PieceInfo(pieceType), boardPosition);
         _boardState.GetTileAt(boardPosition).CurrentPiece = piece.gameObject;
         return piece;

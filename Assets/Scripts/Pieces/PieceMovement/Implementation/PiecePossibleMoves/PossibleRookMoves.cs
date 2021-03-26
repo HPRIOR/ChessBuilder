@@ -15,7 +15,7 @@ public class PossibleRookMoves : AbstractPossibleMoveGenerator
 
         Func<IBoardPosition, ITile> GetTileAt = GetTileRetrievingFunctionFor(pieceColour);
 
-        var originPosition = GetOriginPositionBasedOn(pieceColour, originalPosition);
+        var relativePosition = GetOriginPositionBasedOn(pieceColour, originalPosition);
 
         Func<IBoardPosition, bool> cannotMoveInDirectionPredicate =
             p =>
@@ -32,7 +32,7 @@ public class PossibleRookMoves : AbstractPossibleMoveGenerator
             .SelectMany(direction => 
             ScanIn(
                 direction, 
-                originPosition, 
+                relativePosition, 
                 cannotMoveInDirectionPredicate, 
                 tileContainsOpposingPiece));
     }

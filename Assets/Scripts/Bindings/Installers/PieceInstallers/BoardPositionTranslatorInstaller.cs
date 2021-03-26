@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Zenject;
+﻿using Zenject;
 
 public class BoardPositionTranslatorInstaller : Installer<BoardPositionTranslatorInstaller>
 {
     public override void InstallBindings()
     {
         Container.Bind<IPositionTranslatorFactory>().To<BoardPositionTranslatorFactory>().AsSingle();
-        Container.BindFactory<PieceColour , PositionTranslator, PositionTranslator.Factory>().FromNew();
+        Container.BindFactory<PieceColour, PositionTranslator, PositionTranslator.Factory>().FromNew();
     }
 }

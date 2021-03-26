@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-public class BoardScannerFactory : IBoardScannerFactory
+﻿public class BoardScannerFactory : IBoardScannerFactory
 {
     private readonly BoardScanner.Factory _boardScannerFactory;
 

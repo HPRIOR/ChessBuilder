@@ -11,5 +11,4 @@ public class PieceSpawnerInstaller : Installer<PieceSpawnerInstaller>
         Container.Bind<IPieceSpawner>().To<PieceSpawner>().AsSingle();
         Container.BindFactory<IPieceInfo, IBoardPosition, Piece, Piece.Factory>().FromComponentInNewPrefab(piecePrefab);
     }
-
 }

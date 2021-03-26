@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-public class BoardGenerator : IBoardGenerator
+﻿public class BoardGenerator : IBoardGenerator
 {
     public ITile[,] GenerateBoard()
     {

@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-internal static class PieceSpriteAssetManager {
-    private static  IDictionary<PieceType, string> _pieceSpriteAssetManager = 
+﻿using System.Collections.Generic;
+
+internal static class PieceSpriteAssetManager
+{
+    private static IDictionary<PieceType, string> _pieceSpriteAssetManager =
         new Dictionary<PieceType, string>()
         {
             {PieceType.BlackPawn, "Assets/Sprites/ChessPieces/240x240/240px-Chess_pdt45.svg.png"},
@@ -19,7 +17,7 @@ internal static class PieceSpriteAssetManager {
             {PieceType.WhiteRook, "Assets/Sprites/ChessPieces/240x240/240px-Chess_rlt45.svg.png"},
             {PieceType.WhiteKing, "Assets/Sprites/ChessPieces/240x240/240px-Chess_klt45.svg.png"},
             {PieceType.WhiteQueen, "Assets/Sprites/ChessPieces/240x240/240px-Chess_qlt45.svg.png"}
-
         };
-    public static string GetSpriteAsset(PieceType pieceType) => _pieceSpriteAssetManager[pieceType]; 
+
+    public static string GetSpriteAsset(PieceType pieceType) => _pieceSpriteAssetManager[pieceType];
 }

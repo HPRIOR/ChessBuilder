@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class PossiblePawnMoves : IPieceMoveGenerator
@@ -10,15 +6,14 @@ public class PossiblePawnMoves : IPieceMoveGenerator
     private readonly IPositionTranslator _positionTranslator;
     private readonly IBoardEval _boardEval;
 
-    public PossiblePawnMoves(IPositionTranslator boardPositionTranslator, IBoardEval boardEval) 
+    public PossiblePawnMoves(IPositionTranslator boardPositionTranslator, IBoardEval boardEval)
     {
         _positionTranslator = boardPositionTranslator;
         _boardEval = boardEval;
     }
-   
+
     public IEnumerable<IBoardPosition> GetPossiblePieceMoves(GameObject piece)
     {
-
         var pieceComponent = piece.GetComponent<Piece>();
         var piecePosition = pieceComponent.BoardPosition;
         var potentialMoves = new List<IBoardPosition>();
@@ -53,4 +48,3 @@ public class PossiblePawnMoves : IPieceMoveGenerator
         return potentialMoves;
     }
 }
-

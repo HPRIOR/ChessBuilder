@@ -27,5 +27,4 @@ public struct BoardPosition : IBoardPosition
     }
 
     public IBoardPosition Add(IBoardPosition boardPosition) => new BoardPosition(X + boardPosition.X, Y + boardPosition.Y);
-
 }

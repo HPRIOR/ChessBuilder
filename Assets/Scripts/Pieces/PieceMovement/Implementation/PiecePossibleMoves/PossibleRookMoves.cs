@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using Zenject;
 
-public class PossibleRookMoves : IPieceMoveGenerator 
+public class PossibleRookMoves : IPieceMoveGenerator
 {
     private readonly IBoardScanner _boardScanner;
     private readonly IPositionTranslator _boardPositionTranslator;
@@ -28,5 +26,4 @@ public class PossibleRookMoves : IPieceMoveGenerator
 
         return possibleDirections.SelectMany(direction => _boardScanner.ScanIn(direction, relativePosition));
     }
-
 }

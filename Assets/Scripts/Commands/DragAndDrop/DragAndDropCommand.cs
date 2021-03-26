@@ -16,14 +16,14 @@ public class DragAndDropCommand : ICommand
         MoveDataFactory moveDataFactory,
         IPieceMover pieceMover,
         IMoveValidator moveValidator
-        ) 
+        )
     {
         _moveDataFactory = moveDataFactory;
         _moveData = _moveDataFactory.CreateMoveData(piece, destination);
-        
+
         _piece = piece;
         _destination = destination;
-        
+
         _moveValidator = moveValidator;
         _pieceMover = pieceMover;
     }

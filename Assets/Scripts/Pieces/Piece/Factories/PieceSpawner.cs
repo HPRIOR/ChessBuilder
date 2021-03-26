@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
-
-public class PieceSpawner : IPieceSpawner
+﻿public class PieceSpawner : IPieceSpawner
 {
     private readonly IBoardState _boardState;
     private readonly Piece.Factory _pieceFactory;
@@ -31,4 +24,3 @@ public class PieceSpawner : IPieceSpawner
         return piece;
     }
 }
-

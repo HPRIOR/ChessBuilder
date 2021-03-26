@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 
 public class PossibleBoardMovesGenerator : IPossibleBoardMovesGenerator
 {
     private readonly IBoardState _boardState;
-    public  IDictionary<GameObject, HashSet<IBoardPosition>> PossibleMoves { get; private set; }
+    public IDictionary<GameObject, HashSet<IBoardPosition>> PossibleMoves { get; private set; }
 
     public PossibleBoardMovesGenerator(IBoardState boardState)
     {
@@ -21,7 +18,7 @@ public class PossibleBoardMovesGenerator : IPossibleBoardMovesGenerator
         var activePieceComponents = activeGameObjects.ToList().Select(go => go.GetComponent<Piece>());
         PossibleMoves = activeGameObjects
             .ToDictionary(
-                go => go, 
+                go => go,
                 go => new HashSet<IBoardPosition>(go.GetComponent<Piece>().GetPossibleMoves())
                 );
     }
@@ -38,7 +35,4 @@ public class PossibleBoardMovesGenerator : IPossibleBoardMovesGenerator
             }
         return activeGameObjects;
     }
-
-
-
 }

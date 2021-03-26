@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Zenject;
+﻿using Zenject;
 
 public class BoardEval : IBoardEval
 {
@@ -13,10 +8,11 @@ public class BoardEval : IBoardEval
     {
         _pieceColour = pieceColour;
     }
+
     public bool FriendlyPieceIn(ITile tile) =>
         tile.CurrentPiece is null ? false : tile.CurrentPiece.GetComponent<Piece>().Info.PieceColour == _pieceColour;
 
-    public bool OpposingPieceIn(ITile tile) => 
+    public bool OpposingPieceIn(ITile tile) =>
         tile.CurrentPiece is null ? false : tile.CurrentPiece.GetComponent<Piece>().Info.PieceColour != _pieceColour;
 
     public class Factory : PlaceholderFactory<PieceColour, BoardEval> { }

@@ -3,12 +3,11 @@ using Zenject;
 
 public class MoveData : IMoveData
 {
-   
     public IBoardPosition InitialBoardPosition { get; private set; }
-    public IBoardPosition DestinationBoardPosition { get;  private set;}
-    public GameObject DisplacedPiece { get;  private set;}
-    public GameObject MovedPiece { get;  private set;}
-    public Piece MovedPieceComponent { get;  private set;}
+    public IBoardPosition DestinationBoardPosition { get; private set; }
+    public GameObject DisplacedPiece { get; private set; }
+    public GameObject MovedPiece { get; private set; }
+    public Piece MovedPieceComponent { get; private set; }
 
     public MoveData(GameObject movedPiece, IBoardPosition destination, IBoardState boardState)
     {

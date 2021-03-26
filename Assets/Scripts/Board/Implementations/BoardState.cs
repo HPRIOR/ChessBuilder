@@ -1,11 +1,4 @@
-﻿using Zenject;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-public class BoardState : IBoardState
+﻿public class BoardState : IBoardState
 {
     private ITile[,] _board;
     private ITile[,] _mirroredBoard;

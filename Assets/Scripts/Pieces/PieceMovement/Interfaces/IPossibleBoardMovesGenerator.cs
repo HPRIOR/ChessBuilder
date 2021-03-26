@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public interface IPossibleBoardMovesGenerator
 {
     IDictionary<GameObject, HashSet<IBoardPosition>> PossibleMoves { get; }
+
     void GeneratePossibleMoves();
 }

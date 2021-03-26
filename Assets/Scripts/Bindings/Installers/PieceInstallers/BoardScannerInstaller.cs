@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Zenject;
+﻿using Zenject;
 
 public class BoardScannerInstaller : Installer<BoardScannerInstaller>
 {
@@ -11,6 +6,6 @@ public class BoardScannerInstaller : Installer<BoardScannerInstaller>
     {
         Container.Bind<IBoardEval>().To<BoardEval>().AsSingle();
         Container.Bind<IBoardScannerFactory>().To<BoardScannerFactory>().AsSingle();
-        Container.BindFactory<PieceColour , BoardScanner, BoardScanner.Factory>().FromNew();
+        Container.BindFactory<PieceColour, BoardScanner, BoardScanner.Factory>().FromNew();
     }
 }

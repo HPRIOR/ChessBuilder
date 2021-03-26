@@ -1,11 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
 public class DragAndDrop : MonoBehaviour
 {
-
     private ICommandInvoker _commandInvoker;
     private bool _isDragging;
     private SpriteRenderer _spriteRenderer;
@@ -21,14 +18,14 @@ public class DragAndDrop : MonoBehaviour
     {
         _commandInvoker = commandInvoker;
         _dragAndDropCommandFactory = dragAndDropCommandFactory;
-
     }
+
     private void OnMouseDown()
     {
         _spriteRenderer.sortingOrder = 2;
         _isDragging = true;
     }
-    
+
     private void OnMouseUp()
     {
         _spriteRenderer.sortingOrder = 1;
@@ -57,6 +54,4 @@ public class DragAndDrop : MonoBehaviour
         if (axis < 0.5) return 0;
         return (int)axis;
     }
-
-
 }

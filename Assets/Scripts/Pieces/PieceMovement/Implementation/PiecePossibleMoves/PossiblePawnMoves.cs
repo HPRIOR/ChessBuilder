@@ -14,38 +14,38 @@ public class PossiblePawnMoves : AbstractPossibleMoveGenerator
     {
 
         var pieceComponent = piece.GetComponent<Piece>();
-        var originPosition = pieceComponent.BoardPosition;
+        var piecePosition = pieceComponent.BoardPosition;
         var pieceColour = pieceComponent.Info.PieceColour;
 
         var potentialMoves = new List<IBoardPosition>();
 
-        Func<int, int, ITile> GetTileAt = GetTileRetrievingFunctionBasedOn(pieceColour);
+        Func<IBoardPosition, ITile> GetTileAt = GetTileRetrievingFunctionFor(pieceColour);
 
-        var originX = GetOriginPositionBasedOn(pieceColour, originPosition.X);
-        var originY = GetOriginPositionBasedOn(pieceColour, originPosition.Y);
+        // make get origin position return a position and use this with MoveInDirection.North
+        var originPosition = GetOriginPositionBasedOn(pieceColour, piecePosition);
 
-        if (originY == 7) return potentialMoves; // allow to change piece
+        if (originPosition.Y == 7) return potentialMoves; // allow to change piece
 
-        if (GetTileAt(originX, originY + 1).CurrentPiece == null)
+        if (GetTileAt(originPosition.Add(Move.In(Direction.N))).CurrentPiece == null)
             potentialMoves.Add(
-                GetTileAt(originX, originY + 1).BoardPosition
+                GetTileAt(originPosition.Add(Move.In(Direction.N))).BoardPosition
                 );
 
-        if (originX > 0)
+        if (originPosition.X > 0)
         {
-            var topLeftTile = GetTileAt(originX - 1, originY + 1);
-            if (TileContainsPieceOfOpposingColour(topLeftTile, pieceColour))
+            var topLeftTile = GetTileAt(originPosition.Add(Move.In(Direction.NW)));
+            if (TileContainsOpposingPiece(topLeftTile, pieceColour))
                 potentialMoves.Add(
-                    GetTileAt(originX - 1, originY + 1).BoardPosition
+                    GetTileAt(originPosition.Add(Move.In(Direction.NW))).BoardPosition
                     );
         }
 
-        if (originX < 7)
+        if (originPosition.X < 7)
         {
-            var topRightTile = GetTileAt(originX + 1, originY + 1);
-            if (TileContainsPieceOfOpposingColour(topRightTile, pieceColour))
+            var topRightTile = GetTileAt(originPosition.Add(Move.In(Direction.NE)));
+            if (TileContainsOpposingPiece(topRightTile, pieceColour))
                 potentialMoves.Add(
-                    GetTileAt(originX + 1, originY + 1).BoardPosition
+                    GetTileAt(originPosition.Add(Move.In(Direction.NE))).BoardPosition
                     );
         }
 

@@ -10,6 +10,6 @@ public class BoardPositionTranslatorInstaller : Installer<BoardPositionTranslato
     public override void InstallBindings()
     {
         Container.Bind<IPositionTranslatorFactory>().To<BoardPositionTranslatorFactory>().AsSingle();
-        Container.BindFactory<PieceColour , BoardPositionTranslator, BoardPositionTranslator.Factory>().FromNew();
+        Container.BindFactory<PieceColour , PositionTranslator, PositionTranslator.Factory>().FromNew();
     }
 }

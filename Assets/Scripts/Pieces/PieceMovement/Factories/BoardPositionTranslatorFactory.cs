@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 public class BoardPositionTranslatorFactory : IPositionTranslatorFactory
 {
-    private readonly BoardPositionTranslator.Factory _boardPositionTranslatorFactory;
+    private readonly PositionTranslator.Factory _boardPositionTranslatorFactory;
 
-    public BoardPositionTranslatorFactory(BoardPositionTranslator.Factory boardPositionTranslatorFactory)
+    public BoardPositionTranslatorFactory(PositionTranslator.Factory boardPositionTranslatorFactory)
     {
         _boardPositionTranslatorFactory = boardPositionTranslatorFactory;
     }

@@ -5,11 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using Zenject;
 
-public class BoardPositionTranslator : IPositionTranslator
+public class PositionTranslator : IPositionTranslator
 {
     private readonly PieceColour _pieceColour;
     private readonly IBoardState _boardState;
-    public BoardPositionTranslator(PieceColour pieceColour, IBoardState boardState)
+    public PositionTranslator(PieceColour pieceColour, IBoardState boardState)
     {
         _pieceColour = pieceColour;
         _boardState = boardState;
@@ -24,5 +24,5 @@ public class BoardPositionTranslator : IPositionTranslator
         ? _boardState.GetTileAt(boardPosition) 
         : _boardState.GetMirroredTileAt(boardPosition);
 
-    public class Factory: PlaceholderFactory<PieceColour, BoardPositionTranslator> { }
+    public class Factory: PlaceholderFactory<PieceColour, PositionTranslator> { }
 }

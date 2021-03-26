@@ -25,4 +25,7 @@ public struct BoardPosition : IBoardPosition
             $"Vector: {Vector} \n" +
             $"Algabraic Notation: {GetAlgabraicNotation()}";
     }
+
+    public IBoardPosition Add(IBoardPosition boardPosition) => new BoardPosition(X + boardPosition.X, Y + boardPosition.Y);
+
 }

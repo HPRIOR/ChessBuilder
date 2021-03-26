@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class PieceSpawner : IPieceSpawner
 {
-    IBoardState _boardState;
+    private readonly IBoardState _boardState;
     private readonly Piece.Factory _pieceFactory;
 
     public PieceSpawner(Piece.Factory pieceFactory, IBoardState boardState)

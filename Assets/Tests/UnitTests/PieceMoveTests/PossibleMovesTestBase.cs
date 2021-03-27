@@ -101,6 +101,4 @@ public class PossibleMovesTestBase : ZenjectUnitTestFixture
             .Concat(new List<IBoardPosition>() { boardPosition });
     }
 
-
-
 }

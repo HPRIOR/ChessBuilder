@@ -93,7 +93,7 @@ public class PossibleRookMovesTests : PossibleMovesTestBase
 
     [Test]
     public void WithOpposingPiecesOnMidRankAndFile_RookCanTakeAndIsBlocked(
-        [Values(0, 1, 2)] int x, [Values(0, 1, 2)] int y,
+        [Values(0, 1, 2, 4, 5, 6, 7)] int x, [Values(0, 1, 2, 4, 5, 6, 7)] int y,
         [Values(PieceType.WhiteRook, PieceType.BlackRook)] PieceType pieceType
         )
     {
@@ -112,14 +112,24 @@ public class PossibleRookMovesTests : PossibleMovesTestBase
             var rookGameObject = GetGameObjectAtPosition(x, y);
             var possibleMoves = rookMoveGenerator.GetPossiblePieceMoves(rookGameObject);
 
+
             var unreachableTilesNorth = GetPositionsIncludingAndPassed(new BoardPosition(x, 4), Direction.N).ToList();
             var unreachableTilesEast = GetPositionsIncludingAndPassed(new BoardPosition(4, y), Direction.E).ToList();
 
-            // Todo check all angles as in with friendly test of the same angle
+            var unreachableTilesSouth = GetPositionsIncludingAndPassed(new BoardPosition(x, 2), Direction.S).ToList();
+            var unreachabletilesWest = GetPositionsIncludingAndPassed(new BoardPosition(2, y), Direction.W).ToList();
 
-            var unreachableTiles = unreachableTilesEast.Concat(unreachableTilesNorth);
 
-            HashSet<IBoardPosition> reachableTiles = new HashSet<IBoardPosition>(possibleMoves);
+            var unreachableTiles =
+                x < 3
+                ? unreachableTilesEast
+                : unreachabletilesWest
+                .Concat(
+                    y < 3
+                    ? unreachableTilesNorth
+                    : unreachabletilesWest);
+
+            HashSet<IBoardPosition> reachableTiles = new HashSet<IBoardPosition>(possibleMoves.Select(RelativePositionToTestedPiece));
 
             Assert.IsFalse(reachableTiles.Overlaps(unreachableTiles));
         }
@@ -230,12 +240,12 @@ public class PossibleRookMovesTests : PossibleMovesTestBase
 
 
             var unreachableTiles =
-                x < 3 
-                ? unreachableTilesEast 
+                x < 3
+                ? unreachableTilesEast
                 : unreachabletilesWest
                 .Concat(
-                    y < 3 
-                    ? unreachableTilesNorth 
+                    y < 3
+                    ? unreachableTilesNorth
                     : unreachabletilesWest);
 
 

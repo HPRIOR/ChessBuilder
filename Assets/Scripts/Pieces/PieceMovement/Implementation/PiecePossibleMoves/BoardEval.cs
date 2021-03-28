@@ -9,6 +9,8 @@ public class BoardEval : IBoardEval
         _pieceColour = pieceColour;
     }
 
+    public bool NoPieceIn(ITile tile) => tile.CurrentPiece == null;
+
     public bool FriendlyPieceIn(ITile tile) =>
         tile.CurrentPiece is null ? false : tile.CurrentPiece.GetComponent<Piece>().Info.PieceColour == _pieceColour;
 

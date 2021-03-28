@@ -29,14 +29,17 @@ public class PieceMoveGeneratorFactory : IPieceMoveGeneratorFactory
         {
             var pawn when pawn == PieceType.BlackPawn || pawn == PieceType.WhitePawn => new PossiblePawnMoves(
                 GetPositionTranslatorWith(PieceColourFrom(pieceType)), GetBoardEvalWith(PieceColourFrom(pieceType))),
-            //var bishop when bishop == PieceType.BlackBishop || bishop == PieceType.WhiteBishop => throw new System.NotImplementedException(),
+            var bishop when bishop == PieceType.BlackBishop || bishop == PieceType.WhiteBishop => new PossibleBishopMoves(
+                GetBoardScannerWith(PieceColourFrom(pieceType)), GetPositionTranslatorWith(PieceColourFrom(pieceType))),
             //var knight when knight == PieceType.BlackKnight || knight == PieceType.WhiteKnight => throw new System.NotImplementedException(),
             var rook when rook == PieceType.BlackRook || rook == PieceType.WhiteRook => new PossibleRookMoves(
                 GetBoardScannerWith(PieceColourFrom(pieceType)),
                 GetPositionTranslatorWith(PieceColourFrom(pieceType))
                 ),
-            //var king when king == PieceType.BlackKing || king == PieceType.WhiteKnight => throw new System.NotImplementedException(),
-            //var queen when queen == PieceType.BlackQueen || queen == PieceType.WhiteQueen => throw new System.NotImplementedException(),
+            var king when king == PieceType.BlackKing || king == PieceType.WhiteKing => new PossibleKingMoves(
+                GetPositionTranslatorWith(PieceColourFrom(pieceType)), GetBoardEvalWith(PieceColourFrom(pieceType))),
+            var queen when queen == PieceType.BlackQueen || queen == PieceType.WhiteQueen => new PossibleQueenMoves(
+                GetPositionTranslatorWith(PieceColourFrom(pieceType)), GetBoardScannerWith(PieceColourFrom(pieceType))),
             _ => new NullPossibleMoveGenerator()
         };
 

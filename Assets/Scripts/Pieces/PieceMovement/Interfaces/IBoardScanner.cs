@@ -2,5 +2,5 @@
 
 public interface IBoardScanner
 {
-    IEnumerable<IBoardPosition> ScanIn(Direction direction, IBoardPosition fromPosition);
+    IEnumerable<IBoardPosition> ScanIn(Direction direction, IBoardPosition fromPosition, IBoardState boardState);
 }

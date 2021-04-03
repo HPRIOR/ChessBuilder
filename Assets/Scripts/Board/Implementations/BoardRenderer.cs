@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using Zenject;
 
-// separate this into another class that doesn't depend on tiles so it can be executed indipendantly
+// 'View class'  which is subscribed to changes in game state 
 public class BoardRenderer : MonoBehaviour, IBoardRenderer
 {
     public GameObject tilePrefab;
@@ -50,10 +50,10 @@ public class BoardRenderer : MonoBehaviour, IBoardRenderer
         }
     }
 
-    private void RenderPieces(IBoardState boardState)
+    private void RenderPieces(IBoardState previousState, IBoardState newState)
     {
         DestroyExistingPieces();
-        var board = boardState.Board;
+        var board = newState.Board;
         foreach(var tile in board)
         {
             var currentPiece = tile.CurrentPiece;
@@ -68,7 +68,7 @@ public class BoardRenderer : MonoBehaviour, IBoardRenderer
         var piecesGameObject = GameObject.FindGameObjectWithTag("Pieces");
         if (piecesGameObject.transform.childCount > 0)
             foreach(Transform child in piecesGameObject.transform)
-                Destroy(child);
+                Destroy(child.gameObject);
     }
 
     private (float X, float Y)[,] CreateBoardPositions()

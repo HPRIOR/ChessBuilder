@@ -4,6 +4,6 @@ public class PossibleBoardMovesGeneratorInstaller : Installer<PossibleBoardMoves
 {
     public override void InstallBindings()
     {
-        Container.Bind<IPossibleBoardMovesGenerator>().To<PossibleBoardMovesGenerator>().AsSingle();
+        Container.Bind<IPossibleMovesGenerator>().To<PossibleBoardMovesGenerator>().AsSingle();
     }
 }

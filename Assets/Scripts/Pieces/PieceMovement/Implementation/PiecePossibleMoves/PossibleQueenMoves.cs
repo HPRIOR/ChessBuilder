@@ -15,17 +15,14 @@ public class PossibleQueenMoves : IPieceMoveGenerator
         _positionTranslator = positionTranslator;
         _boardScanner = boardScanner;
     }
-
-    public IEnumerable<IBoardPosition> GetPossiblePieceMoves(GameObject piece)
+    public IEnumerable<IBoardPosition> GetPossiblePieceMoves(IBoardPosition originPosition, IBoardState boardState)
     {
-        var pieceComponent = piece.GetComponent<Piece>();
-        var piecePosition = pieceComponent.BoardPosition;
-        var relativePosition = _positionTranslator.GetRelativePosition(piecePosition);
+        var relativePosition = _positionTranslator.GetRelativePosition(originPosition);
 
         return Enum
             .GetValues(typeof(Direction))
             .Cast<Direction>()
             .ToList()
-            .SelectMany(direction => _boardScanner.ScanIn(direction, relativePosition));
+            .SelectMany(direction => _boardScanner.ScanIn(direction, relativePosition, boardState));
     }
 }

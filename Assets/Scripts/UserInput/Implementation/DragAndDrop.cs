@@ -6,7 +6,7 @@ public class DragAndDrop : MonoBehaviour
     private ICommandInvoker _commandInvoker;
     private bool _isDragging;
     private SpriteRenderer _spriteRenderer;
-    private static DragAndDropCommandFactory _dragAndDropCommandFactory;
+    private static MoveCommandFactory _dragAndDropCommandFactory;
 
     private void Start()
     {
@@ -14,7 +14,7 @@ public class DragAndDrop : MonoBehaviour
     }
 
     [Inject]
-    public void Construct(ICommandInvoker commandInvoker, DragAndDropCommandFactory dragAndDropCommandFactory)
+    public void Construct(ICommandInvoker commandInvoker, MoveCommandFactory dragAndDropCommandFactory)
     {
         _commandInvoker = commandInvoker;
         _dragAndDropCommandFactory = dragAndDropCommandFactory;
@@ -32,7 +32,11 @@ public class DragAndDrop : MonoBehaviour
         var currentMousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         var nearestBoardPosition = GetNearestBoardPosition(currentMousePosition);
 
-        _commandInvoker.AddCommand(_dragAndDropCommandFactory.Create(gameObject, nearestBoardPosition));
+        _commandInvoker.AddCommand(
+            _dragAndDropCommandFactory.Create(
+                GetNearestBoardPosition(gameObject.transform.position), 
+                nearestBoardPosition)
+            );
         _isDragging = false;
     }
 

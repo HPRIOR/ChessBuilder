@@ -23,15 +23,23 @@ public class PossibleKnightMoves : IPieceMoveGenerator
 
         Func<(int X, int Y), bool> coordInBounds = 
             coord => 0 <= coord.X || coord.X <= 7 || 0 <= coord.Y || coord.Y <= 7;
-
-
-
         
         return GetMoveCoords(piecePosition)
             .Where(coordInBounds)
             .Select(coord => new BoardPosition(coord.X, coord.Y))
             .Select(pos => _positionTranslator.GetRelativePosition(pos));
            
+    }
+
+    public IEnumerable<IBoardPosition> GetPossiblePieceMoves(IBoardPosition originPosition, IBoardState boardState)
+    {
+        Func<(int X, int Y), bool> coordInBounds = 
+            coord => 0 <= coord.X || coord.X <= 7 || 0 <= coord.Y || coord.Y <= 7;
+        
+        return GetMoveCoords(originPosition)
+            .Where(coordInBounds)
+            .Select(coord => new BoardPosition(coord.X, coord.Y))
+            .Select(pos => _positionTranslator.GetRelativePosition(pos));
     }
 
     private IEnumerable<(int X, int Y)> GetMoveCoords(IBoardPosition boardPosition)
@@ -53,10 +61,6 @@ public class PossibleKnightMoves : IPieceMoveGenerator
                         .Range(0, 2)
                         .Select(num => num == 0 ? (x + 1, y) : (x - 1, y))
                 );
-
-
-        Debug.Log(lateralMoves);
-        Debug.Log(verticalMoves);
 
         return lateralMoves.Concat(verticalMoves);
     }

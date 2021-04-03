@@ -3,7 +3,7 @@ using Zenject;
 
 public class Game : MonoBehaviour
 {
-    private IPossibleBoardMovesGenerator _possibleBoardMovesGenerator;
+    private IPossibleMovesGenerator _possibleBoardMovesGenerator;
     private IBoardGenerator _boardGenerator;
     public IGameState CurrentState { get; private set; }
 

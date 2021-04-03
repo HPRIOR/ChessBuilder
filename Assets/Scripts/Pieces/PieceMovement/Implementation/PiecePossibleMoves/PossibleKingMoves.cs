@@ -16,29 +16,21 @@ public class PossibleKingMoves : IPieceMoveGenerator
         _boardEval = boardEval;
     }
 
-    
-    public IEnumerable<IBoardPosition> GetPossiblePieceMoves(GameObject piece)
+    public IEnumerable<IBoardPosition> GetPossiblePieceMoves(IBoardPosition originPosition, IBoardState boardState)
     {
-        
-        var pieceComponent = piece.GetComponent<Piece>();
-        var piecePosition = pieceComponent.BoardPosition;
         var potentialMoves = new List<IBoardPosition>();
-
-        var originPosition = _positionTranslator.GetRelativePosition(piecePosition);
-  
-
+        var relativePosition = _positionTranslator.GetRelativePosition(originPosition);
         Enum.GetValues(typeof(Direction)).Cast<Direction>().ToList().ForEach(direction => 
             {
-                var newPosition = originPosition.Add(Move.In(direction));
+                var newPosition = relativePosition.Add(Move.In(direction));
                 var newRelativePosition = _positionTranslator.GetRelativePosition(newPosition);
                 if ( 0 > newPosition.X || newPosition.X > 7 
                     || 0 > newPosition.Y || newPosition.Y > 7 ) return;
-                var newTile = _positionTranslator.GetRelativeTileAt(newPosition);
+                var newTile = _positionTranslator.GetRelativeTileAt(newPosition, boardState);
                 if (_boardEval.OpposingPieceIn(newTile) || _boardEval.NoPieceIn(newTile)) 
                     potentialMoves.Add(newRelativePosition);
             });
 
         return potentialMoves;
-
     }
 }

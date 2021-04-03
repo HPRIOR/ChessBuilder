@@ -3,11 +3,6 @@
 public class BoardEval : IBoardEval
 {
 
-    /*
-     * Changes: account for removal of GO from board.
-     * Tile current piece will be piece type - add mechanism for getting piece colour from piece type
-     * and use this to compare with current piece colour
-     */
     private readonly PieceColour _pieceColour;
 
     public BoardEval(PieceColour pieceColour)

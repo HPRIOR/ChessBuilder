@@ -4,7 +4,7 @@ public class InputInstaller : MonoInstaller
 {
     public override void InstallBindings()
     {
-        DragAndDropCommandInstaller.Install(Container);
+        MoveCommandInstaller.Install(Container);
         CommandInvokerInstaller.Install(Container);
         MoveDataInstaller.Install(Container);
     }

@@ -15,15 +15,12 @@ public class PossibleRookMoves : IPieceMoveGenerator
         _positionTranslator = boardPositionTranslator;
     }
 
-    public IEnumerable<IBoardPosition> GetPossiblePieceMoves(GameObject piece)
+    public IEnumerable<IBoardPosition> GetPossiblePieceMoves(IBoardPosition originPosition, IBoardState boardState)
     {
-        var pieceComponent = piece.GetComponent<Piece>();
-        var originalPosition = pieceComponent.BoardPosition;
-        var pieceColour = pieceComponent.Info.PieceColour;
 
-        var relativePosition = _positionTranslator.GetRelativePosition(originalPosition);
+        var relativePosition = _positionTranslator.GetRelativePosition(originPosition);
         var possibleDirections = new List<Direction>() { Direction.N, Direction.E, Direction.S, Direction.W };
 
-        return possibleDirections.SelectMany(direction => _boardScanner.ScanIn(direction, relativePosition));
+        return possibleDirections.SelectMany(direction => _boardScanner.ScanIn(direction, relativePosition, boardState));
     }
 }

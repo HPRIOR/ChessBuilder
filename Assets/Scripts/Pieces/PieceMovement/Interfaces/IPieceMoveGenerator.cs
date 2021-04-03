@@ -3,5 +3,5 @@ using UnityEngine;
 
 public interface IPieceMoveGenerator
 {
-    IEnumerable<IBoardPosition> GetPossiblePieceMoves(GameObject piece);
+    IEnumerable<IBoardPosition> GetPossiblePieceMoves(IBoardPosition originPosition, IBoardState boardState);
 }

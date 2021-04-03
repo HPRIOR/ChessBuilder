@@ -41,7 +41,7 @@ public class PossibleMovesTestBase : ZenjectUnitTestFixture
         PieceSpawnerInstaller.Install(Container);
         PieceMoveGeneratorFactoryInstaller.Install(Container);
         CommandInvokerInstaller.Install(Container);
-        DragAndDropCommandInstaller.Install(Container);
+        MoveCommandInstaller.Install(Container);
         BoardEvalInstaller.Install(Container);
         BoardScannerInstaller.Install(Container);
         BoardPositionTranslatorInstaller.Install(Container);

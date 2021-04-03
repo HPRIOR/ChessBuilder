@@ -12,24 +12,23 @@ public class PossiblePawnMoves : IPieceMoveGenerator
         _boardEval = boardEval;
     }
 
-    public IEnumerable<IBoardPosition> GetPossiblePieceMoves(GameObject piece)
+    
+    public IEnumerable<IBoardPosition> GetPossiblePieceMoves(IBoardPosition originPosition, IBoardState boardState)
     {
-        var pieceComponent = piece.GetComponent<Piece>();
-        var piecePosition = pieceComponent.BoardPosition;
         var potentialMoves = new List<IBoardPosition>();
 
-        var originPosition = _positionTranslator.GetRelativePosition(piecePosition);
+        originPosition = _positionTranslator.GetRelativePosition(originPosition);
 
         if (originPosition.Y == 7) return potentialMoves; // allow to change piece
 
-        if (_positionTranslator.GetRelativeTileAt(originPosition.Add(Move.In(Direction.N))).CurrentPiece == PieceType.NullPiece)
+        if (_positionTranslator.GetRelativeTileAt(originPosition.Add(Move.In(Direction.N)), boardState).CurrentPiece == PieceType.NullPiece)
             potentialMoves.Add(
                 _positionTranslator.GetRelativePosition(originPosition.Add(Move.In(Direction.N)))
                 );
 
         if (originPosition.X > 0)
         {
-            var topLeftTile = _positionTranslator.GetRelativeTileAt(originPosition.Add(Move.In(Direction.NW)));
+            var topLeftTile = _positionTranslator.GetRelativeTileAt(originPosition.Add(Move.In(Direction.NW)), boardState);
             if (_boardEval.OpposingPieceIn(topLeftTile))
                 potentialMoves.Add(
                     _positionTranslator.GetRelativePosition(originPosition.Add(Move.In(Direction.NW)))
@@ -38,7 +37,7 @@ public class PossiblePawnMoves : IPieceMoveGenerator
 
         if (originPosition.X < 7)
         {
-            var topRightTile = _positionTranslator.GetRelativeTileAt(originPosition.Add(Move.In(Direction.NE)));
+            var topRightTile = _positionTranslator.GetRelativeTileAt(originPosition.Add(Move.In(Direction.NE)), boardState);
             if (_boardEval.OpposingPieceIn(topRightTile))
                 potentialMoves.Add(
                     _positionTranslator.GetRelativePosition(originPosition.Add(Move.In(Direction.NE)))

@@ -2,5 +2,5 @@
 {
     IBoardPosition GetRelativePosition(IBoardPosition originalPosition);
 
-    ITile GetRelativeTileAt(IBoardPosition boardPosition);
+    ITile GetRelativeTileAt(IBoardPosition boardPosition, IBoardState fromBoard);
 }

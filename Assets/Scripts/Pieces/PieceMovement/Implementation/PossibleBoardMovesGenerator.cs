@@ -2,17 +2,28 @@
 using System.Linq;
 using UnityEngine;
 
-/*
- * Changes: tile will contain reference to piece type not game object. Get possible moves will refer to a different
- * mechanism that is give through the piece type. e.g. some factory which produces GetPieceTypeMove class
- * board state passed as argument instead of through constructor, produces dictionary instead of being a member of the 
- * class
- */
-public class PossibleBoardMovesGenerator : IPossibleBoardMovesGenerator
+public class PossibleBoardMovesGenerator : IPossibleMovesGenerator
 {
+    IPieceMoveGeneratorFactory _pieceMoveGenertorFactory;
 
+    PossibleBoardMovesGenerator(IPieceMoveGeneratorFactory pieceMoveGeneratorFactory)
+    {
+        _pieceMoveGenertorFactory = pieceMoveGeneratorFactory;
+    }
     public IDictionary<IBoardPosition, HashSet<IBoardPosition>> GeneratePossibleMoves(IBoardState boardState)
     {
-        throw new System.NotImplementedException();
+        var result = new Dictionary<IBoardPosition, HashSet<IBoardPosition>>();
+        var board = boardState.Board;
+        foreach(var tile in board)
+        {
+            if (tile.CurrentPiece != PieceType.NullPiece)
+            {
+                var currentPiece = tile.CurrentPiece;
+                var boardPos = tile.BoardPosition;
+                var possibleMoves = _pieceMoveGenertorFactory.GetPossibleMoveGenerator(currentPiece).GetPossiblePieceMoves(boardPos, boardState);
+                result.Add(boardPos, new HashSet<IBoardPosition>(possibleMoves));
+            }
+        }
+        return result;
     }
 }

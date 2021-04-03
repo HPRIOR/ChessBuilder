@@ -7,11 +7,21 @@ using UnityEngine;
 
 public class GameState: IGameState
 {
+    IPossibleMovesGenerator _possibleMovesGenerator;
+    public GameState(IPossibleMovesGenerator possibleMovesGenerator)
+    {
+        _possibleMovesGenerator = possibleMovesGenerator;
+    }
     public IBoardState currentBoardState { get; private set; }
+
+    public IDictionary<IBoardPosition, HashSet<IBoardPosition>> PossibleBoardMoves { get; private set; }
     public void UpdateGameState(IBoardState newState)
     {
+        var previousState = currentBoardState;
         currentBoardState = newState;
-        GameStateChangeEvent?.Invoke(currentBoardState);
+
+        PossibleBoardMoves = _possibleMovesGenerator.GeneratePossibleMoves(currentBoardState);
+        GameStateChangeEvent?.Invoke(previousState, currentBoardState);
     }
 
     /*
@@ -19,7 +29,7 @@ public class GameState: IGameState
      *  rendering pieces 
      *  calculating possible moves at the end of a turn                            
      */
-    public event Action<IBoardState> GameStateChangeEvent;
+    public event Action<IBoardState, IBoardState> GameStateChangeEvent;
 
 
 }

@@ -3,24 +3,33 @@ using Zenject;
 
 public class Game : MonoBehaviour
 {
-    private IPieceSpawner _pieceInjector;
     private IPossibleBoardMovesGenerator _possibleBoardMovesGenerator;
+    private IBoardGenerator _boardGenerator;
+    public IGameState CurrentState { get; private set; }
 
     [Inject]
-    public void Construct(IPieceSpawner pieceInjector, IPossibleBoardMovesGenerator possibleBoardMovesGenerator)
+    public void Construct(
+        IGameState initState,
+        IBoardGenerator boardGenerator 
+        //IPossibleBoardMovesGenerator possibleBoardMovesGenerator
+        )
     {
-        _pieceInjector = pieceInjector;
-        _possibleBoardMovesGenerator = possibleBoardMovesGenerator;
+        //_possibleBoardMovesGenerator = possibleBoardMovesGenerator;
+        _boardGenerator = boardGenerator;
+        CurrentState = initState;
+       
     }
 
     public void Start()
     {
-        //_pieceInjector.CreatePieceOf(PieceType.BlackKing, new BoardPosition(0, 0));
-        //_pieceInjector.CreatePieceOf(PieceType.WhiteKing, new BoardPosition(7, 7));
-        _pieceInjector.CreatePieceOf(PieceType.WhitePawn, new BoardPosition(0, 1));
-        _pieceInjector.CreatePieceOf(PieceType.BlackPawn, new BoardPosition(1, 2));
-        _pieceInjector.CreatePieceOf(PieceType.BlackRook, new BoardPosition(1, 7));
-        _pieceInjector.CreatePieceOf(PieceType.BlackKnight, new BoardPosition(5, 5));
-        _possibleBoardMovesGenerator.GeneratePossibleMoves();
+        CurrentState.UpdateGameState(InitBoard());
     }
+
+    private IBoardState InitBoard()
+    {
+        var board = _boardGenerator.GenerateBoard();
+        board[0, 0].CurrentPiece = PieceType.WhiteKnight;
+        return new BoardState(board);
+    }
+
 }

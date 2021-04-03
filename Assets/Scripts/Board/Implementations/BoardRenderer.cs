@@ -1,13 +1,25 @@
 ﻿using UnityEngine;
+using Zenject;
 
 // separate this into another class that doesn't depend on tiles so it can be executed indipendantly
 public class BoardRenderer : MonoBehaviour, IBoardRenderer
 {
     public GameObject tilePrefab;
+    private IPieceSpawner _pieceSpawner;
+    private IGameState _gameState;
 
-    private void Start()
+    private void Awake()
     {
         RenderBoard();
+        _gameState.GameStateChangeEvent += RenderPieces;
+        
+    }
+
+    [Inject]
+    public void Construct(IPieceSpawner pieceSpawner, IGameState gameState)
+    {
+        _pieceSpawner = pieceSpawner;
+        _gameState = gameState;
     }
 
     public void RenderBoard()
@@ -36,6 +48,27 @@ public class BoardRenderer : MonoBehaviour, IBoardRenderer
             }
             count += 1;
         }
+    }
+
+    private void RenderPieces(IBoardState boardState)
+    {
+        DestroyExistingPieces();
+        var board = boardState.Board;
+        foreach(var tile in board)
+        {
+            var currentPiece = tile.CurrentPiece;
+            if(currentPiece != PieceType.NullPiece)
+                _pieceSpawner.CreatePiece(currentPiece, tile.BoardPosition);
+        }
+
+    }
+
+    private void DestroyExistingPieces()
+    {
+        var piecesGameObject = GameObject.FindGameObjectWithTag("Pieces");
+        if (piecesGameObject.transform.childCount > 0)
+            foreach(Transform child in piecesGameObject.transform)
+                Destroy(child);
     }
 
     private (float X, float Y)[,] CreateBoardPositions()

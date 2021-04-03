@@ -1,5 +1,6 @@
 ﻿public enum PieceType
 {
+    NullPiece,
     BlackKing,
     BlackQueen,
     BlackRook,

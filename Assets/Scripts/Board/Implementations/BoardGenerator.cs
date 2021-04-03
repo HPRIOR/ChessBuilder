@@ -13,14 +13,4 @@
 
         return board;
     }
-
-    public ITile[,] RotateBoard(ITile[,] board)
-    {
-        var result = new ITile[8, 8];
-
-        for (int iEnd = 7, iStart = 0; iStart < 8; iStart++, iEnd--)
-            for (int jEnd = 7, jStart = 0; jStart < 8; jStart++, jEnd--)
-                result[iStart, jStart] = board[iEnd, jEnd];
-        return result;
     }
-}

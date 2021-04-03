@@ -10,35 +10,9 @@ using UnityEngine;
  */
 public class PossibleBoardMovesGenerator : IPossibleBoardMovesGenerator
 {
-    private readonly IBoardState _boardState;
-    public IDictionary<GameObject, HashSet<IBoardPosition>> PossibleMoves { get; private set; }
 
-    public PossibleBoardMovesGenerator(IBoardState boardState)
+    public IDictionary<IBoardPosition, HashSet<IBoardPosition>> GeneratePossibleMoves(IBoardState boardState)
     {
-        _boardState = boardState;
-    }
-
-    public void GeneratePossibleMoves()
-    {
-        var activeGameObjects = GetActiveGameObjects();
-        var activePieceComponents = activeGameObjects.ToList().Select(go => go.GetComponent<Piece>());
-        PossibleMoves = activeGameObjects
-            .ToDictionary(
-                gameObject => gameObject,
-                gameObject => new HashSet<IBoardPosition>(gameObject.GetComponent<Piece>().GetPossibleMoves())
-                );
-    }
-
-    private IEnumerable<GameObject> GetActiveGameObjects()
-    {
-        var activeGameObjects = new List<GameObject>();
-        for (int i = 0; i < 8; i++)
-            for (int j = 0; j < 8; j++)
-            {
-                var tile = _boardState.GetTileAt(new BoardPosition(i, j));
-                if (tile.CurrentPiece != null)
-                    activeGameObjects.Add(tile.CurrentPiece);
-            }
-        return activeGameObjects;
+        throw new System.NotImplementedException();
     }
 }

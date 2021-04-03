@@ -2,5 +2,4 @@
 {
     ITile[,] GenerateBoard();
 
-    ITile[,] RotateBoard(ITile[,] board);
 }

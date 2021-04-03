@@ -1,7 +1,8 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
-public interface ITile
+public interface ITile : ICloneable
 {
     IBoardPosition BoardPosition { get; set; }
-    GameObject CurrentPiece { get; set; }
+    PieceType CurrentPiece { get; set; }
 }

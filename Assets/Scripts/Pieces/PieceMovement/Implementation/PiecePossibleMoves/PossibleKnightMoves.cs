@@ -24,7 +24,6 @@ public class PossibleKnightMoves : IPieceMoveGenerator
         Func<(int X, int Y), bool> coordInBounds = 
             coord => 0 <= coord.X || coord.X <= 7 || 0 <= coord.Y || coord.Y <= 7;
 
-        Func<IBoardPosition, bool> doesNotContainFriendlyPiece  ;
 
 
         

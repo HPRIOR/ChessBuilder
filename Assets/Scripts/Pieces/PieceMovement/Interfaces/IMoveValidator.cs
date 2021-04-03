@@ -1,8 +1,7 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public interface IMoveValidator
 {
-    bool ValidateMove(GameObject piece, IBoardPosition destination);
-
-    bool ValidateMove(IBoardPosition origin, IBoardPosition destination);
+    bool ValidateMove(IDictionary<IBoardPosition, HashSet<IBoardPosition>> possibleMoves, IBoardPosition origin, IBoardPosition destination);
 }

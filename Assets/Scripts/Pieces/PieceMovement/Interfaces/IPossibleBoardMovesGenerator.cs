@@ -3,7 +3,5 @@ using UnityEngine;
 
 public interface IPossibleBoardMovesGenerator
 {
-    IDictionary<GameObject, HashSet<IBoardPosition>> PossibleMoves { get; }
-
-    void GeneratePossibleMoves();
+    IDictionary<IBoardPosition, HashSet<IBoardPosition>> GeneratePossibleMoves(IBoardState boardState);
 }

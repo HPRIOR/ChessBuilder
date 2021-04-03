@@ -15,13 +15,15 @@ public class BoardEval : IBoardEval
         _pieceColour = pieceColour;
     }
 
-    public bool NoPieceIn(ITile tile) => tile.CurrentPiece == null;
+    public bool NoPieceIn(ITile tile) => tile.CurrentPiece == PieceType.NullPiece;
 
     public bool FriendlyPieceIn(ITile tile) =>
-        tile.CurrentPiece is null ? false : tile.CurrentPiece.GetComponent<Piece>().Info.PieceColour == _pieceColour;
+        tile.CurrentPiece is PieceType.NullPiece ? false : PieceColourFromType(tile.CurrentPiece) == _pieceColour;
 
     public bool OpposingPieceIn(ITile tile) =>
-        tile.CurrentPiece is null ? false : tile.CurrentPiece.GetComponent<Piece>().Info.PieceColour != _pieceColour;
+        tile.CurrentPiece is PieceType.NullPiece ? false : PieceColourFromType(tile.CurrentPiece) != _pieceColour;
+
+    private PieceColour PieceColourFromType(PieceType pieceType) => pieceType.ToString().StartsWith("White") ? PieceColour.White : PieceColour.Black;
 
     public class Factory : PlaceholderFactory<PieceColour, BoardEval> { }
 }

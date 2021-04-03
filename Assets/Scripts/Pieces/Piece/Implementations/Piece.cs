@@ -7,19 +7,16 @@ public class Piece : MonoBehaviour
 {
     public IBoardPosition BoardPosition { get; set; }
     public IPieceInfo Info { get; private set; }
-    private IPieceMoveGenerator _possibleMoveGenerator;
     private SpriteRenderer _spriteRenderer;
 
     [Inject]
     public void Construct(
             IPieceInfo pieceInfo,
-            IBoardPosition boardPosition,
-            IPieceMoveGeneratorFactory pieceMoveGeneratorFactory
+            IBoardPosition boardPosition
             )
     {
         Info = pieceInfo;
         BoardPosition = boardPosition;
-        _possibleMoveGenerator = pieceMoveGeneratorFactory.GetPossibleMoveGenerator(Info.PieceType);
     }
 
     private void Start()
@@ -30,7 +27,6 @@ public class Piece : MonoBehaviour
         gameObject.transform.position = BoardPosition.Vector;
     }
 
-    public IEnumerable<IBoardPosition> GetPossibleMoves() => _possibleMoveGenerator.GetPossiblePieceMoves(gameObject);
 
     public class Factory : PlaceholderFactory<IPieceInfo, IBoardPosition, Piece> { }
 

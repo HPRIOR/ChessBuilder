@@ -2,7 +2,6 @@
 
 public interface IPieceMover
 {
-    void Move(GameObject piece, IBoardPosition toDestination);
+    IBoardState Move(IBoardState board, IBoardPosition from, IBoardPosition toDestination);
 
-    void UndoMove(IMoveData moveData);
 }

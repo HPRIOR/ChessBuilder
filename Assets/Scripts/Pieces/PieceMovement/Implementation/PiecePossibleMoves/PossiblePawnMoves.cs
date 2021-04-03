@@ -22,7 +22,7 @@ public class PossiblePawnMoves : IPieceMoveGenerator
 
         if (originPosition.Y == 7) return potentialMoves; // allow to change piece
 
-        if (_positionTranslator.GetRelativeTileAt(originPosition.Add(Move.In(Direction.N))).CurrentPiece == null)
+        if (_positionTranslator.GetRelativeTileAt(originPosition.Add(Move.In(Direction.N))).CurrentPiece == PieceType.NullPiece)
             potentialMoves.Add(
                 _positionTranslator.GetRelativePosition(originPosition.Add(Move.In(Direction.N)))
                 );

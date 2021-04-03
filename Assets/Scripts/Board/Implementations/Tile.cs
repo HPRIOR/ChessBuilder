@@ -6,10 +6,10 @@
  */
 public class Tile : ITile
 {
-    public GameObject CurrentPiece { get; set; }
+    public PieceType CurrentPiece { get; set; }
     public IBoardPosition BoardPosition { get; set; }
 
-    public Tile(BoardPosition boardPosition, GameObject currentPiece)
+    public Tile(IBoardPosition boardPosition, PieceType currentPiece)
     {
         BoardPosition = boardPosition;
         CurrentPiece = currentPiece;
@@ -18,9 +18,13 @@ public class Tile : ITile
     public Tile(BoardPosition boardPosition)
     {
         BoardPosition = boardPosition;
-        CurrentPiece = null;
+        CurrentPiece = PieceType.NullPiece;
     }
 
     public override string ToString() => $"Tile at ({BoardPosition.X}, {BoardPosition.Y}) containing" +
-        $" {CurrentPiece?.GetComponent<Piece>().Info.PieceType}";
+        $" {CurrentPiece}";
+
+    public object Clone() =>
+        new Tile(BoardPosition, CurrentPiece);
+   
 }

@@ -3,23 +3,18 @@ using Zenject;
 
 public class DragAndDropCommand : ICommand
 {
-    private static MoveDataFactory _moveDataFactory;
     private static IPieceMover _pieceMover;
     private static IMoveValidator _moveValidator;
-    private IMoveData _moveData;
     private GameObject _piece;
     private IBoardPosition _destination;
 
     public DragAndDropCommand(
         GameObject piece,
         IBoardPosition destination,
-        MoveDataFactory moveDataFactory,
         IPieceMover pieceMover,
         IMoveValidator moveValidator
         )
     {
-        _moveDataFactory = moveDataFactory;
-        _moveData = _moveDataFactory.CreateMoveData(piece, destination);
 
         _piece = piece;
         _destination = destination;
@@ -30,23 +25,23 @@ public class DragAndDropCommand : ICommand
 
     public void Execute()
     {
-        _pieceMover.Move(_piece, _destination);
+        //_pieceMover.Move(_piece, _destination);
     }
 
     public bool IsValid()
     {
-        if (_moveValidator.ValidateMove(_piece, _destination))
-            return true;
-        else
-        {
-            _piece.transform.position = _piece.GetComponent<Piece>().BoardPosition.Vector;
-            return false;
-        }
+        //if (_moveValidator.ValidateMove(_piece, _destination))
+        //    return true;
+        //else
+        //{
+        //    _piece.transform.position = _piece.GetComponent<Piece>().BoardPosition.Vector;
+        //    return false;
+        //}
+        return true;
     }
 
     public void Undo()
     {
-        _pieceMover.UndoMove(_moveData);
     }
 
     public class Factory : PlaceholderFactory<GameObject, IBoardPosition, DragAndDropCommand> { }

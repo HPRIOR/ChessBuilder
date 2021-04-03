@@ -51,12 +51,12 @@ public class PossibleMovesTestBase : ZenjectUnitTestFixture
         piecesAtPositions
         .ToList()
         .ForEach(item =>
-            _pieceSpawner.CreatePieceOf(
+            _pieceSpawner.CreatePiece(
                 item.piece, item.boardPosition)
         );
 
 
-    protected GameObject GetGameObjectAtPosition(int x, int y) => TestedPieceColour == PieceColour.White 
+    protected PieceType GetPieceTypeAtPosition(int x, int y) => TestedPieceColour == PieceColour.White 
         ? _boardState.GetTileAt(new BoardPosition(x, y)).CurrentPiece 
         : _boardState.GetMirroredTileAt(new BoardPosition(x, y)).CurrentPiece;
 

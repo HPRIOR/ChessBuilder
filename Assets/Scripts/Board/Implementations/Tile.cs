@@ -1,5 +1,9 @@
 ﻿using UnityEngine;
 
+
+/*
+ * Changes: CurrentPiece changed to piecType
+ */
 public class Tile : ITile
 {
     public GameObject CurrentPiece { get; set; }

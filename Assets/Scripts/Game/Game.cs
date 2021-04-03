@@ -20,6 +20,7 @@ public class Game : MonoBehaviour
         _pieceInjector.CreatePieceOf(PieceType.WhitePawn, new BoardPosition(0, 1));
         _pieceInjector.CreatePieceOf(PieceType.BlackPawn, new BoardPosition(1, 2));
         _pieceInjector.CreatePieceOf(PieceType.BlackRook, new BoardPosition(1, 7));
+        _pieceInjector.CreatePieceOf(PieceType.BlackKnight, new BoardPosition(5, 5));
         _possibleBoardMovesGenerator.GeneratePossibleMoves();
     }
 }

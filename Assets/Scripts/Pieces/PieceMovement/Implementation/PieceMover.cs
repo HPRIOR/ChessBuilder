@@ -1,5 +1,13 @@
 ﻿using UnityEngine;
 
+/*
+ * changes: Move signature change to Func<IBoardState, IBoardPos, IBoardPos, ITile[]> 
+ * Don't update pieces on move but produce new board with moved piece types
+ * remove undo move from this class as state will just be restored by refering to previous state
+ * remove Boardstate from constructor, and pass as argument so it can be applied to arbitrary boards
+ * 
+ */
+
 public class PieceMover : IPieceMover
 {
     private static IBoardState _boardState;

@@ -31,7 +31,9 @@ public class PieceMoveGeneratorFactory : IPieceMoveGeneratorFactory
                 GetPositionTranslatorWith(PieceColourFrom(pieceType)), GetBoardEvalWith(PieceColourFrom(pieceType))),
             var bishop when bishop == PieceType.BlackBishop || bishop == PieceType.WhiteBishop => new PossibleBishopMoves(
                 GetBoardScannerWith(PieceColourFrom(pieceType)), GetPositionTranslatorWith(PieceColourFrom(pieceType))),
-            //var knight when knight == PieceType.BlackKnight || knight == PieceType.WhiteKnight => throw new System.NotImplementedException(),
+            var knight when knight == PieceType.BlackKnight || knight == PieceType.WhiteKnight => new PossibleKnightMoves(
+                GetPositionTranslatorWith(PieceColourFrom(pieceType)), GetBoardEvalWith(PieceColourFrom(pieceType))
+                ),
             var rook when rook == PieceType.BlackRook || rook == PieceType.WhiteRook => new PossibleRookMoves(
                 GetBoardScannerWith(PieceColourFrom(pieceType)),
                 GetPositionTranslatorWith(PieceColourFrom(pieceType))

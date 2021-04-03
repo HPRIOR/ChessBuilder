@@ -3,6 +3,10 @@ using Zenject;
 
 public class MoveValidator : IMoveValidator
 {
+
+    /*
+     * Changes: board state passed as argument, instead of game object IBoardPosition is used to evaluate piece move
+     */
     private IBoardState _boardState;
     private IPossibleBoardMovesGenerator _possibleBoardMovesGenerator;
 

@@ -2,10 +2,6 @@
 
 public class CommandInvoker : ICommandInvoker
 {
-    /*
-     * player 1/2 logic could be implemented here
-     * instead of the piece mover switching between moves two buffers are kept and commands are invoked from it in turn
-     */
     private Stack<ICommand> commandBuffer;
 
     public CommandInvoker()

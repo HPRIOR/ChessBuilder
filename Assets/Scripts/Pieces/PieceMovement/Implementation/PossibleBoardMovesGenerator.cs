@@ -1,20 +1,19 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
-using UnityEngine;
 
 public class PossibleBoardMovesGenerator : IPossibleMovesGenerator
 {
-    IPieceMoveGeneratorFactory _pieceMoveGeneratorFactory;
+    private IPieceMoveGeneratorFactory _pieceMoveGeneratorFactory;
 
     public PossibleBoardMovesGenerator(IPieceMoveGeneratorFactory pieceMoveGeneratorFactory)
     {
         _pieceMoveGeneratorFactory = pieceMoveGeneratorFactory;
     }
+
     public IDictionary<IBoardPosition, HashSet<IBoardPosition>> GeneratePossibleMoves(IBoardState boardState)
     {
         var result = new Dictionary<IBoardPosition, HashSet<IBoardPosition>>();
         var board = boardState.Board;
-        foreach(var tile in board)
+        foreach (var tile in board)
         {
             if (tile.CurrentPiece != PieceType.NullPiece)
             {

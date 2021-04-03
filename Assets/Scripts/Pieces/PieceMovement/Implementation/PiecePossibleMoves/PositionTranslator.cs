@@ -20,6 +20,5 @@ public class PositionTranslator : IPositionTranslator
         ? boardState.GetTileAt(boardPosition)
         : boardState.GetMirroredTileAt(boardPosition);
 
-
     public class Factory : PlaceholderFactory<PieceColour, PositionTranslator> { }
 }

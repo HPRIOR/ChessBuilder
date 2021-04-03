@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using UnityEngine;
 
 public class PossiblePawnMoves : IPieceMoveGenerator
 {
@@ -12,7 +11,6 @@ public class PossiblePawnMoves : IPieceMoveGenerator
         _boardEval = boardEval;
     }
 
-    
     public IEnumerable<IBoardPosition> GetPossiblePieceMoves(IBoardPosition originPosition, IBoardState boardState)
     {
         var potentialMoves = new List<IBoardPosition>();

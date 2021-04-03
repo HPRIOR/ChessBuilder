@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using Zenject;
 
-// 'View class'  which is subscribed to changes in game state 
+// 'View class'  which is subscribed to changes in game state
 public class BoardRenderer : MonoBehaviour, IBoardRenderer
 {
     public GameObject tilePrefab;
@@ -12,7 +12,6 @@ public class BoardRenderer : MonoBehaviour, IBoardRenderer
     {
         RenderBoard();
         _gameState.GameStateChangeEvent += RenderPieces;
-        
     }
 
     [Inject]
@@ -54,20 +53,19 @@ public class BoardRenderer : MonoBehaviour, IBoardRenderer
     {
         DestroyExistingPieces();
         var board = newState.Board;
-        foreach(var tile in board)
+        foreach (var tile in board)
         {
             var currentPiece = tile.CurrentPiece;
-            if(currentPiece != PieceType.NullPiece)
+            if (currentPiece != PieceType.NullPiece)
                 _pieceSpawner.CreatePiece(currentPiece, tile.BoardPosition);
         }
-
     }
 
     private void DestroyExistingPieces()
     {
         var piecesGameObject = GameObject.FindGameObjectWithTag("Pieces");
         if (piecesGameObject.transform.childCount > 0)
-            foreach(Transform child in piecesGameObject.transform)
+            foreach (Transform child in piecesGameObject.transform)
                 Destroy(child.gameObject);
     }
 

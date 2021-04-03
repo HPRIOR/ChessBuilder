@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
 
 public class PossibleKnightMoves : IPieceMoveGenerator
 {
@@ -18,10 +15,10 @@ public class PossibleKnightMoves : IPieceMoveGenerator
 
     public IEnumerable<IBoardPosition> GetPossiblePieceMoves(IBoardPosition originPosition, IBoardState boardState)
     {
-        Func<(int X, int Y), bool> coordInBounds = 
+        Func<(int X, int Y), bool> coordInBounds =
             coord => 0 <= coord.X || coord.X <= 7 || 0 <= coord.Y || coord.Y <= 7;
-        
-        return GetMoveCoords(originPosition)
+
+        return GetMoveCoords(_positionTranslator.GetRelativePosition(originPosition))
             .Where(coordInBounds)
             .Select(coord => new BoardPosition(coord.X, coord.Y))
             .Select(pos => _positionTranslator.GetRelativePosition(pos));
@@ -30,17 +27,17 @@ public class PossibleKnightMoves : IPieceMoveGenerator
     private IEnumerable<(int X, int Y)> GetMoveCoords(IBoardPosition boardPosition)
     {
         int x = boardPosition.X; int y = boardPosition.Y;
-        var squareXs = new List<int>(){ x + 2, x - 2};
-        var squareYs = new List<int>() { y + 2, y - 2};
+        var squareXs = new List<int>() { x + 2, x - 2 };
+        var squareYs = new List<int>() { y + 2, y - 2 };
 
-        var lateralMoves = 
+        var lateralMoves =
             squareXs.SelectMany(
                 x => Enumerable
-                        .Range(0,2)
-                        .Select(num => num == 0 ? (x, y + 1): (x, y - 1))
+                        .Range(0, 2)
+                        .Select(num => num == 0 ? (x, y + 1) : (x, y - 1))
                 );
 
-        var verticalMoves 
+        var verticalMoves
             = squareYs.SelectMany(
                 y => Enumerable
                         .Range(0, 2)
@@ -49,5 +46,4 @@ public class PossibleKnightMoves : IPieceMoveGenerator
 
         return lateralMoves.Concat(verticalMoves);
     }
-
 }

@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
 
 public class PossibleRookMoves : IPieceMoveGenerator
 {
@@ -17,7 +16,6 @@ public class PossibleRookMoves : IPieceMoveGenerator
 
     public IEnumerable<IBoardPosition> GetPossiblePieceMoves(IBoardPosition originPosition, IBoardState boardState)
     {
-
         var relativePosition = _positionTranslator.GetRelativePosition(originPosition);
         var possibleDirections = new List<Direction>() { Direction.N, Direction.E, Direction.S, Direction.W };
 

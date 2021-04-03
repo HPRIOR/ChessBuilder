@@ -8,11 +8,9 @@
     }
 
     public Piece CreatePiece(PieceType pieceType, IBoardPosition boardPosition)
-    { 
+    {
         var piece = _pieceFactory.Create(new PieceInfo(pieceType), boardPosition);
         piece.BoardPosition = boardPosition;
         return piece;
     }
-
-        
 }

@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
 
 public class PossibleQueenMoves : IPieceMoveGenerator
 {
@@ -15,6 +12,7 @@ public class PossibleQueenMoves : IPieceMoveGenerator
         _positionTranslator = positionTranslator;
         _boardScanner = boardScanner;
     }
+
     public IEnumerable<IBoardPosition> GetPossiblePieceMoves(IBoardPosition originPosition, IBoardState boardState)
     {
         var relativePosition = _positionTranslator.GetRelativePosition(originPosition);

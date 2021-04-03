@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using UnityEditor;
+﻿using UnityEditor;
 using UnityEngine;
 using Zenject;
 
@@ -26,7 +25,6 @@ public class Piece : MonoBehaviour
         gameObject.transform.parent = GameObject.FindGameObjectWithTag("Pieces")?.transform;
         gameObject.transform.position = BoardPosition.Vector;
     }
-
 
     public class Factory : PlaceholderFactory<IPieceInfo, IBoardPosition, Piece> { }
 

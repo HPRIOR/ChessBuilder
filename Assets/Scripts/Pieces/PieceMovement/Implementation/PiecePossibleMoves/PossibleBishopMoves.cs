@@ -1,7 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
 
 public class PossibleBishopMoves : IPieceMoveGenerator
 {
@@ -13,7 +11,7 @@ public class PossibleBishopMoves : IPieceMoveGenerator
         _boardScanner = boardScanner;
         _positionTranslator = positionTranslator;
     }
-   
+
     public IEnumerable<IBoardPosition> GetPossiblePieceMoves(IBoardPosition originPosition, IBoardState boardState)
     {
         var relativePosition = _positionTranslator.GetRelativePosition(originPosition);

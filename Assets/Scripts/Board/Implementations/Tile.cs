@@ -1,9 +1,7 @@
-﻿using UnityEngine;
-
-
-/*
+﻿/*
  * Changes: CurrentPiece changed to piecType
  */
+
 public class Tile : ITile
 {
     public PieceType CurrentPiece { get; set; }
@@ -26,5 +24,4 @@ public class Tile : ITile
 
     public object Clone() =>
         new Tile(BoardPosition, CurrentPiece);
-   
 }

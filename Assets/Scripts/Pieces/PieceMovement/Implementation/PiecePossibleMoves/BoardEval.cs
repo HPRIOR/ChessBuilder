@@ -2,7 +2,6 @@
 
 public class BoardEval : IBoardEval
 {
-
     private readonly PieceColour _pieceColour;
 
     public BoardEval(PieceColour pieceColour)

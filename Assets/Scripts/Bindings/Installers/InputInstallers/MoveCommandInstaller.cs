@@ -1,5 +1,4 @@
-﻿using UnityEngine;
-using Zenject;
+﻿using Zenject;
 
 public class MoveCommandInstaller : Installer<MoveCommandInstaller>
 {

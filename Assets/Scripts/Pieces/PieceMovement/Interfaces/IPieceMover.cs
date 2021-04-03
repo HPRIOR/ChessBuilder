@@ -1,7 +1,4 @@
-﻿using UnityEngine;
-
-public interface IPieceMover
+﻿public interface IPieceMover
 {
     IBoardState Move(IBoardState board, IBoardPosition from, IBoardPosition toDestination);
-
 }

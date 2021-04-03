@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-public class MoveCommandFactory
+﻿public class MoveCommandFactory
 {
     private MoveCommand.Factory _movePieceCommandFactory;
 

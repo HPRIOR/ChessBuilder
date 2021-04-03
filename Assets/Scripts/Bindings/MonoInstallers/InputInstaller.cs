@@ -6,6 +6,5 @@ public class InputInstaller : MonoInstaller
     {
         MoveCommandInstaller.Install(Container);
         CommandInvokerInstaller.Install(Container);
-        MoveDataInstaller.Install(Container);
     }
 }

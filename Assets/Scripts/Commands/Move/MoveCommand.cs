@@ -1,5 +1,4 @@
-﻿using UnityEngine;
-using Zenject;
+﻿using Zenject;
 
 public class MoveCommand : ICommand
 {
@@ -42,7 +41,6 @@ public class MoveCommand : ICommand
         _gameState.UpdateGameState(_stateTransitionedFrom);
         return false;
     }
-
 
     public void Undo()
     {

@@ -16,21 +16,6 @@ public class PossibleKnightMoves : IPieceMoveGenerator
         _boardEval = boardEval;
     }
 
-    public IEnumerable<IBoardPosition> GetPossiblePieceMoves(GameObject piece)
-    { 
-        var pieceComponent = piece.GetComponent<Piece>();
-        var piecePosition = pieceComponent.BoardPosition;
-
-        Func<(int X, int Y), bool> coordInBounds = 
-            coord => 0 <= coord.X || coord.X <= 7 || 0 <= coord.Y || coord.Y <= 7;
-        
-        return GetMoveCoords(piecePosition)
-            .Where(coordInBounds)
-            .Select(coord => new BoardPosition(coord.X, coord.Y))
-            .Select(pos => _positionTranslator.GetRelativePosition(pos));
-           
-    }
-
     public IEnumerable<IBoardPosition> GetPossiblePieceMoves(IBoardPosition originPosition, IBoardState boardState)
     {
         Func<(int X, int Y), bool> coordInBounds = 

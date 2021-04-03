@@ -7,10 +7,12 @@ public class DragAndDrop : MonoBehaviour
     private bool _isDragging;
     private SpriteRenderer _spriteRenderer;
     private static MoveCommandFactory _dragAndDropCommandFactory;
+    private Piece _piece;
 
     private void Start()
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();
+        _piece = gameObject.GetComponent<Piece>();
     }
 
     [Inject]
@@ -34,7 +36,7 @@ public class DragAndDrop : MonoBehaviour
 
         _commandInvoker.AddCommand(
             _dragAndDropCommandFactory.Create(
-                GetNearestBoardPosition(gameObject.transform.position), 
+                _piece.BoardPosition,
                 nearestBoardPosition)
             );
         _isDragging = false;

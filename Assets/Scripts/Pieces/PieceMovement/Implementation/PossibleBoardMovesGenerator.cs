@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class PossibleBoardMovesGenerator : IPossibleMovesGenerator
 {
-    IPieceMoveGeneratorFactory _pieceMoveGenertorFactory;
+    IPieceMoveGeneratorFactory _pieceMoveGeneratorFactory;
 
-    PossibleBoardMovesGenerator(IPieceMoveGeneratorFactory pieceMoveGeneratorFactory)
+    public PossibleBoardMovesGenerator(IPieceMoveGeneratorFactory pieceMoveGeneratorFactory)
     {
-        _pieceMoveGenertorFactory = pieceMoveGeneratorFactory;
+        _pieceMoveGeneratorFactory = pieceMoveGeneratorFactory;
     }
     public IDictionary<IBoardPosition, HashSet<IBoardPosition>> GeneratePossibleMoves(IBoardState boardState)
     {
@@ -20,10 +20,11 @@ public class PossibleBoardMovesGenerator : IPossibleMovesGenerator
             {
                 var currentPiece = tile.CurrentPiece;
                 var boardPos = tile.BoardPosition;
-                var possibleMoves = _pieceMoveGenertorFactory.GetPossibleMoveGenerator(currentPiece).GetPossiblePieceMoves(boardPos, boardState);
+                var possibleMoves = _pieceMoveGeneratorFactory.GetPossibleMoveGenerator(currentPiece).GetPossiblePieceMoves(boardPos, boardState);
                 result.Add(boardPos, new HashSet<IBoardPosition>(possibleMoves));
             }
         }
+        //result.ToList().ForEach(x => x.Value.ToList().ForEach(x => Debug.Log(x)));
         return result;
     }
 }

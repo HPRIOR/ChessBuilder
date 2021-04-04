@@ -2,6 +2,7 @@ using Zenject;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 [TestFixture]
 public class PossibleKingMovesTests : PossibleMovesTestBase
@@ -16,15 +17,16 @@ public class PossibleKingMovesTests : PossibleMovesTestBase
         var kingMoveGenerator = GetPossibleMoveGenerator(pieceType);
         var pieces = new List<(PieceType, IBoardPosition)>()
         {
-            (pieceType, RelativePositionToTestedPiece(new BoardPosition(x, y)))
+            (pieceType, new BoardPosition(x, y))
         };
 
-        SetUpBoardWith(pieces);
+        var board = SetUpBoardWith(pieces);
 
-        var kingGameObject = GetPieceTypeAtPosition(x, y);
-        //var possibleMoves = kingMoveGenerator.GetPossiblePieceMoves(kingGameObject);
+        var possibleMoves = kingMoveGenerator.GetPossiblePieceMoves(new BoardPosition(x, y), board);
 
-        //Assert.AreEqual(8, possibleMoves.Count());
+
+        Assert.AreEqual(8, possibleMoves.Count());
+         
     }
 
     [Test]
@@ -37,15 +39,14 @@ public class PossibleKingMovesTests : PossibleMovesTestBase
         var kingMoveGenerator = GetPossibleMoveGenerator(pieceType);
         var pieces = new List<(PieceType, IBoardPosition)>()
         {
-            (pieceType, RelativePositionToTestedPiece(new BoardPosition(x, y)))
+            (pieceType, new BoardPosition(x, y))
         };
 
-        SetUpBoardWith(pieces);
+        var board = SetUpBoardWith(pieces);
 
-        var kingGameObject = GetPieceTypeAtPosition(x, y);
-        //var possibleMoves = kingMoveGenerator.GetPossiblePieceMoves(kingGameObject);
+        var possibleMoves = kingMoveGenerator.GetPossiblePieceMoves(new BoardPosition(x, y), board);
 
-        //Assert.AreEqual(3, possibleMoves.Count());
+        Assert.AreEqual(3, possibleMoves.Count());
     }
 
     [Test]
@@ -61,12 +62,11 @@ public class PossibleKingMovesTests : PossibleMovesTestBase
             (pieceType, RelativePositionToTestedPiece(new BoardPosition(x, y)))
         };
 
-        SetUpBoardWith(pieces);
+        var board =  SetUpBoardWith(pieces);
 
-        var kingGameObject = GetPieceTypeAtPosition(x, y);
-        //var possibleMoves = kingMoveGenerator.GetPossiblePieceMoves(kingGameObject);
+        var possibleMoves = kingMoveGenerator.GetPossiblePieceMoves(new BoardPosition(x, y), board);
 
-        //Assert.AreEqual(5, possibleMoves.Count());
+        Assert.AreEqual(5, possibleMoves.Count());
     }
 
     [Test]
@@ -82,12 +82,11 @@ public class PossibleKingMovesTests : PossibleMovesTestBase
             (pieceType, RelativePositionToTestedPiece(new BoardPosition(x, y)))
         };
 
-        SetUpBoardWith(pieces);
+        var board = SetUpBoardWith(pieces);
+        var possibleMoves = kingMoveGenerator.GetPossiblePieceMoves(new BoardPosition(x, y), board);
 
-        var kingGameObject = GetPieceTypeAtPosition(x, y);
-        //var possibleMoves = kingMoveGenerator.GetPossiblePieceMoves(kingGameObject);
 
-        //Assert.AreEqual(5, possibleMoves.Count());
+        Assert.AreEqual(5, possibleMoves.Count());
     }
 
     [Test]
@@ -100,23 +99,21 @@ public class PossibleKingMovesTests : PossibleMovesTestBase
         var kingMoveGenerator = GetPossibleMoveGenerator(pieceType);
         var pieces = new List<(PieceType, IBoardPosition)>()
         {
-            (pieceType, RelativePositionToTestedPiece(new BoardPosition(x, y))),
-            (GetOppositePieceType(pieceType), RelativePositionToTestedPiece(new BoardPosition(x + 1, y))),
-            (GetOppositePieceType(pieceType), RelativePositionToTestedPiece(new BoardPosition(x + 1, y - 1))),
-            (GetOppositePieceType(pieceType), RelativePositionToTestedPiece(new BoardPosition(x + 1, y + 1))),
-            (GetOppositePieceType(pieceType), RelativePositionToTestedPiece(new BoardPosition(x - 1, y - 1))),
-            (GetOppositePieceType(pieceType), RelativePositionToTestedPiece(new BoardPosition(x - 1, y))),
-            (GetOppositePieceType(pieceType), RelativePositionToTestedPiece(new BoardPosition(x - 1, y + 1))),
-            (GetOppositePieceType(pieceType), RelativePositionToTestedPiece(new BoardPosition(x, y + 1))),
-            (GetOppositePieceType(pieceType), RelativePositionToTestedPiece(new BoardPosition(x, y - 1))),
+            (pieceType, new BoardPosition(x, y)),
+            (GetOppositePieceType(pieceType), new BoardPosition(x + 1, y)),
+            (GetOppositePieceType(pieceType), new BoardPosition(x + 1, y - 1)),
+            (GetOppositePieceType(pieceType), new BoardPosition(x + 1, y + 1)),
+            (GetOppositePieceType(pieceType), new BoardPosition(x - 1, y - 1)),
+            (GetOppositePieceType(pieceType), new BoardPosition(x - 1, y)),
+            (GetOppositePieceType(pieceType), new BoardPosition(x - 1, y + 1)) ,
+            (GetOppositePieceType(pieceType), new BoardPosition(x, y + 1)),
+            (GetOppositePieceType(pieceType), new BoardPosition(x, y - 1)),
         };
 
-        SetUpBoardWith(pieces);
+        var board = SetUpBoardWith(pieces);
+        var possibleMoves = kingMoveGenerator.GetPossiblePieceMoves(new BoardPosition(x, y), board);
 
-        var kingGameObject = GetPieceTypeAtPosition(x, y);
-        //var possibleMoves = kingMoveGenerator.GetPossiblePieceMoves(kingGameObject);
-
-        //Assert.AreEqual(8, possibleMoves.Count());
+        Assert.AreEqual(8, possibleMoves.Count());
     }
 
     [Test]
@@ -130,16 +127,16 @@ public class PossibleKingMovesTests : PossibleMovesTestBase
         var kingMoveGenerator = GetPossibleMoveGenerator(pieceType);
         var pieces = new List<(PieceType, IBoardPosition)>()
         {
-            (pieceType, RelativePositionToTestedPiece(new BoardPosition(x, y))),
-            (pieceType, RelativePositionToTestedPiece(new BoardPosition(x + 1, y ))),
+            (pieceType, new BoardPosition(x, y)),
+            (pieceType, new BoardPosition(x + 1, y )),
         };
 
-        SetUpBoardWith(pieces);
 
-        var kingGameObject = GetPieceTypeAtPosition(x, y);
-        //var possibleMoves = kingMoveGenerator.GetPossiblePieceMoves(kingGameObject);
+        var board = SetUpBoardWith(pieces);
 
-        //Assert.AreEqual(7, possibleMoves.Count());
+        var possibleMoves = kingMoveGenerator.GetPossiblePieceMoves(new BoardPosition(x, y), board);
+
+        Assert.AreEqual(7, possibleMoves.Count());
     }
 
 

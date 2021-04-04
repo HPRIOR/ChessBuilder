@@ -8,13 +8,11 @@ public class PieceSpawnerTests : ZenjectIntegrationTestFixture
 {
 
     private IPieceSpawner _pieceSpawner;
-    private IBoardState _boardState;
 
     [Inject]
-    public void Construct(IPieceSpawner pieceSpawner, IBoardState boardState)
+    public void Construct(IPieceSpawner pieceSpawner)
     {
         _pieceSpawner = pieceSpawner;
-        _boardState = boardState;
     }
 
     void CommonInstall()
@@ -35,9 +33,9 @@ public class PieceSpawnerTests : ZenjectIntegrationTestFixture
         )
     {
         CommonInstall();
-        //var piece = _pieceSpawner.CreatePieceOf(pieceType, new BoardPosition(x, y));
+        var piece = _pieceSpawner.CreatePiece(pieceType, new BoardPosition(x, y));
         yield return null;
-        //Assert.AreEqual(new BoardPosition(x, y), piece.BoardPosition);
+        Assert.AreEqual(new BoardPosition(x, y), piece.BoardPosition);
     }
 
     [UnityTest]
@@ -46,29 +44,9 @@ public class PieceSpawnerTests : ZenjectIntegrationTestFixture
         )
     {
         CommonInstall();
-        //var piece = _pieceSpawner.CreatePieceOf(pieceType, new BoardPosition(0, 0));
+        var piece = _pieceSpawner.CreatePiece(pieceType, new BoardPosition(0, 0));
         yield return null;
-        //Assert.AreEqual(pieceType, piece.Info.PieceType);
-    }
-
-    [UnityTest]
-    public IEnumerator PiecesChangeBoardStateOnSpawn(
-        [Values] PieceType pieceType, [Values(1, 3, 5, 7)] int x, [Values(0, 2, 4, 6)] int y
-        )
-    {
-        CommonInstall();
-        //var piece = _pieceSpawner.CreatePieceOf(pieceType, new BoardPosition(x, y));
-        yield return null;
-        //Assert.AreEqual(piece, _boardState.GetTileAt(new BoardPosition(x, y)).CurrentPiece.GetComponent<Piece>());
-    }
-
-    [UnityTest]
-    public IEnumerator PiecesSpawnWithPossibleMoveGenerator([Values] PieceType pieceType)
-    {
-        CommonInstall();
-        //var piece = _pieceSpawner.CreatePieceOf(pieceType, new BoardPosition(0, 0));
-        yield return null;
-        //Assert.IsNotNull(piece.GetPossibleMoves());
+        Assert.AreEqual(pieceType, piece.Info.PieceType);
     }
 
     [UnityTest]
@@ -77,8 +55,8 @@ public class PieceSpawnerTests : ZenjectIntegrationTestFixture
         )
     {
         CommonInstall();
-        //var piece = _pieceSpawner.CreatePieceOf(PieceType.WhitePawn, new BoardPosition(x, y));
+        var piece = _pieceSpawner.CreatePiece(PieceType.WhitePawn, new BoardPosition(x, y));
         yield return null;
-        //Assert.AreEqual(new Vector2(x + 0.5f, y + 0.5f), piece.BoardPosition.Vector);
+        Assert.AreEqual(new Vector2(x + 0.5f, y + 0.5f), piece.BoardPosition.Vector);
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 public class PossibleKingMoves : IPieceMoveGenerator
 {
@@ -17,14 +18,15 @@ public class PossibleKingMoves : IPieceMoveGenerator
     {
         var potentialMoves = new List<IBoardPosition>();
         var relativePosition = _positionTranslator.GetRelativePosition(originPosition);
+
         Enum.GetValues(typeof(Direction)).Cast<Direction>().ToList().ForEach(direction =>
             {
                 var newPosition = relativePosition.Add(Move.In(direction));
                 var newRelativePosition = _positionTranslator.GetRelativePosition(newPosition);
                 if (0 > newPosition.X || newPosition.X > 7
                     || 0 > newPosition.Y || newPosition.Y > 7) return;
-                var newTile = _positionTranslator.GetRelativeTileAt(newPosition, boardState);
-                if (_boardEval.OpposingPieceIn(newTile) || _boardEval.NoPieceIn(newTile))
+                var potentialMoveTile = _positionTranslator.GetRelativeTileAt(newPosition, boardState);
+                if (_boardEval.OpposingPieceIn(potentialMoveTile) || _boardEval.NoPieceIn(potentialMoveTile))
                     potentialMoves.Add(newRelativePosition);
             });
 

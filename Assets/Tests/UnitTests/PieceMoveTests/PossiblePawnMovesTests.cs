@@ -23,7 +23,6 @@ public class PossiblePawnMovesTests : PossibleMovesTestBase
 
         SetUpBoardWith(pieces);
 
-        var pawnGameObject = GetPieceTypeAtPosition(x, y);
         //var possibleMoves = pawnMoveGenerator.GetPossiblePieceMoves(pawnGameObject);
 
         //Assert.AreEqual(1, possibleMoves.Count());
@@ -45,7 +44,6 @@ public class PossiblePawnMovesTests : PossibleMovesTestBase
 
         SetUpBoardWith(pieces);
 
-        var pawnGameObject = GetPieceTypeAtPosition(x, y);
         //var possibleMoves = pawnMoveGenerator.GetPossiblePieceMoves(pawnGameObject);
 
         //Assert.AreEqual(2, possibleMoves.Count());
@@ -63,16 +61,15 @@ public class PossiblePawnMovesTests : PossibleMovesTestBase
         var pawnMoveGenerator = GetPossibleMoveGenerator(pieceType);
         var pieces = new List<(PieceType, IBoardPosition)>() {
             (pieceType,  RelativePositionToTestedPiece(new BoardPosition(x, y))),
-            (GetOppositePieceType(pieceType),  RelativePositionToTestedPiece(new BoardPosition(x - 1, y + 1)))
+            (GetOppositePieceType(pieceType), RelativePositionToTestedPiece( new BoardPosition(x - 1, y + 1)))
         };
 
-        SetUpBoardWith(pieces);
+        var board = SetUpBoardWith(pieces);
 
-        var pawnGameObject = GetPieceTypeAtPosition(x, y);
-        //var possibleMoves = pawnMoveGenerator.GetPossiblePieceMoves(pawnGameObject);
+        var possibleMoves = pawnMoveGenerator.GetPossiblePieceMoves(RelativePositionToTestedPiece(new BoardPosition(x, y)), board);
 
-        //Assert.AreEqual(2, possibleMoves.Count());
-        //Assert.Contains(RelativePositionToTestedPiece(new BoardPosition(x - 1, y + 1)), (ICollection)possibleMoves);
+        Assert.AreEqual(2, possibleMoves.Count());
+        Assert.Contains(RelativePositionToTestedPiece( new BoardPosition(x - 1, y + 1)), (ICollection)possibleMoves);
     }
 
     [Test]
@@ -89,12 +86,11 @@ public class PossiblePawnMovesTests : PossibleMovesTestBase
             (whiteOrBlackPiece, RelativePositionToTestedPiece(new BoardPosition(x, y + 1)))
         };
 
-        SetUpBoardWith(pieces);
+        var board = SetUpBoardWith(pieces);
 
-        //var pawnGameObject = GetPieceTypeAtPosition(x, y);
-        //var possibleMoves = pawnMoveGenerator.GetPossiblePieceMoves(pawnGameObject);
+        var possibleMoves = pawnMoveGenerator.GetPossiblePieceMoves(RelativePositionToTestedPiece(new BoardPosition(x, y)), board);
 
-        //Assert.AreEqual(0, possibleMoves.Count());
+        Assert.AreEqual(0, possibleMoves.Count());
     }
 
     [Test]
@@ -112,14 +108,13 @@ public class PossiblePawnMovesTests : PossibleMovesTestBase
             (GetOppositePieceType(pieceType), RelativePositionToTestedPiece(new BoardPosition(x - 1, y + 1)))
         };
 
-        SetUpBoardWith(pieces);
+        var board = SetUpBoardWith(pieces);
 
-        var pawnGameObject = GetPieceTypeAtPosition(x, y);
-        //var possibleMoves = pawnMoveGenerator.GetPossiblePieceMoves(pawnGameObject);
+        var possibleMoves = pawnMoveGenerator.GetPossiblePieceMoves(RelativePositionToTestedPiece(new BoardPosition(x, y)), board);
 
-        //Assert.AreEqual(3, possibleMoves.Count());
-        //Assert.Contains(RelativePositionToTestedPiece(new BoardPosition(x - 1, y + 1)), (ICollection)possibleMoves);
-        //Assert.Contains(RelativePositionToTestedPiece(new BoardPosition(x + 1, y + 1)), (ICollection)possibleMoves);
+        Assert.AreEqual(3, possibleMoves.Count());
+        Assert.Contains(RelativePositionToTestedPiece(new BoardPosition(x - 1, y + 1)), (ICollection)possibleMoves);
+        Assert.Contains(RelativePositionToTestedPiece(new BoardPosition(x + 1, y + 1)), (ICollection)possibleMoves);
     }
 
 }

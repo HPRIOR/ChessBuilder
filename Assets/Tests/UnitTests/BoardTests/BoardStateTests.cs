@@ -5,26 +5,28 @@ using UnityEngine;
 [TestFixture]
 public class BoardStateTests : ZenjectUnitTestFixture
 {
+    IBoardGenerator _boardGenerator;
     [SetUp]
     public void Init()
     {
         BoardStateInstaller.Install(Container);
+        _boardGenerator = Container.Resolve<IBoardGenerator>();
     }
 
-    private IBoardState GetBoardState() => Container.Resolve<IBoardState>();
+    private IBoardState GetBoardState() => new BoardState(_boardGenerator.GenerateBoard());
 
     [Test]
     public void BindsCorrectly()
     {
-        IBoardState boardState = Container.Resolve<IBoardState>();
+        IBoardGenerator boardGenerator = Container.Resolve<IBoardGenerator>();
 
-        Assert.NotNull(boardState);
+        Assert.NotNull(boardGenerator);
     }
 
     [Test]
     public void ResolvesToClass()
     {
-        BoardState boardState = Container.Resolve<IBoardState>() as BoardState;
+        IBoardState boardState = GetBoardState(); 
 
         Assert.IsNotNull(boardState);
     }
@@ -32,7 +34,7 @@ public class BoardStateTests : ZenjectUnitTestFixture
     [Test]
     public void BoardIsGenerated()
     {
-        IBoardState boardState = Container.Resolve<IBoardState>();
+        IBoardState boardState = GetBoardState();
 
         Assert.IsNotNull(boardState.GetTileAt(new BoardPosition(0,0)));
     }
@@ -70,7 +72,7 @@ public class BoardStateTests : ZenjectUnitTestFixture
         )
     {
         var boardState = GetBoardState();
-        Assert.IsNull(boardState.GetTileAt(new BoardPosition(x, y)).CurrentPiece);
+        Assert.AreEqual(PieceType.NullPiece, boardState.GetTileAt(new BoardPosition(x, y)).CurrentPiece);
     }
 
     [Test]

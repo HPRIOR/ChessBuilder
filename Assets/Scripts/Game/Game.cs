@@ -24,8 +24,8 @@ public class Game : MonoBehaviour
     private IBoardState InitBoard()
     {
         var board = _boardGenerator.GenerateBoard();
-        board[0, 0].CurrentPiece = PieceType.WhiteKnight;
-        board[1, 1].CurrentPiece = PieceType.BlackKnight;
+        board[3, 3].CurrentPiece = PieceType.WhiteQueen;
+        board[4, 4].CurrentPiece = PieceType.BlackQueen;
         return new BoardState(board);
     }
 }

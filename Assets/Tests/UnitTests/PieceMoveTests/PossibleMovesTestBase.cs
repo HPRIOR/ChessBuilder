@@ -7,9 +7,9 @@ using System;
 
 public class PossibleMovesTestBase : ZenjectUnitTestFixture
 {
+    private IBoardGenerator _boardGenerator;
     private IPieceSpawner _pieceSpawner;
     private IPieceMoveGeneratorFactory _pieceMoveGeneratorFactory;
-    private IBoardState _boardState;
     protected PieceColour TestedPieceColour { get; set; } = PieceColour.White;
 
     [SetUp]
@@ -23,7 +23,6 @@ public class PossibleMovesTestBase : ZenjectUnitTestFixture
     public void TearDown()
     {
         Container.UnbindAll();
-        _boardState = null;
         _pieceMoveGeneratorFactory = null;
         _pieceSpawner = null;
     }
@@ -32,7 +31,7 @@ public class PossibleMovesTestBase : ZenjectUnitTestFixture
     {
         _pieceSpawner = Container.Resolve<IPieceSpawner>();
         _pieceMoveGeneratorFactory = Container.Resolve<IPieceMoveGeneratorFactory>();
-        _boardState = Container.Resolve<IBoardState>();
+        _boardGenerator = Container.Resolve<IBoardGenerator>();
     }
 
     private void InstallBindings()
@@ -47,18 +46,18 @@ public class PossibleMovesTestBase : ZenjectUnitTestFixture
         BoardPositionTranslatorInstaller.Install(Container);
     }
 
-    protected void SetUpBoardWith(IEnumerable<(PieceType piece, IBoardPosition boardPosition)> piecesAtPositions) =>
-        piecesAtPositions
-        .ToList()
-        .ForEach(item =>
-            _pieceSpawner.CreatePiece(
-                item.piece, item.boardPosition)
-        );
+    protected IBoardState SetUpBoardWith(IEnumerable<(PieceType piece, IBoardPosition boardPosition)> piecesAtPositions)
+    {
+        var boardState = new BoardState(_boardGenerator.GenerateBoard());
+        var board = boardState.Board;
+        piecesAtPositions.ToList().ForEach(tup => board[tup.boardPosition.X, tup.boardPosition.Y].CurrentPiece = tup.piece);
+        return boardState;
+    }
 
 
-    protected PieceType GetPieceTypeAtPosition(int x, int y) => TestedPieceColour == PieceColour.White 
-        ? _boardState.GetTileAt(new BoardPosition(x, y)).CurrentPiece 
-        : _boardState.GetMirroredTileAt(new BoardPosition(x, y)).CurrentPiece;
+    protected PieceType GetPieceTypeAtPosition(int x, int y, IBoardState inBoardState) => TestedPieceColour == PieceColour.White 
+        ? inBoardState.GetTileAt(new BoardPosition(x, y)).CurrentPiece 
+        : inBoardState.GetMirroredTileAt(new BoardPosition(x, y)).CurrentPiece;
 
     protected IPieceMoveGenerator GetPossibleMoveGenerator(PieceType pieceType) => 
         _pieceMoveGeneratorFactory.GetPossibleMoveGenerator(pieceType);

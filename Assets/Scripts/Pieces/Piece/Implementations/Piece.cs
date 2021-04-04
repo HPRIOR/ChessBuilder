@@ -21,7 +21,8 @@ public class Piece : MonoBehaviour
     private void Start()
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();
-        _spriteRenderer.sprite = AssetDatabase.LoadAssetAtPath<Sprite>(Info.SpriteAsset);
+        if (Info.SpriteAsset != "")
+            _spriteRenderer.sprite = AssetDatabase.LoadAssetAtPath<Sprite>(Info.SpriteAsset);
         gameObject.transform.parent = GameObject.FindGameObjectWithTag("Pieces")?.transform;
         gameObject.transform.position = BoardPosition.Vector;
     }

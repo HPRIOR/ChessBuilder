@@ -21,10 +21,9 @@ public class PossibleQueenMovesTests : PossibleMovesTestBase
             (pieceType, RelativePositionToTestedPiece(new BoardPosition(x, y)))
         };
 
-        SetUpBoardWith(pieces);
+        var board = SetUpBoardWith(pieces);
 
-        var queenGameObject = GetPieceTypeAtPosition(x, y);
-        //var possibleMoves = queenMoveGenerator.GetPossiblePieceMoves(queenGameObject);
+        var possibleMoves = queenMoveGenerator.GetPossiblePieceMoves(RelativePositionToTestedPiece(new BoardPosition(x,y)), board);
 
         var allMovesFromPosition =
             Enum
@@ -36,7 +35,7 @@ public class PossibleQueenMovesTests : PossibleMovesTestBase
                     Move.In(direction).Add(RelativePositionToTestedPiece(new BoardPosition(x, y))), direction
                 ));
 
-        //Assert.AreEqual(allMovesFromPosition.Count(), possibleMoves.Count());
+        Assert.AreEqual(allMovesFromPosition.Count(), possibleMoves.Count());
     }
 
     [Test]
@@ -58,9 +57,8 @@ public class PossibleQueenMovesTests : PossibleMovesTestBase
             )
         };
 
-        SetUpBoardWith(pieces);
+        var board = SetUpBoardWith(pieces);
 
-        var queenGameObject = GetPieceTypeAtPosition(x, y);
 
         var unreachablePositionsNE = GetPositionsIncludingAndPassed(new BoardPosition(4, 4), Direction.NE);
         var unreachablePositionsSW = GetPositionsIncludingAndPassed(new BoardPosition(2, 2), Direction.SW);
@@ -80,9 +78,9 @@ public class PossibleQueenMovesTests : PossibleMovesTestBase
         else
             unreachableTiles = unreachableTiles.Concat(unreachablePositionsNW).ToList();
 
-        //var possibleMoves = new HashSet<IBoardPosition>(queenMoveGenerator.GetPossiblePieceMoves(queenGameObject));
+        var possibleMoves = new HashSet<IBoardPosition>(queenMoveGenerator.GetPossiblePieceMoves(RelativePositionToTestedPiece(new BoardPosition(x, y)), board));
 
-        //Assert.IsFalse(possibleMoves.Overlaps(unreachableTiles.Select(RelativePositionToTestedPiece)));
+        Assert.IsFalse(possibleMoves.Overlaps(unreachableTiles.Select(RelativePositionToTestedPiece)));
     }
 
 
@@ -101,16 +99,14 @@ public class PossibleQueenMovesTests : PossibleMovesTestBase
                 (GetOppositePieceType(pieceType), RelativePositionToTestedPiece(new BoardPosition(3, y))),
             };
 
-            SetUpBoardWith(pieces);
+            var board = SetUpBoardWith(pieces);
             var queenMoveGenerator = GetPossibleMoveGenerator(pieceType);
-            var queenGameObject = GetPieceTypeAtPosition(x, y);
-            //var possibleMoves = queenMoveGenerator.GetPossiblePieceMoves(queenGameObject);
 
-            var unreachableTilesNorth = GetPositionsIncludingAndPassed(new BoardPosition(x, 4), Direction.N).ToList();
-            var unreachableTilesEast = GetPositionsIncludingAndPassed(new BoardPosition(4, y), Direction.E).ToList();
+            var unreachableTilesNorth = GetPositionsIncludingAndPassed(RelativePositionToTestedPiece(new BoardPosition(x, 4)), Direction.N).ToList();
+            var unreachableTilesEast = GetPositionsIncludingAndPassed(RelativePositionToTestedPiece( new BoardPosition(4, y)), Direction.E).ToList();
 
-            var unreachableTilesSouth = GetPositionsIncludingAndPassed(new BoardPosition(x, 2), Direction.S).ToList();
-            var unreachabletilesWest = GetPositionsIncludingAndPassed(new BoardPosition(2, y), Direction.W).ToList();
+            var unreachableTilesSouth = GetPositionsIncludingAndPassed(RelativePositionToTestedPiece(new BoardPosition(x, 2)), Direction.S).ToList();
+            var unreachabletilesWest = GetPositionsIncludingAndPassed( RelativePositionToTestedPiece(new BoardPosition(2, y)), Direction.W).ToList();
 
             var unreachableTiles =
                 x < 3
@@ -121,8 +117,9 @@ public class PossibleQueenMovesTests : PossibleMovesTestBase
                     ? unreachableTilesNorth
                     : unreachabletilesWest);
 
-            //HashSet<IBoardPosition> reachableTiles = new HashSet<IBoardPosition>(possibleMoves.Select(RelativePositionToTestedPiece));
-            //Assert.IsFalse(reachableTiles.Overlaps(unreachableTiles));
+            var possibleMoves = queenMoveGenerator.GetPossiblePieceMoves(RelativePositionToTestedPiece( new BoardPosition(x, y)), board);
+            HashSet<IBoardPosition> reachableTiles = new HashSet<IBoardPosition>(possibleMoves);
+            Assert.IsFalse(reachableTiles.Overlaps(unreachableTiles));
         }
         catch (PieceSpawnException)
         {

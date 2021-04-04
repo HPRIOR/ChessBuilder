@@ -16,7 +16,8 @@ internal static class PieceSpriteAssetManager
             {PieceType.WhiteKnight, "Assets/Sprites/ChessPieces/240x240/240px-Chess_nlt45.svg.png"},
             {PieceType.WhiteRook, "Assets/Sprites/ChessPieces/240x240/240px-Chess_rlt45.svg.png"},
             {PieceType.WhiteKing, "Assets/Sprites/ChessPieces/240x240/240px-Chess_klt45.svg.png"},
-            {PieceType.WhiteQueen, "Assets/Sprites/ChessPieces/240x240/240px-Chess_qlt45.svg.png"}
+            {PieceType.WhiteQueen, "Assets/Sprites/ChessPieces/240x240/240px-Chess_qlt45.svg.png"},
+            {PieceType.NullPiece, ""}
         };
 
     public static string GetSpriteAsset(PieceType pieceType) => _pieceSpriteAssetManager[pieceType];

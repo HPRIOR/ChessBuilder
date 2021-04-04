@@ -24,7 +24,6 @@ public class PossibleKnightMovesTests : PossibleMovesTestBase
 
         SetUpBoardWith(pieces);
 
-        var knightGameObject = GetPieceTypeAtPosition(x, y);
         //var possibleMoves = new HashSet<IBoardPosition>(knightMoveGenerator.GetPossiblePieceMoves(knightGameObject));
 
         //Assert.AreEqual(8, possibleMoves.Count);
@@ -45,7 +44,6 @@ public class PossibleKnightMovesTests : PossibleMovesTestBase
 
         SetUpBoardWith(pieces);
 
-        var knightGameObject = GetPieceTypeAtPosition(x, y);
 
         var expectedMoves = new List<IBoardPosition>()
         {
@@ -79,7 +77,6 @@ public class PossibleKnightMovesTests : PossibleMovesTestBase
 
         SetUpBoardWith(pieces);
 
-        var knightGameObject = GetPieceTypeAtPosition(x, y);
 
         var expectedMoves = new List<IBoardPosition>()
         {

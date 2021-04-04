@@ -86,8 +86,8 @@ public class PossibleQueenMovesTests : PossibleMovesTestBase
 
     [Test]
     public void WithOpposingPieceOnMidBoard_QueenCanTakeAndIsBlockedLaterally(
-        [Values(0, 1, 2, 3, 4, 5, 6, 7)] int x, [Values(0, 1, 2, 3, 4, 5, 6, 7)] int y,
-        [Values(PieceType.WhiteRook, PieceType.BlackRook)] PieceType pieceType
+        [Values(0, 1, 2,  4, 5, 6, 7)] int x, [Values(0, 1, 2,  4, 5, 6, 7)] int y,
+        [Values(PieceType.WhiteQueen, PieceType.WhiteQueen)] PieceType pieceType
         )
     {
         try

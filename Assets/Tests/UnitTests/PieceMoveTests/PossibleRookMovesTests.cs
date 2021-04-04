@@ -207,13 +207,13 @@ public class PossibleRookMovesTests : PossibleMovesTestBase
 
     [Test]
     public void WithFriendlyPiecesOnMidRankAndFile_RookIsBlocked(
-        [Values(0, 1, 2, 3, 4, 5, 6, 7)] int x, [Values(0, 1, 2, 3, 4, 5, 6, 7)] int y,
+        [Values(0, 1, 2, 4, 5, 6, 7)] int x, [Values(0, 1, 2,  4, 5, 6, 7)] int y,
         [Values(PieceType.WhiteRook, PieceType.BlackRook)] PieceType pieceType
         )
     {
         try
         {
-            SetTestedPieceColourWith(pieceType);
+            SetTestedPieceColourWith(PieceType.WhiteRook);
             var rookMoveGenerator = GetPossibleMoveGenerator(pieceType);
             var pieces = new List<(PieceType, IBoardPosition)>() {
                 (pieceType, RelativePositionToTestedPiece(new BoardPosition(x, y))),
@@ -241,7 +241,9 @@ public class PossibleRookMovesTests : PossibleMovesTestBase
                     ? unreachableTilesNorth
                     : unreachabletilesWest);
 
-
+            possibleMoves.ToList().ForEach(
+                    Debug.Log
+                );
             HashSet<IBoardPosition> reachableTiles = new HashSet<IBoardPosition>(possibleMoves);
 
             Assert.IsFalse(reachableTiles.Overlaps(unreachableTiles));

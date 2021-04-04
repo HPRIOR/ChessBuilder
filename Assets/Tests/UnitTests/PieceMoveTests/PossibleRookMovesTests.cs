@@ -241,9 +241,6 @@ public class PossibleRookMovesTests : PossibleMovesTestBase
                     ? unreachableTilesNorth
                     : unreachabletilesWest);
 
-            possibleMoves.ToList().ForEach(
-                    Debug.Log
-                );
             HashSet<IBoardPosition> reachableTiles = new HashSet<IBoardPosition>(possibleMoves);
 
             Assert.IsFalse(reachableTiles.Overlaps(unreachableTiles));

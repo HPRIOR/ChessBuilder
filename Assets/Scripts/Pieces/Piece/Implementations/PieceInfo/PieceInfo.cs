@@ -2,12 +2,12 @@
 {
     public PieceInfo(PieceType pieceType)
     {
-        SpriteAsset = PieceSpriteAssetManager.GetSpriteAsset(pieceType);
+        SpriteAssetPath = PieceSpriteAssetManager.GetSpriteAsset(pieceType);
         PieceColour = PieceColourMap.GetPieceColour(pieceType);
         PieceType = pieceType;
     }
 
-    public string SpriteAsset { get; }
+    public string SpriteAssetPath { get; }
     public PieceType PieceType { get; }
     public PieceColour PieceColour { get; }
 

@@ -4,6 +4,6 @@ public class GameStateInstaller : Installer<GameStateInstaller>
 {
     public override void InstallBindings()
     {
-        Container.Bind<IGameState>().To<GameState>().AsSingle();
+        Container.Bind(typeof(ITurnEventInvoker), typeof(IGameState)).To<GameState>().AsSingle();
     }
 }

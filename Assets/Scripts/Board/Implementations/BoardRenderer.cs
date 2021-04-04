@@ -6,19 +6,19 @@ public class BoardRenderer : MonoBehaviour, IBoardRenderer
 {
     public GameObject tilePrefab;
     private IPieceSpawner _pieceSpawner;
-    private IGameState _gameState;
+    private ITurnEventInvoker _turnEventInvoker;
 
     private void Awake()
     {
         RenderBoard();
-        _gameState.GameStateChangeEvent += RenderPieces;
+        _turnEventInvoker.GameStateChangeEvent += RenderPieces;
     }
 
     [Inject]
-    public void Construct(IPieceSpawner pieceSpawner, IGameState gameState)
+    public void Construct(IPieceSpawner pieceSpawner, ITurnEventInvoker turnEventInvoker)
     {
         _pieceSpawner = pieceSpawner;
-        _gameState = gameState;
+        _turnEventInvoker = turnEventInvoker;
     }
 
     public void RenderBoard()

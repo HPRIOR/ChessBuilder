@@ -8,5 +8,4 @@ public interface IGameState
 
     void UpdateGameState(IBoardState newState);
 
-    event Action<IBoardState, IBoardState> GameStateChangeEvent;
 }

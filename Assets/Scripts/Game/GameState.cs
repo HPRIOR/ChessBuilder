@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-public class GameState : IGameState
+public class GameState : IGameState, ITurnEventInvoker
 {
     private IPossibleMovesGenerator _possibleMovesGenerator;
 

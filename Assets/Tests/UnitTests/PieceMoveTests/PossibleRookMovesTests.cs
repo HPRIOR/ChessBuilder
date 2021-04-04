@@ -31,8 +31,6 @@ public class PossibleRookMovesTests : PossibleMovesTestBase
         [Values(PieceType.WhiteRook, PieceType.BlackRook)] PieceType pieceType
         )
     {
-        try
-        {
             SetTestedPieceColourWith(pieceType);
             var rookMoveGenerator = GetPossibleMoveGenerator(pieceType);
             var pieces = new List<(PieceType, IBoardPosition)>() {
@@ -46,11 +44,6 @@ public class PossibleRookMovesTests : PossibleMovesTestBase
             var possibleMoves = rookMoveGenerator.GetPossiblePieceMoves(RelativePositionToTestedPiece(new BoardPosition(x,y)), board);
 
             Assert.AreEqual(14, new HashSet<IBoardPosition>(possibleMoves).Count());
-        }
-        catch (PieceSpawnException)
-        {
-            Debug.Log("Test skipped due to spawn clash");
-        }
     }
 
     [Test]
@@ -59,8 +52,6 @@ public class PossibleRookMovesTests : PossibleMovesTestBase
         [Values(PieceType.WhiteRook, PieceType.BlackRook)] PieceType pieceType
         )
     {
-        try
-        {
             SetTestedPieceColourWith(pieceType);
             var rookMoveGenerator = GetPossibleMoveGenerator(pieceType);
             var pieces = new List<(PieceType, IBoardPosition)>() {
@@ -81,11 +72,6 @@ public class PossibleRookMovesTests : PossibleMovesTestBase
             HashSet<IBoardPosition> reachableTiles = new HashSet<IBoardPosition>(possibleMoves);
 
             Assert.IsFalse(reachableTiles.Overlaps(unreachableTiles));
-        }
-        catch (PieceSpawnException)
-        {
-            Debug.Log("Test skipped due to spawn clash");
-        }
     }
 
     [Test]
@@ -94,8 +80,6 @@ public class PossibleRookMovesTests : PossibleMovesTestBase
         [Values(PieceType.WhiteRook, PieceType.BlackRook)] PieceType pieceType
         )
     {
-        try
-        {
             SetTestedPieceColourWith(pieceType);
             var rookMoveGenerator = GetPossibleMoveGenerator(pieceType);
             var pieces = new List<(PieceType, IBoardPosition)>() {
@@ -128,11 +112,6 @@ public class PossibleRookMovesTests : PossibleMovesTestBase
             HashSet<IBoardPosition> reachableTiles = new HashSet<IBoardPosition>(possibleMoves.Select(RelativePositionToTestedPiece));
 
             Assert.IsFalse(reachableTiles.Overlaps(unreachableTiles));
-        }
-        catch (PieceSpawnException)
-        {
-            Debug.Log("Test skipped due to spawn clash");
-        }
     }
 
 
@@ -142,8 +121,6 @@ public class PossibleRookMovesTests : PossibleMovesTestBase
         [Values(PieceType.WhiteRook, PieceType.BlackRook)] PieceType pieceType
         )
     {
-        try
-        {
             SetTestedPieceColourWith(pieceType);
             var rookMoveGenerator = GetPossibleMoveGenerator(pieceType);
             var pieces = new List<(PieceType, IBoardPosition)>() {
@@ -163,11 +140,6 @@ public class PossibleRookMovesTests : PossibleMovesTestBase
                     .Select(RelativePositionToTestedPiece));
 
             Assert.IsFalse(reachableTile.Overlaps(unreachableTiles));
-        }
-        catch (PieceSpawnException)
-        {
-            Debug.Log("Test skipped due to spawn clash");
-        }
     }
 
     [Test]
@@ -176,8 +148,6 @@ public class PossibleRookMovesTests : PossibleMovesTestBase
         [Values(PieceType.WhiteRook, PieceType.BlackRook)] PieceType pieceType
         )
     {
-        try
-        {
             SetTestedPieceColourWith(pieceType);
             var rookMoveGenerator = GetPossibleMoveGenerator(pieceType);
             var pieces = new List<(PieceType, IBoardPosition)>() {
@@ -198,11 +168,6 @@ public class PossibleRookMovesTests : PossibleMovesTestBase
             var unreachableTiles = unreachableTilesEast.Concat(unreachableTilesNorth).Select(RelativePositionToTestedPiece);
 
             Assert.IsFalse(reachableTile.Overlaps(unreachableTiles));
-        }
-        catch (PieceSpawnException)
-        {
-            Debug.Log("Test skipped due to spawn clash");
-        }
     }
 
     [Test]
@@ -211,8 +176,6 @@ public class PossibleRookMovesTests : PossibleMovesTestBase
         [Values(PieceType.WhiteRook, PieceType.BlackRook)] PieceType pieceType
         )
     {
-        try
-        {
             SetTestedPieceColourWith(PieceType.WhiteRook);
             var rookMoveGenerator = GetPossibleMoveGenerator(pieceType);
             var pieces = new List<(PieceType, IBoardPosition)>() {
@@ -245,11 +208,5 @@ public class PossibleRookMovesTests : PossibleMovesTestBase
 
             Assert.IsFalse(reachableTiles.Overlaps(unreachableTiles));
         }
-        catch (PieceSpawnException)
-        {
-            Debug.Log("Test skipped due to spawn clash");
-        }
     }
 
-
-}

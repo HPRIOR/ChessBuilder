@@ -90,8 +90,6 @@ public class PossibleQueenMovesTests : PossibleMovesTestBase
         [Values(PieceType.WhiteQueen, PieceType.WhiteQueen)] PieceType pieceType
         )
     {
-        try
-        {
             SetTestedPieceColourWith(pieceType);
             var pieces = new List<(PieceType, IBoardPosition)>() {
                 (pieceType, RelativePositionToTestedPiece(new BoardPosition(x, y))),
@@ -121,9 +119,4 @@ public class PossibleQueenMovesTests : PossibleMovesTestBase
             HashSet<IBoardPosition> reachableTiles = new HashSet<IBoardPosition>(possibleMoves);
             Assert.IsFalse(reachableTiles.Overlaps(unreachableTiles));
         }
-        catch (PieceSpawnException)
-        {
-            Debug.Log("Test skipped due to spawn class");
-        }
-    }
 }

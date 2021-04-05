@@ -9,4 +9,6 @@ public interface IBoardPosition
     string GetAlgabraicNotation();
 
     IBoardPosition Add(IBoardPosition boardPosition);
+
+    bool Equals(IBoardPosition comparedBoardPosition);
 }

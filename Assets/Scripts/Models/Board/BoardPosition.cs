@@ -21,10 +21,11 @@ public struct BoardPosition : IBoardPosition
 
     public override string ToString()
     {
-        return $"Coordinates: {X}, {Y} \n" +
-            $"Vector: {Vector} \n" +
-            $"Algabraic Notation: {GetAlgabraicNotation()}";
+        return $"{X}, {Y}";
     }
 
     public IBoardPosition Add(IBoardPosition boardPosition) => new BoardPosition(X + boardPosition.X, Y + boardPosition.Y);
+
+    public bool Equals(IBoardPosition comparedBoardPosition)
+        => comparedBoardPosition.X == X && comparedBoardPosition.Y == Y;
 }

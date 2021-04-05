@@ -23,7 +23,6 @@ public class PossibleBoardMovesGenerator : IPossibleMovesGenerator
                 result.Add(boardPos, new HashSet<IBoardPosition>(possibleMoves));
             }
         }
-        //result.ToList().ForEach(x => x.Value.ToList().ForEach(x => Debug.Log(x)));
         return result;
     }
 }

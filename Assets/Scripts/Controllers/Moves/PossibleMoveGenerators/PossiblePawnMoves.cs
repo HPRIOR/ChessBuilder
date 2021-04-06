@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Assets.Scripts.Models.Piece;
 
 public class PossiblePawnMoves : IPieceMoveGenerator
 {
@@ -19,7 +20,7 @@ public class PossiblePawnMoves : IPieceMoveGenerator
 
         if (originPosition.Y == 7) return potentialMoves; // allow to change piece
 
-        if (_positionTranslator.GetRelativeTileAt(originPosition.Add(Move.In(Direction.N)), boardState).CurrentPiece == PieceType.NullPiece)
+        if (_positionTranslator.GetRelativeTileAt(originPosition.Add(Move.In(Direction.N)), boardState).CurrentPiece.Type == PieceType.NullPiece)
             potentialMoves.Add(
                 _positionTranslator.GetRelativePosition(originPosition.Add(Move.In(Direction.N)))
                 );

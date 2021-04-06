@@ -4,6 +4,7 @@ using NUnit.Framework;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using Assets.Scripts.Models.Piece;
 
 public class PossibleMovesTestBase : ZenjectUnitTestFixture
 {
@@ -50,14 +51,14 @@ public class PossibleMovesTestBase : ZenjectUnitTestFixture
     {
         var boardState = new BoardState(_boardGenerator.GenerateBoard());
         var board = boardState.Board;
-        piecesAtPositions.ToList().ForEach(tup => board[tup.boardPosition.X, tup.boardPosition.Y].CurrentPiece = tup.piece);
+        piecesAtPositions.ToList().ForEach(tup => board[tup.boardPosition.X, tup.boardPosition.Y].CurrentPiece = new Piece(tup.piece));
         return boardState;
     }
 
 
     protected PieceType GetPieceTypeAtPosition(int x, int y, IBoardState inBoardState) => TestedPieceColour == PieceColour.White 
-        ? inBoardState.GetTileAt(new BoardPosition(x, y)).CurrentPiece 
-        : inBoardState.GetMirroredTileAt(new BoardPosition(x, y)).CurrentPiece;
+        ? inBoardState.GetTileAt(new BoardPosition(x, y)).CurrentPiece.Type 
+        : inBoardState.GetMirroredTileAt(new BoardPosition(x, y)).CurrentPiece.Type;
 
     protected IPieceMoveGenerator GetPossibleMoveGenerator(PieceType pieceType) => 
         _pieceMoveGeneratorFactory.GetPossibleMoveGenerator(pieceType);

@@ -9,6 +9,6 @@ public class PieceSpawnerInstaller : Installer<PieceSpawnerInstaller>
     public override void InstallBindings()
     {
         Container.Bind<IPieceSpawner>().To<PieceSpawner>().AsSingle();
-        Container.BindFactory<IPieceInfo, IBoardPosition, Piece, Piece.Factory>().FromComponentInNewPrefab(piecePrefab);
+        Container.BindFactory<IPieceInfo, IBoardPosition, PieceMono, PieceMono.Factory>().FromComponentInNewPrefab(piecePrefab);
     }
 }

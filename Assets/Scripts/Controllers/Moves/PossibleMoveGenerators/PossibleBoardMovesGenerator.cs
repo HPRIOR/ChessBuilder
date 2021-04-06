@@ -17,11 +17,11 @@ public class PossibleBoardMovesGenerator : IPossibleMovesGenerator
         var result = new Dictionary<IBoardPosition, HashSet<IBoardPosition>>();
         var board = boardState.Board;
         foreach (var tile in board)
-            if (tile.CurrentPiece != PieceType.NullPiece)
+            if (tile.CurrentPiece.Type != PieceType.NullPiece)
             {
                 var currentPiece = tile.CurrentPiece;
                 var boardPos = tile.BoardPosition;
-                var possibleMoves = _pieceMoveGeneratorFactory.GetPossibleMoveGenerator(currentPiece).GetPossiblePieceMoves(boardPos, boardState);
+                var possibleMoves = _pieceMoveGeneratorFactory.GetPossibleMoveGenerator(currentPiece.Type).GetPossiblePieceMoves(boardPos, boardState);
                 result.Add(boardPos, new HashSet<IBoardPosition>(possibleMoves));
             }
         return result;
@@ -38,7 +38,7 @@ public class PossibleBoardMovesGenerator : IPossibleMovesGenerator
             var bp = t.Key;
             var set = t.Value;
             var currentPiece = board[bp.X, bp.Y].CurrentPiece;
-            if (currentPiece != PieceType.BlackKing || currentPiece != PieceType.WhiteKing)
+            if (currentPiece.Type != PieceType.BlackKing || currentPiece.Type != PieceType.WhiteKing)
                 return (bp, set.Intersect(possibleNonKingMoves) as HashSet<IBoardPosition>);
             else return (bp, set);
         }).ToDictionary(t => t.bp, t => t.Item2);

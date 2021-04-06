@@ -7,12 +7,12 @@ public class DragAndDrop : MonoBehaviour
     private bool _isDragging;
     private SpriteRenderer _spriteRenderer;
     private static MoveCommandFactory _dragAndDropCommandFactory;
-    private Piece _piece;
+    private PieceMono _piece;
 
     private void Start()
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();
-        _piece = gameObject.GetComponent<Piece>();
+        _piece = gameObject.GetComponent<PieceMono>();
     }
 
     [Inject]

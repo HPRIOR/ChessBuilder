@@ -1,4 +1,5 @@
 using Zenject;
+using Assets.Scripts.Models.Piece;
 using NUnit.Framework;
 using UnityEngine;
 
@@ -72,7 +73,7 @@ public class BoardStateTests : ZenjectUnitTestFixture
         )
     {
         var boardState = GetBoardState();
-        Assert.AreEqual(PieceType.NullPiece, boardState.GetTileAt(new BoardPosition(x, y)).CurrentPiece);
+        Assert.AreEqual(new Piece(PieceType.NullPiece), boardState.GetTileAt(new BoardPosition(x, y)).CurrentPiece);
     }
 
     [Test]

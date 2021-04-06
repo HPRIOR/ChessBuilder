@@ -1,11 +1,4 @@
-﻿/*
- * changes: Move signature change to Func<IBoardState, IBoardPos, IBoardPos, ITile[]>
- * Don't update pieces on move but produce new board with moved piece types
- * remove undo move from this class as state will just be restored by refering to previous state
- * remove Boardstate from constructor, and pass as argument so it can be applied to arbitrary boards
- *
- */
-
+﻿using Assets.Scripts.Models.Piece;
 public class PieceMover : IPieceMover
 {
     public IBoardState Move(IBoardState originalBoard, IBoardPosition from, IBoardPosition destination)
@@ -15,7 +8,7 @@ public class PieceMover : IPieceMover
         var fromTile = newBoard.GetTileAt(from);
 
         destinationTile.CurrentPiece = originalBoard.GetTileAt(from).CurrentPiece;
-        fromTile.CurrentPiece = PieceType.NullPiece;
+        fromTile.CurrentPiece = new Piece(PieceType.NullPiece);
         return newBoard;
     }
 }

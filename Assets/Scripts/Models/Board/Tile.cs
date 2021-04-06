@@ -1,13 +1,11 @@
-﻿/*
- * Changes: CurrentPiece changed to piecType
- */
+﻿using Assets.Scripts.Models.Piece;
 
 public class Tile : ITile
 {
-    public PieceType CurrentPiece { get; set; }
+    public Piece CurrentPiece { get; set; }
     public IBoardPosition BoardPosition { get; set; }
 
-    public Tile(IBoardPosition boardPosition, PieceType currentPiece)
+    public Tile(IBoardPosition boardPosition, Piece currentPiece)
     {
         BoardPosition = boardPosition;
         CurrentPiece = currentPiece;
@@ -16,7 +14,7 @@ public class Tile : ITile
     public Tile(BoardPosition boardPosition)
     {
         BoardPosition = boardPosition;
-        CurrentPiece = PieceType.NullPiece;
+        CurrentPiece = new Piece(PieceType.NullPiece);
     }
 
     public override string ToString() => $"Tile at ({BoardPosition.X}, {BoardPosition.Y}) containing" +

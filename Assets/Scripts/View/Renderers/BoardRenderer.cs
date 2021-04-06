@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using Zenject;
-
+using Assets.Scripts.Models.Piece;
 // 'View class'  which is subscribed to changes in game state
 public class BoardRenderer : MonoBehaviour, IBoardRenderer
 {
@@ -56,8 +56,8 @@ public class BoardRenderer : MonoBehaviour, IBoardRenderer
         foreach (var tile in board)
         {
             var currentPiece = tile.CurrentPiece;
-            if (currentPiece != PieceType.NullPiece)
-                _pieceSpawner.CreatePiece(currentPiece, tile.BoardPosition);
+            if (currentPiece.Type != PieceType.NullPiece)
+                _pieceSpawner.CreatePiece(currentPiece.Type, tile.BoardPosition);
         }
     }
 

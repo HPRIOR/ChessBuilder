@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using Assets.Scripts.Models.Piece;
 using Zenject;
 
 namespace Assets.Scripts.Controllers.Game
@@ -26,8 +27,8 @@ namespace Assets.Scripts.Controllers.Game
         private IBoardState InitBoard()
         {
             var board = _boardGenerator.GenerateBoard();
-            board[3, 3].CurrentPiece = PieceType.WhiteQueen;
-            board[4, 4].CurrentPiece = PieceType.BlackQueen;
+            board[3, 3].CurrentPiece = new Piece(PieceType.WhiteQueen);
+            board[4, 4].CurrentPiece = new Piece(PieceType.BlackQueen);
             return new BoardState(board);
         }
     }

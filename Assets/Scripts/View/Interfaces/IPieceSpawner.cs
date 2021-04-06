@@ -1,4 +1,4 @@
 ﻿public interface IPieceSpawner
 {
-    Piece CreatePiece(PieceType pieceType, IBoardPosition BoardPosition);
+    PieceMono CreatePiece(PieceType pieceType, IBoardPosition BoardPosition);
 }

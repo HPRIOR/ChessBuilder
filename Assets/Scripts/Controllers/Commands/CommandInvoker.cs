@@ -1,30 +1,34 @@
 ﻿using System.Collections.Generic;
+using Controllers.Interfaces;
 
-public class CommandInvoker : ICommandInvoker
+namespace Controllers.Commands
 {
-    private readonly Stack<ICommand> _commandBuffer;
-
-    public CommandInvoker()
+    public class CommandInvoker : ICommandInvoker
     {
-        _commandBuffer = new Stack<ICommand>();
-    }
+        private readonly Stack<ICommand> _commandBuffer;
 
-    public void AddCommand(ICommand command)
-    {
-        if (command.IsValid())
+        public CommandInvoker()
         {
-            command.Execute();
-            _commandBuffer.Push(command);
+            _commandBuffer = new Stack<ICommand>();
         }
-    }
 
-    public void RollBackCommand()
-    {
-        if (_commandBuffer.Count > 0) _commandBuffer.Pop().Undo();
-    }
+        public void AddCommand(ICommand command)
+        {
+            if (command.IsValid())
+            {
+                command.Execute();
+                _commandBuffer.Push(command);
+            }
+        }
 
-    public void UndoCommand()
-    {
-        throw new System.NotImplementedException();
+        public void RollBackCommand()
+        {
+            if (_commandBuffer.Count > 0) _commandBuffer.Pop().Undo();
+        }
+
+        public void UndoCommand()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

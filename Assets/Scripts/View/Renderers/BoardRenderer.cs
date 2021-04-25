@@ -1,79 +1,87 @@
-﻿using UnityEngine;
+﻿using Game.Interfaces;
+using Models.Services.Interfaces;
+using Models.State.Interfaces;
+using Models.State.Piece;
+using UnityEngine;
+using View.Interfaces;
 using Zenject;
-using Assets.Scripts.Models.Piece;
+
 // 'View class'  which is subscribed to changes in game state
-public class BoardRenderer : MonoBehaviour, IBoardRenderer
+namespace View.Renderers
 {
-    public GameObject tilePrefab;
-    private IPieceSpawner _pieceSpawner;
-    private ITurnEventInvoker _turnEventInvoker;
-
-    private void Awake()
+    public class BoardRenderer : MonoBehaviour, IBoardRenderer
     {
-        RenderBoard();
-        _turnEventInvoker.GameStateChangeEvent += RenderPieces;
-    }
+        public GameObject tilePrefab;
+        private IPieceSpawner _pieceSpawner;
+        private ITurnEventInvoker _turnEventInvoker;
 
-    [Inject]
-    public void Construct(IPieceSpawner pieceSpawner, ITurnEventInvoker turnEventInvoker)
-    {
-        _pieceSpawner = pieceSpawner;
-        _turnEventInvoker = turnEventInvoker;
-    }
-
-    public void RenderBoard()
-    {
-        var board = CreateBoardPositions();
-        var boardParent = new GameObject("BoardRender");
-        var lightDarkColourSwitch = true;
-        var greenColour = new Color32(118, 150, 86, 255);
-        var creamColour = new Color32(238, 238, 210, 255);
-        var count = 1;
-        foreach (var (x, y) in board)
+        private void Awake()
         {
-            // Instantiate tile prefab under BoardRender GameObject
-            var currentTile = Instantiate(tilePrefab, boardParent.transform, true);
-            currentTile.transform.position = new Vector2(x, y);
+            RenderBoard();
+            _turnEventInvoker.GameStateChangeEvent += RenderPieces;
+        }
 
-            // Change light and dark squares
-            var spriteRenderer = currentTile.GetComponent<SpriteRenderer>();
-            spriteRenderer.color = lightDarkColourSwitch ? greenColour : creamColour;
+        [Inject]
+        public void Construct(IPieceSpawner pieceSpawner, ITurnEventInvoker turnEventInvoker)
+        {
+            _pieceSpawner = pieceSpawner;
+            _turnEventInvoker = turnEventInvoker;
+        }
 
-            // ensures first tile on the next row is the same colour last tile in row
-            if (count % 8 != 0)
+        public void RenderBoard()
+        {
+            var board = CreateBoardPositions();
+            var boardParent = new GameObject("BoardRender");
+            var lightDarkColourSwitch = true;
+            var greenColour = new Color32(118, 150, 86, 255);
+            var creamColour = new Color32(238, 238, 210, 255);
+            var count = 1;
+            foreach (var (x, y) in board)
             {
-                lightDarkColourSwitch = !lightDarkColourSwitch;
+                // Instantiate tile prefab under BoardRender GameObject
+                var currentTile = Instantiate(tilePrefab, boardParent.transform, true);
+                currentTile.transform.position = new Vector2(x, y);
+
+                // Change light and dark squares
+                var spriteRenderer = currentTile.GetComponent<SpriteRenderer>();
+                spriteRenderer.color = lightDarkColourSwitch ? greenColour : creamColour;
+
+                // ensures first tile on the next row is the same colour last tile in row
+                if (count % 8 != 0)
+                {
+                    lightDarkColourSwitch = !lightDarkColourSwitch;
+                }
+                count += 1;
             }
-            count += 1;
         }
-    }
 
-    private void RenderPieces(IBoardState previousState, IBoardState newState)
-    {
-        DestroyExistingPieces();
-        var board = newState.Board;
-        foreach (var tile in board)
+        private void RenderPieces(IBoardState previousState, IBoardState newState)
         {
-            var currentPiece = tile.CurrentPiece;
-            if (currentPiece.Type != PieceType.NullPiece)
-                _pieceSpawner.CreatePiece(currentPiece.Type, tile.BoardPosition);
+            DestroyExistingPieces();
+            var board = newState.Board;
+            foreach (var tile in board)
+            {
+                var currentPiece = tile.CurrentPiece;
+                if (currentPiece.Type != PieceType.NullPiece)
+                    _pieceSpawner.CreatePiece(currentPiece.Type, tile.BoardPosition);
+            }
         }
-    }
 
-    private void DestroyExistingPieces()
-    {
-        var piecesGameObject = GameObject.FindGameObjectWithTag("Pieces");
-        if (piecesGameObject.transform.childCount > 0)
-            foreach (Transform child in piecesGameObject.transform)
-                Destroy(child.gameObject);
-    }
+        private void DestroyExistingPieces()
+        {
+            var piecesGameObject = GameObject.FindGameObjectWithTag("Pieces");
+            if (piecesGameObject.transform.childCount > 0)
+                foreach (Transform child in piecesGameObject.transform)
+                    Destroy(child.gameObject);
+        }
 
-    private (float X, float Y)[,] CreateBoardPositions()
-    {
-        var board = new (float X, float Y)[8, 8];
-        for (var i = 0; i < 8; i++)
+        private (float X, float Y)[,] CreateBoardPositions()
+        {
+            var board = new (float X, float Y)[8, 8];
+            for (var i = 0; i < 8; i++)
             for (var j = 0; j < 8; j++)
                 board[i, j] = (i + 0.5f, j + 0.5f);
-        return board;
+            return board;
+        }
     }
 }

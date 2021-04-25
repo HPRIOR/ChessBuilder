@@ -4,7 +4,12 @@ using NUnit.Framework;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-using Assets.Scripts.Models.Piece;
+using Models.Services.Interfaces;
+using Models.Services.Moves.PossibleMoveHelpers;
+using Models.State.Board;
+using Models.State.Interfaces;
+using Models.State.Piece;
+using View.Interfaces;
 
 public class PossibleMovesTestBase : ZenjectUnitTestFixture
 {

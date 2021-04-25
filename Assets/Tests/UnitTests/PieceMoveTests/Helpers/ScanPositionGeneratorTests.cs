@@ -1,9 +1,11 @@
 using NUnit.Framework;
-using Assets.Scripts.Controllers.Moves.PossibleMoveHelpers;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using System;
+using Models.Services.Moves.PossibleMoveHelpers;
+using Models.State.Board;
+using Models.State.Interfaces;
 
 [TestFixture]
 public class ScanPositionGeneratorTests

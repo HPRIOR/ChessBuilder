@@ -2,6 +2,10 @@ using Zenject;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
+using Models.Services.Moves.PossibleMoveHelpers;
+using Models.State.Board;
+using Models.State.Interfaces;
+using Models.State.Piece;
 using UnityEngine;
 
 [TestFixture]

@@ -1,4 +1,8 @@
-﻿using Zenject;
+﻿using Models.Services.Board;
+using Models.Services.Interfaces;
+using Models.State.Board;
+using Models.State.Interfaces;
+using Zenject;
 
 public class BoardStateInstaller : Installer<BoardStateInstaller>
 {

@@ -1,5 +1,10 @@
-﻿using UnityEditor;
+﻿using Models.Services.Interfaces;
+using Models.Services.Piece;
+using Models.State.Interfaces;
+using UnityEditor;
 using UnityEngine;
+using View.Interfaces;
+using View.Renderers;
 using Zenject;
 
 public class PieceSpawnerInstaller : Installer<PieceSpawnerInstaller>

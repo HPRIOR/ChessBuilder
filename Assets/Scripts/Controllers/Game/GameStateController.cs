@@ -17,6 +17,8 @@ public class GameStateController : IGameState, ITurnEventInvoker
 
     public PieceColour Turn { get; private set; } = PieceColour.White;
 
+    // provide an overload which passes in the changed tile. This can be used to check for mate when passed
+    // to generate possible piece moves
     public void UpdateGameState(IBoardState newState)
     {
         var previousState = CurrentBoardState;
@@ -24,7 +26,7 @@ public class GameStateController : IGameState, ITurnEventInvoker
 
         PossiblePieceMoves = _possibleMovesGenerator.GeneratePossibleMoves(CurrentBoardState, Turn);
 
-        ChangeTurn();
+        Turn = ChangeTurn();
         GameStateChangeEvent?.Invoke(previousState, CurrentBoardState);
 
     }

@@ -4,6 +4,10 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using System;
+using Models.Services.Moves.PossibleMoveHelpers;
+using Models.State.Board;
+using Models.State.Interfaces;
+using Models.State.Piece;
 
 public class PossibleQueenMovesTests : PossibleMovesTestBase
 {

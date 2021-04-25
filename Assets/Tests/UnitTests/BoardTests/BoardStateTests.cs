@@ -1,5 +1,8 @@
 using Zenject;
-using Assets.Scripts.Models.Piece;
+using Models.Services.Interfaces;
+using Models.State.Board;
+using Models.State.Interfaces;
+using Models.State.Piece;
 using NUnit.Framework;
 using UnityEngine;
 

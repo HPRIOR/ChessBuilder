@@ -1,8 +1,11 @@
-﻿public interface ICommandInvoker
+﻿namespace Controllers.Interfaces
 {
-    void AddCommand(ICommand command);
+    public interface ICommandInvoker
+    {
+        void AddCommand(ICommand command);
 
-    void RollBackCommand();
+        void RollBackCommand();
 
-    void UndoCommand();
+        void UndoCommand();
+    }
 }

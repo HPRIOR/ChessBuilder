@@ -1,8 +1,11 @@
-﻿public interface ICommand
+﻿namespace Controllers.Interfaces
 {
-    void Execute();
+    public interface ICommand
+    {
+        void Execute();
 
-    void Undo();
+        void Undo();
 
-    bool IsValid();
+        bool IsValid();
+    }
 }

@@ -1,4 +1,7 @@
-﻿public interface IBoardRenderer
+﻿namespace View.Interfaces
 {
-    void RenderBoard();
+    public interface IBoardRenderer
+    {
+        void RenderBoard();
+    }
 }

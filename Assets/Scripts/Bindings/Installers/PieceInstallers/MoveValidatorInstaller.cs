@@ -1,4 +1,6 @@
-﻿using Zenject;
+﻿using Models.Services.Interfaces;
+using Models.Services.Moves.PieceMovers;
+using Zenject;
 
 public class MoveValidatorInstaller : Installer<MoveValidatorInstaller>
 {

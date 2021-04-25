@@ -1,4 +1,6 @@
-﻿using Zenject;
+﻿using Models.Services.Interfaces;
+using Models.Services.Moves.Factories;
+using Zenject;
 
 public class PieceMoveGeneratorFactoryInstaller : Installer<PieceMoveGeneratorFactoryInstaller>
 {

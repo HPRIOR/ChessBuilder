@@ -1,4 +1,8 @@
-﻿using Zenject;
+﻿using Models.Services.Interfaces;
+using Models.Services.Moves.Factories;
+using Models.Services.Moves.PossibleMoveHelpers;
+using Models.State.Piece;
+using Zenject;
 
 public class BoardEvalInstaller : Installer<BoardEvalInstaller>
 {

@@ -1,4 +1,6 @@
-﻿using Zenject;
+﻿using Models.Services.Interfaces;
+using Models.Services.Moves.PieceMovers;
+using Zenject;
 
 public class PieceMoverInstaller : Installer<PieceMoverInstaller>
 {

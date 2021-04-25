@@ -1,4 +1,6 @@
-﻿using Zenject;
+﻿using Models.Services.Interfaces;
+using Models.Services.Moves.PossibleMoveGenerators;
+using Zenject;
 
 public class PossibleBoardMovesGeneratorInstaller : Installer<PossibleBoardMovesGeneratorInstaller>
 {

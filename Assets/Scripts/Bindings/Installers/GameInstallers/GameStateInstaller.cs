@@ -1,3 +1,5 @@
+using Game.Implementations;
+using Game.Interfaces;
 using Zenject;
 
 public class GameStateInstaller : Installer<GameStateInstaller>

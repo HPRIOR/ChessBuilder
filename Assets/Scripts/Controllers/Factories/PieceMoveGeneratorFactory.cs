@@ -45,7 +45,7 @@ public class PieceMoveGeneratorFactory : IPieceMoveGeneratorFactory
             _ => new NullPossibleMoveGenerator()
         };
 
-    private PieceColour PieceColourFrom(PieceType pieceType) =>
+    private static PieceColour PieceColourFrom(PieceType pieceType) =>
         pieceType.ToString().StartsWith("White")
         ? PieceColour.White
         : PieceColour.Black;

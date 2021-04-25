@@ -2,7 +2,7 @@
 
 internal static class PieceSpriteAssetManager
 {
-    private static IDictionary<PieceType, string> _pieceSpriteAssetManager =
+    private static readonly IDictionary<PieceType, string> _pieceSpriteAssetManager =
         new Dictionary<PieceType, string>()
         {
             {PieceType.BlackPawn, "Assets/Sprites/ChessPieces/240x240/240px-Chess_pdt45.svg.png"},

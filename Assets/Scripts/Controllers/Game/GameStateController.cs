@@ -3,25 +3,34 @@ using System.Collections.Generic;
 
 public class GameStateController : IGameState, ITurnEventInvoker
 {
-    private IPossibleMovesGenerator _possibleMovesGenerator;
+    private readonly IPossibleMovesGenerator _possibleMovesGenerator;
+
 
     public GameStateController(IPossibleMovesGenerator possibleMovesGenerator)
     {
         _possibleMovesGenerator = possibleMovesGenerator;
     }
 
-    public IBoardState currentBoardState { get; private set; }
+    public IBoardState CurrentBoardState { get; private set; }
 
-    public IDictionary<IBoardPosition, HashSet<IBoardPosition>> PossibleBoardMoves { get; private set; }
+    public IDictionary<IBoardPosition, HashSet<IBoardPosition>> PossiblePieceMoves { get; private set; }
+
+    public PieceColour Turn { get; private set; } = PieceColour.White;
 
     public void UpdateGameState(IBoardState newState)
     {
-        var previousState = currentBoardState;
-        currentBoardState = newState;
+        var previousState = CurrentBoardState;
+        CurrentBoardState = newState;
 
-        PossibleBoardMoves = _possibleMovesGenerator.GeneratePossibleMoves(currentBoardState);
-        GameStateChangeEvent?.Invoke(previousState, currentBoardState);
+        PossiblePieceMoves = _possibleMovesGenerator.GeneratePossibleMoves(CurrentBoardState, Turn);
+
+        ChangeTurn();
+        GameStateChangeEvent?.Invoke(previousState, CurrentBoardState);
+
     }
+
+    private PieceColour ChangeTurn() =>
+        Turn == PieceColour.White ? PieceColour.Black : PieceColour.White; 
 
     public event Action<IBoardState, IBoardState> GameStateChangeEvent;
 }

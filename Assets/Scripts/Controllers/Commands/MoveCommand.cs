@@ -4,10 +4,10 @@ public class MoveCommand : ICommand
 {
     private static IPieceMover _pieceMover;
     private static IMoveValidator _moveValidator;
-    private IBoardPosition _from;
-    private IBoardPosition _destination;
-    private IGameState _gameState;
-    private IBoardState _stateTransitionedFrom;
+    private readonly IBoardPosition _from;
+    private readonly IBoardPosition _destination;
+    private readonly IGameState _gameState;
+    private readonly IBoardState _stateTransitionedFrom;
 
     public MoveCommand(
         IBoardPosition from,
@@ -18,7 +18,7 @@ public class MoveCommand : ICommand
         )
     {
         _gameState = gameState;
-        _stateTransitionedFrom = _gameState.currentBoardState;
+        _stateTransitionedFrom = _gameState.CurrentBoardState;
 
         _from = from;
         _destination = destination;
@@ -29,13 +29,14 @@ public class MoveCommand : ICommand
 
     public void Execute()
     {
-        _gameState.UpdateGameState(_pieceMover.Move(_gameState.currentBoardState, _from, _destination));
+        var newBoardState = _pieceMover.Move(_gameState.CurrentBoardState, _from, _destination);
+        _gameState.UpdateGameState(newBoardState);
     }
 
     public bool IsValid()
     {
         if (_from == _destination) return false;
-        if (_moveValidator.ValidateMove(_gameState.PossibleBoardMoves, _from, _destination))
+        if (_moveValidator.ValidateMove(_gameState.PossiblePieceMoves, _from, _destination))
             return true;
 
         _gameState.UpdateGameState(_stateTransitionedFrom);

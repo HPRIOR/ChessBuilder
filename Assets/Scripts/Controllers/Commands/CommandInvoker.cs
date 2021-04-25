@@ -2,11 +2,11 @@
 
 public class CommandInvoker : ICommandInvoker
 {
-    private Stack<ICommand> commandBuffer;
+    private readonly Stack<ICommand> _commandBuffer;
 
     public CommandInvoker()
     {
-        commandBuffer = new Stack<ICommand>();
+        _commandBuffer = new Stack<ICommand>();
     }
 
     public void AddCommand(ICommand command)
@@ -14,13 +14,13 @@ public class CommandInvoker : ICommandInvoker
         if (command.IsValid())
         {
             command.Execute();
-            commandBuffer.Push(command);
+            _commandBuffer.Push(command);
         }
     }
 
     public void RollBackCommand()
     {
-        if (commandBuffer.Count > 0) commandBuffer.Pop().Undo();
+        if (_commandBuffer.Count > 0) _commandBuffer.Pop().Undo();
     }
 
     public void UndoCommand()

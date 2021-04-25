@@ -1,6 +1,6 @@
 ﻿public class MoveCommandFactory
 {
-    private MoveCommand.Factory _movePieceCommandFactory;
+    private readonly MoveCommand.Factory _movePieceCommandFactory;
 
     public MoveCommandFactory(MoveCommand.Factory movePieceCommandFactory)
     {

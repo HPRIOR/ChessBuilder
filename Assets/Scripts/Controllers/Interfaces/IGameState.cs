@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 public interface IGameState
 {
-    IBoardState currentBoardState { get; }
-    IDictionary<IBoardPosition, HashSet<IBoardPosition>> PossibleBoardMoves { get; }
-
+    PieceColour Turn { get; }
+    IBoardState CurrentBoardState { get; }
+    IDictionary<IBoardPosition, HashSet<IBoardPosition>> PossiblePieceMoves { get; }
     void UpdateGameState(IBoardState newState);
 
 }

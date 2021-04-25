@@ -1,6 +1,6 @@
 ﻿namespace Assets.Scripts.Models.Piece
 {
-    public struct Piece
+    public readonly struct Piece
     {
         public PieceColour Colour { get; }
         public PieceType Type { get; }

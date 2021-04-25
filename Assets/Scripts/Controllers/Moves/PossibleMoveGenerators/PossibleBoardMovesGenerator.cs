@@ -12,20 +12,46 @@ public class PossibleBoardMovesGenerator : IPossibleMovesGenerator
         _pieceMoveGeneratorFactory = pieceMoveGeneratorFactory;
     }
 
-    public IDictionary<IBoardPosition, HashSet<IBoardPosition>> GeneratePossibleMoves(IBoardState boardState)
+    // the logic is wrong here
+    // Moves players possible moves are evaluated for wether they contain a checking move, howoever 
+    // it should be checked that the opposite players moves contain a checking move
+    // all moves need to be evaluated - if the opposing moves contain a check, then this would incure the IntersectOnCheck method
+    // a better solution may be to flag a variable in the board state if one player moves the board into a checked state
+    // this could be stired as state in this class: IEnumerable<IBoardPosition> checkMoves
+    public IDictionary<IBoardPosition, HashSet<IBoardPosition>> GeneratePossibleMoves(IBoardState boardState, PieceColour turn)
     {
         var result = new Dictionary<IBoardPosition, HashSet<IBoardPosition>>();
         var board = boardState.Board;
+
+        bool checkedKingFound = false;
+        IBoardPosition checkedKing = null;
+        IBoardPosition checkingPiece = null;
+
         foreach (var tile in board)
-            if (tile.CurrentPiece.Type != PieceType.NullPiece)
+        {
+            var currentPiece = tile.CurrentPiece;
+            if (currentPiece.Type != PieceType.NullPiece && currentPiece.Colour == turn)
             {
-                var currentPiece = tile.CurrentPiece;
                 var boardPos = tile.BoardPosition;
                 var possibleMoves = _pieceMoveGeneratorFactory.GetPossibleMoveGenerator(currentPiece.Type).GetPossiblePieceMoves(boardPos, boardState);
-                result.Add(boardPos, new HashSet<IBoardPosition>(possibleMoves));
+
+                if(!checkedKingFound)
+                    checkedKing = possibleMoves.FirstOrDefault(p =>
+                    {
+                        var tile = board[p.X, p.Y];
+                        return (tile.CurrentPiece.Type == PieceType.BlackKing || tile.CurrentPiece.Type == PieceType.WhiteKing) && tile.CurrentPiece.Colour != turn;
+                    });
+                if (checkedKing != null)
+                {
+                    checkingPiece = tile.BoardPosition;
+                    checkedKingFound = true;
+                }
+            result.Add(boardPos, new HashSet<IBoardPosition>(possibleMoves));
             }
-        return result;
+        }
+        return checkedKingFound ? IntersectOnCheck(result, board, checkedKing, checkingPiece) :result;
     }
+
 
     private IDictionary<IBoardPosition, HashSet<IBoardPosition>> IntersectOnCheck(
         IDictionary<IBoardPosition, HashSet<IBoardPosition>> possibleMoves,

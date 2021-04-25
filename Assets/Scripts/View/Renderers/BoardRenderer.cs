@@ -28,13 +28,12 @@ public class BoardRenderer : MonoBehaviour, IBoardRenderer
         var lightDarkColourSwitch = true;
         var greenColour = new Color32(118, 150, 86, 255);
         var creamColour = new Color32(238, 238, 210, 255);
-        int count = 1;
-        foreach (var boardTile in board)
+        var count = 1;
+        foreach (var (x, y) in board)
         {
             // Instantiate tile prefab under BoardRender GameObject
-            var currentTile = GameObject.Instantiate(tilePrefab);
-            currentTile.transform.parent = boardParent.transform;
-            currentTile.transform.position = new Vector2(boardTile.Item1, boardTile.Item2);
+            var currentTile = Instantiate(tilePrefab, boardParent.transform, true);
+            currentTile.transform.position = new Vector2(x, y);
 
             // Change light and dark squares
             var spriteRenderer = currentTile.GetComponent<SpriteRenderer>();
@@ -72,8 +71,8 @@ public class BoardRenderer : MonoBehaviour, IBoardRenderer
     private (float X, float Y)[,] CreateBoardPositions()
     {
         var board = new (float X, float Y)[8, 8];
-        for (int i = 0; i < 8; i++)
-            for (int j = 0; j < 8; j++)
+        for (var i = 0; i < 8; i++)
+            for (var j = 0; j < 8; j++)
                 board[i, j] = (i + 0.5f, j + 0.5f);
         return board;
     }

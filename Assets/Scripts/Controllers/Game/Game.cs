@@ -1,13 +1,13 @@
-﻿using UnityEngine;
-using Assets.Scripts.Models.Piece;
+﻿using Assets.Scripts.Models.Piece;
+using UnityEngine;
 using Zenject;
 
-namespace Assets.Scripts.Controllers.Game
+namespace Controllers.Game
 {
     public class Game : MonoBehaviour
     {
         private IBoardGenerator _boardGenerator;
-        public IGameState GameState { get; private set; }
+        private IGameState GameState { get; set; }
 
         [Inject]
         public void Construct(

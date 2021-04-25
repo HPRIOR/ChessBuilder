@@ -2,7 +2,7 @@
 
 internal static class PieceColourMap
 {
-    private static HashSet<PieceType> WhitePieces = new HashSet<PieceType>() {
+    private static readonly HashSet<PieceType> WhitePieces = new HashSet<PieceType>() {
         PieceType.WhiteBishop,
         PieceType.WhiteKnight,
         PieceType.WhitePawn,

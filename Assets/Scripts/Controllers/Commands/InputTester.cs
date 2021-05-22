@@ -2,7 +2,7 @@
 using UnityEngine;
 using Zenject;
 
-namespace View.UserInput
+namespace Controllers.Commands
 {
     public class InputTester : MonoBehaviour
     {

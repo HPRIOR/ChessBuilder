@@ -1,12 +1,9 @@
 using Bindings.Installers.BoardInstallers;
 using Bindings.Installers.PieceInstallers;
 using Models.Services.Interfaces;
-using Models.Services.Moves.PieceMovers;
 using Models.State.Board;
-using Models.State.Interfaces;
 using Models.State.PieceState;
 using NUnit.Framework;
-using UnityEngine;
 using Zenject;
 
 namespace Tests.UnitTests.PieceMoveTests.Movers
@@ -14,21 +11,6 @@ namespace Tests.UnitTests.PieceMoveTests.Movers
     [TestFixture]
     public class PieceMoverTest : ZenjectUnitTestFixture
     {
-        private IPieceMover _pieceMover;
-        private IBoardGenerator _boardGenerator;
-
-        private void InstallBindings()
-        {
-            PieceMoverInstaller.Install(Container);
-            BoardStateInstaller.Install(Container);
-        }
-
-        private void ResolveContainer()
-        {
-            _boardGenerator = Container.Resolve<IBoardGenerator>();
-            _pieceMover = Container.Resolve<IPieceMover>();
-        }
-
         [SetUp]
         public void Init()
         {
@@ -39,6 +21,21 @@ namespace Tests.UnitTests.PieceMoveTests.Movers
         [TearDown]
         public void TearDown()
         {
+        }
+
+        private IPieceMover _pieceMover;
+        private IBoardGenerator _boardGenerator;
+
+        private void InstallBindings()
+        {
+            PieceMoverInstaller.Install(Container);
+            BoardGeneratorInstaller.Install(Container);
+        }
+
+        private void ResolveContainer()
+        {
+            _boardGenerator = Container.Resolve<IBoardGenerator>();
+            _pieceMover = Container.Resolve<IPieceMover>();
         }
 
         [Test]

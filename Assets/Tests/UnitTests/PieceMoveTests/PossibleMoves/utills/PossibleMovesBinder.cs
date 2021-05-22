@@ -11,13 +11,13 @@ namespace Tests.UnitTests.PieceMoveTests.PossibleMoves
         {
             BoardGeneratorInstaller.Install(Container);
             PieceSpawnerInstaller.Install(Container);
-            PieceMoveGeneratorFactoryInstaller.Install(Container);
+            PossibleMoveFactoryInstaller.Install(Container);
             CommandInvokerInstaller.Install(Container);
             MoveCommandInstaller.Install(Container);
             BoardEvalInstaller.Install(Container);
             BoardScannerInstaller.Install(Container);
             BoardPositionTranslatorInstaller.Install(Container);
-            PossibleBoardMovesGeneratorInstaller.Install(Container);
+            AllPossibleMovesGeneratorInstaller.Install(Container);
         }
     }
 }

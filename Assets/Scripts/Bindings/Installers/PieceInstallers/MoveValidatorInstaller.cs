@@ -1,5 +1,5 @@
-﻿using Models.Services.Interfaces;
-using Models.Services.Moves.PieceMovers;
+﻿using Controllers.PieceMovers;
+using Models.Services.Interfaces;
 using Zenject;
 
 namespace Bindings.Installers.PieceInstallers

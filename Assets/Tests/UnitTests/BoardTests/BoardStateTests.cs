@@ -1,3 +1,4 @@
+using Bindings.Installers.BoardInstallers;
 using Models.Services.Interfaces;
 using Models.State.Board;
 using Models.State.Interfaces;

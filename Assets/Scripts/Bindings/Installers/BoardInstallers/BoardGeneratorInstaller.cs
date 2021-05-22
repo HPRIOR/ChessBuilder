@@ -4,7 +4,7 @@ using Zenject;
 
 namespace Bindings.Installers.BoardInstallers
 {
-    public class BoardStateInstaller : Installer<BoardStateInstaller>
+    public class BoardGeneratorInstaller : Installer<BoardGeneratorInstaller>
     {
         public override void InstallBindings()
         {

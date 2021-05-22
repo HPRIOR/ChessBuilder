@@ -1,6 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Bindings.Installers.BoardInstallers;
+using Bindings.Installers.InputInstallers;
+using Bindings.Installers.PieceInstallers;
 using Models.Services.Interfaces;
 using Models.Services.Moves.PossibleMoveHelpers;
 using Models.State.Board;

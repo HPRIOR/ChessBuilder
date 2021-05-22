@@ -2,10 +2,13 @@
 using Models.Services.Moves.PieceMovers;
 using Zenject;
 
-public class MoveValidatorInstaller : Installer<MoveValidatorInstaller>
+namespace Bindings.Installers.PieceInstallers
 {
-    public override void InstallBindings()
+    public class MoveValidatorInstaller : Installer<MoveValidatorInstaller>
     {
-        Container.Bind<IMoveValidator>().To<MoveValidator>().AsSingle();
+        public override void InstallBindings()
+        {
+            Container.Bind<IMoveValidator>().To<MoveValidator>().AsSingle();
+        }
     }
 }

@@ -4,11 +4,14 @@ using Models.Services.Moves.PossibleMoveHelpers;
 using Models.State.PieceState;
 using Zenject;
 
-public class BoardPositionTranslatorInstaller : Installer<BoardPositionTranslatorInstaller>
+namespace Bindings.Installers.PieceInstallers
 {
-    public override void InstallBindings()
+    public class BoardPositionTranslatorInstaller : Installer<BoardPositionTranslatorInstaller>
     {
-        Container.Bind<IPositionTranslatorFactory>().To<BoardPositionTranslatorFactory>().AsSingle();
-        Container.BindFactory<PieceColour, PositionTranslator, PositionTranslator.Factory>().FromNew();
+        public override void InstallBindings()
+        {
+            Container.Bind<IPositionTranslatorFactory>().To<BoardPositionTranslatorFactory>().AsSingle();
+            Container.BindFactory<PieceColour, PositionTranslator, PositionTranslator.Factory>().FromNew();
+        }
     }
 }

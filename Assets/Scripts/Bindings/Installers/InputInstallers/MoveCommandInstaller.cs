@@ -3,11 +3,14 @@ using Controllers.Factories;
 using Models.State.Interfaces;
 using Zenject;
 
-public class MoveCommandInstaller : Installer<MoveCommandInstaller>
+namespace Bindings.Installers.InputInstallers
 {
-    public override void InstallBindings()
+    public class MoveCommandInstaller : Installer<MoveCommandInstaller>
     {
-        Container.Bind<MoveCommandFactory>().AsSingle();
-        Container.BindFactory<IBoardPosition, IBoardPosition, MoveCommand, MoveCommand.Factory>().FromNew();
+        public override void InstallBindings()
+        {
+            Container.Bind<MoveCommandFactory>().AsSingle();
+            Container.BindFactory<IBoardPosition, IBoardPosition, MoveCommand, MoveCommand.Factory>().FromNew();
+        }
     }
 }

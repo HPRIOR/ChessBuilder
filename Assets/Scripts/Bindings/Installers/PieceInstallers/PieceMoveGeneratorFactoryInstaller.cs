@@ -2,10 +2,13 @@
 using Models.Services.Moves.Factories;
 using Zenject;
 
-public class PieceMoveGeneratorFactoryInstaller : Installer<PieceMoveGeneratorFactoryInstaller>
+namespace Bindings.Installers.PieceInstallers
 {
-    public override void InstallBindings()
+    public class PieceMoveGeneratorFactoryInstaller : Installer<PieceMoveGeneratorFactoryInstaller>
     {
-        Container.Bind<IPieceMoveGeneratorFactory>().To<PieceMoveGeneratorFactory>().AsSingle();
+        public override void InstallBindings()
+        {
+            Container.Bind<IPieceMoveGeneratorFactory>().To<PieceMoveGeneratorFactory>().AsSingle();
+        }
     }
 }

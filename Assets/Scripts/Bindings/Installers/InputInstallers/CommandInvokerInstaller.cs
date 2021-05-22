@@ -2,10 +2,13 @@
 using Controllers.Interfaces;
 using Zenject;
 
-public class CommandInvokerInstaller : Installer<CommandInvokerInstaller>
+namespace Bindings.Installers.InputInstallers
 {
-    public override void InstallBindings()
+    public class CommandInvokerInstaller : Installer<CommandInvokerInstaller>
     {
-        Container.Bind<ICommandInvoker>().To<CommandInvoker>().AsSingle();
+        public override void InstallBindings()
+        {
+            Container.Bind<ICommandInvoker>().To<CommandInvoker>().AsSingle();
+        }
     }
 }

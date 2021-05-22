@@ -1,16 +1,20 @@
-﻿using Zenject;
+﻿using Bindings.Installers.PieceInstallers;
+using Zenject;
 
-public class PieceInstaller : MonoInstaller
+namespace Bindings.MonoInstallers
 {
-    public override void InstallBindings()
+    public class PieceInstaller : MonoInstaller
     {
-        PieceSpawnerInstaller.Install(Container);
-        PieceMoverInstaller.Install(Container);
-        PieceMoveGeneratorFactoryInstaller.Install(Container);
-        PossibleBoardMovesGeneratorInstaller.Install(Container);
-        MoveValidatorInstaller.Install(Container);
-        BoardEvalInstaller.Install(Container);
-        BoardPositionTranslatorInstaller.Install(Container);
-        BoardScannerInstaller.Install(Container);
+        public override void InstallBindings()
+        {
+            PieceSpawnerInstaller.Install(Container);
+            PieceMoverInstaller.Install(Container);
+            PieceMoveGeneratorFactoryInstaller.Install(Container);
+            PossibleBoardMovesGeneratorInstaller.Install(Container);
+            MoveValidatorInstaller.Install(Container);
+            BoardEvalInstaller.Install(Container);
+            BoardPositionTranslatorInstaller.Install(Container);
+            BoardScannerInstaller.Install(Container);
+        }
     }
 }

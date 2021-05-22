@@ -2,10 +2,13 @@
 using Models.Services.Moves.PossibleMoveGenerators;
 using Zenject;
 
-public class PossibleBoardMovesGeneratorInstaller : Installer<PossibleBoardMovesGeneratorInstaller>
+namespace Bindings.Installers.PieceInstallers
 {
-    public override void InstallBindings()
+    public class PossibleBoardMovesGeneratorInstaller : Installer<PossibleBoardMovesGeneratorInstaller>
     {
-        Container.Bind<IPossibleMovesGenerator>().To<PossibleBoardMovesGenerator>().AsSingle();
+        public override void InstallBindings()
+        {
+            Container.Bind<IPossibleMovesGenerator>().To<PossibleBoardMovesGenerator>().AsSingle();
+        }
     }
 }

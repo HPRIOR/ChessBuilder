@@ -1,9 +1,13 @@
-﻿using Zenject;
+﻿using Bindings.Installers.BoardInstallers;
+using Zenject;
 
-public class BoardInstaller : MonoInstaller
+namespace Bindings.MonoInstallers
 {
-    public override void InstallBindings()
+    public class BoardInstaller : MonoInstaller
     {
-        BoardStateInstaller.Install(Container);
+        public override void InstallBindings()
+        {
+            BoardStateInstaller.Install(Container);
+        }
     }
 }

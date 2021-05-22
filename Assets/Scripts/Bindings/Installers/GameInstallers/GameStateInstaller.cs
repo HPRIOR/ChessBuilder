@@ -2,10 +2,13 @@ using Game.Implementations;
 using Game.Interfaces;
 using Zenject;
 
-public class GameStateInstaller : Installer<GameStateInstaller>
+namespace Bindings.Installers.GameInstallers
 {
-    public override void InstallBindings()
+    public class GameStateInstaller : Installer<GameStateInstaller>
     {
-        Container.Bind(typeof(ITurnEventInvoker), typeof(IGameState)).To<GameStateController>().AsSingle();
+        public override void InstallBindings()
+        {
+            Container.Bind(typeof(ITurnEventInvoker), typeof(IGameState)).To<GameStateController>().AsSingle();
+        }
     }
 }

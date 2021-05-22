@@ -1,10 +1,14 @@
-﻿using Zenject;
+﻿using Bindings.Installers.InputInstallers;
+using Zenject;
 
-public class InputInstaller : MonoInstaller
+namespace Bindings.MonoInstallers
 {
-    public override void InstallBindings()
+    public class InputInstaller : MonoInstaller
     {
-        MoveCommandInstaller.Install(Container);
-        CommandInvokerInstaller.Install(Container);
+        public override void InstallBindings()
+        {
+            MoveCommandInstaller.Install(Container);
+            CommandInvokerInstaller.Install(Container);
+        }
     }
 }

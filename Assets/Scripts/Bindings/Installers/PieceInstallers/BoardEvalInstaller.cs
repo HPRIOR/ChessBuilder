@@ -4,11 +4,14 @@ using Models.Services.Moves.PossibleMoveHelpers;
 using Models.State.PieceState;
 using Zenject;
 
-public class BoardEvalInstaller : Installer<BoardEvalInstaller>
+namespace Bindings.Installers.PieceInstallers
 {
-    public override void InstallBindings()
+    public class BoardEvalInstaller : Installer<BoardEvalInstaller>
     {
-        Container.Bind<IBoardEvalFactory>().To<BoardEvalFactory>().AsSingle();
-        Container.BindFactory<PieceColour, BoardMoveEval, BoardMoveEval.Factory>().FromNew();
+        public override void InstallBindings()
+        {
+            Container.Bind<IBoardEvalFactory>().To<BoardEvalFactory>().AsSingle();
+            Container.BindFactory<PieceColour, BoardMoveEval, BoardMoveEval.Factory>().FromNew();
+        }
     }
 }

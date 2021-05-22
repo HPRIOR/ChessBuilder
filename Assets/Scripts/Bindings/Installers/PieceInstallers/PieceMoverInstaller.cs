@@ -2,10 +2,13 @@
 using Models.Services.Moves.PieceMovers;
 using Zenject;
 
-public class PieceMoverInstaller : Installer<PieceMoverInstaller>
+namespace Bindings.Installers.PieceInstallers
 {
-    public override void InstallBindings()
+    public class PieceMoverInstaller : Installer<PieceMoverInstaller>
     {
-        Container.Bind<IPieceMover>().To<PieceMover>().AsSingle();
+        public override void InstallBindings()
+        {
+            Container.Bind<IPieceMover>().To<PieceMover>().AsSingle();
+        }
     }
 }

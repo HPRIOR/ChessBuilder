@@ -1,9 +1,13 @@
+using Bindings.Installers.GameInstallers;
 using Zenject;
 
-public class GameInstaller : MonoInstaller
+namespace Bindings.MonoInstallers
 {
-    public override void InstallBindings()
+    public class GameInstaller : MonoInstaller
     {
-        GameStateInstaller.Install(Container);
+        public override void InstallBindings()
+        {
+            GameStateInstaller.Install(Container);
+        }
     }
 }

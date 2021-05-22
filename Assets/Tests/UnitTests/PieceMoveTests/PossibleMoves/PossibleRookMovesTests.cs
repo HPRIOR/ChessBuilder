@@ -1,40 +1,41 @@
-using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
 using Models.Services.Moves.PossibleMoveHelpers;
 using Models.State.Board;
 using Models.State.Interfaces;
 using Models.State.PieceState;
-using UnityEngine;
+using NUnit.Framework;
 
-[TestFixture]
-public class PossibleRookMovesTests : PossibleMovesTestBase
+namespace Tests.UnitTests.PieceMoveTests.PossibleMoves
 {
-    [Test]
-    public void OnEmptyBoard_RookCanMoveForwardAndSideWays(
-        [Values(0, 1, 2, 3, 4, 5, 6, 7)] int x, [Values(0, 1, 2, 3, 4, 5, 6, 7)] int y,
-        [Values(PieceType.WhiteRook, PieceType.BlackRook)] PieceType pieceType
-        )
+    [TestFixture]
+    public class PossibleRookMovesTests : PossibleMovesTestBase
     {
-        SetTestedPieceColourWith(pieceType);
-        var rookMoveGenerator = GetPossibleMoveGenerator(pieceType);
-        var pieces = new List<(PieceType, IBoardPosition)>() {
-            (pieceType, RelativePositionToTestedPiece(new BoardPosition(x, y)))
-        };
-
-        var board =  SetUpBoardWith(pieces);
-
-        var possibleMoves = rookMoveGenerator.GetPossiblePieceMoves(RelativePositionToTestedPiece(new BoardPosition(x, y)), board);
-
-        Assert.AreEqual(14, new HashSet<IBoardPosition>(possibleMoves).Count());
-    }
-
-    [Test]
-    public void WithOpposingPieceOnBackRankAndFile_RookCanTake(
-        [Values(0, 1, 2, 3, 4, 5, 6, 7)] int x, [Values(0, 1, 2, 3, 4, 5, 6, 7)] int y,
-        [Values(PieceType.WhiteRook, PieceType.BlackRook)] PieceType pieceType
+        [Test]
+        public void OnEmptyBoard_RookCanMoveForwardAndSideWays(
+            [Values(0, 1, 2, 3, 4, 5, 6, 7)] int x, [Values(0, 1, 2, 3, 4, 5, 6, 7)] int y,
+            [Values(PieceType.WhiteRook, PieceType.BlackRook)] PieceType pieceType
         )
-    {
+        {
+            SetTestedPieceColourWith(pieceType);
+            var rookMoveGenerator = GetPossibleMoveGenerator(pieceType);
+            var pieces = new List<(PieceType, IBoardPosition)>() {
+                (pieceType, RelativePositionToTestedPiece(new BoardPosition(x, y)))
+            };
+
+            var board =  SetUpBoardWith(pieces);
+
+            var possibleMoves = rookMoveGenerator.GetPossiblePieceMoves(RelativePositionToTestedPiece(new BoardPosition(x, y)), board);
+
+            Assert.AreEqual(14, new HashSet<IBoardPosition>(possibleMoves).Count());
+        }
+
+        [Test]
+        public void WithOpposingPieceOnBackRankAndFile_RookCanTake(
+            [Values(0, 1, 2, 3, 4, 5, 6, 7)] int x, [Values(0, 1, 2, 3, 4, 5, 6, 7)] int y,
+            [Values(PieceType.WhiteRook, PieceType.BlackRook)] PieceType pieceType
+        )
+        {
             SetTestedPieceColourWith(pieceType);
             var rookMoveGenerator = GetPossibleMoveGenerator(pieceType);
             var pieces = new List<(PieceType, IBoardPosition)>() {
@@ -48,14 +49,14 @@ public class PossibleRookMovesTests : PossibleMovesTestBase
             var possibleMoves = rookMoveGenerator.GetPossiblePieceMoves(RelativePositionToTestedPiece(new BoardPosition(x,y)), board);
 
             Assert.AreEqual(14, new HashSet<IBoardPosition>(possibleMoves).Count());
-    }
+        }
 
-    [Test]
-    public void WithOpposingPiecesOnSeventhRankAndFile_RookCanTakeAndIsBlocked(
-        [Values(0, 1, 2, 3, 4, 5)] int x, [Values(0, 1, 2, 3, 4, 5)] int y,
-        [Values(PieceType.WhiteRook, PieceType.BlackRook)] PieceType pieceType
+        [Test]
+        public void WithOpposingPiecesOnSeventhRankAndFile_RookCanTakeAndIsBlocked(
+            [Values(0, 1, 2, 3, 4, 5)] int x, [Values(0, 1, 2, 3, 4, 5)] int y,
+            [Values(PieceType.WhiteRook, PieceType.BlackRook)] PieceType pieceType
         )
-    {
+        {
             SetTestedPieceColourWith(pieceType);
             var rookMoveGenerator = GetPossibleMoveGenerator(pieceType);
             var pieces = new List<(PieceType, IBoardPosition)>() {
@@ -76,14 +77,14 @@ public class PossibleRookMovesTests : PossibleMovesTestBase
             HashSet<IBoardPosition> reachableTiles = new HashSet<IBoardPosition>(possibleMoves);
 
             Assert.IsFalse(reachableTiles.Overlaps(unreachableTiles));
-    }
+        }
 
-    [Test]
-    public void WithOpposingPiecesOnMidRankAndFile_RookCanTakeAndIsBlocked(
-        [Values(0, 1, 2, 4, 5, 6, 7)] int x, [Values(0, 1, 2, 4, 5, 6, 7)] int y,
-        [Values(PieceType.WhiteRook, PieceType.BlackRook)] PieceType pieceType
+        [Test]
+        public void WithOpposingPiecesOnMidRankAndFile_RookCanTakeAndIsBlocked(
+            [Values(0, 1, 2, 4, 5, 6, 7)] int x, [Values(0, 1, 2, 4, 5, 6, 7)] int y,
+            [Values(PieceType.WhiteRook, PieceType.BlackRook)] PieceType pieceType
         )
-    {
+        {
             SetTestedPieceColourWith(pieceType);
             var rookMoveGenerator = GetPossibleMoveGenerator(pieceType);
             var pieces = new List<(PieceType, IBoardPosition)>() {
@@ -106,25 +107,25 @@ public class PossibleRookMovesTests : PossibleMovesTestBase
 
             var unreachableTiles =
                 x < 3
-                ? unreachableTilesEast
-                : unreachabletilesWest
-                .Concat(
-                    y < 3
-                    ? unreachableTilesNorth
-                    : unreachabletilesWest);
+                    ? unreachableTilesEast
+                    : unreachabletilesWest
+                        .Concat(
+                            y < 3
+                                ? unreachableTilesNorth
+                                : unreachabletilesWest);
 
             HashSet<IBoardPosition> reachableTiles = new HashSet<IBoardPosition>(possibleMoves.Select(RelativePositionToTestedPiece));
 
             Assert.IsFalse(reachableTiles.Overlaps(unreachableTiles));
-    }
+        }
 
 
-    [Test]
-    public void WithFriendlyPieceOnBackRankAndFile_RookIsBlocked(
-        [Values(0, 1, 2, 3, 4, 5, 6)] int x, [Values(0, 1, 2, 3, 4, 5, 6)] int y,
-        [Values(PieceType.WhiteRook, PieceType.BlackRook)] PieceType pieceType
+        [Test]
+        public void WithFriendlyPieceOnBackRankAndFile_RookIsBlocked(
+            [Values(0, 1, 2, 3, 4, 5, 6)] int x, [Values(0, 1, 2, 3, 4, 5, 6)] int y,
+            [Values(PieceType.WhiteRook, PieceType.BlackRook)] PieceType pieceType
         )
-    {
+        {
             SetTestedPieceColourWith(pieceType);
             var rookMoveGenerator = GetPossibleMoveGenerator(pieceType);
             var pieces = new List<(PieceType, IBoardPosition)>() {
@@ -141,17 +142,17 @@ public class PossibleRookMovesTests : PossibleMovesTestBase
             var unreachableTiles =
                 new HashSet<IBoardPosition>(
                     new List<IBoardPosition>() { new BoardPosition(7, y), new BoardPosition(x, 7) }
-                    .Select(RelativePositionToTestedPiece));
+                        .Select(RelativePositionToTestedPiece));
 
             Assert.IsFalse(reachableTile.Overlaps(unreachableTiles));
-    }
+        }
 
-    [Test]
-    public void WithFriendlyPieceOnSeventhRankAndFile_RookIsBlocked(
-        [Values(0, 1, 2, 3, 4, 5)] int x, [Values(0, 1, 2, 3, 4, 5)] int y,
-        [Values(PieceType.WhiteRook, PieceType.BlackRook)] PieceType pieceType
+        [Test]
+        public void WithFriendlyPieceOnSeventhRankAndFile_RookIsBlocked(
+            [Values(0, 1, 2, 3, 4, 5)] int x, [Values(0, 1, 2, 3, 4, 5)] int y,
+            [Values(PieceType.WhiteRook, PieceType.BlackRook)] PieceType pieceType
         )
-    {
+        {
             SetTestedPieceColourWith(pieceType);
             var rookMoveGenerator = GetPossibleMoveGenerator(pieceType);
             var pieces = new List<(PieceType, IBoardPosition)>() {
@@ -172,14 +173,14 @@ public class PossibleRookMovesTests : PossibleMovesTestBase
             var unreachableTiles = unreachableTilesEast.Concat(unreachableTilesNorth).Select(RelativePositionToTestedPiece);
 
             Assert.IsFalse(reachableTile.Overlaps(unreachableTiles));
-    }
+        }
 
-    [Test]
-    public void WithFriendlyPiecesOnMidRankAndFile_RookIsBlocked(
-        [Values(0, 1, 2, 4, 5, 6, 7)] int x, [Values(0, 1, 2,  4, 5, 6, 7)] int y,
-        [Values(PieceType.WhiteRook, PieceType.BlackRook)] PieceType pieceType
+        [Test]
+        public void WithFriendlyPiecesOnMidRankAndFile_RookIsBlocked(
+            [Values(0, 1, 2, 4, 5, 6, 7)] int x, [Values(0, 1, 2,  4, 5, 6, 7)] int y,
+            [Values(PieceType.WhiteRook, PieceType.BlackRook)] PieceType pieceType
         )
-    {
+        {
             SetTestedPieceColourWith(PieceType.WhiteRook);
             var rookMoveGenerator = GetPossibleMoveGenerator(pieceType);
             var pieces = new List<(PieceType, IBoardPosition)>() {
@@ -201,16 +202,17 @@ public class PossibleRookMovesTests : PossibleMovesTestBase
 
             var unreachableTiles =
                 x < 3
-                ? unreachableTilesEast
-                : unreachabletilesWest
-                .Concat(
-                    y < 3
-                    ? unreachableTilesNorth
-                    : unreachabletilesWest);
+                    ? unreachableTilesEast
+                    : unreachabletilesWest
+                        .Concat(
+                            y < 3
+                                ? unreachableTilesNorth
+                                : unreachabletilesWest);
 
             HashSet<IBoardPosition> reachableTiles = new HashSet<IBoardPosition>(possibleMoves);
 
             Assert.IsFalse(reachableTiles.Overlaps(unreachableTiles));
         }
     }
+}
 

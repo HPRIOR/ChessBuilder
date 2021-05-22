@@ -1,66 +1,68 @@
-using Zenject;
 using System.Collections;
 using Models.Services.Interfaces;
 using Models.State.Board;
 using Models.State.PieceState;
-using UnityEngine.TestTools;
 using NUnit.Framework;
 using UnityEngine;
-using View.Interfaces;
+using UnityEngine.TestTools;
+using Zenject;
 
-public class PieceSpawnerTests : ZenjectIntegrationTestFixture
+namespace Tests.PlayModeTests
 {
-
-    private IPieceSpawner _pieceSpawner;
-
-    [Inject]
-    public void Construct(IPieceSpawner pieceSpawner)
+    public class PieceSpawnerTests : ZenjectIntegrationTestFixture
     {
-        _pieceSpawner = pieceSpawner;
-    }
 
-    void CommonInstall()
-    {
-        PreInstall();
+        private IPieceSpawner _pieceSpawner;
 
-        PieceSpawnerInstaller.Install(Container);
-        BoardStateInstaller.Install(Container);
+        [Inject]
+        public void Construct(IPieceSpawner pieceSpawner)
+        {
+            _pieceSpawner = pieceSpawner;
+        }
 
-        PostInstall();
-    }
+        void CommonInstall()
+        {
+            PreInstall();
 
-    [UnityTest]
-    public IEnumerator PiecesSpawnInCorrectPosition(
-        [Values] PieceType pieceType,
-        [Values(2, 4, 6)] int x,
-        [Values(1, 3, 5)] int y
+            PieceSpawnerInstaller.Install(Container);
+            BoardStateInstaller.Install(Container);
+
+            PostInstall();
+        }
+
+        [UnityTest]
+        public IEnumerator PiecesSpawnInCorrectPosition(
+            [Values] PieceType pieceType,
+            [Values(2, 4, 6)] int x,
+            [Values(1, 3, 5)] int y
         )
-    {
-        CommonInstall();
-        var piece = _pieceSpawner.CreatePiece(pieceType, new BoardPosition(x, y));
-        yield return null;
-        Assert.AreEqual(new BoardPosition(x, y), piece.BoardPosition);
-    }
+        {
+            CommonInstall();
+            var piece = _pieceSpawner.CreatePiece(pieceType, new BoardPosition(x, y));
+            yield return null;
+            Assert.AreEqual(new BoardPosition(x, y), piece.BoardPosition);
+        }
 
-    [UnityTest]
-    public IEnumerator PiecesSpawnWithCorrectType(
-        [Values] PieceType pieceType
+        [UnityTest]
+        public IEnumerator PiecesSpawnWithCorrectType(
+            [Values] PieceType pieceType
         )
-    {
-        CommonInstall();
-        var piece = _pieceSpawner.CreatePiece(pieceType, new BoardPosition(0, 0));
-        yield return null;
-        Assert.AreEqual(pieceType, piece.Info.PieceType);
-    }
+        {
+            CommonInstall();
+            var piece = _pieceSpawner.CreatePiece(pieceType, new BoardPosition(0, 0));
+            yield return null;
+            Assert.AreEqual(pieceType, piece.Info.PieceType);
+        }
 
-    [UnityTest]
-    public IEnumerator PiecesSpawnAtCorrectVector(
-        [Values(0, 1, 2, 3, 4, 5, 6, 7)] int x, [Values(0, 1, 2, 3, 4, 5, 6, 7)] int y
+        [UnityTest]
+        public IEnumerator PiecesSpawnAtCorrectVector(
+            [Values(0, 1, 2, 3, 4, 5, 6, 7)] int x, [Values(0, 1, 2, 3, 4, 5, 6, 7)] int y
         )
-    {
-        CommonInstall();
-        var piece = _pieceSpawner.CreatePiece(PieceType.WhitePawn, new BoardPosition(x, y));
-        yield return null;
-        Assert.AreEqual(new Vector2(x + 0.5f, y + 0.5f), piece.BoardPosition.Vector);
+        {
+            CommonInstall();
+            var piece = _pieceSpawner.CreatePiece(PieceType.WhitePawn, new BoardPosition(x, y));
+            yield return null;
+            Assert.AreEqual(new Vector2(x + 0.5f, y + 0.5f), piece.BoardPosition.Vector);
+        }
     }
 }

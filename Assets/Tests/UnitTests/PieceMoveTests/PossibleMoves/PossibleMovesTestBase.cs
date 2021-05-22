@@ -1,109 +1,110 @@
-using Zenject;
-using System.Linq;
-using NUnit.Framework;
-using System.Collections.Generic;
-using UnityEngine;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Models.Services.Interfaces;
 using Models.Services.Moves.PossibleMoveHelpers;
 using Models.State.Board;
 using Models.State.Interfaces;
 using Models.State.PieceState;
-using View.Interfaces;
+using NUnit.Framework;
+using Zenject;
 
-public class PossibleMovesTestBase : ZenjectUnitTestFixture
+namespace Tests.UnitTests.PieceMoveTests.PossibleMoves
 {
-    private IBoardGenerator _boardGenerator;
-    private IPieceSpawner _pieceSpawner;
-    private IPieceMoveGeneratorFactory _pieceMoveGeneratorFactory;
-    protected PieceColour TestedPieceColour { get; set; } = PieceColour.White;
-
-    [SetUp]
-    public void Init()
+    public class PossibleMovesTestBase : ZenjectUnitTestFixture
     {
-        InstallBindings();
-        ResolveContainer();
-    }
+        private IBoardGenerator _boardGenerator;
+        private IPieceSpawner _pieceSpawner;
+        private IPieceMoveGeneratorFactory _pieceMoveGeneratorFactory;
+        private PieceColour TestedPieceColour { get; set; } = PieceColour.White;
 
-    [TearDown]
-    public void TearDown()
-    {
-        Container.UnbindAll();
-        _pieceMoveGeneratorFactory = null;
-        _pieceSpawner = null;
-    }
-
-    public void ResolveContainer()
-    {
-        _pieceSpawner = Container.Resolve<IPieceSpawner>();
-        _pieceMoveGeneratorFactory = Container.Resolve<IPieceMoveGeneratorFactory>();
-        _boardGenerator = Container.Resolve<IBoardGenerator>();
-    }
-
-    private void InstallBindings()
-    {
-        BoardStateInstaller.Install(Container);
-        PieceSpawnerInstaller.Install(Container);
-        PieceMoveGeneratorFactoryInstaller.Install(Container);
-        CommandInvokerInstaller.Install(Container);
-        MoveCommandInstaller.Install(Container);
-        BoardEvalInstaller.Install(Container);
-        BoardScannerInstaller.Install(Container);
-        BoardPositionTranslatorInstaller.Install(Container);
-    }
-
-    protected IBoardState SetUpBoardWith(IEnumerable<(PieceType piece, IBoardPosition boardPosition)> piecesAtPositions)
-    {
-        var boardState = new BoardState(_boardGenerator.GenerateBoard());
-        var board = boardState.Board;
-        piecesAtPositions.ToList().ForEach(tup => board[tup.boardPosition.X, tup.boardPosition.Y].CurrentPiece = new Piece(tup.piece));
-        return boardState;
-    }
-
-
-    protected PieceType GetPieceTypeAtPosition(int x, int y, IBoardState inBoardState) => TestedPieceColour == PieceColour.White 
-        ? inBoardState.GetTileAt(new BoardPosition(x, y)).CurrentPiece.Type 
-        : inBoardState.GetMirroredTileAt(new BoardPosition(x, y)).CurrentPiece.Type;
-
-    protected IPieceMoveGenerator GetPossibleMoveGenerator(PieceType pieceType) => 
-        _pieceMoveGeneratorFactory.GetPossibleMoveGenerator(pieceType);
-
-    protected PieceType GetOppositePieceType(PieceType pieceType)
-    {
-        var pieceTypeString = pieceType.ToString();
-        if (pieceTypeString.StartsWith("White"))
+        [SetUp]
+        public void Init()
         {
-            return (PieceType)Enum.Parse(typeof(PieceType), "Black" + pieceTypeString.Substring(5));
+            InstallBindings();
+            ResolveContainer();
         }
-        return (PieceType)Enum.Parse(typeof(PieceType), "White" + pieceTypeString.Substring(5));
-    }
 
-    /// <summary>
-    /// Gets the position relative to the current tested piece (white or black)
-    /// </summary>
-    /// <param name="boardPosition"></param>
-    /// <returns></returns>
-    protected IBoardPosition RelativePositionToTestedPiece(IBoardPosition boardPosition) =>
-        TestedPieceColour == PieceColour.White ? boardPosition : GetMirroredBoardPosition(boardPosition);
+        [TearDown]
+        public void TearDown()
+        {
+            Container.UnbindAll();
+            _pieceMoveGeneratorFactory = null;
+            _pieceSpawner = null;
+        }
+
+        public void ResolveContainer()
+        {
+            _pieceSpawner = Container.Resolve<IPieceSpawner>();
+            _pieceMoveGeneratorFactory = Container.Resolve<IPieceMoveGeneratorFactory>();
+            _boardGenerator = Container.Resolve<IBoardGenerator>();
+        }
+
+        private void InstallBindings()
+        {
+            BoardStateInstaller.Install(Container);
+            PieceSpawnerInstaller.Install(Container);
+            PieceMoveGeneratorFactoryInstaller.Install(Container);
+            CommandInvokerInstaller.Install(Container);
+            MoveCommandInstaller.Install(Container);
+            BoardEvalInstaller.Install(Container);
+            BoardScannerInstaller.Install(Container);
+            BoardPositionTranslatorInstaller.Install(Container);
+        }
+
+        protected IBoardState SetUpBoardWith(IEnumerable<(PieceType piece, IBoardPosition boardPosition)> piecesAtPositions)
+        {
+            var boardState = new BoardState(_boardGenerator.GenerateBoard());
+            var board = boardState.Board;
+            piecesAtPositions.ToList().ForEach(tup => board[tup.boardPosition.X, tup.boardPosition.Y].CurrentPiece = new Piece(tup.piece));
+            return boardState;
+        }
+
+
+        protected PieceType GetPieceTypeAtPosition(int x, int y, IBoardState inBoardState) => TestedPieceColour == PieceColour.White 
+            ? inBoardState.GetTileAt(new BoardPosition(x, y)).CurrentPiece.Type 
+            : inBoardState.GetMirroredTileAt(new BoardPosition(x, y)).CurrentPiece.Type;
+
+        protected IPieceMoveGenerator GetPossibleMoveGenerator(PieceType pieceType) => 
+            _pieceMoveGeneratorFactory.GetPossibleMoveGenerator(pieceType);
+
+        protected PieceType GetOppositePieceType(PieceType pieceType)
+        {
+            var pieceTypeString = pieceType.ToString();
+            if (pieceTypeString.StartsWith("White"))
+            {
+                return (PieceType)Enum.Parse(typeof(PieceType), "Black" + pieceTypeString.Substring(5));
+            }
+            return (PieceType)Enum.Parse(typeof(PieceType), "White" + pieceTypeString.Substring(5));
+        }
+
+        /// <summary>
+        /// Gets the position relative to the current tested piece (white or black)
+        /// </summary>
+        /// <param name="boardPosition"></param>
+        /// <returns></returns>
+        protected IBoardPosition RelativePositionToTestedPiece(IBoardPosition boardPosition) =>
+            TestedPieceColour == PieceColour.White ? boardPosition : GetMirroredBoardPosition(boardPosition);
 
    
-    private IBoardPosition GetMirroredBoardPosition(IBoardPosition boardPosition) =>
-        new BoardPosition(Math.Abs(boardPosition.X - 7), Math.Abs(boardPosition.Y - 7));
+        private IBoardPosition GetMirroredBoardPosition(IBoardPosition boardPosition) =>
+            new BoardPosition(Math.Abs(boardPosition.X - 7), Math.Abs(boardPosition.Y - 7));
 
 
-    protected void SetTestedPieceColourWith(PieceType currentPieceType) =>
-        _ = TestedPieceColour = GetPieceColourFrom(currentPieceType);
+        protected void SetTestedPieceColourWith(PieceType currentPieceType) =>
+            _ = TestedPieceColour = GetPieceColourFrom(currentPieceType);
 
-    private PieceColour GetPieceColourFrom(PieceType pieceType) => 
-        pieceType.ToString().StartsWith("White") ? PieceColour.White : PieceColour.Black;
+        private PieceColour GetPieceColourFrom(PieceType pieceType) => 
+            pieceType.ToString().StartsWith("White") ? PieceColour.White : PieceColour.Black;
 
-    protected IEnumerable<IBoardPosition> GetPositionsIncludingAndPassed(IBoardPosition boardPosition, Direction direction)
-    {
-        if (boardPosition.X > 7 || boardPosition.X < 0 || boardPosition.Y > 7 || boardPosition.Y < 0) return new List<IBoardPosition>();
-        var nextBoardPosition =
-            new BoardPosition(boardPosition.X + Move.In(direction).X, boardPosition.Y + Move.In(direction).Y);
-        return GetPositionsIncludingAndPassed(nextBoardPosition, direction)
-            .Concat(new List<IBoardPosition>() { boardPosition });
+        protected IEnumerable<IBoardPosition> GetPositionsIncludingAndPassed(IBoardPosition boardPosition, Direction direction)
+        {
+            if (boardPosition.X > 7 || boardPosition.X < 0 || boardPosition.Y > 7 || boardPosition.Y < 0) return new List<IBoardPosition>();
+            var nextBoardPosition =
+                new BoardPosition(boardPosition.X + Move.In(direction).X, boardPosition.Y + Move.In(direction).Y);
+            return GetPositionsIncludingAndPassed(nextBoardPosition, direction)
+                .Concat(new List<IBoardPosition>() { boardPosition });
+        }
+
     }
-
 }

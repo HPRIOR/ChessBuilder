@@ -1,123 +1,124 @@
-using Zenject;
-using NUnit.Framework;
-using System.Linq;
-using System.Collections.Generic;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using Models.State.Board;
 using Models.State.Interfaces;
 using Models.State.PieceState;
-using UnityEngine;
+using NUnit.Framework;
 
-[TestFixture]
-public class PossiblePawnMovesTests : PossibleMovesTestBase
+namespace Tests.UnitTests.PieceMoveTests.PossibleMoves
 {
-    [Test]
-    public void PawnsCanMoveForward(
-        [Values(0, 1, 2, 3, 4, 5, 6, 7)] int x, [Values(0, 1, 2, 3, 4, 5, 6)] int y, 
-        [Values(PieceType.WhitePawn, PieceType.BlackPawn)] PieceType pieceType
-        )
+    [TestFixture]
+    public class PossiblePawnMovesTests : PossibleMovesTestBase
     {
-        SetTestedPieceColourWith(pieceType);
-
-        var pawnMoveGenerator = GetPossibleMoveGenerator(pieceType);
-        var pieces = new List<(PieceType, IBoardPosition)>() {
-            (pieceType, RelativePositionToTestedPiece(new BoardPosition(x, y)))
-        };
-
-        SetUpBoardWith(pieces);
-
-        //var possibleMoves = pawnMoveGenerator.GetPossiblePieceMoves(pawnGameObject);
-
-        //Assert.AreEqual(1, possibleMoves.Count());
-        //Assert.AreEqual(RelativePositionToTestedPiece(new BoardPosition(x, y + 1)), possibleMoves.First());
-    }
-
-    [Test]
-    public void PawnsCanTakeDiagonallyRight(
-        [Values(0, 1, 2, 3, 4, 5, 6)] int x, [Values(0, 1, 2, 3, 4, 5, 6)] int y,
-        [Values(PieceType.WhitePawn, PieceType.BlackPawn)] PieceType pieceType
+        [Test]
+        public void PawnsCanMoveForward(
+            [Values(0, 1, 2, 3, 4, 5, 6, 7)] int x, [Values(0, 1, 2, 3, 4, 5, 6)] int y, 
+            [Values(PieceType.WhitePawn, PieceType.BlackPawn)] PieceType pieceType
         )
-    {
-        SetTestedPieceColourWith(pieceType);
-        var pawnMoveGenerator = GetPossibleMoveGenerator(pieceType);
-        var pieces = new List<(PieceType, IBoardPosition)>() {
-            (pieceType, RelativePositionToTestedPiece(new BoardPosition(x, y))),
-            (GetOppositePieceType(pieceType), RelativePositionToTestedPiece(new BoardPosition(x + 1, y + 1)))
-        };
+        {
+            SetTestedPieceColourWith(pieceType);
 
-        SetUpBoardWith(pieces);
+            var pawnMoveGenerator = GetPossibleMoveGenerator(pieceType);
+            var pieces = new List<(PieceType, IBoardPosition)>() {
+                (pieceType, RelativePositionToTestedPiece(new BoardPosition(x, y)))
+            };
 
-        //var possibleMoves = pawnMoveGenerator.GetPossiblePieceMoves(pawnGameObject);
+            SetUpBoardWith(pieces);
 
-        //Assert.AreEqual(2, possibleMoves.Count());
-        //Assert.Contains(RelativePositionToTestedPiece(new BoardPosition(x + 1, y + 1)), (ICollection)possibleMoves);
+            //var possibleMoves = pawnMoveGenerator.GetPossiblePieceMoves(pawnGameObject);
 
-    }
+            //Assert.AreEqual(1, possibleMoves.Count());
+            //Assert.AreEqual(RelativePositionToTestedPiece(new BoardPosition(x, y + 1)), possibleMoves.First());
+        }
 
-    [Test]
-    public void PawnsCanTakeDiagonallyLeft(
-        [Values(1, 2, 3, 4, 5, 6, 7)] int x, [Values(0, 1, 2, 3, 4, 5, 6)] int y,
-        [Values(PieceType.WhitePawn, PieceType.BlackPawn)] PieceType pieceType
+        [Test]
+        public void PawnsCanTakeDiagonallyRight(
+            [Values(0, 1, 2, 3, 4, 5, 6)] int x, [Values(0, 1, 2, 3, 4, 5, 6)] int y,
+            [Values(PieceType.WhitePawn, PieceType.BlackPawn)] PieceType pieceType
         )
-    {
-        SetTestedPieceColourWith(pieceType);
-        var pawnMoveGenerator = GetPossibleMoveGenerator(pieceType);
-        var pieces = new List<(PieceType, IBoardPosition)>() {
-            (pieceType,  RelativePositionToTestedPiece(new BoardPosition(x, y))),
-            (GetOppositePieceType(pieceType), RelativePositionToTestedPiece( new BoardPosition(x - 1, y + 1)))
-        };
+        {
+            SetTestedPieceColourWith(pieceType);
+            var pawnMoveGenerator = GetPossibleMoveGenerator(pieceType);
+            var pieces = new List<(PieceType, IBoardPosition)>() {
+                (pieceType, RelativePositionToTestedPiece(new BoardPosition(x, y))),
+                (GetOppositePieceType(pieceType), RelativePositionToTestedPiece(new BoardPosition(x + 1, y + 1)))
+            };
 
-        var board = SetUpBoardWith(pieces);
+            SetUpBoardWith(pieces);
 
-        var possibleMoves = pawnMoveGenerator.GetPossiblePieceMoves(RelativePositionToTestedPiece(new BoardPosition(x, y)), board);
+            //var possibleMoves = pawnMoveGenerator.GetPossiblePieceMoves(pawnGameObject);
 
-        Assert.AreEqual(2, possibleMoves.Count());
-        Assert.Contains(RelativePositionToTestedPiece( new BoardPosition(x - 1, y + 1)), (ICollection)possibleMoves);
-    }
+            //Assert.AreEqual(2, possibleMoves.Count());
+            //Assert.Contains(RelativePositionToTestedPiece(new BoardPosition(x + 1, y + 1)), (ICollection)possibleMoves);
 
-    [Test]
-    public void PawnIsBlockedByWhiteAndBlackPieces(
-        [Values(0, 1, 2, 3, 4, 5, 6, 7)] int x, [Values(0, 1, 2, 3, 4, 5, 6)] int y,
-        [Values(PieceType.BlackPawn, PieceType.WhitePawn)] PieceType whiteOrBlackPiece,
-        [Values(PieceType.BlackPawn, PieceType.WhitePawn)] PieceType pieceType
+        }
+
+        [Test]
+        public void PawnsCanTakeDiagonallyLeft(
+            [Values(1, 2, 3, 4, 5, 6, 7)] int x, [Values(0, 1, 2, 3, 4, 5, 6)] int y,
+            [Values(PieceType.WhitePawn, PieceType.BlackPawn)] PieceType pieceType
         )
-    {
-        SetTestedPieceColourWith(pieceType);
-        var pawnMoveGenerator = GetPossibleMoveGenerator(pieceType);
-        var pieces = new List<(PieceType, IBoardPosition)>() {
-            (pieceType, RelativePositionToTestedPiece(new BoardPosition(x, y))),
-            (whiteOrBlackPiece, RelativePositionToTestedPiece(new BoardPosition(x, y + 1)))
-        };
+        {
+            SetTestedPieceColourWith(pieceType);
+            var pawnMoveGenerator = GetPossibleMoveGenerator(pieceType);
+            var pieces = new List<(PieceType, IBoardPosition)>() {
+                (pieceType,  RelativePositionToTestedPiece(new BoardPosition(x, y))),
+                (GetOppositePieceType(pieceType), RelativePositionToTestedPiece( new BoardPosition(x - 1, y + 1)))
+            };
 
-        var board = SetUpBoardWith(pieces);
+            var board = SetUpBoardWith(pieces);
 
-        var possibleMoves = pawnMoveGenerator.GetPossiblePieceMoves(RelativePositionToTestedPiece(new BoardPosition(x, y)), board);
+            var possibleMoves = pawnMoveGenerator.GetPossiblePieceMoves(RelativePositionToTestedPiece(new BoardPosition(x, y)), board);
 
-        Assert.AreEqual(0, possibleMoves.Count());
-    }
+            Assert.AreEqual(2, possibleMoves.Count());
+            Assert.Contains(RelativePositionToTestedPiece( new BoardPosition(x - 1, y + 1)), (ICollection)possibleMoves);
+        }
 
-    [Test]
-    public void PawnsCanTakeOnBothSide(
-        [Values(1, 2, 3, 4, 5, 6)] int x, [Values(0, 1, 2, 3, 4, 5, 6)] int y,
-        [Values(PieceType.BlackPawn, PieceType.WhitePawn)] PieceType pieceType
+        [Test]
+        public void PawnIsBlockedByWhiteAndBlackPieces(
+            [Values(0, 1, 2, 3, 4, 5, 6, 7)] int x, [Values(0, 1, 2, 3, 4, 5, 6)] int y,
+            [Values(PieceType.BlackPawn, PieceType.WhitePawn)] PieceType whiteOrBlackPiece,
+            [Values(PieceType.BlackPawn, PieceType.WhitePawn)] PieceType pieceType
         )
-    {
+        {
+            SetTestedPieceColourWith(pieceType);
+            var pawnMoveGenerator = GetPossibleMoveGenerator(pieceType);
+            var pieces = new List<(PieceType, IBoardPosition)>() {
+                (pieceType, RelativePositionToTestedPiece(new BoardPosition(x, y))),
+                (whiteOrBlackPiece, RelativePositionToTestedPiece(new BoardPosition(x, y + 1)))
+            };
 
-        SetTestedPieceColourWith(pieceType);
-        var pawnMoveGenerator = GetPossibleMoveGenerator(pieceType);
-        var pieces = new List<(PieceType, IBoardPosition)>() {
-            (pieceType, RelativePositionToTestedPiece(new BoardPosition(x, y))),
-            (GetOppositePieceType(pieceType), RelativePositionToTestedPiece(new BoardPosition(x + 1, y + 1))),
-            (GetOppositePieceType(pieceType), RelativePositionToTestedPiece(new BoardPosition(x - 1, y + 1)))
-        };
+            var board = SetUpBoardWith(pieces);
 
-        var board = SetUpBoardWith(pieces);
+            var possibleMoves = pawnMoveGenerator.GetPossiblePieceMoves(RelativePositionToTestedPiece(new BoardPosition(x, y)), board);
 
-        var possibleMoves = pawnMoveGenerator.GetPossiblePieceMoves(RelativePositionToTestedPiece(new BoardPosition(x, y)), board);
+            Assert.AreEqual(0, possibleMoves.Count());
+        }
 
-        Assert.AreEqual(3, possibleMoves.Count());
-        Assert.Contains(RelativePositionToTestedPiece(new BoardPosition(x - 1, y + 1)), (ICollection)possibleMoves);
-        Assert.Contains(RelativePositionToTestedPiece(new BoardPosition(x + 1, y + 1)), (ICollection)possibleMoves);
+        [Test]
+        public void PawnsCanTakeOnBothSide(
+            [Values(1, 2, 3, 4, 5, 6)] int x, [Values(0, 1, 2, 3, 4, 5, 6)] int y,
+            [Values(PieceType.BlackPawn, PieceType.WhitePawn)] PieceType pieceType
+        )
+        {
+
+            SetTestedPieceColourWith(pieceType);
+            var pawnMoveGenerator = GetPossibleMoveGenerator(pieceType);
+            var pieces = new List<(PieceType, IBoardPosition)>() {
+                (pieceType, RelativePositionToTestedPiece(new BoardPosition(x, y))),
+                (GetOppositePieceType(pieceType), RelativePositionToTestedPiece(new BoardPosition(x + 1, y + 1))),
+                (GetOppositePieceType(pieceType), RelativePositionToTestedPiece(new BoardPosition(x - 1, y + 1)))
+            };
+
+            var board = SetUpBoardWith(pieces);
+
+            var possibleMoves = pawnMoveGenerator.GetPossiblePieceMoves(RelativePositionToTestedPiece(new BoardPosition(x, y)), board);
+
+            Assert.AreEqual(3, possibleMoves.Count());
+            Assert.Contains(RelativePositionToTestedPiece(new BoardPosition(x - 1, y + 1)), (ICollection)possibleMoves);
+            Assert.Contains(RelativePositionToTestedPiece(new BoardPosition(x + 1, y + 1)), (ICollection)possibleMoves);
+        }
+
     }
-
 }

@@ -2,11 +2,12 @@
 using Models.Services.Interfaces;
 using Models.State.Interfaces;
 
-namespace Models.Services.Moves.PieceMovers
+namespace Controllers.PieceMovers
 {
     public class MoveValidator : IMoveValidator
     {
-        public bool ValidateMove(IDictionary<IBoardPosition, HashSet<IBoardPosition>> possibleMoves, IBoardPosition from, IBoardPosition destination)
+        public bool ValidateMove(IDictionary<IBoardPosition, HashSet<IBoardPosition>> possibleMoves,
+            IBoardPosition from, IBoardPosition destination)
         {
             if (from == destination) return false;
             if (possibleMoves.ContainsKey(from))

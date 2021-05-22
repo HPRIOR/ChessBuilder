@@ -14,8 +14,8 @@ namespace Tests.UnitTests.PieceMoveTests.PossibleMoves
     public class PossibleMovesTestBase : ZenjectUnitTestFixture
     {
         private IBoardGenerator _boardGenerator;
-        private IPieceMoveGeneratorFactory _pieceMoveGeneratorFactory;
         private IPieceSpawner _pieceSpawner;
+        private IPossibleMoveFactory _possibleMoveFactory;
         private PieceColour TestedPieceColour { get; set; } = PieceColour.White;
 
         [SetUp]
@@ -29,14 +29,14 @@ namespace Tests.UnitTests.PieceMoveTests.PossibleMoves
         public void TearDown()
         {
             Container.UnbindAll();
-            _pieceMoveGeneratorFactory = null;
+            _possibleMoveFactory = null;
             _pieceSpawner = null;
         }
 
         public void ResolveContainer()
         {
             _pieceSpawner = Container.Resolve<IPieceSpawner>();
-            _pieceMoveGeneratorFactory = Container.Resolve<IPieceMoveGeneratorFactory>();
+            _possibleMoveFactory = Container.Resolve<IPossibleMoveFactory>();
             _boardGenerator = Container.Resolve<IBoardGenerator>();
         }
 
@@ -60,7 +60,7 @@ namespace Tests.UnitTests.PieceMoveTests.PossibleMoves
 
         protected IPieceMoveGenerator GetPossibleMoveGenerator(PieceType pieceType)
         {
-            return _pieceMoveGeneratorFactory.GetPossibleMoveGenerator(pieceType);
+            return _possibleMoveFactory.GetPossibleMoveGenerator(pieceType);
         }
 
         protected PieceType GetOppositePieceType(PieceType pieceType)

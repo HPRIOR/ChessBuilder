@@ -24,19 +24,19 @@ namespace Tests.UnitTests.PieceMoveTests.PossibleMoves
         }
 
         private IBoardGenerator _boardGenerator;
-        private IPossibleMovesGenerator _possibleMovesGenerator;
+        private IAllPossibleMovesGenerator _allPossibleMovesGenerator;
 
         private void ResolveContainer()
         {
             _boardGenerator = Container.Resolve<IBoardGenerator>();
-            _possibleMovesGenerator = Container.Resolve<IPossibleMovesGenerator>();
+            _allPossibleMovesGenerator = Container.Resolve<IAllPossibleMovesGenerator>();
         }
 
         [Test]
         public void WithNoPieces_NoPossibleMoves()
         {
             var board = new BoardState(_boardGenerator);
-            var possibleMoves = _possibleMovesGenerator.GeneratePossibleMoves(board, PieceColour.White);
+            var possibleMoves = _allPossibleMovesGenerator.GetPossibleMoves(board, PieceColour.White);
             Assert.AreEqual(0, possibleMoves.Count());
         }
     }

@@ -2,7 +2,7 @@
 
 namespace Models.Services.Interfaces
 {
-    public interface IPieceMoveGeneratorFactory
+    public interface IPossibleMoveFactory
     {
         IPieceMoveGenerator GetPossibleMoveGenerator(PieceType pieceType);
     }

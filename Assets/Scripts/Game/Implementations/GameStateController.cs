@@ -9,11 +9,11 @@ namespace Game.Implementations
 {
     public class GameStateController : IGameState, ITurnEventInvoker
     {
-        private readonly IPossibleMovesGenerator _possibleMovesGenerator;
+        private readonly IAllPossibleMovesGenerator _allPossibleMovesGenerator;
 
-        public GameStateController(IPossibleMovesGenerator possibleMovesGenerator)
+        public GameStateController(IAllPossibleMovesGenerator allPossibleMovesGenerator)
         {
-            _possibleMovesGenerator = possibleMovesGenerator;
+            _allPossibleMovesGenerator = allPossibleMovesGenerator;
         }
 
         public IBoardState CurrentBoardState { get; private set; }
@@ -29,16 +29,17 @@ namespace Game.Implementations
             var previousState = CurrentBoardState;
             CurrentBoardState = newState;
 
-            PossiblePieceMoves = _possibleMovesGenerator.GeneratePossibleMoves(CurrentBoardState, Turn);
+            PossiblePieceMoves = _allPossibleMovesGenerator.GetPossibleMoves(CurrentBoardState, Turn);
 
             Turn = ChangeTurn();
             GameStateChangeEvent?.Invoke(previousState, CurrentBoardState);
-
         }
 
-        private PieceColour ChangeTurn() =>
-            Turn == PieceColour.White ? PieceColour.Black : PieceColour.White; 
-
         public event Action<IBoardState, IBoardState> GameStateChangeEvent;
+
+        private PieceColour ChangeTurn()
+        {
+            return Turn == PieceColour.White ? PieceColour.Black : PieceColour.White;
+        }
     }
 }

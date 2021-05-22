@@ -7,13 +7,13 @@ using Models.State.PieceState;
 
 namespace Models.Services.Moves.PossibleMoveGenerators
 {
-    public class PossibleBoardMovesGenerator : IPossibleMovesGenerator
+    public class AllPossibleMovesGenerator : IAllPossibleMovesGenerator
     {
-        private readonly IPieceMoveGeneratorFactory _pieceMoveGeneratorFactory;
+        private readonly IPossibleMoveFactory _possibleMoveFactory;
 
-        public PossibleBoardMovesGenerator(IPieceMoveGeneratorFactory pieceMoveGeneratorFactory)
+        public AllPossibleMovesGenerator(IPossibleMoveFactory possibleMoveFactory)
         {
-            _pieceMoveGeneratorFactory = pieceMoveGeneratorFactory;
+            _possibleMoveFactory = possibleMoveFactory;
         }
 
         // the logic is wrong here
@@ -23,7 +23,8 @@ namespace Models.Services.Moves.PossibleMoveGenerators
         // a better solution may be to flag a variable in the board state if one player moves the board into a checked state
         // this could be started as state in this class: IEnumerable<IBoardPosition> checkMoves
         // GeneratePossibleMove needs to take in the the moved piece of the previous turn so that this can be checked 
-        public IDictionary<IBoardPosition, HashSet<IBoardPosition>> GeneratePossibleMoves(IBoardState boardState, PieceColour turn)
+        public IDictionary<IBoardPosition, HashSet<IBoardPosition>> GetPossibleMoves(IBoardState boardState,
+            PieceColour turn)
         {
             var result = new Dictionary<IBoardPosition, HashSet<IBoardPosition>>();
             var board = boardState.Board;
@@ -34,11 +35,13 @@ namespace Models.Services.Moves.PossibleMoveGenerators
                 if (currentPiece.Type != PieceType.NullPiece /*&& currentPiece.Colour == turn*/)
                 {
                     var boardPos = tile.BoardPosition;
-                    var possibleMoves = _pieceMoveGeneratorFactory.GetPossibleMoveGenerator(currentPiece.Type).GetPossiblePieceMoves(boardPos, boardState);
+                    var possibleMoves = _possibleMoveFactory.GetPossibleMoveGenerator(currentPiece.Type)
+                        .GetPossiblePieceMoves(boardPos, boardState);
 
                     result.Add(boardPos, new HashSet<IBoardPosition>(possibleMoves));
                 }
             }
+
             return result;
         }
 
@@ -46,9 +49,10 @@ namespace Models.Services.Moves.PossibleMoveGenerators
         private IDictionary<IBoardPosition, HashSet<IBoardPosition>> IntersectOnCheck(
             IDictionary<IBoardPosition, HashSet<IBoardPosition>> possibleMoves,
             ITile[,] board,
-            IBoardPosition checkedKing, IBoardPosition checkingPiece) 
+            IBoardPosition checkedKing, IBoardPosition checkingPiece)
         {
-            var possibleNonKingMoves = new HashSet<IBoardPosition>(ScanPositionGenerator.GetPositionsBetween(checkedKing, checkingPiece));
+            var possibleNonKingMoves =
+                new HashSet<IBoardPosition>(ScanPositionGenerator.GetPositionsBetween(checkedKing, checkingPiece));
             return possibleMoves.ToList().Select(t =>
             {
                 var bp = t.Key;
@@ -56,9 +60,8 @@ namespace Models.Services.Moves.PossibleMoveGenerators
                 var currentPiece = board[bp.X, bp.Y].CurrentPiece;
                 if (currentPiece.Type != PieceType.BlackKing || currentPiece.Type != PieceType.WhiteKing)
                     return (bp, set.Intersect(possibleNonKingMoves) as HashSet<IBoardPosition>);
-                else return (bp, set);
+                return (bp, set);
             }).ToDictionary(t => t.bp, t => t.Item2);
-
         }
     }
 }

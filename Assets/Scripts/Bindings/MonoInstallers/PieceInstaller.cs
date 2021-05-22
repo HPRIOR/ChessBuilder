@@ -9,8 +9,8 @@ namespace Bindings.MonoInstallers
         {
             PieceSpawnerInstaller.Install(Container);
             PieceMoverInstaller.Install(Container);
-            PieceMoveGeneratorFactoryInstaller.Install(Container);
-            PossibleBoardMovesGeneratorInstaller.Install(Container);
+            PossibleMoveFactoryInstaller.Install(Container);
+            AllPossibleMovesGeneratorInstaller.Install(Container);
             MoveValidatorInstaller.Install(Container);
             BoardEvalInstaller.Install(Container);
             BoardPositionTranslatorInstaller.Install(Container);

@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using Models.Services.Interfaces;
 using Models.State.Board;
 using Models.State.Interfaces;
+using UnityEngine;
 
 namespace Models.Services.Moves.PossibleMoveGenerators
 {
@@ -20,20 +22,27 @@ namespace Models.Services.Moves.PossibleMoveGenerators
 
         public IEnumerable<IBoardPosition> GetPossiblePieceMoves(IBoardPosition originPosition, IBoardState boardState)
         {
-            Func<(int X, int Y), bool> coordInBounds =
-                coord => 0 <= coord.X || coord.X <= 7 || 0 <= coord.Y || coord.Y <= 7;
+            bool CoordInBounds((int X, int Y) coord) => 0 <= coord.X && coord.X <= 7 && 0 <= coord.Y && coord.Y <= 7;
 
-            return GetMoveCoords(_positionTranslator.GetRelativePosition(originPosition))
-                .Where(coordInBounds)
+            bool FriendlyPieceNotInTile((int X, int Y) coord) =>
+                !_boardEval.FriendlyPieceIn(
+                    boardState.GetTileAt(_positionTranslator.GetRelativePosition(new BoardPosition(coord.X, coord.Y))));
+
+            var moveCoords = GetMoveCoords(_positionTranslator.GetRelativePosition(originPosition))
+                .Where(CoordInBounds)
+                .Where(FriendlyPieceNotInTile)
                 .Select(coord => new BoardPosition(coord.X, coord.Y))
                 .Select(pos => _positionTranslator.GetRelativePosition(pos));
+
+            return moveCoords;
         }
 
-        private IEnumerable<(int X, int Y)> GetMoveCoords(IBoardPosition boardPosition)
+        private static IEnumerable<(int X, int Y)> GetMoveCoords(IBoardPosition boardPosition)
         {
-            int x = boardPosition.X; int y = boardPosition.Y;
-            var squareXs = new List<int>() { x + 2, x - 2 };
-            var squareYs = new List<int>() { y + 2, y - 2 };
+            var x = boardPosition.X;
+            var y = boardPosition.Y;
+            var squareXs = new List<int> {x + 2, x - 2};
+            var squareYs = new List<int> {y + 2, y - 2};
 
             var lateralMoves =
                 squareXs.SelectMany(

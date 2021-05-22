@@ -28,33 +28,18 @@ namespace Models.Services.Moves.PossibleMoveGenerators
             var result = new Dictionary<IBoardPosition, HashSet<IBoardPosition>>();
             var board = boardState.Board;
 
-            bool checkedKingFound = false;
-            IBoardPosition checkedKing = null;
-            IBoardPosition checkingPiece = null;
-
             foreach (var tile in board)
             {
                 var currentPiece = tile.CurrentPiece;
-                if (currentPiece.Type != PieceType.NullPiece && currentPiece.Colour == turn)
+                if (currentPiece.Type != PieceType.NullPiece /*&& currentPiece.Colour == turn*/)
                 {
                     var boardPos = tile.BoardPosition;
                     var possibleMoves = _pieceMoveGeneratorFactory.GetPossibleMoveGenerator(currentPiece.Type).GetPossiblePieceMoves(boardPos, boardState);
 
-                    if(!checkedKingFound)
-                        checkedKing = possibleMoves.FirstOrDefault(p =>
-                        {
-                            var tile = board[p.X, p.Y];
-                            return (tile.CurrentPiece.Type == PieceType.BlackKing || tile.CurrentPiece.Type == PieceType.WhiteKing) && tile.CurrentPiece.Colour != turn;
-                        });
-                    if (checkedKing != null)
-                    {
-                        checkingPiece = tile.BoardPosition;
-                        checkedKingFound = true;
-                    }
                     result.Add(boardPos, new HashSet<IBoardPosition>(possibleMoves));
                 }
             }
-            return checkedKingFound ? IntersectOnCheck(result, board, checkedKing, checkingPiece) :result;
+            return result;
         }
 
 

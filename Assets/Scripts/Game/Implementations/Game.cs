@@ -31,8 +31,8 @@ namespace Game.Implementations
         private IBoardState InitBoard()
         {
             var board = _boardGenerator.GenerateBoard();
-            board[3, 3].CurrentPiece = new Piece(PieceType.WhiteQueen);
-            board[4, 4].CurrentPiece = new Piece(PieceType.BlackQueen);
+            board[3, 3].CurrentPiece = new Piece(PieceType.WhiteKnight);
+            board[4, 4].CurrentPiece = new Piece(PieceType.BlackKnight);
             return new BoardState(board);
         }
     }

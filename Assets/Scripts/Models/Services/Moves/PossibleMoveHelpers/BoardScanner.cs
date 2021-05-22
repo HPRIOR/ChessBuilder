@@ -9,7 +9,7 @@ namespace Models.Services.Moves.PossibleMoveHelpers
 {
     public class BoardScanner : IBoardScanner
     {
-        private readonly IBoardEval _boardEval;
+        private readonly IBoardMoveEval _boardMoveEval;
         private readonly IPositionTranslator _positionTranslator;
 
         public BoardScanner(
@@ -17,7 +17,7 @@ namespace Models.Services.Moves.PossibleMoveHelpers
             IBoardEvalFactory boardEvalFactory,
             IPositionTranslatorFactory positionTranslatorFactory)
         {
-            _boardEval = boardEvalFactory.Create(pieceColour);
+            _boardMoveEval = boardEvalFactory.Create(pieceColour);
             _positionTranslator = positionTranslatorFactory.Create(pieceColour);
         }
 
@@ -39,10 +39,10 @@ namespace Models.Services.Moves.PossibleMoveHelpers
         }
 
         private bool TileContainsOpposingPieceAt(IBoardPosition boardPosition, IBoardState boardState) =>
-            _boardEval.OpposingPieceIn(_positionTranslator.GetRelativeTileAt(boardPosition, boardState));
+            _boardMoveEval.OpposingPieceIn(_positionTranslator.GetRelativeTileAt(boardPosition, boardState));
 
         private bool TileContainsFriendlyPieceAt(IBoardPosition boardPosition, IBoardState boardState) =>
-            _boardEval.FriendlyPieceIn(_positionTranslator.GetRelativeTileAt(boardPosition, boardState));
+            _boardMoveEval.FriendlyPieceIn(_positionTranslator.GetRelativeTileAt(boardPosition, boardState));
 
         public class Factory : PlaceholderFactory<PieceColour, BoardScanner> { }
     }

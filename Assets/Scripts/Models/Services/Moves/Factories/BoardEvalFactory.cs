@@ -6,14 +6,14 @@ namespace Models.Services.Moves.Factories
 {
     public class BoardEvalFactory : IBoardEvalFactory
     {
-        private readonly BoardEval.Factory _boardEvalFactory;
+        private readonly BoardMoveEval.Factory _boardEvalFactory;
 
-        public BoardEvalFactory(BoardEval.Factory boardEvalFactory)
+        public BoardEvalFactory(BoardMoveEval.Factory boardEvalFactory)
         {
             _boardEvalFactory = boardEvalFactory;
         }
 
-        public IBoardEval Create(PieceColour pieceColour) =>
+        public IBoardMoveEval Create(PieceColour pieceColour) =>
             _boardEvalFactory.Create(pieceColour);
     }
 }

@@ -6,8 +6,8 @@ namespace Models.Services.Moves.Factories
 {
     public class PieceMoveGeneratorFactory : IPieceMoveGeneratorFactory
     {
-        private readonly IBoardEval _whiteBoardEval;
-        private readonly IBoardEval _blackBoardEval;
+        private readonly IBoardMoveEval _whiteBoardMoveEval;
+        private readonly IBoardMoveEval _blackBoardMoveEval;
 
         private readonly IPositionTranslator _whitePositionTranslator;
         private readonly IPositionTranslator _blackPositionTranslator;
@@ -20,8 +20,8 @@ namespace Models.Services.Moves.Factories
             IPositionTranslatorFactory boardPositionTranslatorFactory,
             IBoardEvalFactory boardEvalFactory)
         {
-            _whiteBoardEval = boardEvalFactory.Create(PieceColour.White);
-            _blackBoardEval = boardEvalFactory.Create(PieceColour.Black);
+            _whiteBoardMoveEval = boardEvalFactory.Create(PieceColour.White);
+            _blackBoardMoveEval = boardEvalFactory.Create(PieceColour.Black);
 
             _whiteBoardScanner = boardScannerFactory.Create(PieceColour.White);
             _blackBoardScanner = boardScannerFactory.Create(PieceColour.Black);
@@ -76,9 +76,9 @@ namespace Models.Services.Moves.Factories
                 ? _whitePositionTranslator
                 : _blackPositionTranslator;
 
-        private IBoardEval GetBoardEvalWith(PieceColour pieceColour) =>
+        private IBoardMoveEval GetBoardEvalWith(PieceColour pieceColour) =>
             pieceColour == PieceColour.White
-                ? _whiteBoardEval
-                : _blackBoardEval;
+                ? _whiteBoardMoveEval
+                : _blackBoardMoveEval;
     }
 }

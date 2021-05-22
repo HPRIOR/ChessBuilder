@@ -4,6 +4,6 @@ namespace Models.Services.Interfaces
 {
     public interface IBoardEvalFactory
     {
-        IBoardEval Create(PieceColour pieceColour);
+        IBoardMoveEval Create(PieceColour pieceColour);
     }
 }

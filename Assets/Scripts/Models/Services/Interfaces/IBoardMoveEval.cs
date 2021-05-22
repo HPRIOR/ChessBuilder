@@ -2,7 +2,7 @@
 
 namespace Models.Services.Interfaces
 {
-    public interface IBoardEval
+    public interface IBoardMoveEval
     {
         bool OpposingPieceIn(ITile tile);
 

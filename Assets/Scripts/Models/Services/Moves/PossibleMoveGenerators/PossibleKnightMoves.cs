@@ -12,12 +12,12 @@ namespace Models.Services.Moves.PossibleMoveGenerators
     public class PossibleKnightMoves : IPieceMoveGenerator
     {
         private readonly IPositionTranslator _positionTranslator;
-        private readonly IBoardEval _boardEval;
+        private readonly IBoardMoveEval _boardMoveEval;
 
-        public PossibleKnightMoves(IPositionTranslator positionTranslator, IBoardEval boardEval)
+        public PossibleKnightMoves(IPositionTranslator positionTranslator, IBoardMoveEval boardMoveEval)
         {
             _positionTranslator = positionTranslator;
-            _boardEval = boardEval;
+            _boardMoveEval = boardMoveEval;
         }
 
         public IEnumerable<IBoardPosition> GetPossiblePieceMoves(IBoardPosition originPosition, IBoardState boardState)
@@ -25,7 +25,7 @@ namespace Models.Services.Moves.PossibleMoveGenerators
             bool CoordInBounds((int X, int Y) coord) => 0 <= coord.X && coord.X <= 7 && 0 <= coord.Y && coord.Y <= 7;
 
             bool FriendlyPieceNotInTile((int X, int Y) coord) =>
-                !_boardEval.FriendlyPieceIn(
+                !_boardMoveEval.FriendlyPieceIn(
                     boardState.GetTileAt(_positionTranslator.GetRelativePosition(new BoardPosition(coord.X, coord.Y))));
 
             var moveCoords = GetMoveCoords(_positionTranslator.GetRelativePosition(originPosition))

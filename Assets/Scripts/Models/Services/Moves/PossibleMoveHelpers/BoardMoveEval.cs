@@ -5,11 +5,11 @@ using Zenject;
 
 namespace Models.Services.Moves.PossibleMoveHelpers
 {
-    public class BoardEval : IBoardEval
+    public class BoardMoveEval : IBoardMoveEval
     {
         private readonly PieceColour _pieceColour;
 
-        public BoardEval(PieceColour pieceColour)
+        public BoardMoveEval(PieceColour pieceColour)
         {
             _pieceColour = pieceColour;
         }
@@ -24,6 +24,6 @@ namespace Models.Services.Moves.PossibleMoveHelpers
 
         private static PieceColour PieceColourFromType(PieceType pieceType) => pieceType.ToString().StartsWith("White") ? PieceColour.White : PieceColour.Black;
 
-        public class Factory : PlaceholderFactory<PieceColour, BoardEval> { }
+        public class Factory : PlaceholderFactory<PieceColour, BoardMoveEval> { }
     }
 }

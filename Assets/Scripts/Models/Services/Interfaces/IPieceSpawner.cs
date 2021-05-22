@@ -1,5 +1,5 @@
 ﻿using Models.State.Interfaces;
-using Models.State.Piece;
+using Models.State.PieceState;
 using View.Renderers;
 
 namespace Models.Services.Interfaces

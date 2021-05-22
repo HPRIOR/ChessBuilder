@@ -1,14 +1,14 @@
 ﻿using Models.State.Interfaces;
-using Models.State.Piece;
+using Models.State.PieceState;
 
 namespace Models.State.Board
 {
     public class Tile : ITile
     {
-        public Piece.Piece CurrentPiece { get; set; }
+        public Piece CurrentPiece { get; set; }
         public IBoardPosition BoardPosition { get; set; }
 
-        public Tile(IBoardPosition boardPosition, Piece.Piece currentPiece)
+        public Tile(IBoardPosition boardPosition, Piece currentPiece)
         {
             BoardPosition = boardPosition;
             CurrentPiece = currentPiece;
@@ -17,7 +17,7 @@ namespace Models.State.Board
         public Tile(BoardPosition boardPosition)
         {
             BoardPosition = boardPosition;
-            CurrentPiece = new Piece.Piece(PieceType.NullPiece);
+            CurrentPiece = new Piece(PieceType.NullPiece);
         }
 
         public override string ToString() => $"Tile at ({BoardPosition.X}, {BoardPosition.Y}) containing" +

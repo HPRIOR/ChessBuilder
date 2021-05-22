@@ -1,6 +1,6 @@
 using Models.Services.Interfaces;
 using Models.Services.Moves.PossibleMoveGenerators;
-using Models.State.Piece;
+using Models.State.PieceState;
 
 namespace Models.Services.Moves.Factories
 {

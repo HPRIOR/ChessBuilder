@@ -8,7 +8,7 @@ using Models.Services.Interfaces;
 using Models.Services.Moves.PossibleMoveHelpers;
 using Models.State.Board;
 using Models.State.Interfaces;
-using Models.State.Piece;
+using Models.State.PieceState;
 using View.Interfaces;
 
 public class PossibleMovesTestBase : ZenjectUnitTestFixture

@@ -1,4 +1,4 @@
-﻿namespace Models.State.Piece
+﻿namespace Models.State.PieceState
 {
     public enum PieceType
     {

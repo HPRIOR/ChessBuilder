@@ -2,7 +2,7 @@ using Zenject;
 using Models.Services.Interfaces;
 using Models.State.Board;
 using Models.State.Interfaces;
-using Models.State.Piece;
+using Models.State.PieceState;
 using NUnit.Framework;
 using UnityEngine;
 

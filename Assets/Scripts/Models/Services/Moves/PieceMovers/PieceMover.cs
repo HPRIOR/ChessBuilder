@@ -1,6 +1,6 @@
 ﻿using Models.Services.Interfaces;
 using Models.State.Interfaces;
-using Models.State.Piece;
+using Models.State.PieceState;
 
 namespace Models.Services.Moves.PieceMovers
 {
@@ -13,7 +13,7 @@ namespace Models.Services.Moves.PieceMovers
             var fromTile = newBoard.GetTileAt(from);
 
             destinationTile.CurrentPiece = originalBoard.GetTileAt(from).CurrentPiece;
-            fromTile.CurrentPiece = new State.Piece.Piece(PieceType.NullPiece);
+            fromTile.CurrentPiece = new State.PieceState.Piece(PieceType.NullPiece);
             return newBoard;
         }
     }

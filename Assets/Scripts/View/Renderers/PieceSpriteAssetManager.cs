@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Models.State.Piece;
+using Models.State.PieceState;
 
 namespace View.Renderers
 {

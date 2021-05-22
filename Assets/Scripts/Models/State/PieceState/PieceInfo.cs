@@ -1,7 +1,7 @@
 ﻿using Models.State.Interfaces;
 using View.Renderers;
 
-namespace Models.State.Piece
+namespace Models.State.PieceState
 {
     public class PieceInfo : IPieceInfo
     {

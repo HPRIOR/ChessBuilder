@@ -1,7 +1,7 @@
 ﻿using Models.Services.Interfaces;
 using Models.Services.Moves.Factories;
 using Models.Services.Moves.PossibleMoveHelpers;
-using Models.State.Piece;
+using Models.State.PieceState;
 using Zenject;
 
 public class BoardPositionTranslatorInstaller : Installer<BoardPositionTranslatorInstaller>

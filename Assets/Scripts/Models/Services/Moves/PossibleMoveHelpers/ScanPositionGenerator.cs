@@ -12,19 +12,16 @@ namespace Models.Services.Moves.PossibleMoveHelpers
         {
             if (init.Equals(dest))
                 return new List<IBoardPosition>();
-            else if (init.X == dest.X && init.Y != dest.Y)
+            if (init.X == dest.X && init.Y != dest.Y)
                 return GetExlusivePositionsWithConstant(init.Y, dest.Y, init.X, true);
-            else if (init.Y == dest.Y && init.X != dest.X)
+            if (init.Y == dest.Y && init.X != dest.X)
                 return GetExlusivePositionsWithConstant(init.X, dest.X, init.Y, false);
-            else
-            {
-                var xs = GetExclusiveValuesAccordingToPosition(init.X, dest.X, GetValues);
-                var ys = GetExclusiveValuesAccordingToPosition(init.Y, dest.Y, GetValues);
-                return xs
-                    .Zip(ys, (x, y) => new BoardPosition(x, y))
-                    .Cast<IBoardPosition>()
-                    .ToList();
-            }
+            var xs = GetExclusiveValuesAccordingToPosition(init.X, dest.X, GetValues);
+            var ys = GetExclusiveValuesAccordingToPosition(init.Y, dest.Y, GetValues);
+            return xs
+                .Zip(ys, (x, y) => new BoardPosition(x, y))
+                .Cast<IBoardPosition>()
+                .ToList();
         }
 
         private static IEnumerable<IBoardPosition> GetExlusivePositionsWithConstant(int init, int dest, int constant, bool xConstant)

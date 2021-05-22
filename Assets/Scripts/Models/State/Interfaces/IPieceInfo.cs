@@ -1,4 +1,4 @@
-﻿using Models.State.Piece;
+﻿using Models.State.PieceState;
 
 namespace Models.State.Interfaces
 {

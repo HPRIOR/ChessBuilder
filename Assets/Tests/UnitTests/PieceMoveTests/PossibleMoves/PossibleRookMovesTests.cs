@@ -4,7 +4,7 @@ using System.Linq;
 using Models.Services.Moves.PossibleMoveHelpers;
 using Models.State.Board;
 using Models.State.Interfaces;
-using Models.State.Piece;
+using Models.State.PieceState;
 using UnityEngine;
 
 [TestFixture]

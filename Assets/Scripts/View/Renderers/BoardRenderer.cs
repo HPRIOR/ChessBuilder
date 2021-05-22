@@ -1,7 +1,7 @@
 ﻿using Game.Interfaces;
 using Models.Services.Interfaces;
 using Models.State.Interfaces;
-using Models.State.Piece;
+using Models.State.PieceState;
 using UnityEngine;
 using View.Interfaces;
 using Zenject;

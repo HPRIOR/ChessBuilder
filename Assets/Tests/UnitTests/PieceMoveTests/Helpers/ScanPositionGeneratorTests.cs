@@ -11,8 +11,6 @@ using Models.State.Interfaces;
 public class ScanPositionGeneratorTests
 {
 
-
-
     [Test]
     public void GetPositionsNorth()
     {

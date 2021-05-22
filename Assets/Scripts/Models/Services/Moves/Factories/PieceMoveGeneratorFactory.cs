@@ -30,6 +30,16 @@ namespace Models.Services.Moves.Factories
             _blackPositionTranslator = boardPositionTranslatorFactory.Create(PieceColour.Black);
         }
 
+        /// <summary>
+        /// Instantiates the relevant board evaluating class which determines the available moves to a given
+        /// piece. 
+        /// </summary>
+        /// <remarks>
+        /// Necessary to get the relevant position translator and board evaluator based on the colour of the piece.
+        /// Added complexity, although it allows movement logic to be symmetrical among piece colours, and share. 
+        /// </remarks>
+        /// <param name="pieceType"></param>
+        /// <returns></returns>
         public IPieceMoveGenerator GetPossibleMoveGenerator(PieceType pieceType) =>
             pieceType switch
             {

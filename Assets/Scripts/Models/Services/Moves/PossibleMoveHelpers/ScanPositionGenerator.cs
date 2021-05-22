@@ -13,9 +13,9 @@ namespace Models.Services.Moves.PossibleMoveHelpers
             if (init.Equals(dest))
                 return new List<IBoardPosition>();
             if (init.X == dest.X && init.Y != dest.Y)
-                return GetExlusivePositionsWithConstant(init.Y, dest.Y, init.X, true);
+                return GetExclusivePositionsWithConstant(init.Y, dest.Y, init.X, true);
             if (init.Y == dest.Y && init.X != dest.X)
-                return GetExlusivePositionsWithConstant(init.X, dest.X, init.Y, false);
+                return GetExclusivePositionsWithConstant(init.X, dest.X, init.Y, false);
             var xs = GetExclusiveValuesAccordingToPosition(init.X, dest.X, GetValues);
             var ys = GetExclusiveValuesAccordingToPosition(init.Y, dest.Y, GetValues);
             return xs
@@ -24,7 +24,7 @@ namespace Models.Services.Moves.PossibleMoveHelpers
                 .ToList();
         }
 
-        private static IEnumerable<IBoardPosition> GetExlusivePositionsWithConstant(int init, int dest, int constant, bool xConstant)
+        private static IEnumerable<IBoardPosition> GetExclusivePositionsWithConstant(int init, int dest, int constant, bool xConstant)
         {
             Func<int, int, IBoardPosition> xConstantFunc = (y, x) => new BoardPosition(x, y);
             Func<int, int, IBoardPosition> yConstantFunc = (x, y) => new BoardPosition(x, y);

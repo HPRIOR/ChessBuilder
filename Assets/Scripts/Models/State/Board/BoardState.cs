@@ -1,4 +1,5 @@
 ﻿using System;
+using Models.Services.Interfaces;
 using Models.State.Interfaces;
 
 namespace Models.State.Board
@@ -10,6 +11,11 @@ namespace Models.State.Board
         public BoardState(ITile[,] board)
         {
             Board = board;
+        }
+
+        public BoardState(IBoardGenerator boardGenerator)
+        {
+            Board = boardGenerator.GenerateBoard();
         }
 
         public ITile GetTileAt(IBoardPosition boardPosition) =>

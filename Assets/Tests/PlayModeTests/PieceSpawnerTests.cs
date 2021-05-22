@@ -13,7 +13,6 @@ namespace Tests.PlayModeTests
 {
     public class PieceSpawnerTests : ZenjectIntegrationTestFixture
     {
-
         private IPieceSpawner _pieceSpawner;
 
         [Inject]
@@ -22,12 +21,12 @@ namespace Tests.PlayModeTests
             _pieceSpawner = pieceSpawner;
         }
 
-        void CommonInstall()
+        private void CommonInstall()
         {
             PreInstall();
 
             PieceSpawnerInstaller.Install(Container);
-            BoardStateInstaller.Install(Container);
+            BoardGeneratorInstaller.Install(Container);
 
             PostInstall();
         }

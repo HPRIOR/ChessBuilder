@@ -53,6 +53,7 @@ namespace Controllers.Commands
         // If update gamestate is changed to accept the changed tile, it is not clear how undo will work
         // the move which instigated _stateTransitioned from is lost
         // some hashing may need to be implemented, so that states can be saved along with corresponding moves 
+        // or we could just pass through the _from
         public void Undo() =>
             _gameState.UpdateGameState(_stateTransitionedFrom);
 

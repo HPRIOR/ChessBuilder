@@ -4,6 +4,6 @@ namespace Models.Services.Interfaces
 {
     public interface IPieceMover
     {
-        IBoardState Move(IBoardState board, IBoardPosition from, IBoardPosition toDestination);
+        IBoardState GenerateNewBoardState(IBoardState board, IBoardPosition from, IBoardPosition toDestination);
     }
 }

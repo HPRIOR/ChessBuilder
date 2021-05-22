@@ -35,7 +35,7 @@ namespace Controllers.Commands
 
         public void Execute()
         {
-            var newBoardState = _pieceMover.Move(_gameState.CurrentBoardState, _from, _destination);
+            var newBoardState = _pieceMover.GenerateNewBoardState(_gameState.CurrentBoardState, _from, _destination);
             _gameState.UpdateGameState(newBoardState);
         }
 
@@ -50,7 +50,7 @@ namespace Controllers.Commands
             return false;
         }
 
-        // If updategamestate is changed to accept the changed tile, it is not clear how undo will work
+        // If update gamestate is changed to accept the changed tile, it is not clear how undo will work
         // the move which instigated _stateTransitioned from is lost
         // some hashing may need to be implemented, so that states can be saved along with corresponding moves 
         public void Undo() =>

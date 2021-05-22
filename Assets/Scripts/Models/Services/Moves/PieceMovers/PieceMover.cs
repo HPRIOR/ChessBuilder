@@ -6,7 +6,7 @@ namespace Models.Services.Moves.PieceMovers
 {
     public class PieceMover : IPieceMover
     {
-        public IBoardState Move(IBoardState originalBoard, IBoardPosition from, IBoardPosition destination)
+        public IBoardState GenerateNewBoardState(IBoardState originalBoard, IBoardPosition from, IBoardPosition destination)
         {
             var newBoard = (IBoardState)originalBoard.Clone();
             var destinationTile = newBoard.GetTileAt(destination);

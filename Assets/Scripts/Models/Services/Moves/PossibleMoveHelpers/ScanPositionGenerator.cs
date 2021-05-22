@@ -18,8 +18,8 @@ namespace Models.Services.Moves.PossibleMoveHelpers
                 return GetExlusivePositionsWithConstant(init.X, dest.X, init.Y, false);
             else
             {
-                var xs = GetExlusiveValuesAccordingToPosition(init.X, dest.X, GetValues);
-                var ys = GetExlusiveValuesAccordingToPosition(init.Y, dest.Y, GetValues);
+                var xs = GetExclusiveValuesAccordingToPosition(init.X, dest.X, GetValues);
+                var ys = GetExclusiveValuesAccordingToPosition(init.Y, dest.Y, GetValues);
                 return xs
                     .Zip(ys, (x, y) => new BoardPosition(x, y))
                     .Cast<IBoardPosition>()
@@ -33,7 +33,7 @@ namespace Models.Services.Moves.PossibleMoveHelpers
             Func<int, int, IBoardPosition> yConstantFunc = (x, y) => new BoardPosition(x, y);
             var constantList = Enumerable.Range(0, Math.Abs(init - dest)).Select(x => constant).ToList();
             return
-                GetExlusiveValuesAccordingToPosition(init, dest, GetValues)
+                GetExclusiveValuesAccordingToPosition(init, dest, GetValues)
                 .Zip(constantList, xConstant ? xConstantFunc : yConstantFunc)
                 .Cast<IBoardPosition>()
                 .ToList();
@@ -48,7 +48,7 @@ namespace Models.Services.Moves.PossibleMoveHelpers
                 : GetValues(init, dest - 1).Concat(new List<int>() { dest });
         }
 
-        private static IEnumerable<int> GetExlusiveValuesAccordingToPosition(
+        private static IEnumerable<int> GetExclusiveValuesAccordingToPosition(
             int init, int dest,
             Func<int, int, IEnumerable<int>> GetValueFunc) =>
             init > dest ? GetValueFunc(init, dest + 1) : GetValueFunc(init, dest - 1);

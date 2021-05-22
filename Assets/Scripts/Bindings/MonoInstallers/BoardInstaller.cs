@@ -7,7 +7,7 @@ namespace Bindings.MonoInstallers
     {
         public override void InstallBindings()
         {
-            BoardStateInstaller.Install(Container);
+            BoardGeneratorInstaller.Install(Container);
         }
     }
 }

@@ -11,7 +11,6 @@ namespace Game.Implementations
     {
         private readonly IPossibleMovesGenerator _possibleMovesGenerator;
 
-
         public GameStateController(IPossibleMovesGenerator possibleMovesGenerator)
         {
             _possibleMovesGenerator = possibleMovesGenerator;

@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using Models.State.Board;
-using Models.State.Interfaces;
 using Models.State.PieceState;
 using NUnit.Framework;
 
@@ -19,7 +18,7 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
         {
             SetTestedPieceColourWith(pieceType);
             var kingMoveGenerator = GetPossibleMoveGenerator(pieceType);
-            var pieces = new List<(PieceType, IBoardPosition)>
+            var pieces = new List<(PieceType, BoardPosition)>
             {
                 (pieceType, new BoardPosition(x, y))
             };
@@ -41,7 +40,7 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
         {
             SetTestedPieceColourWith(pieceType);
             var kingMoveGenerator = GetPossibleMoveGenerator(pieceType);
-            var pieces = new List<(PieceType, IBoardPosition)>
+            var pieces = new List<(PieceType, BoardPosition)>
             {
                 (pieceType, new BoardPosition(x, y))
             };
@@ -62,7 +61,7 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
         {
             SetTestedPieceColourWith(pieceType);
             var kingMoveGenerator = GetPossibleMoveGenerator(pieceType);
-            var pieces = new List<(PieceType, IBoardPosition)>
+            var pieces = new List<(PieceType, BoardPosition)>
             {
                 (pieceType, RelativePositionToTestedPiece(new BoardPosition(x, y)))
             };
@@ -83,7 +82,7 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
         {
             SetTestedPieceColourWith(pieceType);
             var kingMoveGenerator = GetPossibleMoveGenerator(pieceType);
-            var pieces = new List<(PieceType, IBoardPosition)>
+            var pieces = new List<(PieceType, BoardPosition)>
             {
                 (pieceType, RelativePositionToTestedPiece(new BoardPosition(x, y)))
             };
@@ -104,7 +103,7 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
         {
             SetTestedPieceColourWith(pieceType);
             var kingMoveGenerator = GetPossibleMoveGenerator(pieceType);
-            var pieces = new List<(PieceType, IBoardPosition)>
+            var pieces = new List<(PieceType, BoardPosition)>
             {
                 (pieceType, new BoardPosition(x, y)),
                 (GetOppositePieceType(pieceType), new BoardPosition(x + 1, y)),
@@ -132,7 +131,7 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
         {
             SetTestedPieceColourWith(pieceType);
             var kingMoveGenerator = GetPossibleMoveGenerator(pieceType);
-            var pieces = new List<(PieceType, IBoardPosition)>
+            var pieces = new List<(PieceType, BoardPosition)>
             {
                 (pieceType, new BoardPosition(x, y)),
                 (pieceType, new BoardPosition(x + 1, y))

@@ -1,13 +1,13 @@
-﻿using Models.State.Interfaces;
+﻿using Models.State.Board;
 
 namespace Models.Services.Interfaces
 {
     public interface ITileEvaluator
     {
-        bool OpposingPieceIn(ITile tile);
+        bool OpposingPieceIn(Tile tile);
 
-        bool FriendlyPieceIn(ITile tile);
+        bool FriendlyPieceIn(Tile tile);
 
-        bool NoPieceIn(ITile tile);
+        bool NoPieceIn(Tile tile);
     }
 }

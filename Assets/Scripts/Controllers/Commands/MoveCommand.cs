@@ -1,7 +1,7 @@
 ﻿using Controllers.Interfaces;
 using Game.Interfaces;
 using Models.Services.Interfaces;
-using Models.State.Interfaces;
+using Models.State.Board;
 using Zenject;
 
 namespace Controllers.Commands
@@ -10,14 +10,14 @@ namespace Controllers.Commands
     {
         private static IPieceMover _pieceMover;
         private static IMoveValidator _moveValidator;
-        private readonly IBoardPosition _from;
-        private readonly IBoardPosition _destination;
+        private readonly BoardPosition _destination;
+        private readonly BoardPosition _from;
         private readonly IGameState _gameState;
-        private readonly IBoardState _stateTransitionedFrom;
+        private readonly BoardState _stateTransitionedFrom;
 
         public MoveCommand(
-            IBoardPosition from,
-            IBoardPosition destination,
+            BoardPosition from,
+            BoardPosition destination,
             IPieceMover pieceMover,
             IMoveValidator moveValidator,
             IGameState gameState
@@ -41,18 +41,22 @@ namespace Controllers.Commands
 
         public bool IsValid()
         {
-            if (_from == _destination) return false;
+            if (_from.Equals(_destination)) return false;
             if (_moveValidator.ValidateMove(_gameState.PossiblePieceMoves, _from, _destination))
                 return true;
-        
+
             // return to original state
             _gameState.UpdateGameState(_stateTransitionedFrom);
             return false;
         }
 
-        public void Undo() =>
+        public void Undo()
+        {
             _gameState.UpdateGameState(_stateTransitionedFrom);
+        }
 
-        public class Factory : PlaceholderFactory<IBoardPosition, IBoardPosition, MoveCommand> { }
+        public class Factory : PlaceholderFactory<BoardPosition, BoardPosition, MoveCommand>
+        {
+        }
     }
 }

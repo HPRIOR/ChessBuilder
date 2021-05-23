@@ -1,15 +1,15 @@
 ﻿using Models.Services.Interfaces;
-using Models.State.Interfaces;
+using Models.State.Board;
 using Models.State.PieceState;
 
 namespace Controllers.PieceMovers
 {
     public class PieceMover : IPieceMover
     {
-        public IBoardState GenerateNewBoardState(IBoardState originalBoardState, IBoardPosition from,
-            IBoardPosition destination)
+        public BoardState GenerateNewBoardState(BoardState originalBoardState, BoardPosition from,
+            BoardPosition destination)
         {
-            var newBoardState = (IBoardState) originalBoardState.Clone();
+            var newBoardState = (BoardState) originalBoardState.Clone();
             // get swapped pieces
             var destinationTile = newBoardState.Board[destination.X, destination.Y];
             var fromTile = newBoardState.Board[from.X, from.Y];

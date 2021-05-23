@@ -1,6 +1,6 @@
 ﻿using Game.Interfaces;
 using Models.Services.Interfaces;
-using Models.State.Interfaces;
+using Models.State.Board;
 using Models.State.PieceState;
 using UnityEngine;
 using View.Interfaces;
@@ -19,13 +19,6 @@ namespace View.Renderers
         {
             RenderBoard();
             _turnEventInvoker.GameStateChangeEvent += RenderPieces;
-        }
-
-        [Inject]
-        public void Construct(IPieceSpawner pieceSpawner, ITurnEventInvoker turnEventInvoker)
-        {
-            _pieceSpawner = pieceSpawner;
-            _turnEventInvoker = turnEventInvoker;
         }
 
         public void RenderBoard()
@@ -47,15 +40,19 @@ namespace View.Renderers
                 spriteRenderer.color = lightDarkColourSwitch ? greenColour : creamColour;
 
                 // ensures first tile on the next row is the same colour last tile in row
-                if (count % 8 != 0)
-                {
-                    lightDarkColourSwitch = !lightDarkColourSwitch;
-                }
+                if (count % 8 != 0) lightDarkColourSwitch = !lightDarkColourSwitch;
                 count += 1;
             }
         }
 
-        private void RenderPieces(IBoardState previousState, IBoardState newState)
+        [Inject]
+        public void Construct(IPieceSpawner pieceSpawner, ITurnEventInvoker turnEventInvoker)
+        {
+            _pieceSpawner = pieceSpawner;
+            _turnEventInvoker = turnEventInvoker;
+        }
+
+        private void RenderPieces(BoardState previousState, BoardState newState)
         {
             DestroyExistingPieces();
             var board = newState.Board;

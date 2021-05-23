@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Models.Services.Interfaces;
 using Models.Services.Moves.PossibleMoveHelpers;
-using Models.State.Interfaces;
+using Models.State.Board;
 using Models.State.PieceState;
 
 namespace Models.Services.Moves.PossibleMoveGenerators
@@ -17,9 +17,9 @@ namespace Models.Services.Moves.PossibleMoveGenerators
             _tileEvaluator = tileEvaluator;
         }
 
-        public IEnumerable<IBoardPosition> GetPossiblePieceMoves(IBoardPosition originPosition, IBoardState boardState)
+        public IEnumerable<BoardPosition> GetPossiblePieceMoves(BoardPosition originPosition, BoardState boardState)
         {
-            var potentialMoves = new List<IBoardPosition>();
+            var potentialMoves = new List<BoardPosition>();
 
             originPosition = _positionTranslator.GetRelativePosition(originPosition);
 

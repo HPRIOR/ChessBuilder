@@ -1,7 +1,6 @@
 using Bindings.Installers.BoardInstallers;
 using Models.Services.Interfaces;
 using Models.State.Board;
-using Models.State.Interfaces;
 using Models.State.PieceState;
 using NUnit.Framework;
 using UnityEngine;
@@ -21,7 +20,7 @@ namespace Tests.UnitTests.BoardTests
 
         private IBoardGenerator _boardGenerator;
 
-        private IBoardState GetBoardState()
+        private BoardState GetBoardState()
         {
             return new BoardState(_boardGenerator.GenerateBoard());
         }

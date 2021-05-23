@@ -2,7 +2,7 @@
 using System.Linq;
 using Models.Services.Interfaces;
 using Models.Services.Moves.PossibleMoveHelpers;
-using Models.State.Interfaces;
+using Models.State.Board;
 
 namespace Models.Services.Moves.PossibleMoveGenerators
 {
@@ -19,12 +19,13 @@ namespace Models.Services.Moves.PossibleMoveGenerators
             _positionTranslator = boardPositionTranslator;
         }
 
-        public IEnumerable<IBoardPosition> GetPossiblePieceMoves(IBoardPosition originPosition, IBoardState boardState)
+        public IEnumerable<BoardPosition> GetPossiblePieceMoves(BoardPosition originPosition, BoardState boardState)
         {
             var relativePosition = _positionTranslator.GetRelativePosition(originPosition);
-            var possibleDirections = new List<Direction>() { Direction.N, Direction.E, Direction.S, Direction.W };
+            var possibleDirections = new List<Direction> {Direction.N, Direction.E, Direction.S, Direction.W};
 
-            return possibleDirections.SelectMany(direction => _boardScanner.ScanIn(direction, relativePosition, boardState));
+            return possibleDirections.SelectMany(direction =>
+                _boardScanner.ScanIn(direction, relativePosition, boardState));
         }
     }
 }

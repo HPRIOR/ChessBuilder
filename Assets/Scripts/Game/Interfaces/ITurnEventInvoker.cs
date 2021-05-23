@@ -1,10 +1,10 @@
 ﻿using System;
-using Models.State.Interfaces;
+using Models.State.Board;
 
 namespace Game.Interfaces
 {
     public interface ITurnEventInvoker
     {
-        event Action<IBoardState, IBoardState> GameStateChangeEvent;
+        event Action<BoardState, BoardState> GameStateChangeEvent;
     }
 }

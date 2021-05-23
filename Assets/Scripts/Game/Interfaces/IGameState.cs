@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Models.State.Interfaces;
+using Models.State.Board;
 using Models.State.PieceState;
 
 namespace Game.Interfaces
@@ -7,9 +7,8 @@ namespace Game.Interfaces
     public interface IGameState
     {
         PieceColour Turn { get; }
-        IBoardState CurrentBoardState { get; }
-        IDictionary<IBoardPosition, HashSet<IBoardPosition>> PossiblePieceMoves { get; }
-        void UpdateGameState(IBoardState newState);
-
+        BoardState CurrentBoardState { get; }
+        IDictionary<BoardPosition, HashSet<BoardPosition>> PossiblePieceMoves { get; }
+        void UpdateGameState(BoardState newState);
     }
 }

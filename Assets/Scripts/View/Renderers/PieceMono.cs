@@ -1,4 +1,5 @@
-﻿using Models.State.Interfaces;
+﻿using Models.State.Board;
+using Models.State.Interfaces;
 using UnityEditor;
 using UnityEngine;
 using Zenject;
@@ -7,19 +8,9 @@ namespace View.Renderers
 {
     public class PieceMono : MonoBehaviour
     {
-        public IBoardPosition BoardPosition { get; set; }
-        public IPieceInfo Info { get; private set; }
         private SpriteRenderer _spriteRenderer;
-
-        [Inject]
-        public void Construct(
-            IPieceInfo pieceInfo,
-            IBoardPosition boardPosition
-        )
-        {
-            Info = pieceInfo;
-            BoardPosition = boardPosition;
-        }
+        public BoardPosition BoardPosition { get; set; }
+        public IPieceInfo Info { get; private set; }
 
         private void Start()
         {
@@ -30,8 +21,23 @@ namespace View.Renderers
             gameObject.transform.position = BoardPosition.Vector;
         }
 
-        public class Factory : PlaceholderFactory<IPieceInfo, IBoardPosition, PieceMono> { }
+        [Inject]
+        public void Construct(
+            IPieceInfo pieceInfo,
+            BoardPosition boardPosition
+        )
+        {
+            Info = pieceInfo;
+            BoardPosition = boardPosition;
+        }
 
-        public override string ToString() => $"{Info}\n{BoardPosition}\n";
+        public override string ToString()
+        {
+            return $"{Info}\n{BoardPosition}\n";
+        }
+
+        public class Factory : PlaceholderFactory<IPieceInfo, BoardPosition, PieceMono>
+        {
+        }
     }
 }

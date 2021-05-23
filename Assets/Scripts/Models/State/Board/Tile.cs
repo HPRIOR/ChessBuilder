@@ -1,14 +1,11 @@
-﻿using Models.State.Interfaces;
+﻿using System;
 using Models.State.PieceState;
 
 namespace Models.State.Board
 {
-    public class Tile : ITile
+    public class Tile : ICloneable
     {
-        public Piece CurrentPiece { get; set; }
-        public IBoardPosition BoardPosition { get;  }
-
-        private Tile(IBoardPosition boardPosition, Piece currentPiece)
+        private Tile(BoardPosition boardPosition, Piece currentPiece)
         {
             BoardPosition = boardPosition;
             CurrentPiece = currentPiece;
@@ -20,10 +17,18 @@ namespace Models.State.Board
             CurrentPiece = new Piece(PieceType.NullPiece);
         }
 
-        public override string ToString() => $"Tile at ({BoardPosition.X}, {BoardPosition.Y}) containing" +
-                                             $" {CurrentPiece}";
+        public Piece CurrentPiece { get; set; }
+        public BoardPosition BoardPosition { get; }
 
-        public object Clone() =>
-            new Tile(BoardPosition, CurrentPiece);
+        public object Clone()
+        {
+            return new Tile(BoardPosition, CurrentPiece);
+        }
+
+        public override string ToString()
+        {
+            return $"Tile at ({BoardPosition.X}, {BoardPosition.Y}) containing" +
+                   $" {CurrentPiece}";
+        }
     }
 }

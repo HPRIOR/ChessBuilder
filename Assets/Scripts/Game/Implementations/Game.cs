@@ -1,7 +1,6 @@
 ﻿using Game.Interfaces;
 using Models.Services.Interfaces;
 using Models.State.Board;
-using Models.State.Interfaces;
 using Models.State.PieceState;
 using UnityEngine;
 using Zenject;
@@ -28,7 +27,7 @@ namespace Game.Implementations
             GameState = initState;
         }
 
-        private IBoardState InitBoard()
+        private BoardState InitBoard()
         {
             var board = _boardGenerator.GenerateBoard();
             board[3, 3].CurrentPiece = new Piece(PieceType.WhitePawn);

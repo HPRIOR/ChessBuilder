@@ -1,6 +1,6 @@
 ﻿using Controllers.Commands;
 using Controllers.Factories;
-using Models.State.Interfaces;
+using Models.State.Board;
 using Zenject;
 
 namespace Bindings.Installers.InputInstallers
@@ -10,7 +10,7 @@ namespace Bindings.Installers.InputInstallers
         public override void InstallBindings()
         {
             Container.Bind<MoveCommandFactory>().AsSingle();
-            Container.BindFactory<IBoardPosition, IBoardPosition, MoveCommand, MoveCommand.Factory>().FromNew();
+            Container.BindFactory<BoardPosition, BoardPosition, MoveCommand, MoveCommand.Factory>().FromNew();
         }
     }
 }

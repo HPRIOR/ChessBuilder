@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Models.Services.Moves.PossibleMoveHelpers;
 using Models.State.Board;
-using Models.State.Interfaces;
 using Models.State.PieceState;
 using NUnit.Framework;
 
@@ -19,14 +18,14 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
         {
             SetTestedPieceColourWith(pieceType);
             var bishopMoveGenerator = GetPossibleMoveGenerator(pieceType);
-            var pieces = new List<(PieceType, IBoardPosition)>
+            var pieces = new List<(PieceType, BoardPosition)>
             {
                 (pieceType, new BoardPosition(x, y))
             };
 
             var board = SetUpBoardWith(pieces);
             var possibleMoves = bishopMoveGenerator.GetPossiblePieceMoves(new BoardPosition(x, y), board);
-            Assert.AreEqual(7, new HashSet<IBoardPosition>(possibleMoves).Count());
+            Assert.AreEqual(7, new HashSet<BoardPosition>(possibleMoves).Count());
         }
 
         [Test]
@@ -37,7 +36,7 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
         {
             SetTestedPieceColourWith(pieceType);
             var bishopMoveGenerator = GetPossibleMoveGenerator(pieceType);
-            var pieces = new List<(PieceType, IBoardPosition)>
+            var pieces = new List<(PieceType, BoardPosition)>
             {
                 (pieceType, new BoardPosition(x, y)),
                 (GetOppositePieceType(pieceType), new BoardPosition(x == 7 ? 0 : 7, y == 7 ? 0 : 7))
@@ -46,7 +45,7 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
             var board = SetUpBoardWith(pieces);
             var possibleMoves = bishopMoveGenerator.GetPossiblePieceMoves(new BoardPosition(x, y), board);
 
-            Assert.AreEqual(7, new HashSet<IBoardPosition>(possibleMoves).Count());
+            Assert.AreEqual(7, new HashSet<BoardPosition>(possibleMoves).Count());
         }
 
         [Test]
@@ -59,7 +58,7 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
             var bishopMoveGenerator = GetPossibleMoveGenerator(pieceType);
 
             var onWhiteBand = x == 7 && y == 7 || x == 0 && y == 0;
-            var pieces = new List<(PieceType, IBoardPosition)>
+            var pieces = new List<(PieceType, BoardPosition)>
             {
                 (pieceType, new BoardPosition(x, y)),
                 (GetOppositePieceType(pieceType),
@@ -75,7 +74,7 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
             var unreachablePositionsNW = GetPositionsIncludingAndPassed(new BoardPosition(3, 4), Direction.NW);
             var unreachablePositionsSE = GetPositionsIncludingAndPassed(new BoardPosition(5, 2), Direction.SE);
 
-            IList<IBoardPosition> unreachableTiles = new List<IBoardPosition>();
+            IList<BoardPosition> unreachableTiles = new List<BoardPosition>();
 
             if (onWhiteBand)
                 if (x >= 4)
@@ -88,7 +87,7 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
                 unreachableTiles = unreachableTiles.Concat(unreachablePositionsNW).ToList();
 
             var possibleMoves =
-                new HashSet<IBoardPosition>(bishopMoveGenerator.GetPossiblePieceMoves(new BoardPosition(x, y), board));
+                new HashSet<BoardPosition>(bishopMoveGenerator.GetPossiblePieceMoves(new BoardPosition(x, y), board));
 
             Assert.IsFalse(possibleMoves.Overlaps(unreachableTiles));
         }
@@ -101,7 +100,7 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
         {
             SetTestedPieceColourWith(pieceType);
             var bishopMoveGenerator = GetPossibleMoveGenerator(pieceType);
-            var pieces = new List<(PieceType, IBoardPosition)>
+            var pieces = new List<(PieceType, BoardPosition)>
             {
                 (pieceType, new BoardPosition(x, y)),
                 (GetOppositePieceType(pieceType), new BoardPosition(x == 0 ? 6 : 1, y == 0 ? 6 : 1))
@@ -110,7 +109,7 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
             var board = SetUpBoardWith(pieces);
             var possibleMoves = bishopMoveGenerator.GetPossiblePieceMoves(new BoardPosition(x, y), board);
 
-            var unreachableTiles = new List<IBoardPosition>
+            var unreachableTiles = new List<BoardPosition>
             {
                 new BoardPosition(0, 0),
                 new BoardPosition(7, 7),
@@ -118,7 +117,7 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
                 new BoardPosition(0, 7)
             };
 
-            Assert.IsFalse(new HashSet<IBoardPosition>(possibleMoves).Overlaps(unreachableTiles));
+            Assert.IsFalse(new HashSet<BoardPosition>(possibleMoves).Overlaps(unreachableTiles));
         }
 
         [Test]
@@ -129,7 +128,7 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
         {
             SetTestedPieceColourWith(pieceType);
             var bishopMoveGenerator = GetPossibleMoveGenerator(pieceType);
-            var pieces = new List<(PieceType, IBoardPosition)>
+            var pieces = new List<(PieceType, BoardPosition)>
             {
                 (pieceType, new BoardPosition(x, y)),
                 (pieceType, new BoardPosition(x == 7 ? 0 : 7, y == 7 ? 0 : 7))
@@ -139,7 +138,7 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
             var possibleMoves = bishopMoveGenerator.GetPossiblePieceMoves(new BoardPosition(x, y), board);
 
 
-            Assert.AreEqual(6, new HashSet<IBoardPosition>(possibleMoves).Count());
+            Assert.AreEqual(6, new HashSet<BoardPosition>(possibleMoves).Count());
         }
 
         [Test]
@@ -150,7 +149,7 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
         {
             SetTestedPieceColourWith(pieceType);
             var bishopMoveGenerator = GetPossibleMoveGenerator(pieceType);
-            var pieces = new List<(PieceType, IBoardPosition)>
+            var pieces = new List<(PieceType, BoardPosition)>
             {
                 (pieceType, new BoardPosition(x, y)),
                 (pieceType, new BoardPosition(x == 0 ? 6 : 1, y == 0 ? 6 : 1))
@@ -159,7 +158,7 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
             var board = SetUpBoardWith(pieces);
             var possibleMoves = bishopMoveGenerator.GetPossiblePieceMoves(new BoardPosition(x, y), board);
 
-            Assert.AreEqual(5, new HashSet<IBoardPosition>(possibleMoves).Count());
+            Assert.AreEqual(5, new HashSet<BoardPosition>(possibleMoves).Count());
         }
 
         [Test]
@@ -172,7 +171,7 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
             var bishopMoveGenerator = GetPossibleMoveGenerator(pieceType);
 
             var onWhiteBand = x == 7 && y == 7 || x == 0 && y == 0;
-            var pieces = new List<(PieceType, IBoardPosition)>
+            var pieces = new List<(PieceType, BoardPosition)>
             {
                 (pieceType, new BoardPosition(x, y)),
                 (pieceType,
@@ -187,7 +186,7 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
             var unreachablePositionsNW = GetPositionsIncludingAndPassed(new BoardPosition(4, 3), Direction.NW);
             var unreachablePositionsSE = GetPositionsIncludingAndPassed(new BoardPosition(4, 3), Direction.SE);
 
-            IList<IBoardPosition> unreachableTiles = new List<IBoardPosition>();
+            IList<BoardPosition> unreachableTiles = new List<BoardPosition>();
 
             if (onWhiteBand)
                 if (x >= 4)
@@ -201,7 +200,7 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
 
 
             var possibleMoves =
-                new HashSet<IBoardPosition>(bishopMoveGenerator.GetPossiblePieceMoves(new BoardPosition(x, y), board));
+                new HashSet<BoardPosition>(bishopMoveGenerator.GetPossiblePieceMoves(new BoardPosition(x, y), board));
 
             Assert.IsFalse(possibleMoves.Overlaps(unreachableTiles));
         }

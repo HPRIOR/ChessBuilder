@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using Bindings.Installers.PieceInstallers;
 using Models.Services.Interfaces;
 using Models.State.Board;
-using Models.State.Interfaces;
 using NUnit.Framework;
 using Zenject;
 
@@ -40,9 +39,9 @@ namespace Tests.UnitTests.Controllers.PieceMovers
         public void RejectsIf_FromEqualsDestination()
         {
             var possibleMoves =
-                new Dictionary<IBoardPosition, HashSet<IBoardPosition>>();
-            IBoardPosition a = new BoardPosition(1, 1);
-            IBoardPosition b = new BoardPosition(1, 1);
+                new Dictionary<BoardPosition, HashSet<BoardPosition>>();
+            var a = new BoardPosition(1, 1);
+            var b = new BoardPosition(1, 1);
             Assert.IsFalse(_moveValidator.ValidateMove(possibleMoves, a, b));
         }
 
@@ -50,12 +49,12 @@ namespace Tests.UnitTests.Controllers.PieceMovers
         public void RejectsIf_NoMovesFound()
         {
             var possibleMoves =
-                new Dictionary<IBoardPosition, HashSet<IBoardPosition>>
+                new Dictionary<BoardPosition, HashSet<BoardPosition>>
                 {
-                    {new BoardPosition(1, 1), new HashSet<IBoardPosition> {new BoardPosition(7, 7)}}
+                    {new BoardPosition(1, 1), new HashSet<BoardPosition> {new BoardPosition(7, 7)}}
                 };
-            IBoardPosition a = new BoardPosition(1, 1);
-            IBoardPosition b = new BoardPosition(2, 2);
+            var a = new BoardPosition(1, 1);
+            var b = new BoardPosition(2, 2);
             Assert.IsFalse(_moveValidator.ValidateMove(possibleMoves, a, b));
         }
 
@@ -63,12 +62,12 @@ namespace Tests.UnitTests.Controllers.PieceMovers
         public void AcceptsIf_MovesFound()
         {
             var possibleMoves =
-                new Dictionary<IBoardPosition, HashSet<IBoardPosition>>
+                new Dictionary<BoardPosition, HashSet<BoardPosition>>
                 {
-                    {new BoardPosition(1, 1), new HashSet<IBoardPosition> {new BoardPosition(2, 2)}}
+                    {new BoardPosition(1, 1), new HashSet<BoardPosition> {new BoardPosition(2, 2)}}
                 };
-            IBoardPosition a = new BoardPosition(1, 1);
-            IBoardPosition b = new BoardPosition(2, 2);
+            var a = new BoardPosition(1, 1);
+            var b = new BoardPosition(2, 2);
             Assert.IsTrue(_moveValidator.ValidateMove(possibleMoves, a, b));
         }
     }

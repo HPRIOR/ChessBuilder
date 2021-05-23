@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
-using Models.State.Interfaces;
+using Models.State.Board;
 
 namespace Models.Services.Interfaces
 {
     public interface IPieceMoveGenerator
     {
-        IEnumerable<IBoardPosition> GetPossiblePieceMoves(IBoardPosition originPosition, IBoardState boardState);
+        IEnumerable<BoardPosition> GetPossiblePieceMoves(BoardPosition originPosition, BoardState boardState);
     }
 }

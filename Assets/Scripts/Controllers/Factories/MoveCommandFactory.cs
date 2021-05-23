@@ -1,5 +1,5 @@
 ﻿using Controllers.Commands;
-using Models.State.Interfaces;
+using Models.State.Board;
 
 namespace Controllers.Factories
 {
@@ -12,7 +12,7 @@ namespace Controllers.Factories
             _movePieceCommandFactory = movePieceCommandFactory;
         }
 
-        public MoveCommand Create(IBoardPosition from, IBoardPosition destination)
+        public MoveCommand Create(BoardPosition from, BoardPosition destination)
         {
             return _movePieceCommandFactory.Create(from, destination);
         }

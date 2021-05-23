@@ -1,9 +1,8 @@
-﻿using Models.State.Interfaces;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Models.State.Board
 {
-    public readonly struct BoardPosition : IBoardPosition
+    public readonly struct BoardPosition
     {
         public int X { get; }
         public int Y { get; }
@@ -16,20 +15,19 @@ namespace Models.State.Board
             Vector = new Vector2(x + 0.5f, y + 0.5f);
         }
 
-        // TODO
-        public BoardPosition(string algebraicNotation) => throw new System.NotImplementedException();
-
-        // TODO
-        public string GetAlgebraicNotation() => X.ToString() + Y.ToString();
-
         public override string ToString()
         {
             return $"{X}, {Y}";
         }
 
-        public IBoardPosition Add(IBoardPosition boardPosition) => new BoardPosition(X + boardPosition.X, Y + boardPosition.Y);
+        public BoardPosition Add(BoardPosition boardPosition)
+        {
+            return new BoardPosition(X + boardPosition.X, Y + boardPosition.Y);
+        }
 
-        public bool Equals(IBoardPosition comparedBoardPosition)
-            => comparedBoardPosition.X == X && comparedBoardPosition.Y == Y;
+        public bool Equals(BoardPosition comparedBoardPosition)
+        {
+            return comparedBoardPosition.X == X && comparedBoardPosition.Y == Y;
+        }
     }
 }

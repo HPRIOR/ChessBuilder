@@ -3,7 +3,6 @@ using Bindings.Utils;
 using Game.Interfaces;
 using Models.Services.Interfaces;
 using Models.State.Board;
-using Models.State.Interfaces;
 using NUnit.Framework;
 using Zenject;
 
@@ -59,7 +58,7 @@ namespace Tests.UnitTests.Game
         {
             var turnEventInvoker = _gameStateController as ITurnEventInvoker;
             var count = 0;
-            Action<IBoardState, IBoardState> mockFunc = (prev, newState) => { count += 1; };
+            Action<BoardState, BoardState> mockFunc = (prev, newState) => { count += 1; };
             turnEventInvoker.GameStateChangeEvent += mockFunc;
 
             var boardState = new BoardState(_boardGenerator);

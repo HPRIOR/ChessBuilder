@@ -1,11 +1,11 @@
-﻿using Models.State.Interfaces;
+﻿using Models.State.Board;
 
 namespace Models.Services.Interfaces
 {
     public interface IPositionTranslator
     {
-        IBoardPosition GetRelativePosition(IBoardPosition originalPosition);
+        BoardPosition GetRelativePosition(BoardPosition originalPosition);
 
-        ITile GetRelativeTileAt(IBoardPosition boardPosition, IBoardState fromBoard);
+        Tile GetRelativeTileAt(BoardPosition boardPosition, BoardState fromBoard);
     }
 }

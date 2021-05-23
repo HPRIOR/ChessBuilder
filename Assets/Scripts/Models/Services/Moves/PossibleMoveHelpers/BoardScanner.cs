@@ -21,6 +21,17 @@ namespace Models.Services.Moves.PossibleMoveHelpers
             _positionTranslator = positionTranslatorFactory.Create(pieceColour);
         }
 
+        /// <summary>
+        /// </summary>
+        /// <remarks>
+        ///     More confusing stuff due to the mirroring of black and white piece logic. Scanner will scan as though
+        ///     the board perspective is white, then evaluate based on the colour given e.g. flip the board and analyse
+        ///     the 'opposite' tile.
+        /// </remarks>
+        /// <param name="direction"></param>
+        /// <param name="currentPosition"></param>
+        /// <param name="boardState"></param>
+        /// <returns></returns>
         public IEnumerable<IBoardPosition> ScanIn(Direction direction, IBoardPosition currentPosition,
             IBoardState boardState)
         {
@@ -40,6 +51,7 @@ namespace Models.Services.Moves.PossibleMoveHelpers
             return 0 > x || x > 7 || 0 > y || y > 7 || TileContainsFriendlyPieceAt(boardPosition, boardState);
         }
 
+        // TODO refactor so that position translator result is passed through instead of calculated each time
         private bool TileContainsOpposingPieceAt(IBoardPosition boardPosition, IBoardState boardState)
         {
             return _tileEvaluator.OpposingPieceIn(_positionTranslator.GetRelativeTileAt(boardPosition, boardState));

@@ -28,7 +28,8 @@ namespace Tests.UnitTests.PossibleMoves.PossibleMoves
 
             var board = SetUpBoardWith(pieces);
 
-            var possibleMoves = pawnMoveGenerator.GetPossiblePieceMoves(new BoardPosition(x, y), board);
+            var possibleMoves =
+                pawnMoveGenerator.GetPossiblePieceMoves(RelativePositionToTestedPiece(new BoardPosition(x, y)), board);
 
             Assert.AreEqual(1, possibleMoves.Count());
             Assert.AreEqual(RelativePositionToTestedPiece(new BoardPosition(x, y + 1)), possibleMoves.First());
@@ -49,12 +50,14 @@ namespace Tests.UnitTests.PossibleMoves.PossibleMoves
                 (GetOppositePieceType(pieceType), RelativePositionToTestedPiece(new BoardPosition(x + 1, y + 1)))
             };
 
-            SetUpBoardWith(pieces);
+            var board = SetUpBoardWith(pieces);
 
-            //var possibleMoves = pawnMoveGenerator.GetPossiblePieceMoves(pawnGameObject);
+            var possibleMoves =
+                pawnMoveGenerator.GetPossiblePieceMoves(RelativePositionToTestedPiece(new BoardPosition(x, y)), board);
 
-            //Assert.AreEqual(2, possibleMoves.Count());
-            //Assert.Contains(RelativePositionToTestedPiece(new BoardPosition(x + 1, y + 1)), (ICollection)possibleMoves);
+            Assert.AreEqual(2, possibleMoves.Count());
+            Assert.Contains(RelativePositionToTestedPiece(new BoardPosition(x + 1, y + 1)),
+                (ICollection) possibleMoves);
         }
 
         [Test]

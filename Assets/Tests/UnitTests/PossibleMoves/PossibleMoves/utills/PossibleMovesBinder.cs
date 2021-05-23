@@ -3,7 +3,7 @@ using Bindings.Installers.InputInstallers;
 using Bindings.Installers.PieceInstallers;
 using Zenject;
 
-namespace Tests.UnitTests.PieceMoveTests.PossibleMoves
+namespace Tests.UnitTests.PossibleMoves.PossibleMoves.utills
 {
     public static class PossibleMovesBinder
     {

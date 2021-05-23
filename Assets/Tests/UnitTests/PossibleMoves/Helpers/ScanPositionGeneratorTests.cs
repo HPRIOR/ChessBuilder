@@ -4,7 +4,7 @@ using Models.State.Board;
 using Models.State.Interfaces;
 using NUnit.Framework;
 
-namespace Tests.UnitTests.PieceMoveTests.Helpers
+namespace Tests.UnitTests.PossibleMoves.Helpers
 {
     [TestFixture]
     public class ScanPositionGeneratorTests

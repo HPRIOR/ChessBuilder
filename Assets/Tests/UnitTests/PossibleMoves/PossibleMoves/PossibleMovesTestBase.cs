@@ -7,9 +7,10 @@ using Models.State.Board;
 using Models.State.Interfaces;
 using Models.State.PieceState;
 using NUnit.Framework;
+using Tests.UnitTests.PossibleMoves.PossibleMoves.utills;
 using Zenject;
 
-namespace Tests.UnitTests.PieceMoveTests.PossibleMoves
+namespace Tests.UnitTests.PossibleMoves.PossibleMoves
 {
     public class PossibleMovesTestBase : ZenjectUnitTestFixture
     {

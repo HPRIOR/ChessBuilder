@@ -7,7 +7,7 @@ using Models.State.Interfaces;
 using Models.State.PieceState;
 using NUnit.Framework;
 
-namespace Tests.UnitTests.PieceMoveTests.PossibleMoves
+namespace Tests.UnitTests.PossibleMoves.PossibleMoves
 {
     public class PossibleQueenMovesTests : PossibleMovesTestBase
     {

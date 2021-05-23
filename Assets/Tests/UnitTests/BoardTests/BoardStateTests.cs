@@ -47,7 +47,7 @@ namespace Tests.UnitTests.BoardTests
         {
             var boardState = GetBoardState();
 
-            Assert.IsNotNull(boardState.GetTileAt(new BoardPosition(0, 0)));
+            Assert.IsNotNull(boardState.Board[0, 0]);
         }
 
         [Test]
@@ -55,7 +55,9 @@ namespace Tests.UnitTests.BoardTests
         {
             var boardState = GetBoardState();
 
-            Assert.DoesNotThrow(() => boardState.GetTileAt(new BoardPosition(7, 7)));
+            Assert.DoesNotThrow(() =>
+                boardState.Board[7, 7].CurrentPiece = new Piece(PieceType.BlackBishop)
+            );
         }
 
         [Test]
@@ -64,7 +66,7 @@ namespace Tests.UnitTests.BoardTests
         )
         {
             var boardState = GetBoardState();
-            Assert.AreEqual(new BoardPosition(x, y), boardState.GetTileAt(new BoardPosition(x, y)).BoardPosition);
+            Assert.AreEqual(new BoardPosition(x, y), boardState.Board[x, y].BoardPosition);
         }
 
         [Test]
@@ -73,7 +75,7 @@ namespace Tests.UnitTests.BoardTests
         )
         {
             var boardState = GetBoardState();
-            Assert.AreEqual(boardState.GetTileAt(new BoardPosition(x, y)).BoardPosition, new BoardPosition(x, y));
+            Assert.AreEqual(boardState.Board[x, y].BoardPosition, new BoardPosition(x, y));
         }
 
         [Test]
@@ -82,33 +84,17 @@ namespace Tests.UnitTests.BoardTests
         )
         {
             var boardState = GetBoardState();
-            Assert.AreEqual(new Piece(PieceType.NullPiece), boardState.GetTileAt(new BoardPosition(x, y)).CurrentPiece);
+            Assert.AreEqual(new Piece(PieceType.NullPiece), boardState.Board[x, y].CurrentPiece);
         }
 
         [Test]
-        public void TilesAreAtCorrentPositions(
+        public void TilesAreAtCorrectPositions(
             [Values(0, 1, 2, 3, 4, 5, 6, 7)] int x, [Values(0, 1, 2, 3, 4, 5, 6, 7)] int y
         )
         {
             var boardState = GetBoardState();
-            Assert.AreEqual(boardState.GetTileAt(new BoardPosition(x, y)).BoardPosition.Vector,
+            Assert.AreEqual(boardState.Board[x, y].BoardPosition.Vector,
                 new Vector2(x + 0.5f, y + 0.5f));
-        }
-
-
-        [Test]
-        public void BoardRotatesCorrectly()
-        {
-            var boardState = GetBoardState();
-
-            Assert.AreEqual(boardState.GetMirroredTileAt(new BoardPosition(0, 0)),
-                boardState.GetTileAt(new BoardPosition(7, 7)));
-            Assert.AreEqual(boardState.GetMirroredTileAt(new BoardPosition(1, 1)),
-                boardState.GetTileAt(new BoardPosition(6, 6)));
-            Assert.AreEqual(boardState.GetMirroredTileAt(new BoardPosition(4, 6)),
-                boardState.GetTileAt(new BoardPosition(3, 1)));
-            Assert.AreEqual(boardState.GetMirroredTileAt(new BoardPosition(3, 2)),
-                boardState.GetTileAt(new BoardPosition(4, 5)));
         }
     }
 }

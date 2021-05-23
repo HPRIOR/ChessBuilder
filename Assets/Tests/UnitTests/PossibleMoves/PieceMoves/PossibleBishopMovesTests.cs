@@ -6,7 +6,7 @@ using Models.State.Interfaces;
 using Models.State.PieceState;
 using NUnit.Framework;
 
-namespace Tests.UnitTests.PossibleMoves.PossibleMoves
+namespace Tests.UnitTests.PossibleMoves.PieceMoves
 {
     [TestFixture]
     public class PossibleBishopMovesTests : PossibleMovesTestBase
@@ -14,11 +14,12 @@ namespace Tests.UnitTests.PossibleMoves.PossibleMoves
         [Test]
         public void OnEmptyBoard_BishopCanMoveDiagonally(
             [Values(0, 7)] int x, [Values(0, 7)] int y,
-            [Values(PieceType.WhiteBishop, PieceType.BlackBishop)] PieceType pieceType)
+            [Values(PieceType.WhiteBishop, PieceType.BlackBishop)]
+            PieceType pieceType)
         {
             SetTestedPieceColourWith(pieceType);
             var bishopMoveGenerator = GetPossibleMoveGenerator(pieceType);
-            var pieces = new List<(PieceType, IBoardPosition)>()
+            var pieces = new List<(PieceType, IBoardPosition)>
             {
                 (pieceType, new BoardPosition(x, y))
             };
@@ -31,11 +32,12 @@ namespace Tests.UnitTests.PossibleMoves.PossibleMoves
         [Test]
         public void WithOpposingPieceInCorner_BishopCanTake(
             [Values(0, 7)] int x, [Values(0, 7)] int y,
-            [Values(PieceType.WhiteBishop, PieceType.BlackBishop)] PieceType pieceType)
+            [Values(PieceType.WhiteBishop, PieceType.BlackBishop)]
+            PieceType pieceType)
         {
             SetTestedPieceColourWith(pieceType);
             var bishopMoveGenerator = GetPossibleMoveGenerator(pieceType);
-            var pieces = new List<(PieceType, IBoardPosition)>()
+            var pieces = new List<(PieceType, IBoardPosition)>
             {
                 (pieceType, new BoardPosition(x, y)),
                 (GetOppositePieceType(pieceType), new BoardPosition(x == 7 ? 0 : 7, y == 7 ? 0 : 7))
@@ -45,23 +47,23 @@ namespace Tests.UnitTests.PossibleMoves.PossibleMoves
             var possibleMoves = bishopMoveGenerator.GetPossiblePieceMoves(new BoardPosition(x, y), board);
 
             Assert.AreEqual(7, new HashSet<IBoardPosition>(possibleMoves).Count());
-
         }
 
         [Test]
         public void WithOpposingPieceInMid_BishopCanTakeAndIsBlocked(
             [Values(0, 7)] int x, [Values(0, 7)] int y,
-            [Values(PieceType.WhiteBishop, PieceType.BlackBishop)] PieceType pieceType)
+            [Values(PieceType.WhiteBishop, PieceType.BlackBishop)]
+            PieceType pieceType)
         {
             SetTestedPieceColourWith(pieceType);
             var bishopMoveGenerator = GetPossibleMoveGenerator(pieceType);
 
-            bool onWhiteBand = x == 7 && y == 7 || x == 0 && y == 0;
-            var pieces = new List<(PieceType, IBoardPosition)>()
+            var onWhiteBand = x == 7 && y == 7 || x == 0 && y == 0;
+            var pieces = new List<(PieceType, IBoardPosition)>
             {
                 (pieceType, new BoardPosition(x, y)),
-                (GetOppositePieceType(pieceType), 
-                    onWhiteBand ? new BoardPosition(3,3) : new BoardPosition(4, 3)
+                (GetOppositePieceType(pieceType),
+                    onWhiteBand ? new BoardPosition(3, 3) : new BoardPosition(4, 3)
                 )
             };
 
@@ -80,26 +82,26 @@ namespace Tests.UnitTests.PossibleMoves.PossibleMoves
                     unreachableTiles = unreachableTiles.Concat(unreachablePositionsSW).ToList();
                 else
                     unreachableTiles = unreachableTiles.Concat(unreachablePositionsNE).ToList();
-            else
-            if (x <= 3)
+            else if (x <= 3)
                 unreachableTiles = unreachableTiles.Concat(unreachablePositionsSE).ToList();
             else
                 unreachableTiles = unreachableTiles.Concat(unreachablePositionsNW).ToList();
 
-            var possibleMoves = new HashSet<IBoardPosition>(bishopMoveGenerator.GetPossiblePieceMoves(new BoardPosition(x, y), board));
+            var possibleMoves =
+                new HashSet<IBoardPosition>(bishopMoveGenerator.GetPossiblePieceMoves(new BoardPosition(x, y), board));
 
             Assert.IsFalse(possibleMoves.Overlaps(unreachableTiles));
-
         }
 
         [Test]
         public void WithOpposingPieceBlockingEnd_BishopCanTakeaAndIsBlocked(
             [Values(0, 7)] int x, [Values(0, 7)] int y,
-            [Values(PieceType.WhiteBishop, PieceType.BlackBishop)] PieceType pieceType)
+            [Values(PieceType.WhiteBishop, PieceType.BlackBishop)]
+            PieceType pieceType)
         {
             SetTestedPieceColourWith(pieceType);
             var bishopMoveGenerator = GetPossibleMoveGenerator(pieceType);
-            var pieces = new List<(PieceType, IBoardPosition)>()
+            var pieces = new List<(PieceType, IBoardPosition)>
             {
                 (pieceType, new BoardPosition(x, y)),
                 (GetOppositePieceType(pieceType), new BoardPosition(x == 0 ? 6 : 1, y == 0 ? 6 : 1))
@@ -108,12 +110,12 @@ namespace Tests.UnitTests.PossibleMoves.PossibleMoves
             var board = SetUpBoardWith(pieces);
             var possibleMoves = bishopMoveGenerator.GetPossiblePieceMoves(new BoardPosition(x, y), board);
 
-            var unreachableTiles = new List<IBoardPosition>()
+            var unreachableTiles = new List<IBoardPosition>
             {
-                new BoardPosition(0,0),
-                new BoardPosition(7,7),
-                new BoardPosition(7,0),
-                new BoardPosition(0,7),
+                new BoardPosition(0, 0),
+                new BoardPosition(7, 7),
+                new BoardPosition(7, 0),
+                new BoardPosition(0, 7)
             };
 
             Assert.IsFalse(new HashSet<IBoardPosition>(possibleMoves).Overlaps(unreachableTiles));
@@ -122,14 +124,15 @@ namespace Tests.UnitTests.PossibleMoves.PossibleMoves
         [Test]
         public void WithFriendlyPieceInCorner_BishopIsBlocked(
             [Values(0, 7)] int x, [Values(0, 7)] int y,
-            [Values(PieceType.WhiteBishop, PieceType.BlackBishop)] PieceType pieceType)
+            [Values(PieceType.WhiteBishop, PieceType.BlackBishop)]
+            PieceType pieceType)
         {
             SetTestedPieceColourWith(pieceType);
             var bishopMoveGenerator = GetPossibleMoveGenerator(pieceType);
-            var pieces = new List<(PieceType, IBoardPosition)>()
+            var pieces = new List<(PieceType, IBoardPosition)>
             {
                 (pieceType, new BoardPosition(x, y)),
-                (pieceType, new BoardPosition(x == 7 ? 0: 7, y == 7 ? 0 : 7))
+                (pieceType, new BoardPosition(x == 7 ? 0 : 7, y == 7 ? 0 : 7))
             };
 
             var board = SetUpBoardWith(pieces);
@@ -137,17 +140,17 @@ namespace Tests.UnitTests.PossibleMoves.PossibleMoves
 
 
             Assert.AreEqual(6, new HashSet<IBoardPosition>(possibleMoves).Count());
-
         }
 
         [Test]
         public void WithFriendlyPieceBlockingEnd_BishopIsBlocked(
             [Values(0, 7)] int x, [Values(0, 7)] int y,
-            [Values(PieceType.WhiteBishop, PieceType.BlackBishop)] PieceType pieceType)
+            [Values(PieceType.WhiteBishop, PieceType.BlackBishop)]
+            PieceType pieceType)
         {
             SetTestedPieceColourWith(pieceType);
             var bishopMoveGenerator = GetPossibleMoveGenerator(pieceType);
-            var pieces = new List<(PieceType, IBoardPosition)>()
+            var pieces = new List<(PieceType, IBoardPosition)>
             {
                 (pieceType, new BoardPosition(x, y)),
                 (pieceType, new BoardPosition(x == 0 ? 6 : 1, y == 0 ? 6 : 1))
@@ -157,23 +160,23 @@ namespace Tests.UnitTests.PossibleMoves.PossibleMoves
             var possibleMoves = bishopMoveGenerator.GetPossiblePieceMoves(new BoardPosition(x, y), board);
 
             Assert.AreEqual(5, new HashSet<IBoardPosition>(possibleMoves).Count());
-
         }
 
         [Test]
         public void WithFriendlyPieceInMiddle_BishopIsBlocked(
             [Values(0, 7)] int x, [Values(0, 7)] int y,
-            [Values(PieceType.WhiteBishop, PieceType.BlackBishop)] PieceType pieceType)
+            [Values(PieceType.WhiteBishop, PieceType.BlackBishop)]
+            PieceType pieceType)
         {
             SetTestedPieceColourWith(pieceType);
             var bishopMoveGenerator = GetPossibleMoveGenerator(pieceType);
 
-            bool onWhiteBand = x == 7 && y == 7 || x == 0 && y == 0;
-            var pieces = new List<(PieceType, IBoardPosition)>()
+            var onWhiteBand = x == 7 && y == 7 || x == 0 && y == 0;
+            var pieces = new List<(PieceType, IBoardPosition)>
             {
                 (pieceType, new BoardPosition(x, y)),
-                (pieceType, 
-                    onWhiteBand ? new BoardPosition(3,3) : new BoardPosition(4, 3)
+                (pieceType,
+                    onWhiteBand ? new BoardPosition(3, 3) : new BoardPosition(4, 3)
                 )
             };
 
@@ -191,19 +194,16 @@ namespace Tests.UnitTests.PossibleMoves.PossibleMoves
                     unreachableTiles = unreachableTiles.Concat(unreachablePositionsSW).ToList();
                 else
                     unreachableTiles = unreachableTiles.Concat(unreachablePositionsNE).ToList();
-            else
-            if (x <= 3)
+            else if (x <= 3)
                 unreachableTiles = unreachableTiles.Concat(unreachablePositionsSE).ToList();
             else
                 unreachableTiles = unreachableTiles.Concat(unreachablePositionsNW).ToList();
 
 
-            var possibleMoves = new HashSet<IBoardPosition>(bishopMoveGenerator.GetPossiblePieceMoves(new BoardPosition(x, y), board));
+            var possibleMoves =
+                new HashSet<IBoardPosition>(bishopMoveGenerator.GetPossiblePieceMoves(new BoardPosition(x, y), board));
 
             Assert.IsFalse(possibleMoves.Overlaps(unreachableTiles));
-
         }
-
-
     }
 }

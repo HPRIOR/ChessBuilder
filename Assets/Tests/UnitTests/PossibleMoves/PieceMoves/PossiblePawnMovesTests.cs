@@ -6,7 +6,7 @@ using Models.State.Interfaces;
 using Models.State.PieceState;
 using NUnit.Framework;
 
-namespace Tests.UnitTests.PossibleMoves.PossibleMoves
+namespace Tests.UnitTests.PossibleMoves.PieceMoves
 {
     [TestFixture]
     public class PossiblePawnMovesTests : PossibleMovesTestBase

@@ -3,10 +3,10 @@ using Models.Services.Interfaces;
 using Models.State.Board;
 using Models.State.PieceState;
 using NUnit.Framework;
-using Tests.UnitTests.PossibleMoves.PossibleMoves.utills;
+using Tests.UnitTests.PossibleMoves.PossibleMoves.Utils;
 using Zenject;
 
-namespace Tests.UnitTests.PossibleMoves.PossibleMoves
+namespace Tests.UnitTests.PossibleMoves.PieceMoves
 {
     [TestFixture]
     public class PossibleMovesTest : ZenjectUnitTestFixture

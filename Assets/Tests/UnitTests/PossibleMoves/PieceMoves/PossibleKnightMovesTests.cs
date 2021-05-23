@@ -5,7 +5,7 @@ using Models.State.Interfaces;
 using Models.State.PieceState;
 using NUnit.Framework;
 
-namespace Tests.UnitTests.PossibleMoves.PossibleMoves
+namespace Tests.UnitTests.PossibleMoves.PieceMoves
 {
     public class PossibleKnightMovesTests : PossibleMovesTestBase
     {
@@ -18,7 +18,7 @@ namespace Tests.UnitTests.PossibleMoves.PossibleMoves
             SetTestedPieceColourWith(pieceType);
             var knightMoveGenerator = GetPossibleMoveGenerator(pieceType);
 
-            var pieces = new List<(PieceType, IBoardPosition)>()
+            var pieces = new List<(PieceType, IBoardPosition)>
             {
                 (pieceType, RelativePositionToTestedPiece(new BoardPosition(x, y)))
             };
@@ -41,7 +41,7 @@ namespace Tests.UnitTests.PossibleMoves.PossibleMoves
             SetTestedPieceColourWith(pieceType);
             var knightMoveGenerator = GetPossibleMoveGenerator(pieceType);
 
-            var pieces = new List<(PieceType, IBoardPosition)>()
+            var pieces = new List<(PieceType, IBoardPosition)>
             {
                 (pieceType, RelativePositionToTestedPiece(new BoardPosition(x, y)))
             };
@@ -49,7 +49,7 @@ namespace Tests.UnitTests.PossibleMoves.PossibleMoves
             var board = SetUpBoardWith(pieces);
 
 
-            var expectedMoves = new List<IBoardPosition>()
+            var expectedMoves = new List<IBoardPosition>
             {
                 new BoardPosition(x + 2, y + 1),
                 new BoardPosition(x + 2, y - 1),
@@ -73,7 +73,7 @@ namespace Tests.UnitTests.PossibleMoves.PossibleMoves
         {
             SetTestedPieceColourWith(pieceType);
             var knightMoveGenerator = GetPossibleMoveGenerator(pieceType);
-            var pieces = new List<(PieceType, IBoardPosition)>()
+            var pieces = new List<(PieceType, IBoardPosition)>
             {
                 (pieceType, RelativePositionToTestedPiece(new BoardPosition(x, y))),
                 (pieceType, RelativePositionToTestedPiece(new BoardPosition(x + 2, y + 1)))
@@ -94,7 +94,8 @@ namespace Tests.UnitTests.PossibleMoves.PossibleMoves
 
             var illegalMove = RelativePositionToTestedPiece(new BoardPosition(x + 2, y + 1));
             var possibleMoves = new HashSet<IBoardPosition>(
-                knightMoveGenerator.GetPossiblePieceMoves(RelativePositionToTestedPiece(new BoardPosition(x, y)), board));
+                knightMoveGenerator.GetPossiblePieceMoves(RelativePositionToTestedPiece(new BoardPosition(x, y)),
+                    board));
 
             expectedMoves.ToList().ForEach(move => Assert.IsTrue(possibleMoves.Contains(move)));
             Assert.AreEqual(7, expectedMoves.Count());
@@ -110,7 +111,7 @@ namespace Tests.UnitTests.PossibleMoves.PossibleMoves
             SetTestedPieceColourWith(pieceType);
             var knightMoveGenerator = GetPossibleMoveGenerator(pieceType);
 
-            var pieces = new List<(PieceType, IBoardPosition)>()
+            var pieces = new List<(PieceType, IBoardPosition)>
             {
                 (pieceType, RelativePositionToTestedPiece(new BoardPosition(x, y))),
                 (GetOppositePieceType(pieceType), RelativePositionToTestedPiece(new BoardPosition(x + 2, y + 1)))
@@ -131,7 +132,8 @@ namespace Tests.UnitTests.PossibleMoves.PossibleMoves
             }.Select(RelativePositionToTestedPiece);
 
             var possibleMoves = new HashSet<IBoardPosition>(
-                knightMoveGenerator.GetPossiblePieceMoves(RelativePositionToTestedPiece(new BoardPosition(x, y)), board));
+                knightMoveGenerator.GetPossiblePieceMoves(RelativePositionToTestedPiece(new BoardPosition(x, y)),
+                    board));
 
             expectedMoves.ToList().ForEach(move => Assert.IsTrue(possibleMoves.Contains(move)));
             Assert.AreEqual(8, expectedMoves.Count());
@@ -146,9 +148,9 @@ namespace Tests.UnitTests.PossibleMoves.PossibleMoves
             SetTestedPieceColourWith(pieceType);
             var knightMoveGenerator = GetPossibleMoveGenerator(pieceType);
 
-            var pieces = new List<(PieceType, IBoardPosition)>()
+            var pieces = new List<(PieceType, IBoardPosition)>
             {
-                (pieceType, RelativePositionToTestedPiece(new BoardPosition(x, y))),
+                (pieceType, RelativePositionToTestedPiece(new BoardPosition(x, y)))
             };
 
             var board = SetUpBoardWith(pieces);
@@ -158,16 +160,16 @@ namespace Tests.UnitTests.PossibleMoves.PossibleMoves
 
         [Test]
         public void OnSide_OnlyFourMovesArePossible(
-            [Values(2,3,4,5)] int x, 
+            [Values(2, 3, 4, 5)] int x,
             [Values(PieceType.WhiteKnight, PieceType.BlackKnight)]
             PieceType pieceType)
         {
             SetTestedPieceColourWith(pieceType);
             var knightMoveGenerator = GetPossibleMoveGenerator(pieceType);
 
-            var pieces = new List<(PieceType, IBoardPosition)>()
+            var pieces = new List<(PieceType, IBoardPosition)>
             {
-                (pieceType, RelativePositionToTestedPiece(new BoardPosition(x, 0))),
+                (pieceType, RelativePositionToTestedPiece(new BoardPosition(x, 0)))
             };
 
             var board = SetUpBoardWith(pieces);

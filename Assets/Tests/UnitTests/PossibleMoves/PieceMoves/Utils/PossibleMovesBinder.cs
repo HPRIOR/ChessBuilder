@@ -3,7 +3,7 @@ using Bindings.Installers.InputInstallers;
 using Bindings.Installers.PieceInstallers;
 using Zenject;
 
-namespace Tests.UnitTests.PossibleMoves.PossibleMoves.utills
+namespace Tests.UnitTests.PossibleMoves.PossibleMoves.Utils
 {
     public static class PossibleMovesBinder
     {
@@ -14,7 +14,7 @@ namespace Tests.UnitTests.PossibleMoves.PossibleMoves.utills
             PossibleMoveFactoryInstaller.Install(Container);
             CommandInvokerInstaller.Install(Container);
             MoveCommandInstaller.Install(Container);
-            BoardEvalInstaller.Install(Container);
+            TileEvaluatorInstaller.Install(Container);
             BoardScannerInstaller.Install(Container);
             BoardPositionTranslatorInstaller.Install(Container);
             AllPossibleMovesGeneratorInstaller.Install(Container);

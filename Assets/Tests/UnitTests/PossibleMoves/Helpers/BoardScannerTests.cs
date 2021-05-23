@@ -8,7 +8,6 @@ using Models.State.Board;
 using Models.State.Interfaces;
 using Models.State.PieceState;
 using NUnit.Framework;
-using UnityEngine;
 using Zenject;
 
 namespace Tests.UnitTests.PossibleMoves.Helpers
@@ -167,12 +166,7 @@ namespace Tests.UnitTests.PossibleMoves.Helpers
                 new BoardPosition(5, 5),
                 new BoardPosition(6, 6)
             };
-            Debug.Log(positions.Count());
-            foreach (var boardPosition in positions)
-            {
-                Debug.Log(boardPosition);
-                Assert.AreEqual(true, expected.Contains(boardPosition));
-            }
+            foreach (var boardPosition in positions) Assert.AreEqual(true, expected.Contains(boardPosition));
         }
 
 
@@ -205,12 +199,7 @@ namespace Tests.UnitTests.PossibleMoves.Helpers
                 new BoardPosition(5, 5),
                 new BoardPosition(6, 6)
             };
-            Debug.Log(positions.Count());
-            foreach (var boardPosition in positions)
-            {
-                Debug.Log(boardPosition);
-                Assert.AreEqual(true, expected.Contains(boardPosition));
-            }
+            foreach (var boardPosition in positions) Assert.AreEqual(true, expected.Contains(boardPosition));
         }
 
 

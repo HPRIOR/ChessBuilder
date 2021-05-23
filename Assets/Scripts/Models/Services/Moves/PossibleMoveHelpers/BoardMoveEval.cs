@@ -14,16 +14,23 @@ namespace Models.Services.Moves.PossibleMoveHelpers
             _pieceColour = pieceColour;
         }
 
-        public bool NoPieceIn(ITile tile) => tile.CurrentPiece.Type == PieceType.NullPiece;
+        public bool NoPieceIn(ITile tile)
+        {
+            return tile.CurrentPiece.Type == PieceType.NullPiece;
+        }
 
-        public bool FriendlyPieceIn(ITile tile) =>
-            !(tile.CurrentPiece.Type is PieceType.NullPiece) && PieceColourFromType(tile.CurrentPiece.Type) == _pieceColour;
+        public bool FriendlyPieceIn(ITile tile)
+        {
+            return !(tile.CurrentPiece.Type is PieceType.NullPiece) && tile.CurrentPiece.Colour == _pieceColour;
+        }
 
-        public bool OpposingPieceIn(ITile tile) =>
-            !(tile.CurrentPiece.Type is PieceType.NullPiece) && PieceColourFromType(tile.CurrentPiece.Type) != _pieceColour;
+        public bool OpposingPieceIn(ITile tile)
+        {
+            return !(tile.CurrentPiece.Type is PieceType.NullPiece) && tile.CurrentPiece.Colour != _pieceColour;
+        }
 
-        private static PieceColour PieceColourFromType(PieceType pieceType) => pieceType.ToString().StartsWith("White") ? PieceColour.White : PieceColour.Black;
-
-        public class Factory : PlaceholderFactory<PieceColour, BoardMoveEval> { }
+        public class Factory : PlaceholderFactory<PieceColour, BoardMoveEval>
+        {
+        }
     }
 }

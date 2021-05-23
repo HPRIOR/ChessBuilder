@@ -11,7 +11,7 @@ using NUnit.Framework;
 using UnityEngine;
 using Zenject;
 
-namespace Tests.UnitTests.PossibleMoves.PieceMoves.Utils
+namespace Tests.UnitTests.PossibleMoves.Helpers
 {
     [TestFixture]
     public class BoardScannerTests : ZenjectUnitTestFixture

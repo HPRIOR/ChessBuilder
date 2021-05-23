@@ -5,11 +5,11 @@ using Zenject;
 
 namespace Models.Services.Moves.PossibleMoveHelpers
 {
-    public class BoardMoveEval : IBoardMoveEval
+    public class TileEvaluator : ITileEvaluator
     {
         private readonly PieceColour _pieceColour;
 
-        public BoardMoveEval(PieceColour pieceColour)
+        public TileEvaluator(PieceColour pieceColour)
         {
             _pieceColour = pieceColour;
         }
@@ -29,7 +29,7 @@ namespace Models.Services.Moves.PossibleMoveHelpers
             return !(tile.CurrentPiece.Type is PieceType.NullPiece) && tile.CurrentPiece.Colour != _pieceColour;
         }
 
-        public class Factory : PlaceholderFactory<PieceColour, BoardMoveEval>
+        public class Factory : PlaceholderFactory<PieceColour, TileEvaluator>
         {
         }
     }

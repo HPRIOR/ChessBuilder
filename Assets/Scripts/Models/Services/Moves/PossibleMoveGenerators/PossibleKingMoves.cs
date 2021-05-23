@@ -10,12 +10,12 @@ namespace Models.Services.Moves.PossibleMoveGenerators
     public class PossibleKingMoves : IPieceMoveGenerator
     {
         private readonly IPositionTranslator _positionTranslator;
-        private readonly IBoardMoveEval _boardMoveEval;
+        private readonly ITileEvaluator _tileEvaluator;
 
-        public PossibleKingMoves(IPositionTranslator positionTranslator, IBoardMoveEval boardMoveEval)
+        public PossibleKingMoves(IPositionTranslator positionTranslator, ITileEvaluator tileEvaluator)
         {
             _positionTranslator = positionTranslator;
-            _boardMoveEval = boardMoveEval;
+            _tileEvaluator = tileEvaluator;
         }
 
         public IEnumerable<IBoardPosition> GetPossiblePieceMoves(IBoardPosition originPosition, IBoardState boardState)
@@ -30,7 +30,7 @@ namespace Models.Services.Moves.PossibleMoveGenerators
                 if (0 > newPosition.X || newPosition.X > 7
                                       || 0 > newPosition.Y || newPosition.Y > 7) return;
                 var potentialMoveTile = _positionTranslator.GetRelativeTileAt(newPosition, boardState);
-                if (_boardMoveEval.OpposingPieceIn(potentialMoveTile) || _boardMoveEval.NoPieceIn(potentialMoveTile))
+                if (_tileEvaluator.OpposingPieceIn(potentialMoveTile) || _tileEvaluator.NoPieceIn(potentialMoveTile))
                     potentialMoves.Add(newRelativePosition);
             });
 

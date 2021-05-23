@@ -10,7 +10,7 @@ namespace Bindings.Installers.PieceInstallers
     {
         public override void InstallBindings()
         {
-            Container.Bind<IBoardMoveEval>().To<BoardMoveEval>().AsSingle();
+            Container.Bind<ITileEvaluator>().To<TileEvaluator>().AsSingle();
             Container.Bind<IBoardScannerFactory>().To<BoardScannerFactory>().AsSingle();
             Container.BindFactory<PieceColour, BoardScanner, BoardScanner.Factory>().FromNew();
         }

@@ -1,32 +1,34 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 using Models.Services.Interfaces;
 using Models.State.Board;
 using Models.State.Interfaces;
-using UnityEngine;
 
 namespace Models.Services.Moves.PossibleMoveGenerators
 {
     public class PossibleKnightMoves : IPieceMoveGenerator
     {
         private readonly IPositionTranslator _positionTranslator;
-        private readonly IBoardMoveEval _boardMoveEval;
+        private readonly ITileEvaluator _tileEvaluator;
 
-        public PossibleKnightMoves(IPositionTranslator positionTranslator, IBoardMoveEval boardMoveEval)
+        public PossibleKnightMoves(IPositionTranslator positionTranslator, ITileEvaluator tileEvaluator)
         {
             _positionTranslator = positionTranslator;
-            _boardMoveEval = boardMoveEval;
+            _tileEvaluator = tileEvaluator;
         }
 
         public IEnumerable<IBoardPosition> GetPossiblePieceMoves(IBoardPosition originPosition, IBoardState boardState)
         {
-            bool CoordInBounds((int X, int Y) coord) => 0 <= coord.X && coord.X <= 7 && 0 <= coord.Y && coord.Y <= 7;
+            bool CoordInBounds((int X, int Y) coord)
+            {
+                return 0 <= coord.X && coord.X <= 7 && 0 <= coord.Y && coord.Y <= 7;
+            }
 
-            bool FriendlyPieceNotInTile((int X, int Y) coord) =>
-                !_boardMoveEval.FriendlyPieceIn(
+            bool FriendlyPieceNotInTile((int X, int Y) coord)
+            {
+                return !_tileEvaluator.FriendlyPieceIn(
                     boardState.GetTileAt(_positionTranslator.GetRelativePosition(new BoardPosition(coord.X, coord.Y))));
+            }
 
             var moveCoords = GetMoveCoords(_positionTranslator.GetRelativePosition(originPosition))
                 .Where(CoordInBounds)

@@ -6,22 +6,22 @@ namespace Models.Services.Moves.Factories
 {
     public class PossibleMoveFactory : IPossibleMoveFactory
     {
-        private readonly IBoardMoveEval _blackBoardMoveEval;
         private readonly IBoardScanner _blackBoardScanner;
         private readonly IPositionTranslator _blackPositionTranslator;
-        private readonly IBoardMoveEval _whiteBoardMoveEval;
+        private readonly ITileEvaluator _blackTileEvaluator;
 
         private readonly IBoardScanner _whiteBoardScanner;
 
         private readonly IPositionTranslator _whitePositionTranslator;
+        private readonly ITileEvaluator _whiteTileEvaluator;
 
         public PossibleMoveFactory(
             IBoardScannerFactory boardScannerFactory,
             IPositionTranslatorFactory boardPositionTranslatorFactory,
-            IBoardEvalFactory boardEvalFactory)
+            ITileEvaluatorFactory tileEvaluatorFactory)
         {
-            _whiteBoardMoveEval = boardEvalFactory.Create(PieceColour.White);
-            _blackBoardMoveEval = boardEvalFactory.Create(PieceColour.Black);
+            _whiteTileEvaluator = tileEvaluatorFactory.Create(PieceColour.White);
+            _blackTileEvaluator = tileEvaluatorFactory.Create(PieceColour.Black);
 
             _whiteBoardScanner = boardScannerFactory.Create(PieceColour.White);
             _blackBoardScanner = boardScannerFactory.Create(PieceColour.Black);
@@ -91,11 +91,11 @@ namespace Models.Services.Moves.Factories
                 : _blackPositionTranslator;
         }
 
-        private IBoardMoveEval GetBoardEvalWith(PieceColour pieceColour)
+        private ITileEvaluator GetBoardEvalWith(PieceColour pieceColour)
         {
             return pieceColour == PieceColour.White
-                ? _whiteBoardMoveEval
-                : _blackBoardMoveEval;
+                ? _whiteTileEvaluator
+                : _blackTileEvaluator;
         }
     }
 }

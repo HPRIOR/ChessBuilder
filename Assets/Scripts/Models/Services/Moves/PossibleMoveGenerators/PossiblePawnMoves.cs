@@ -9,12 +9,12 @@ namespace Models.Services.Moves.PossibleMoveGenerators
     public class PossiblePawnMoves : IPieceMoveGenerator
     {
         private readonly IPositionTranslator _positionTranslator;
-        private readonly IBoardMoveEval _boardMoveEval;
+        private readonly ITileEvaluator _tileEvaluator;
 
-        public PossiblePawnMoves(IPositionTranslator boardPositionTranslator, IBoardMoveEval boardMoveEval)
+        public PossiblePawnMoves(IPositionTranslator boardPositionTranslator, ITileEvaluator tileEvaluator)
         {
             _positionTranslator = boardPositionTranslator;
-            _boardMoveEval = boardMoveEval;
+            _tileEvaluator = tileEvaluator;
         }
 
         public IEnumerable<IBoardPosition> GetPossiblePieceMoves(IBoardPosition originPosition, IBoardState boardState)
@@ -25,15 +25,17 @@ namespace Models.Services.Moves.PossibleMoveGenerators
 
             if (originPosition.Y == 7) return potentialMoves; // allow to change piece
 
-            if (_positionTranslator.GetRelativeTileAt(originPosition.Add(Move.In(Direction.N)), boardState).CurrentPiece.Type == PieceType.NullPiece)
+            if (_positionTranslator.GetRelativeTileAt(originPosition.Add(Move.In(Direction.N)), boardState).CurrentPiece
+                .Type == PieceType.NullPiece)
                 potentialMoves.Add(
                     _positionTranslator.GetRelativePosition(originPosition.Add(Move.In(Direction.N)))
                 );
 
             if (originPosition.X > 0)
             {
-                var topLeftTile = _positionTranslator.GetRelativeTileAt(originPosition.Add(Move.In(Direction.NW)), boardState);
-                if (_boardMoveEval.OpposingPieceIn(topLeftTile))
+                var topLeftTile =
+                    _positionTranslator.GetRelativeTileAt(originPosition.Add(Move.In(Direction.NW)), boardState);
+                if (_tileEvaluator.OpposingPieceIn(topLeftTile))
                     potentialMoves.Add(
                         _positionTranslator.GetRelativePosition(originPosition.Add(Move.In(Direction.NW)))
                     );
@@ -41,8 +43,9 @@ namespace Models.Services.Moves.PossibleMoveGenerators
 
             if (originPosition.X < 7)
             {
-                var topRightTile = _positionTranslator.GetRelativeTileAt(originPosition.Add(Move.In(Direction.NE)), boardState);
-                if (_boardMoveEval.OpposingPieceIn(topRightTile))
+                var topRightTile =
+                    _positionTranslator.GetRelativeTileAt(originPosition.Add(Move.In(Direction.NE)), boardState);
+                if (_tileEvaluator.OpposingPieceIn(topRightTile))
                     potentialMoves.Add(
                         _positionTranslator.GetRelativePosition(originPosition.Add(Move.In(Direction.NE)))
                     );

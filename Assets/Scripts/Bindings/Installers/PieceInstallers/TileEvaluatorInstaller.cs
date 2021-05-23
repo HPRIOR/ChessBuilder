@@ -6,12 +6,12 @@ using Zenject;
 
 namespace Bindings.Installers.PieceInstallers
 {
-    public class BoardEvalInstaller : Installer<BoardEvalInstaller>
+    public class TileEvaluatorInstaller : Installer<TileEvaluatorInstaller>
     {
         public override void InstallBindings()
         {
-            Container.Bind<IBoardEvalFactory>().To<BoardEvalFactory>().AsSingle();
-            Container.BindFactory<PieceColour, BoardMoveEval, BoardMoveEval.Factory>().FromNew();
+            Container.Bind<ITileEvaluatorFactory>().To<TileEvaluatorFactory>().AsSingle();
+            Container.BindFactory<PieceColour, TileEvaluator, TileEvaluator.Factory>().FromNew();
         }
     }
 }

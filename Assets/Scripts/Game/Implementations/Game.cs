@@ -13,26 +13,26 @@ namespace Game.Implementations
         private IBoardGenerator _boardGenerator;
         private IGameState GameState { get; set; }
 
-        [Inject]
-        public void Construct(
-            IGameState initState,
-            IBoardGenerator boardGenerator
-            )
-        {
-            _boardGenerator = boardGenerator;
-            GameState = initState;
-        }
-
         public void Start()
         {
             GameState.UpdateGameState(InitBoard());
         }
 
+        [Inject]
+        public void Construct(
+            IGameState initState,
+            IBoardGenerator boardGenerator
+        )
+        {
+            _boardGenerator = boardGenerator;
+            GameState = initState;
+        }
+
         private IBoardState InitBoard()
         {
             var board = _boardGenerator.GenerateBoard();
-            board[3, 3].CurrentPiece = new Piece(PieceType.WhiteKnight);
-            board[4, 4].CurrentPiece = new Piece(PieceType.BlackKnight);
+            board[3, 3].CurrentPiece = new Piece(PieceType.WhitePawn);
+            board[4, 4].CurrentPiece = new Piece(PieceType.BlackPawn);
             return new BoardState(board);
         }
     }

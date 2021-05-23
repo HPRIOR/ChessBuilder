@@ -14,7 +14,7 @@ namespace Bindings.Utils
             GameStateInstaller.Install(container);
             CommandInvokerInstaller.Install(container);
             MoveCommandInstaller.Install(container);
-            BoardEvalInstaller.Install(container);
+            TileEvaluatorInstaller.Install(container);
             BoardPositionTranslatorInstaller.Install(container);
             BoardScannerInstaller.Install(container);
             MoveValidatorInstaller.Install(container);

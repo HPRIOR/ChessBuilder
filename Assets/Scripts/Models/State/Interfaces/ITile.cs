@@ -1,10 +1,11 @@
 ﻿using System;
+using Models.State.PieceState;
 
 namespace Models.State.Interfaces
 {
     public interface ITile : ICloneable
     {
         IBoardPosition BoardPosition { get; }
-        PieceState.Piece CurrentPiece { get; set; }
+        Piece CurrentPiece { get; set; }
     }
 }

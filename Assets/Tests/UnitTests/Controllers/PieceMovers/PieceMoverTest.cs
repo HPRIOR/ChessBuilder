@@ -6,7 +6,7 @@ using Models.State.PieceState;
 using NUnit.Framework;
 using Zenject;
 
-namespace Tests.UnitTests.PieceMoveTests.Movers
+namespace Tests.UnitTests.Controllers.PieceMovers
 {
     [TestFixture]
     public class PieceMoverTest : ZenjectUnitTestFixture

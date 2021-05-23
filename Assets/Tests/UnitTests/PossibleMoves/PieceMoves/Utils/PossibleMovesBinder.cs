@@ -16,7 +16,7 @@ namespace Tests.UnitTests.PossibleMoves.PossibleMoves.Utils
             MoveCommandInstaller.Install(Container);
             TileEvaluatorInstaller.Install(Container);
             BoardScannerInstaller.Install(Container);
-            BoardPositionTranslatorInstaller.Install(Container);
+            PositionTranslatorInstaller.Install(Container);
             AllPossibleMovesGeneratorInstaller.Install(Container);
         }
     }

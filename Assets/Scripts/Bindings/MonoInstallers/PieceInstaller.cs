@@ -13,7 +13,7 @@ namespace Bindings.MonoInstallers
             AllPossibleMovesGeneratorInstaller.Install(Container);
             MoveValidatorInstaller.Install(Container);
             TileEvaluatorInstaller.Install(Container);
-            BoardPositionTranslatorInstaller.Install(Container);
+            PositionTranslatorInstaller.Install(Container);
             BoardScannerInstaller.Install(Container);
         }
     }

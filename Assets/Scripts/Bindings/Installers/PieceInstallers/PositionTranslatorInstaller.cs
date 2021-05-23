@@ -6,7 +6,7 @@ using Zenject;
 
 namespace Bindings.Installers.PieceInstallers
 {
-    public class BoardPositionTranslatorInstaller : Installer<BoardPositionTranslatorInstaller>
+    public class PositionTranslatorInstaller : Installer<PositionTranslatorInstaller>
     {
         public override void InstallBindings()
         {

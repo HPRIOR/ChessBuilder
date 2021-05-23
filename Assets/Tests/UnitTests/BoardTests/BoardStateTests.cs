@@ -56,7 +56,7 @@ namespace Tests.UnitTests.BoardTests
             var boardState = GetBoardState();
 
             Assert.DoesNotThrow(() =>
-                boardState.Board[7, 7].CurrentPiece = new Piece(PieceType.BlackBishop)
+                Debug.Log(boardState.Board[7, 7].CurrentPiece)
             );
         }
 

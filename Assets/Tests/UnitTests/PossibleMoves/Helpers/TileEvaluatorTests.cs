@@ -8,7 +8,7 @@ using Zenject;
 namespace Tests.UnitTests.PossibleMoves.Helpers
 {
     [TestFixture]
-    public class BoardMoveEvalTests : ZenjectUnitTestFixture
+    public class TileEvaluatorTests : ZenjectUnitTestFixture
     {
         [SetUp]
         public void Init()
@@ -23,26 +23,26 @@ namespace Tests.UnitTests.PossibleMoves.Helpers
             Container.UnbindAll();
         }
 
-        private IBoardEvalFactory _boardEvalFactory;
+        private ITileEvaluatorFactory _tileEvaluatorFactory;
 
 
         private void ResolveContainers()
         {
-            BoardEvalInstaller.Install(Container);
+            TileEvaluatorInstaller.Install(Container);
         }
 
         private void InstallBindings()
         {
-            _boardEvalFactory = Container.Resolve<IBoardEvalFactory>();
+            _tileEvaluatorFactory = Container.Resolve<ITileEvaluatorFactory>();
         }
 
 
         [Test]
         public void Identifies_NoPieceInTile_True()
         {
-            var boardEval = _boardEvalFactory.Create(PieceColour.White);
+            var tileEval = _tileEvaluatorFactory.Create(PieceColour.White);
             var tile = new Tile(new BoardPosition(1, 1)) {CurrentPiece = new Piece(PieceType.NullPiece)};
-            Assert.IsTrue(boardEval.NoPieceIn(tile));
+            Assert.IsTrue(tileEval.NoPieceIn(tile));
         }
 
         [Test]
@@ -50,42 +50,42 @@ namespace Tests.UnitTests.PossibleMoves.Helpers
             [Values] PieceType pieceType
         )
         {
-            var boardEval = _boardEvalFactory.Create(PieceColour.White);
+            var tileEval = _tileEvaluatorFactory.Create(PieceColour.White);
             var tile = new Tile(new BoardPosition(1, 1)) {CurrentPiece = new Piece(pieceType)};
             if (pieceType != PieceType.NullPiece)
-                Assert.IsFalse(boardEval.NoPieceIn(tile));
+                Assert.IsFalse(tileEval.NoPieceIn(tile));
         }
 
         [Test]
         public void WithBlackPiece_IdentifiesFriendlyPieceInTile()
         {
-            var boardEval = _boardEvalFactory.Create(PieceColour.Black);
+            var tileEval = _tileEvaluatorFactory.Create(PieceColour.Black);
             var tile = new Tile(new BoardPosition(1, 1)) {CurrentPiece = new Piece(PieceType.BlackBishop)};
-            Assert.IsTrue(boardEval.FriendlyPieceIn(tile));
+            Assert.IsTrue(tileEval.FriendlyPieceIn(tile));
         }
 
         [Test]
         public void WithWhitePiece_IdentifiesFriendlyPieceInTile()
         {
-            var boardEval = _boardEvalFactory.Create(PieceColour.White);
+            var tileEval = _tileEvaluatorFactory.Create(PieceColour.White);
             var tile = new Tile(new BoardPosition(1, 1)) {CurrentPiece = new Piece(PieceType.WhiteBishop)};
-            Assert.IsTrue(boardEval.FriendlyPieceIn(tile));
+            Assert.IsTrue(tileEval.FriendlyPieceIn(tile));
         }
 
         [Test]
         public void WithWhitePiece_IdentifiesOpposingPieceInTile()
         {
-            var boardEval = _boardEvalFactory.Create(PieceColour.White);
+            var tileEval = _tileEvaluatorFactory.Create(PieceColour.White);
             var tile = new Tile(new BoardPosition(1, 1)) {CurrentPiece = new Piece(PieceType.BlackBishop)};
-            Assert.IsTrue(boardEval.OpposingPieceIn(tile));
+            Assert.IsTrue(tileEval.OpposingPieceIn(tile));
         }
 
         [Test]
         public void WithBlackPiece_IdentifiesOpposingPieceInTile()
         {
-            var boardEval = _boardEvalFactory.Create(PieceColour.Black);
+            var tileEval = _tileEvaluatorFactory.Create(PieceColour.Black);
             var tile = new Tile(new BoardPosition(1, 1)) {CurrentPiece = new Piece(PieceType.WhiteBishop)};
-            Assert.IsTrue(boardEval.OpposingPieceIn(tile));
+            Assert.IsTrue(tileEval.OpposingPieceIn(tile));
         }
     }
 }

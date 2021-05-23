@@ -1,10 +1,10 @@
-﻿using Models.State.Interfaces;
+﻿using Models.State.Board;
 
 namespace Models.Services.Interfaces
 {
     public interface IPieceMover
     {
-        IBoardState GenerateNewBoardState(IBoardState originalBoardState, IBoardPosition from,
-            IBoardPosition toDestination);
+        BoardState GenerateNewBoardState(BoardState originalBoardState, BoardPosition from,
+            BoardPosition toDestination);
     }
 }

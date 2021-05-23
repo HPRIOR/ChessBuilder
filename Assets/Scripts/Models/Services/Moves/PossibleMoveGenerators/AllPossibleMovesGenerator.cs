@@ -2,7 +2,7 @@
 using System.Linq;
 using Models.Services.Interfaces;
 using Models.Services.Moves.PossibleMoveHelpers;
-using Models.State.Interfaces;
+using Models.State.Board;
 using Models.State.PieceState;
 
 namespace Models.Services.Moves.PossibleMoveGenerators
@@ -23,10 +23,10 @@ namespace Models.Services.Moves.PossibleMoveGenerators
         // a better solution may be to flag a variable in the board state if one player moves the board into a checked state
         // this could be started as state in this class: IEnumerable<IBoardPosition> checkMoves
         // GeneratePossibleMove needs to take in the the moved piece of the previous turn so that this can be checked 
-        public IDictionary<IBoardPosition, HashSet<IBoardPosition>> GetPossibleMoves(IBoardState boardState,
+        public IDictionary<BoardPosition, HashSet<BoardPosition>> GetPossibleMoves(BoardState boardState,
             PieceColour turn)
         {
-            var result = new Dictionary<IBoardPosition, HashSet<IBoardPosition>>();
+            var result = new Dictionary<BoardPosition, HashSet<BoardPosition>>();
             var board = boardState.Board;
 
             foreach (var tile in board)
@@ -38,7 +38,7 @@ namespace Models.Services.Moves.PossibleMoveGenerators
                     var possibleMoves = _possibleMoveFactory.GetPossibleMoveGenerator(currentPiece.Type)
                         .GetPossiblePieceMoves(boardPos, boardState);
 
-                    result.Add(boardPos, new HashSet<IBoardPosition>(possibleMoves));
+                    result.Add(boardPos, new HashSet<BoardPosition>(possibleMoves));
                 }
             }
 
@@ -46,20 +46,20 @@ namespace Models.Services.Moves.PossibleMoveGenerators
         }
 
 
-        private IDictionary<IBoardPosition, HashSet<IBoardPosition>> IntersectOnCheck(
-            IDictionary<IBoardPosition, HashSet<IBoardPosition>> possibleMoves,
-            ITile[,] board,
-            IBoardPosition checkedKing, IBoardPosition checkingPiece)
+        private IDictionary<BoardPosition, HashSet<BoardPosition>> IntersectOnCheck(
+            IDictionary<BoardPosition, HashSet<BoardPosition>> possibleMoves,
+            Tile[,] board,
+            BoardPosition checkedKing, BoardPosition checkingPiece)
         {
             var possibleNonKingMoves =
-                new HashSet<IBoardPosition>(ScanPositionGenerator.GetPositionsBetween(checkedKing, checkingPiece));
+                new HashSet<BoardPosition>(ScanPositionGenerator.GetPositionsBetween(checkedKing, checkingPiece));
             return possibleMoves.ToList().Select(t =>
             {
                 var bp = t.Key;
                 var set = t.Value;
                 var currentPiece = board[bp.X, bp.Y].CurrentPiece;
                 if (currentPiece.Type != PieceType.BlackKing || currentPiece.Type != PieceType.WhiteKing)
-                    return (bp, set.Intersect(possibleNonKingMoves) as HashSet<IBoardPosition>);
+                    return (bp, set.Intersect(possibleNonKingMoves) as HashSet<BoardPosition>);
                 return (bp, set);
             }).ToDictionary(t => t.bp, t => t.Item2);
         }

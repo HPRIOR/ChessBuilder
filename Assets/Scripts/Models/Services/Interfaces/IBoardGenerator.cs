@@ -1,9 +1,9 @@
-﻿using Models.State.Interfaces;
+﻿using Models.State.Board;
 
 namespace Models.Services.Interfaces
 {
     public interface IBoardGenerator
     {
-        ITile[,] GenerateBoard();
+        Tile[,] GenerateBoard();
     }
 }

@@ -1,7 +1,6 @@
 ﻿using Models.Services.Interfaces;
-using Models.State.Interfaces;
+using Models.State.Board;
 using Models.State.PieceState;
-using View.Interfaces;
 using View.Renderers;
 
 namespace Models.Services.Piece
@@ -15,7 +14,7 @@ namespace Models.Services.Piece
             _pieceFactory = pieceFactory;
         }
 
-        public PieceMono CreatePiece(PieceType pieceType, IBoardPosition boardPosition)
+        public PieceMono CreatePiece(PieceType pieceType, BoardPosition boardPosition)
         {
             var piece = _pieceFactory.Create(new PieceInfo(pieceType), boardPosition);
             piece.BoardPosition = boardPosition;

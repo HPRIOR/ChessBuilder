@@ -1,12 +1,14 @@
 ﻿using System.Collections.Generic;
 using Models.Services.Interfaces;
-using Models.State.Interfaces;
+using Models.State.Board;
 
 namespace Models.Services.Moves.PossibleMoveGenerators
 {
     public class NullPossibleMoveGenerator : IPieceMoveGenerator
     {
-        public IEnumerable<IBoardPosition> GetPossiblePieceMoves(IBoardPosition originPosition, IBoardState boardState) =>
-            new List<IBoardPosition>();
+        public IEnumerable<BoardPosition> GetPossiblePieceMoves(BoardPosition originPosition, BoardState boardState)
+        {
+            return new List<BoardPosition>();
+        }
     }
 }

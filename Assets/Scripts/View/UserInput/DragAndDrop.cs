@@ -1,7 +1,6 @@
 using Controllers.Factories;
 using Controllers.Interfaces;
 using Models.State.Board;
-using Models.State.Interfaces;
 using UnityEngine;
 using View.Renderers;
 using Zenject;
@@ -10,11 +9,11 @@ namespace View.UserInput
 {
     public class DragAndDrop : MonoBehaviour
     {
+        private static MoveCommandFactory _dragAndDropCommandFactory;
         private ICommandInvoker _commandInvoker;
         private bool _isDragging;
-        private SpriteRenderer _spriteRenderer;
-        private static MoveCommandFactory _dragAndDropCommandFactory;
         private PieceMono _piece;
+        private SpriteRenderer _spriteRenderer;
 
         private void Start()
         {
@@ -22,11 +21,13 @@ namespace View.UserInput
             _piece = gameObject.GetComponent<PieceMono>();
         }
 
-        [Inject]
-        public void Construct(ICommandInvoker commandInvoker, MoveCommandFactory dragAndDropCommandFactory)
+        private void Update()
         {
-            _commandInvoker = commandInvoker;
-            _dragAndDropCommandFactory = dragAndDropCommandFactory;
+            if (_isDragging)
+            {
+                Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
+                transform.Translate(mousePosition);
+            }
         }
 
         private void OnMouseDown()
@@ -49,23 +50,24 @@ namespace View.UserInput
             _isDragging = false;
         }
 
-        private void Update()
+        [Inject]
+        public void Construct(ICommandInvoker commandInvoker, MoveCommandFactory dragAndDropCommandFactory)
         {
-            if (_isDragging)
-            {
-                Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
-                transform.Translate(mousePosition);
-            }
+            _commandInvoker = commandInvoker;
+            _dragAndDropCommandFactory = dragAndDropCommandFactory;
         }
 
-        private IBoardPosition GetNearestBoardPosition(Vector2 position) =>
-            new BoardPosition(ConvertAxisToNearestBoardIndex(position.x), ConvertAxisToNearestBoardIndex(position.y));
+        private BoardPosition GetNearestBoardPosition(Vector2 position)
+        {
+            return new BoardPosition(ConvertAxisToNearestBoardIndex(position.x),
+                ConvertAxisToNearestBoardIndex(position.y));
+        }
 
         private int ConvertAxisToNearestBoardIndex(float axis)
         {
             if (axis > 7.5) return 7;
             if (axis < 0.5) return 0;
-            return (int)axis;
+            return (int) axis;
         }
     }
 }

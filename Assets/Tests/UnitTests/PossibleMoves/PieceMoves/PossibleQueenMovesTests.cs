@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Models.Services.Moves.PossibleMoveHelpers;
 using Models.State.Board;
-using Models.State.Interfaces;
 using Models.State.PieceState;
 using NUnit.Framework;
 
@@ -21,7 +20,7 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
             SetTestedPieceColourWith(pieceType);
 
             var queenMoveGenerator = GetPossibleMoveGenerator(pieceType);
-            var pieces = new List<(PieceType, IBoardPosition)>
+            var pieces = new List<(PieceType, BoardPosition)>
             {
                 (pieceType, RelativePositionToTestedPiece(new BoardPosition(x, y)))
             };
@@ -56,7 +55,7 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
             var queenMoveGenerator = GetPossibleMoveGenerator(pieceType);
 
             var onWhiteBand = x == 7 && y == 7 || x == 0 && y == 0;
-            var pieces = new List<(PieceType, IBoardPosition)>
+            var pieces = new List<(PieceType, BoardPosition)>
             {
                 (pieceType, RelativePositionToTestedPiece(new BoardPosition(x, y))),
                 (GetOppositePieceType(pieceType), RelativePositionToTestedPiece(
@@ -72,7 +71,7 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
             var unreachablePositionsNw = GetPositionsIncludingAndPassed(new BoardPosition(3, 4), Direction.NW);
             var unreachablePositionsSe = GetPositionsIncludingAndPassed(new BoardPosition(5, 2), Direction.SE);
 
-            IList<IBoardPosition> unreachableTiles = new List<IBoardPosition>();
+            IList<BoardPosition> unreachableTiles = new List<BoardPosition>();
 
             if (onWhiteBand)
                 if (x >= 4)
@@ -84,7 +83,7 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
             else
                 unreachableTiles = unreachableTiles.Concat(unreachablePositionsNw).ToList();
 
-            var possibleMoves = new HashSet<IBoardPosition>(
+            var possibleMoves = new HashSet<BoardPosition>(
                 queenMoveGenerator.GetPossiblePieceMoves(RelativePositionToTestedPiece(new BoardPosition(x, y)),
                     board));
 
@@ -99,7 +98,7 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
         )
         {
             SetTestedPieceColourWith(pieceType);
-            var pieces = new List<(PieceType, IBoardPosition)>
+            var pieces = new List<(PieceType, BoardPosition)>
             {
                 (pieceType, RelativePositionToTestedPiece(new BoardPosition(x, y))),
                 (GetOppositePieceType(pieceType), RelativePositionToTestedPiece(new BoardPosition(x, 3))),
@@ -134,7 +133,7 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
 
             var possibleMoves =
                 queenMoveGenerator.GetPossiblePieceMoves(RelativePositionToTestedPiece(new BoardPosition(x, y)), board);
-            var reachableTiles = new HashSet<IBoardPosition>(possibleMoves);
+            var reachableTiles = new HashSet<BoardPosition>(possibleMoves);
             Assert.IsFalse(reachableTiles.Overlaps(unreachableTiles));
         }
     }

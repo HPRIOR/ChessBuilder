@@ -1,15 +1,15 @@
 ﻿using System.Collections.Generic;
 using Models.Services.Interfaces;
-using Models.State.Interfaces;
+using Models.State.Board;
 
 namespace Controllers.PieceMovers
 {
     public class MoveValidator : IMoveValidator
     {
-        public bool ValidateMove(IDictionary<IBoardPosition, HashSet<IBoardPosition>> possibleMoves,
-            IBoardPosition from, IBoardPosition destination)
+        public bool ValidateMove(IDictionary<BoardPosition, HashSet<BoardPosition>> possibleMoves,
+            BoardPosition from, BoardPosition destination)
         {
-            if (from == destination) return false;
+            if (from.Equals(destination)) return false;
             if (possibleMoves.ContainsKey(from))
                 return possibleMoves[from].Contains(destination);
             return false;

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Models.Services.Interfaces;
-using Models.State.Interfaces;
+using Models.State.Board;
 using Models.State.PieceState;
 using Zenject;
 
@@ -32,19 +32,19 @@ namespace Models.Services.Moves.PossibleMoveHelpers
         /// <param name="currentPosition"></param>
         /// <param name="boardState"></param>
         /// <returns></returns>
-        public IEnumerable<IBoardPosition> ScanIn(Direction direction, IBoardPosition currentPosition,
-            IBoardState boardState)
+        public IEnumerable<BoardPosition> ScanIn(Direction direction, BoardPosition currentPosition,
+            BoardState boardState)
         {
             var newPosition = currentPosition.Add(Move.In(direction));
             if (PieceCannotMoveTo(newPosition, boardState))
-                return new List<IBoardPosition>();
+                return new List<BoardPosition>();
             if (TileContainsOpposingPieceAt(newPosition, boardState))
-                return new List<IBoardPosition> {_positionTranslator.GetRelativePosition(newPosition)};
+                return new List<BoardPosition> {_positionTranslator.GetRelativePosition(newPosition)};
             return ScanIn(direction, newPosition, boardState)
-                .Concat(new List<IBoardPosition> {_positionTranslator.GetRelativePosition(newPosition)});
+                .Concat(new List<BoardPosition> {_positionTranslator.GetRelativePosition(newPosition)});
         }
 
-        private bool PieceCannotMoveTo(IBoardPosition boardPosition, IBoardState boardState)
+        private bool PieceCannotMoveTo(BoardPosition boardPosition, BoardState boardState)
         {
             var x = boardPosition.X;
             var y = boardPosition.Y;
@@ -52,12 +52,12 @@ namespace Models.Services.Moves.PossibleMoveHelpers
         }
 
         // TODO refactor so that position translator result is passed through instead of calculated each time
-        private bool TileContainsOpposingPieceAt(IBoardPosition boardPosition, IBoardState boardState)
+        private bool TileContainsOpposingPieceAt(BoardPosition boardPosition, BoardState boardState)
         {
             return _tileEvaluator.OpposingPieceIn(_positionTranslator.GetRelativeTileAt(boardPosition, boardState));
         }
 
-        private bool TileContainsFriendlyPieceAt(IBoardPosition boardPosition, IBoardState boardState)
+        private bool TileContainsFriendlyPieceAt(BoardPosition boardPosition, BoardState boardState)
         {
             return _tileEvaluator.FriendlyPieceIn(_positionTranslator.GetRelativeTileAt(boardPosition, boardState));
         }

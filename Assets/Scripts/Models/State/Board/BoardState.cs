@@ -1,11 +1,11 @@
-﻿using Models.Services.Interfaces;
-using Models.State.Interfaces;
+﻿using System;
+using Models.Services.Interfaces;
 
 namespace Models.State.Board
 {
-    public class BoardState : IBoardState
+    public class BoardState : ICloneable
     {
-        public BoardState(ITile[,] board)
+        public BoardState(Tile[,] board)
         {
             Board = board;
         }
@@ -15,7 +15,7 @@ namespace Models.State.Board
             Board = boardGenerator.GenerateBoard();
         }
 
-        public ITile[,] Board { get; }
+        public Tile[,] Board { get; }
 
         public object Clone()
         {

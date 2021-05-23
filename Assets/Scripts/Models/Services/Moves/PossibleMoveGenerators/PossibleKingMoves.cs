@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Models.Services.Interfaces;
 using Models.Services.Moves.PossibleMoveHelpers;
-using Models.State.Interfaces;
+using Models.State.Board;
 
 namespace Models.Services.Moves.PossibleMoveGenerators
 {
@@ -18,9 +18,9 @@ namespace Models.Services.Moves.PossibleMoveGenerators
             _tileEvaluator = tileEvaluator;
         }
 
-        public IEnumerable<IBoardPosition> GetPossiblePieceMoves(IBoardPosition originPosition, IBoardState boardState)
+        public IEnumerable<BoardPosition> GetPossiblePieceMoves(BoardPosition originPosition, BoardState boardState)
         {
-            var potentialMoves = new List<IBoardPosition>();
+            var potentialMoves = new List<BoardPosition>();
             var relativePosition = _positionTranslator.GetRelativePosition(originPosition);
 
             Enum.GetValues(typeof(Direction)).Cast<Direction>().ToList().ForEach(direction =>

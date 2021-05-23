@@ -4,7 +4,6 @@ using System.Linq;
 using Models.Services.Interfaces;
 using Models.Services.Moves.PossibleMoveHelpers;
 using Models.State.Board;
-using Models.State.Interfaces;
 using Models.State.PieceState;
 using NUnit.Framework;
 using Tests.UnitTests.PossibleMoves.PossibleMoves.Utils;
@@ -41,8 +40,8 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
             _boardGenerator = Container.Resolve<IBoardGenerator>();
         }
 
-        protected IBoardState SetUpBoardWith(
-            IEnumerable<(PieceType piece, IBoardPosition boardPosition)> piecesAtPositions)
+        protected BoardState SetUpBoardWith(
+            IEnumerable<(PieceType piece, BoardPosition boardPosition)> piecesAtPositions)
         {
             var boardState = new BoardState(_boardGenerator.GenerateBoard());
             var board = boardState.Board;
@@ -70,13 +69,13 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
         /// </summary>
         /// <param name="boardPosition"></param>
         /// <returns></returns>
-        protected IBoardPosition RelativePositionToTestedPiece(IBoardPosition boardPosition)
+        protected BoardPosition RelativePositionToTestedPiece(BoardPosition boardPosition)
         {
             return TestedPieceColour == PieceColour.White ? boardPosition : GetMirroredBoardPosition(boardPosition);
         }
 
 
-        private IBoardPosition GetMirroredBoardPosition(IBoardPosition boardPosition)
+        private BoardPosition GetMirroredBoardPosition(BoardPosition boardPosition)
         {
             return new BoardPosition(Math.Abs(boardPosition.X - 7), Math.Abs(boardPosition.Y - 7));
         }
@@ -92,15 +91,15 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
             return pieceType.ToString().StartsWith("White") ? PieceColour.White : PieceColour.Black;
         }
 
-        protected IEnumerable<IBoardPosition> GetPositionsIncludingAndPassed(IBoardPosition boardPosition,
+        protected IEnumerable<BoardPosition> GetPositionsIncludingAndPassed(BoardPosition boardPosition,
             Direction direction)
         {
             if (boardPosition.X > 7 || boardPosition.X < 0 || boardPosition.Y > 7 || boardPosition.Y < 0)
-                return new List<IBoardPosition>();
+                return new List<BoardPosition>();
             var nextBoardPosition =
                 new BoardPosition(boardPosition.X + Move.In(direction).X, boardPosition.Y + Move.In(direction).Y);
             return GetPositionsIncludingAndPassed(nextBoardPosition, direction)
-                .Concat(new List<IBoardPosition> {boardPosition});
+                .Concat(new List<BoardPosition> {boardPosition});
         }
     }
 }

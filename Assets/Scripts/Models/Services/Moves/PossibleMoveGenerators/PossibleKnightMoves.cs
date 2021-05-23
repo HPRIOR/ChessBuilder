@@ -2,7 +2,6 @@
 using System.Linq;
 using Models.Services.Interfaces;
 using Models.State.Board;
-using Models.State.Interfaces;
 
 namespace Models.Services.Moves.PossibleMoveGenerators
 {
@@ -17,7 +16,7 @@ namespace Models.Services.Moves.PossibleMoveGenerators
             _tileEvaluator = tileEvaluator;
         }
 
-        public IEnumerable<IBoardPosition> GetPossiblePieceMoves(IBoardPosition originPosition, IBoardState boardState)
+        public IEnumerable<BoardPosition> GetPossiblePieceMoves(BoardPosition originPosition, BoardState boardState)
         {
             bool CoordInBounds((int X, int Y) coord)
             {
@@ -39,7 +38,7 @@ namespace Models.Services.Moves.PossibleMoveGenerators
             return moveCoords;
         }
 
-        private static IEnumerable<(int X, int Y)> GetMoveCoords(IBoardPosition boardPosition)
+        private static IEnumerable<(int X, int Y)> GetMoveCoords(BoardPosition boardPosition)
         {
             var x = boardPosition.X;
             var y = boardPosition.Y;

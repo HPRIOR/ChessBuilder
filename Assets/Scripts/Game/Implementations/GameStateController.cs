@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Game.Interfaces;
 using Models.Services.Interfaces;
-using Models.State.Interfaces;
+using Models.State.Board;
 using Models.State.PieceState;
 
 namespace Game.Implementations
@@ -16,15 +16,15 @@ namespace Game.Implementations
             _allPossibleMovesGenerator = allPossibleMovesGenerator;
         }
 
-        public IBoardState CurrentBoardState { get; private set; }
+        public BoardState CurrentBoardState { get; private set; }
 
-        public IDictionary<IBoardPosition, HashSet<IBoardPosition>> PossiblePieceMoves { get; private set; }
+        public IDictionary<BoardPosition, HashSet<BoardPosition>> PossiblePieceMoves { get; private set; }
 
         public PieceColour Turn { get; private set; } = PieceColour.White;
 
         // provide an overload which passes in the changed tile. This can be used to check for mate when passed
         // to generate possible piece moves
-        public void UpdateGameState(IBoardState newState)
+        public void UpdateGameState(BoardState newState)
         {
             var previousState = CurrentBoardState;
             CurrentBoardState = newState;
@@ -35,7 +35,7 @@ namespace Game.Implementations
             GameStateChangeEvent?.Invoke(previousState, CurrentBoardState);
         }
 
-        public event Action<IBoardState, IBoardState> GameStateChangeEvent;
+        public event Action<BoardState, BoardState> GameStateChangeEvent;
 
         private PieceColour ChangeTurn()
         {

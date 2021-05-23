@@ -27,7 +27,7 @@ namespace Models.Services.Moves.PossibleMoveGenerators
             bool FriendlyPieceNotInTile((int X, int Y) coord)
             {
                 return !_tileEvaluator.FriendlyPieceIn(
-                    boardState.GetTileAt(_positionTranslator.GetRelativePosition(new BoardPosition(coord.X, coord.Y))));
+                    _positionTranslator.GetRelativeTileAt(new BoardPosition(coord.X, coord.Y), boardState));
             }
 
             var moveCoords = GetMoveCoords(_positionTranslator.GetRelativePosition(originPosition))

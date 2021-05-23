@@ -52,13 +52,6 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
         }
 
 
-        protected PieceType GetPieceTypeAtPosition(int x, int y, IBoardState inBoardState)
-        {
-            return TestedPieceColour == PieceColour.White
-                ? inBoardState.GetTileAt(new BoardPosition(x, y)).CurrentPiece.Type
-                : inBoardState.GetMirroredTileAt(new BoardPosition(x, y)).CurrentPiece.Type;
-        }
-
         protected IPieceMoveGenerator GetPossibleMoveGenerator(PieceType pieceType)
         {
             return _possibleMoveFactory.GetPossibleMoveGenerator(pieceType);

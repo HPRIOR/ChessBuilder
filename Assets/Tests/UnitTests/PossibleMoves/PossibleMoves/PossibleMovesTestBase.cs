@@ -34,7 +34,7 @@ namespace Tests.UnitTests.PossibleMoves.PossibleMoves
             _pieceSpawner = null;
         }
 
-        public void ResolveContainer()
+        private void ResolveContainer()
         {
             _pieceSpawner = Container.Resolve<IPieceSpawner>();
             _possibleMoveFactory = Container.Resolve<IPossibleMoveFactory>();

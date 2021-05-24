@@ -42,6 +42,9 @@ namespace Models.Services.Moves.Factories
         /// <returns></returns>
         public IPieceMoveGenerator GetPossibleMoveGenerator(PieceType pieceType)
         {
+            // TODO refactor each possible move generator to use zenject factories 
+            //      GetPossibleMoveGenerator takes in Piece instead of piece type so that colour can be used 
+            //      and passed to factory
             return pieceType switch
             {
                 var pawn when pawn == PieceType.BlackPawn || pawn == PieceType.WhitePawn => new PossiblePawnMoves(

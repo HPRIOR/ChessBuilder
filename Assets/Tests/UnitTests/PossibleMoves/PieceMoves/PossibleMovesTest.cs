@@ -37,7 +37,7 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
         public void WithNoPieces_NoPossibleMoves()
         {
             var board = new BoardState(_boardGenerator);
-            var possibleMoves = _allPossibleMovesGenerator.GetPossibleMoves(board, PieceColour.White);
+            var possibleMoves = _allPossibleMovesGenerator.GetPossibleMoves(board, PieceColour.White, new BoardPosition(0, 4));
             Assert.AreEqual(0, possibleMoves.Count());
         }
     }

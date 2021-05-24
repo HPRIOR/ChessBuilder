@@ -11,6 +11,8 @@ namespace Models.Services.Moves.PossibleMoveGenerators
         private readonly IBoardScanner _boardScanner;
         private readonly IPositionTranslator _positionTranslator;
 
+        // this could take in factories to mitigate the need for passing boardScanner or position Translator
+        // the colour would be passed in instead and the relevant scanner retrieved 
         public PossibleBishopMoves(IBoardScanner boardScanner, IPositionTranslator positionTranslator)
         {
             _boardScanner = boardScanner;

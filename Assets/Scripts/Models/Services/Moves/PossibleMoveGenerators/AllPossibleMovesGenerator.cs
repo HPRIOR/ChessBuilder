@@ -15,16 +15,11 @@ namespace Models.Services.Moves.PossibleMoveGenerators
         {
             _possibleMoveFactory = possibleMoveFactory;
         }
+        
 
-        // the logic is wrong here
-        // Moves players possible moves are evaluated for whether they contain a checking move, however 
-        // it should be checked that the opposite players moves contain a checking move
-        // all moves need to be evaluated - if the opposing moves contain a check, then this would incur the IntersectOnCheck method
-        // a better solution may be to flag a variable in the board state if one player moves the board into a checked state
-        // this could be started as state in this class: IEnumerable<IBoardPosition> checkMoves
-        // GeneratePossibleMove needs to take in the the moved piece of the previous turn so that this can be checked 
+       
         public IDictionary<BoardPosition, HashSet<BoardPosition>> GetPossibleMoves(BoardState boardState,
-            PieceColour turn)
+            PieceColour turn, BoardPosition previousMove)
         {
             var result = new Dictionary<BoardPosition, HashSet<BoardPosition>>();
             var board = boardState.Board;
@@ -45,6 +40,12 @@ namespace Models.Services.Moves.PossibleMoveGenerators
             return result;
         }
 
+        IEnumerable<BoardPosition> GetCheckedBoardPositions(BoardState boardState, BoardPosition previousMove)
+        {
+            var possibleMoves =
+                _possibleMoveFactory.GetPossibleMoveGenerator(boardState.Board[previousMove.X, previousMove.Y].CurrentPiece.Type);
+            return new List<BoardPosition>();
+        }
 
         private IDictionary<BoardPosition, HashSet<BoardPosition>> IntersectOnCheck(
             IDictionary<BoardPosition, HashSet<BoardPosition>> possibleMoves,

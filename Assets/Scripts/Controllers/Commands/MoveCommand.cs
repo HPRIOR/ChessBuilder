@@ -36,7 +36,7 @@ namespace Controllers.Commands
         public void Execute()
         {
             var newBoardState = _pieceMover.GenerateNewBoardState(_gameState.CurrentBoardState, _from, _destination);
-            _gameState.UpdateGameState(newBoardState);
+            _gameState.UpdateGameState(newBoardState, _destination);
         }
 
         public bool IsValid()
@@ -46,13 +46,14 @@ namespace Controllers.Commands
                 return true;
 
             // return to original state
-            _gameState.UpdateGameState(_stateTransitionedFrom);
+            // this will update turn incorrectly
+            _gameState.UpdateGameState(_stateTransitionedFrom, _from);
             return false;
         }
 
         public void Undo()
         {
-            _gameState.UpdateGameState(_stateTransitionedFrom);
+            _gameState.UpdateGameState(_stateTransitionedFrom, _from);
         }
 
         public class Factory : PlaceholderFactory<BoardPosition, BoardPosition, MoveCommand>

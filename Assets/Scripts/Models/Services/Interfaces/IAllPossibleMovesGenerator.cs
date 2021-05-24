@@ -6,6 +6,7 @@ namespace Models.Services.Interfaces
 {
     public interface IAllPossibleMovesGenerator
     {
-        IDictionary<BoardPosition, HashSet<BoardPosition>> GetPossibleMoves(BoardState boardState, PieceColour turn);
+        IDictionary<BoardPosition, HashSet<BoardPosition>> GetPossibleMoves(BoardState boardState, PieceColour turn,
+            BoardPosition lastMove);
     }
 }

@@ -2,6 +2,7 @@
 using Bindings.Installers.GameInstallers;
 using Bindings.Installers.InputInstallers;
 using Bindings.Installers.PieceInstallers;
+using Bindings.Installers.PossibleMoveInstallers;
 using Zenject;
 
 namespace Bindings.Utils
@@ -21,6 +22,12 @@ namespace Bindings.Utils
             PieceMoverInstaller.Install(container);
             PieceSpawnerInstaller.Install(container);
             AllPossibleMovesGeneratorInstaller.Install(container);
+            PossibleBishopMovesInstaller.Install(container);
+            PossibleKingMovesInstaller.Install(container);
+            PossibleKnightMovesInstaller.Install(container);
+            PossiblePawnMovesInstaller.Install(container);
+            PossibleQueenMovesInstaller.Install(container);
+            PossibleRookMovesInstaller.Install(container);
             PossibleMoveFactoryInstaller.Install(container);
         }
     }

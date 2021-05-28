@@ -1,9 +1,7 @@
-﻿using Models.State.PieceState;
-
-namespace Models.Services.Interfaces
+﻿namespace Models.Services.Interfaces
 {
     public interface IPossibleMoveFactory
     {
-        IPieceMoveGenerator GetPossibleMoveGenerator(PieceType pieceType);
+        IPieceMoveGenerator GetPossibleMoveGenerator(State.PieceState.Piece piece);
     }
 }

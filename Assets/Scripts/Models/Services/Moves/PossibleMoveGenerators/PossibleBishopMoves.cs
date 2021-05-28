@@ -3,6 +3,8 @@ using System.Linq;
 using Models.Services.Interfaces;
 using Models.Services.Moves.PossibleMoveHelpers;
 using Models.State.Board;
+using Models.State.PieceState;
+using Zenject;
 
 namespace Models.Services.Moves.PossibleMoveGenerators
 {
@@ -11,10 +13,11 @@ namespace Models.Services.Moves.PossibleMoveGenerators
         private readonly IBoardScanner _boardScanner;
         private readonly IPositionTranslator _positionTranslator;
 
-        public PossibleBishopMoves(IBoardScanner boardScanner, IPositionTranslator positionTranslator)
+        public PossibleBishopMoves(PieceColour pieceColour, IBoardScannerFactory boardScannerFactory,
+            IPositionTranslatorFactory positionTranslatorFactory)
         {
-            _boardScanner = boardScanner;
-            _positionTranslator = positionTranslator;
+            _boardScanner = boardScannerFactory.Create(pieceColour);
+            _positionTranslator = positionTranslatorFactory.Create(pieceColour);
         }
 
         public IEnumerable<BoardPosition> GetPossiblePieceMoves(BoardPosition originPosition, BoardState boardState)
@@ -24,6 +27,10 @@ namespace Models.Services.Moves.PossibleMoveGenerators
 
             return possibleDirections.SelectMany(direction =>
                 _boardScanner.ScanIn(direction, relativePosition, boardState));
+        }
+
+        public class Factory : PlaceholderFactory<PieceColour, PossibleBishopMoves>
+        {
         }
     }
 }

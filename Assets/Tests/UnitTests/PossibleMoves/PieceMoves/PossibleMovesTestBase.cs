@@ -6,7 +6,7 @@ using Models.Services.Moves.PossibleMoveHelpers;
 using Models.State.Board;
 using Models.State.PieceState;
 using NUnit.Framework;
-using Tests.UnitTests.PossibleMoves.PossibleMoves.Utils;
+using Tests.UnitTests.PossibleMoves.PieceMoves.Utils;
 using Zenject;
 
 namespace Tests.UnitTests.PossibleMoves.PieceMoves
@@ -53,7 +53,7 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
 
         protected IPieceMoveGenerator GetPossibleMoveGenerator(PieceType pieceType)
         {
-            return _possibleMoveFactory.GetPossibleMoveGenerator(pieceType);
+            return _possibleMoveFactory.GetPossibleMoveGenerator(new Piece(pieceType));
         }
 
         protected PieceType GetOppositePieceType(PieceType pieceType)

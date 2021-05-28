@@ -55,7 +55,10 @@ namespace Tests.UnitTests.BoardTests
             var boardState = GetBoardState();
 
             Assert.DoesNotThrow(() =>
-                Debug.Log(boardState.Board[7, 7].CurrentPiece)
+                {
+                    Debug.Log(boardState.Board[7, 7].CurrentPiece);
+                    Debug.ClearDeveloperConsole();
+                }
             );
         }
 

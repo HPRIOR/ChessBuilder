@@ -3,6 +3,7 @@ using Models.Services.Interfaces;
 using Models.Services.Moves.PossibleMoveHelpers;
 using Models.State.Board;
 using Models.State.PieceState;
+using Zenject;
 
 namespace Models.Services.Moves.PossibleMoveGenerators
 {
@@ -11,10 +12,11 @@ namespace Models.Services.Moves.PossibleMoveGenerators
         private readonly IPositionTranslator _positionTranslator;
         private readonly ITileEvaluator _tileEvaluator;
 
-        public PossiblePawnMoves(IPositionTranslator boardPositionTranslator, ITileEvaluator tileEvaluator)
+        public PossiblePawnMoves(PieceColour pieceColour, IPositionTranslatorFactory positionTranslatorFactory,
+            ITileEvaluatorFactory tileEvaluatorFactory)
         {
-            _positionTranslator = boardPositionTranslator;
-            _tileEvaluator = tileEvaluator;
+            _positionTranslator = positionTranslatorFactory.Create(pieceColour);
+            _tileEvaluator = tileEvaluatorFactory.Create(pieceColour);
         }
 
         public IEnumerable<BoardPosition> GetPossiblePieceMoves(BoardPosition originPosition, BoardState boardState)
@@ -52,6 +54,10 @@ namespace Models.Services.Moves.PossibleMoveGenerators
             }
 
             return potentialMoves;
+        }
+
+        public class Factory : PlaceholderFactory<PieceColour, PossiblePawnMoves>
+        {
         }
     }
 }

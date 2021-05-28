@@ -2,6 +2,8 @@
 using System.Linq;
 using Models.Services.Interfaces;
 using Models.State.Board;
+using Models.State.PieceState;
+using Zenject;
 
 namespace Models.Services.Moves.PossibleMoveGenerators
 {
@@ -10,10 +12,11 @@ namespace Models.Services.Moves.PossibleMoveGenerators
         private readonly IPositionTranslator _positionTranslator;
         private readonly ITileEvaluator _tileEvaluator;
 
-        public PossibleKnightMoves(IPositionTranslator positionTranslator, ITileEvaluator tileEvaluator)
+        public PossibleKnightMoves(PieceColour pieceColour, IPositionTranslatorFactory positionTranslatorFactory,
+            ITileEvaluatorFactory tileEvaluatorFactory)
         {
-            _positionTranslator = positionTranslator;
-            _tileEvaluator = tileEvaluator;
+            _positionTranslator = positionTranslatorFactory.Create(pieceColour);
+            _tileEvaluator = tileEvaluatorFactory.Create(pieceColour);
         }
 
         public IEnumerable<BoardPosition> GetPossiblePieceMoves(BoardPosition originPosition, BoardState boardState)
@@ -60,6 +63,10 @@ namespace Models.Services.Moves.PossibleMoveGenerators
                 );
 
             return lateralMoves.Concat(verticalMoves);
+        }
+
+        public class Factory : PlaceholderFactory<PieceColour, PossibleKnightMoves>
+        {
         }
     }
 }

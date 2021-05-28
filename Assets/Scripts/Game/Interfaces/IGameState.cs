@@ -10,7 +10,6 @@ namespace Game.Interfaces
         BoardState CurrentBoardState { get; }
         IDictionary<BoardPosition, HashSet<BoardPosition>> PossiblePieceMoves { get; }
         void UpdateBoardState(BoardState newState, BoardPosition previousMove);
-
         void RetainBoardState();
     }
 }

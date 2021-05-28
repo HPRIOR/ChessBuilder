@@ -26,7 +26,7 @@ namespace Models.Services.Moves.PossibleMoveGenerators
             foreach (var tile in board)
             {
                 var currentPiece = tile.CurrentPiece;
-                if (currentPiece.Type != PieceType.NullPiece /*&& currentPiece.Colour == turn*/)
+                if (currentPiece.Type != PieceType.NullPiece && currentPiece.Colour == turn)
                 {
                     var boardPos = tile.BoardPosition;
                     var possibleMoves = _possibleMoveFactory.GetPossibleMoveGenerator(currentPiece)

@@ -4,6 +4,8 @@ using System.Linq;
 using Models.Services.Interfaces;
 using Models.Services.Moves.PossibleMoveHelpers;
 using Models.State.Board;
+using Models.State.PieceState;
+using Zenject;
 
 namespace Models.Services.Moves.PossibleMoveGenerators
 {
@@ -12,10 +14,11 @@ namespace Models.Services.Moves.PossibleMoveGenerators
         private readonly IBoardScanner _boardScanner;
         private readonly IPositionTranslator _positionTranslator;
 
-        public PossibleQueenMoves(IPositionTranslator positionTranslator, IBoardScanner boardScanner)
+        public PossibleQueenMoves(PieceColour pieceColour, IPositionTranslatorFactory positionTranslatorFactory,
+            IBoardScannerFactory boardScannerFactory)
         {
-            _positionTranslator = positionTranslator;
-            _boardScanner = boardScanner;
+            _positionTranslator = positionTranslatorFactory.Create(pieceColour);
+            _boardScanner = boardScannerFactory.Create(pieceColour);
         }
 
         public IEnumerable<BoardPosition> GetPossiblePieceMoves(BoardPosition originPosition, BoardState boardState)
@@ -27,6 +30,10 @@ namespace Models.Services.Moves.PossibleMoveGenerators
                 .Cast<Direction>()
                 .ToList()
                 .SelectMany(direction => _boardScanner.ScanIn(direction, relativePosition, boardState));
+        }
+
+        public class Factory : PlaceholderFactory<PieceColour, PossibleQueenMoves>
+        {
         }
     }
 }

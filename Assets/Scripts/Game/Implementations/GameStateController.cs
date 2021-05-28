@@ -35,6 +35,11 @@ namespace Game.Implementations
             GameStateChangeEvent?.Invoke(previousState, CurrentBoardState);
         }
 
+        public void RetainBoardState()
+        {
+            GameStateChangeEvent?.Invoke(CurrentBoardState, CurrentBoardState);
+        }
+
         public event Action<BoardState, BoardState> GameStateChangeEvent;
 
         private PieceColour ChangeTurn()

@@ -36,10 +36,72 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
         [Test]
         public void WithNoPieces_NoPossibleMoves()
         {
-            var board = new BoardState(_boardGenerator);
+            var boardState = new BoardState(_boardGenerator);
             var possibleMoves =
-                _allPossibleMovesGenerator.GetPossibleMoves(board, PieceColour.White, new BoardPosition(0, 4));
-            Assert.AreEqual(0, possibleMoves.Count());
+                _allPossibleMovesGenerator.GetPossibleMoves(boardState, PieceColour.White, new BoardPosition(0, 4));
+            Assert.AreEqual(0, possibleMoves.SelectMany(x => x.Value).Count());
+        }
+
+        [Test]
+        public void OnWhiteTurn_BlackCannotMove(
+            [Values(PieceType.BlackBishop, PieceType.BlackKing, PieceType.BlackKnight, PieceType.BlackPawn,
+                PieceType.BlackQueen, PieceType.BlackRook)]
+            PieceType pieceType
+        )
+        {
+            {
+                var board = _boardGenerator.GenerateBoard();
+                board[1, 1].CurrentPiece = new Piece(pieceType);
+                var boardState = new BoardState(board);
+                var possibleMoves =
+                    _allPossibleMovesGenerator.GetPossibleMoves(boardState, PieceColour.White, new BoardPosition(0, 4));
+                Assert.AreEqual(0, possibleMoves.SelectMany(x => x.Value).Count());
+            }
+        }
+
+        [Test]
+        public void OnBlackTurn_BlackCanMove(
+            [Values(PieceType.BlackBishop, PieceType.BlackKing, PieceType.BlackKnight, PieceType.BlackPawn,
+                PieceType.BlackQueen, PieceType.BlackRook)]
+            PieceType pieceType
+        )
+        {
+            var board = _boardGenerator.GenerateBoard();
+            board[1, 1].CurrentPiece = new Piece(pieceType);
+            var boardState = new BoardState(board);
+            var possibleMoves =
+                _allPossibleMovesGenerator.GetPossibleMoves(boardState, PieceColour.Black, new BoardPosition(0, 4));
+            Assert.Greater(possibleMoves.SelectMany(x => x.Value).Count(), 0);
+        }
+
+        [Test]
+        public void OnWhiteTurn_WhiteCanMove(
+            [Values(PieceType.WhiteKnight, PieceType.WhiteKing, PieceType.WhiteBishop, PieceType.WhiteQueen,
+                PieceType.WhitePawn, PieceType.WhiteRook)]
+            PieceType pieceType
+        )
+        {
+            var board = _boardGenerator.GenerateBoard();
+            board[1, 1].CurrentPiece = new Piece(pieceType);
+            var boardState = new BoardState(board);
+            var possibleMoves =
+                _allPossibleMovesGenerator.GetPossibleMoves(boardState, PieceColour.White, new BoardPosition(0, 4));
+            Assert.Greater(possibleMoves.SelectMany(x => x.Value).Count(), 0);
+        }
+
+        [Test]
+        public void OnBlackTurn_WhiteCannotMove(
+            [Values(PieceType.WhiteKnight, PieceType.WhiteKing, PieceType.WhiteBishop, PieceType.WhiteQueen,
+                PieceType.WhitePawn, PieceType.WhiteRook)]
+            PieceType pieceType
+        )
+        {
+            var board = _boardGenerator.GenerateBoard();
+            board[1, 1].CurrentPiece = new Piece(pieceType);
+            var boardState = new BoardState(board);
+            var possibleMoves =
+                _allPossibleMovesGenerator.GetPossibleMoves(boardState, PieceColour.Black, new BoardPosition(0, 4));
+            Assert.AreEqual(0, possibleMoves.SelectMany(x => x.Value).Count());
         }
     }
 }

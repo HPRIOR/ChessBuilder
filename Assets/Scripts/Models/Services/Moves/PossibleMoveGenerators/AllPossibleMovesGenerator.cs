@@ -15,9 +15,8 @@ namespace Models.Services.Moves.PossibleMoveGenerators
         {
             _possibleMoveFactory = possibleMoveFactory;
         }
-        
 
-       
+
         public IDictionary<BoardPosition, HashSet<BoardPosition>> GetPossibleMoves(BoardState boardState,
             PieceColour turn, BoardPosition previousMove)
         {
@@ -30,7 +29,7 @@ namespace Models.Services.Moves.PossibleMoveGenerators
                 if (currentPiece.Type != PieceType.NullPiece /*&& currentPiece.Colour == turn*/)
                 {
                     var boardPos = tile.BoardPosition;
-                    var possibleMoves = _possibleMoveFactory.GetPossibleMoveGenerator(currentPiece.Type)
+                    var possibleMoves = _possibleMoveFactory.GetPossibleMoveGenerator(currentPiece)
                         .GetPossiblePieceMoves(boardPos, boardState);
 
                     result.Add(boardPos, new HashSet<BoardPosition>(possibleMoves));
@@ -40,10 +39,11 @@ namespace Models.Services.Moves.PossibleMoveGenerators
             return result;
         }
 
-        IEnumerable<BoardPosition> GetCheckedBoardPositions(BoardState boardState, BoardPosition previousMove)
+        private IEnumerable<BoardPosition> GetCheckedBoardPositions(BoardState boardState, BoardPosition previousMove)
         {
             var possibleMoves =
-                _possibleMoveFactory.GetPossibleMoveGenerator(boardState.Board[previousMove.X, previousMove.Y].CurrentPiece.Type);
+                _possibleMoveFactory.GetPossibleMoveGenerator(boardState.Board[previousMove.X, previousMove.Y]
+                    .CurrentPiece);
             return new List<BoardPosition>();
         }
 

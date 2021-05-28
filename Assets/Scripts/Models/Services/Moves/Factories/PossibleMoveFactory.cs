@@ -40,7 +40,7 @@ namespace Models.Services.Moves.Factories
         /// </remarks>
         /// <param name="pieceType"></param>
         /// <returns></returns>
-        public IPieceMoveGenerator GetPossibleMoveGenerator(PieceType pieceType)
+        public IPieceMoveGenerator GetPossibleMoveGenerator(State.PieceState.Piece piece)
         {
             // TODO refactor each possible move generator to use zenject factories 
             //      GetPossibleMoveGenerator takes in Piece instead of piece type so that colour can be used 
@@ -48,39 +48,32 @@ namespace Models.Services.Moves.Factories
             //      Factories of each possible move generator made responsible for instantiating auxiliary class
             //      All possible moves then instantiates all the relevant move generators in once go and calls their methods 
             //      when relevant. These should not be generated each move, but persist throughout the program.
-            return pieceType switch
+            return piece.Type switch
             {
                 var pawn when pawn == PieceType.BlackPawn || pawn == PieceType.WhitePawn => new PossiblePawnMoves(
-                    GetPositionTranslatorWith(PieceColourFrom(pieceType)),
-                    GetBoardEvalWith(PieceColourFrom(pieceType))),
+                    GetPositionTranslatorWith(piece.Colour),
+                    GetBoardEvalWith(piece.Colour)),
                 var bishop when bishop == PieceType.BlackBishop || bishop == PieceType.WhiteBishop => new
                     PossibleBishopMoves(
-                        GetBoardScannerWith(PieceColourFrom(pieceType)),
-                        GetPositionTranslatorWith(PieceColourFrom(pieceType))),
+                        GetBoardScannerWith(piece.Colour),
+                        GetPositionTranslatorWith(piece.Colour)),
                 var knight when knight == PieceType.BlackKnight || knight == PieceType.WhiteKnight => new
                     PossibleKnightMoves(
-                        GetPositionTranslatorWith(PieceColourFrom(pieceType)),
-                        GetBoardEvalWith(PieceColourFrom(pieceType))
+                        GetPositionTranslatorWith(piece.Colour),
+                        GetBoardEvalWith(piece.Colour)
                     ),
                 var rook when rook == PieceType.BlackRook || rook == PieceType.WhiteRook => new PossibleRookMoves(
-                    GetBoardScannerWith(PieceColourFrom(pieceType)),
-                    GetPositionTranslatorWith(PieceColourFrom(pieceType))
+                    GetBoardScannerWith(piece.Colour),
+                    GetPositionTranslatorWith(piece.Colour)
                 ),
                 var king when king == PieceType.BlackKing || king == PieceType.WhiteKing => new PossibleKingMoves(
-                    GetPositionTranslatorWith(PieceColourFrom(pieceType)),
-                    GetBoardEvalWith(PieceColourFrom(pieceType))),
+                    GetPositionTranslatorWith(piece.Colour),
+                    GetBoardEvalWith(piece.Colour)),
                 var queen when queen == PieceType.BlackQueen || queen == PieceType.WhiteQueen => new PossibleQueenMoves(
-                    GetPositionTranslatorWith(PieceColourFrom(pieceType)),
-                    GetBoardScannerWith(PieceColourFrom(pieceType))),
+                    GetPositionTranslatorWith(piece.Colour),
+                    GetBoardScannerWith(piece.Colour)),
                 _ => new NullPossibleMoveGenerator()
             };
-        }
-
-        private static PieceColour PieceColourFrom(PieceType pieceType)
-        {
-            return pieceType.ToString().StartsWith("White")
-                ? PieceColour.White
-                : PieceColour.Black;
         }
 
         private IBoardScanner GetBoardScannerWith(PieceColour pieceColour)

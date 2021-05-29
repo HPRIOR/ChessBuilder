@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Models.Services.Interfaces;
 using Models.Services.Moves.PossibleMoveHelpers;
 using Models.State.Board;
@@ -27,6 +28,7 @@ namespace Models.Services.Moves.PossibleMoveGenerators
                     (Dictionary<BoardPosition, HashSet<BoardPosition>>) checkedState.PossibleNonKingMovesWhenInCheck(
                         turnMoves);
 
+            turnMoves = IntersectKingMovesWithNonTurnMoves(nonTurnMoves, turnMoves);
             return turnMoves;
         }
 
@@ -63,6 +65,19 @@ namespace Models.Services.Moves.PossibleMoveGenerators
             }
 
             return (turnMoves, nonTurnMoves);
+        }
+
+        private IDictionary<BoardPosition, HashSet<BoardPosition>> IntersectKingMovesWithNonTurnMoves(
+            IDictionary<BoardPosition, HashSet<BoardPosition>> nonTurnMoves,
+            IDictionary<BoardPosition, HashSet<BoardPosition>> turnMoves)
+        {
+            foreach (var keyVal in nonTurnMoves)
+            {
+                var kingMoves = turnMoves[_kingPosition];
+                turnMoves[_kingPosition] = new HashSet<BoardPosition>(kingMoves.Except(keyVal.Value));
+            }
+
+            return turnMoves;
         }
     }
 }

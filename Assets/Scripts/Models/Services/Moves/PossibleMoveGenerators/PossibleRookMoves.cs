@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Models.Services.Interfaces;
+using Models.Services.Moves.Factories;
 using Models.Services.Moves.PossibleMoveHelpers;
 using Models.State.Board;
 using Models.State.PieceState;
@@ -16,7 +17,7 @@ namespace Models.Services.Moves.PossibleMoveGenerators
         public PossibleRookMoves(PieceColour pieceColour, IBoardScannerFactory boardScannerFactory,
             IPositionTranslatorFactory positionTranslatorFactory)
         {
-            _boardScanner = boardScannerFactory.Create(pieceColour);
+            _boardScanner = boardScannerFactory.Create(pieceColour, ScannerType.Normal);
             _positionTranslator = positionTranslatorFactory.Create(pieceColour);
         }
 

@@ -10,7 +10,7 @@ namespace Models.Services.Moves.PossibleMoveGenerators
     public class AllPossibleMovesGenerator : IAllPossibleMovesGenerator
     {
         private readonly IPossibleMoveFactory _possibleMoveFactory;
-        private BoardPosition _kingPosition;
+        private BoardPosition _kingPosition = new BoardPosition(8, 8);
 
         public AllPossibleMovesGenerator(IPossibleMoveFactory possibleMoveFactory)
         {
@@ -28,7 +28,8 @@ namespace Models.Services.Moves.PossibleMoveGenerators
                     (Dictionary<BoardPosition, HashSet<BoardPosition>>) checkedState.PossibleNonKingMovesWhenInCheck(
                         turnMoves);
 
-            turnMoves = IntersectKingMovesWithNonTurnMoves(nonTurnMoves, turnMoves);
+            if (!_kingPosition.Equals(new BoardPosition(8, 8)))
+                turnMoves = IntersectKingMovesWithNonTurnMoves(nonTurnMoves, turnMoves);
             return turnMoves;
         }
 

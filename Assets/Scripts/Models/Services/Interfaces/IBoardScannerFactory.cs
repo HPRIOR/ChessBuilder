@@ -1,10 +1,9 @@
-﻿using Models.Services.Moves.Factories;
-using Models.State.PieceState;
+﻿using Models.State.PieceState;
 
 namespace Models.Services.Interfaces
 {
     public interface IBoardScannerFactory
     {
-        IBoardScanner Create(PieceColour pieceColour, ScannerType scannerType);
+        IBoardScanner Create(PieceColour pieceColour);
     }
 }

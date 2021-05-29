@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using Models.Services.Interfaces;
-using Models.Services.Moves.Factories;
 using Models.Services.Moves.PossibleMoveHelpers;
 using Models.State.Board;
 using Models.State.PieceState;
@@ -19,7 +18,7 @@ namespace Models.Services.Moves.PossibleMoveGenerators
             IBoardScannerFactory boardScannerFactory)
         {
             _positionTranslator = positionTranslatorFactory.Create(pieceColour);
-            _boardScanner = boardScannerFactory.Create(pieceColour, ScannerType.Normal);
+            _boardScanner = boardScannerFactory.Create(pieceColour);
         }
 
         public IEnumerable<BoardPosition> GetPossiblePieceMoves(BoardPosition originPosition, BoardState boardState)

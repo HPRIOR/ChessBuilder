@@ -13,7 +13,6 @@ namespace Bindings.Installers.PieceInstallers
             Container.Bind<ITileEvaluator>().To<TileEvaluator>().AsSingle();
             Container.Bind<IBoardScannerFactory>().To<BoardScannerFactory>().AsSingle();
             Container.BindFactory<PieceColour, BoardScanner, BoardScanner.Factory>().FromNew();
-            Container.BindFactory<PieceColour, UnrestrictedBoardScanner, UnrestrictedBoardScanner.Factory>();
         }
     }
 }

@@ -36,6 +36,7 @@ namespace Models.Services.Moves.PossibleMoveGenerators
                         turnMoves, kingPosition);
 
                 // checked king moves 
+                turnMoves = checkedState.PossibleKingMovesWhenInCheck(turnMoves, nonTurnMoves, kingPosition);
             }
             else
             {

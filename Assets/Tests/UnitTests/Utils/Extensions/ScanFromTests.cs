@@ -2,9 +2,10 @@
 using System.Linq;
 using Models.Services.Moves.PossibleMoveHelpers;
 using Models.State.Board;
+using Models.Utils.ExtensionMethods.BoardPos;
 using NUnit.Framework;
 
-namespace Tests.UnitTests.PossibleMoves.Helpers
+namespace Tests.UnitTests.Utils.Extensions
 {
     [TestFixture]
     public class ScanFromTests
@@ -12,7 +13,7 @@ namespace Tests.UnitTests.PossibleMoves.Helpers
         [Test]
         public void ScanNorth()
         {
-            var result = ScanFrom.This(new BoardPosition(4, 4), Direction.N);
+            var result = new BoardPosition(4, 4).Scan(Direction.N);
             Assert.That(result.Count(), Is.EqualTo(3));
             Assert.That(result,
                 Is.EquivalentTo(new List<BoardPosition>
@@ -22,7 +23,7 @@ namespace Tests.UnitTests.PossibleMoves.Helpers
         [Test]
         public void ScanSouth()
         {
-            var result = ScanFrom.This(new BoardPosition(4, 4), Direction.S);
+            var result = new BoardPosition(4, 4).Scan(Direction.S);
             Assert.That(result.Count(), Is.EqualTo(4));
             Assert.That(result,
                 Is.EquivalentTo(new List<BoardPosition>
@@ -34,7 +35,7 @@ namespace Tests.UnitTests.PossibleMoves.Helpers
         [Test]
         public void ScanEast()
         {
-            var result = ScanFrom.This(new BoardPosition(4, 4), Direction.E);
+            var result = new BoardPosition(4, 4).Scan(Direction.E);
             Assert.That(result.Count(), Is.EqualTo(3));
             Assert.That(result,
                 Is.EquivalentTo(new List<BoardPosition>
@@ -46,7 +47,7 @@ namespace Tests.UnitTests.PossibleMoves.Helpers
         [Test]
         public void ScanWest()
         {
-            var result = ScanFrom.This(new BoardPosition(4, 4), Direction.W);
+            var result = new BoardPosition(4, 4).Scan(Direction.W);
             Assert.That(result.Count(), Is.EqualTo(4));
             Assert.That(result,
                 Is.EquivalentTo(new List<BoardPosition>
@@ -58,7 +59,7 @@ namespace Tests.UnitTests.PossibleMoves.Helpers
         [Test]
         public void ScanNorthEast()
         {
-            var result = ScanFrom.This(new BoardPosition(4, 4), Direction.NE);
+            var result = new BoardPosition(4, 4).Scan(Direction.NE);
             Assert.That(result.Count(), Is.EqualTo(3));
             Assert.That(result,
                 Is.EquivalentTo(new List<BoardPosition>
@@ -71,7 +72,7 @@ namespace Tests.UnitTests.PossibleMoves.Helpers
         [Test]
         public void ScanNorthWest()
         {
-            var result = ScanFrom.This(new BoardPosition(4, 4), Direction.NW);
+            var result = new BoardPosition(4, 4).Scan(Direction.NW);
             Assert.That(result.Count(), Is.EqualTo(3));
             Assert.That(result,
                 Is.EquivalentTo(new List<BoardPosition>
@@ -83,7 +84,7 @@ namespace Tests.UnitTests.PossibleMoves.Helpers
         [Test]
         public void ScanSouthWest()
         {
-            var result = ScanFrom.This(new BoardPosition(4, 4), Direction.SW);
+            var result = new BoardPosition(4, 4).Scan(Direction.SW);
             Assert.That(result.Count(), Is.EqualTo(4));
             Assert.That(result,
                 Is.EquivalentTo(new List<BoardPosition>
@@ -95,7 +96,7 @@ namespace Tests.UnitTests.PossibleMoves.Helpers
         [Test]
         public void ScanSouthEast()
         {
-            var result = ScanFrom.This(new BoardPosition(4, 4), Direction.SE);
+            var result = new BoardPosition(4, 4).Scan(Direction.SE);
             Assert.That(result.Count(), Is.EqualTo(3));
             Assert.That(result,
                 Is.EquivalentTo(new List<BoardPosition>
@@ -107,7 +108,7 @@ namespace Tests.UnitTests.PossibleMoves.Helpers
         [Test]
         public void ScanOnEdge()
         {
-            var result = ScanFrom.This(new BoardPosition(7, 7), Direction.NE);
+            var result = new BoardPosition(7, 7).Scan(Direction.NE);
             Assert.That(result.Count(), Is.EqualTo(0));
         }
     }

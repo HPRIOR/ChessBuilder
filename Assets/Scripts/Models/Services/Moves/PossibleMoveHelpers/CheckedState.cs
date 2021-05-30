@@ -14,6 +14,7 @@ namespace Models.Services.Moves.PossibleMoveHelpers
         private readonly IPossibleMoveFactory _possibleMoveFactory;
         private readonly BoardPosition _previousMove;
 
+        // TODO 1. inject possible move factory to this; 2. Check all non-turn moves for check; 3. Inject into PossibleMoveGen;
         public CheckedState(BoardState boardState,
             BoardPosition previousMove,
             IPossibleMoveFactory possibleMoveFactory,

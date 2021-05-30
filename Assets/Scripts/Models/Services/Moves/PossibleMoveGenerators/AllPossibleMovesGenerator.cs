@@ -27,14 +27,20 @@ namespace Models.Services.Moves.PossibleMoveGenerators
             var nonTurnMoves = _boardEval.NonTurnMoves;
             var kingPosition = _boardEval.KingPosition;
 
-            var checkedState = new CheckedState(boardState, previousMove, turn, _possibleMoveFactory);
+            var checkedState = new CheckedState(boardState, previousMove, _possibleMoveFactory, kingPosition);
             if (checkedState.IsTrue)
+            {
                 turnMoves =
                     (Dictionary<BoardPosition, HashSet<BoardPosition>>) checkedState.PossibleNonKingMovesWhenInCheck(
-                        turnMoves);
+                        turnMoves, kingPosition);
 
-            if (!kingPosition.Equals(new BoardPosition(8, 8))) // using out of bounds as null
-                turnMoves = IntersectKingMovesWithNonTurnMoves(nonTurnMoves, turnMoves, kingPosition);
+                // checked king moves 
+            }
+            else
+            {
+                if (!kingPosition.Equals(new BoardPosition(8, 8))) // using out of bounds as null
+                    turnMoves = RemoveNonTurnMovesFromAvailableKingMoves(nonTurnMoves, turnMoves, kingPosition);
+            }
 
             // find king moves
             // find pinned pieces
@@ -42,7 +48,7 @@ namespace Models.Services.Moves.PossibleMoveGenerators
         }
 
 
-        private IDictionary<BoardPosition, HashSet<BoardPosition>> IntersectKingMovesWithNonTurnMoves(
+        private IDictionary<BoardPosition, HashSet<BoardPosition>> RemoveNonTurnMovesFromAvailableKingMoves(
             IDictionary<BoardPosition, HashSet<BoardPosition>> nonTurnMoves,
             IDictionary<BoardPosition, HashSet<BoardPosition>> turnMoves,
             BoardPosition kingPosition)

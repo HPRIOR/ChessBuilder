@@ -105,8 +105,7 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
         }
 
         [Test]
-        public void WhenChecked_OnlyKingCanMoveToAvoid(
-        )
+        public void WhenChecked_OnlyKingCanMoveToAvoid()
         {
             var board = _boardGenerator.GenerateBoard();
             board[1, 6].CurrentPiece = new Piece(PieceType.BlackKing);

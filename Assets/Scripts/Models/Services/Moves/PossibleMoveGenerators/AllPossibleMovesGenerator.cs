@@ -28,8 +28,11 @@ namespace Models.Services.Moves.PossibleMoveGenerators
                     (Dictionary<BoardPosition, HashSet<BoardPosition>>) checkedState.PossibleNonKingMovesWhenInCheck(
                         turnMoves);
 
-            if (!_kingPosition.Equals(new BoardPosition(8, 8)))
+            if (!_kingPosition.Equals(new BoardPosition(8, 8))) // using out of bounds as null
                 turnMoves = IntersectKingMovesWithNonTurnMoves(nonTurnMoves, turnMoves);
+
+            // find king moves
+            // find pinned pieces
             return turnMoves;
         }
 

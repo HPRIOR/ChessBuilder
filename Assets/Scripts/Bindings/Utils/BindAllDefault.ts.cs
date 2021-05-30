@@ -29,6 +29,7 @@ namespace Bindings.Utils
             PossibleQueenMovesInstaller.Install(container);
             PossibleRookMovesInstaller.Install(container);
             PossibleMoveFactoryInstaller.Install(container);
+            BoardEvalInstaller.Install(container);
         }
     }
 }

@@ -27,20 +27,13 @@ namespace Models.Services.Moves.PossibleMoveGenerators
             var nonTurnMoves = _boardEval.NonTurnMoves;
             var kingPosition = _boardEval.KingPosition;
 
-
             var checkedState = new CheckedState(boardState, previousMove, _possibleMoveFactory, kingPosition);
             if (checkedState.IsTrue)
             {
-                turnMoves =
-                    (Dictionary<BoardPosition, HashSet<BoardPosition>>) checkedState.PossibleNonKingMovesWhenInCheck(
-                        turnMoves, kingPosition);
-
-                // checked king moves 
-                turnMoves = checkedState.PossibleKingMovesWhenInCheck(turnMoves, nonTurnMoves, kingPosition);
+                turnMoves = checkedState.PossibleMovesWhenInCheck(turnMoves, nonTurnMoves, kingPosition);
             }
             else
             {
-                // this can occur at every stage 
                 if (!kingPosition.Equals(new BoardPosition(8, 8))) // using out of bounds as null
                     turnMoves = RemoveNonTurnMovesFromAvailableKingMoves(nonTurnMoves, turnMoves, kingPosition);
             }

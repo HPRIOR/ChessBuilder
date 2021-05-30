@@ -96,12 +96,14 @@ namespace Tests.UnitTests.PossibleMoves.Helpers
                         new BoardPosition(4, 4),
                         new BoardPosition(5, 5)
                     }
-                }
+                },
+                {new BoardPosition(0, 0), new HashSet<BoardPosition>()}
             };
 
+            var nonTurnMoves = new Dictionary<BoardPosition, HashSet<BoardPosition>>();
 
             var interceptingMoves =
-                checkedState.PossibleNonKingMovesWhenInCheck(possibleMoves, new BoardPosition(0, 0));
+                checkedState.PossibleMovesWhenInCheck(possibleMoves, nonTurnMoves, new BoardPosition(0, 0));
             var expected = new Dictionary<BoardPosition, HashSet<BoardPosition>>
             {
                 {
@@ -113,7 +115,12 @@ namespace Tests.UnitTests.PossibleMoves.Helpers
                     }
                 }
             };
-            Assert.AreEqual(expected, interceptingMoves);
+            Assert.AreEqual(expected[new BoardPosition(3, 5)], interceptingMoves[new BoardPosition(3, 5)]);
         }
+        // only king can move if two checks occur
+
+        // king can move in front of pawn
+
+        // king cannot move to either side of king
     }
 }

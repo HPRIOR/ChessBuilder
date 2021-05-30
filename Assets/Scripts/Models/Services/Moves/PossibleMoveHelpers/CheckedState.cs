@@ -44,8 +44,17 @@ namespace Models.Services.Moves.PossibleMoveHelpers
 
         public bool IsTrue { get; }
 
-        // in the case of a double check exit out here early and return empty possible moves aside from king moves
-        public IDictionary<BoardPosition, HashSet<BoardPosition>> PossibleNonKingMovesWhenInCheck(
+
+        public IDictionary<BoardPosition, HashSet<BoardPosition>> PossibleMovesWhenInCheck(
+            IDictionary<BoardPosition, HashSet<BoardPosition>> turnMoves,
+            IDictionary<BoardPosition, HashSet<BoardPosition>> nonTurnMoves, BoardPosition kingPosition)
+        {
+            turnMoves = PossibleNonKingMovesWhenInCheck(turnMoves, kingPosition);
+            turnMoves = PossibleKingMovesWhenInCheck(turnMoves, nonTurnMoves, kingPosition);
+            return turnMoves;
+        }
+
+        private IDictionary<BoardPosition, HashSet<BoardPosition>> PossibleNonKingMovesWhenInCheck(
             IDictionary<BoardPosition, HashSet<BoardPosition>> possibleMoves, BoardPosition kingPosition)
         {
             foreach (var keyVal in possibleMoves)
@@ -57,7 +66,7 @@ namespace Models.Services.Moves.PossibleMoveHelpers
             return possibleMoves;
         }
 
-        public IDictionary<BoardPosition, HashSet<BoardPosition>> PossibleKingMovesWhenInCheck(
+        private IDictionary<BoardPosition, HashSet<BoardPosition>> PossibleKingMovesWhenInCheck(
             IDictionary<BoardPosition, HashSet<BoardPosition>> turnMoves,
             IDictionary<BoardPosition, HashSet<BoardPosition>> nonTurnMoves,
             BoardPosition kingPosition)

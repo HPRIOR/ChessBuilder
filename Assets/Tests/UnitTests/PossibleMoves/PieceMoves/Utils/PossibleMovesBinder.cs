@@ -25,6 +25,7 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves.Utils
             BoardScannerInstaller.Install(Container);
             PositionTranslatorInstaller.Install(Container);
             AllPossibleMovesGeneratorInstaller.Install(Container);
+            BoardEvalInstaller.Install(Container);
         }
     }
 }

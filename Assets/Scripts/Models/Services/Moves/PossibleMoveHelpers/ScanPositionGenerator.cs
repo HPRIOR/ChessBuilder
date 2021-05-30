@@ -25,12 +25,20 @@ namespace Models.Services.Moves.PossibleMoveHelpers
         private static IEnumerable<BoardPosition> GetExclusivePositionsWithConstant(int init, int dest, int constant,
             bool xConstant)
         {
-            Func<int, int, BoardPosition> xConstantFunc = (y, x) => new BoardPosition(x, y);
-            Func<int, int, BoardPosition> yConstantFunc = (x, y) => new BoardPosition(x, y);
+            static BoardPosition XConstantFunc(int y, int x)
+            {
+                return new BoardPosition(x, y);
+            }
+
+            static BoardPosition YConstantFunc(int x, int y)
+            {
+                return new BoardPosition(x, y);
+            }
+
             var constantList = Enumerable.Range(0, Math.Abs(init - dest)).Select(x => constant).ToList();
             return
                 GetExclusiveValuesAccordingToPosition(init, dest, GetValues)
-                    .Zip(constantList, xConstant ? xConstantFunc : yConstantFunc)
+                    .Zip(constantList, xConstant ? (Func<int, int, BoardPosition>) XConstantFunc : YConstantFunc)
                     .ToList();
         }
 

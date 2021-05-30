@@ -24,7 +24,7 @@ namespace Game.Implementations
 
         // provide an overload which passes in the changed tile. This can be used to check for mate when passed
         // to generate possible piece moves
-        public void UpdateGameState(BoardState newState, BoardPosition previousMove)
+        public void UpdateBoardState(BoardState newState, BoardPosition previousMove)
         {
             var previousState = CurrentBoardState;
             CurrentBoardState = newState;
@@ -33,6 +33,11 @@ namespace Game.Implementations
 
             Turn = ChangeTurn();
             GameStateChangeEvent?.Invoke(previousState, CurrentBoardState);
+        }
+
+        public void RetainBoardState()
+        {
+            GameStateChangeEvent?.Invoke(CurrentBoardState, CurrentBoardState);
         }
 
         public event Action<BoardState, BoardState> GameStateChangeEvent;

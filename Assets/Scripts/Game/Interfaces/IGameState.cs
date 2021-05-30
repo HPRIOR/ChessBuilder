@@ -9,6 +9,7 @@ namespace Game.Interfaces
         PieceColour Turn { get; }
         BoardState CurrentBoardState { get; }
         IDictionary<BoardPosition, HashSet<BoardPosition>> PossiblePieceMoves { get; }
-        void UpdateGameState(BoardState newState,  BoardPosition previousMove);
+        void UpdateBoardState(BoardState newState, BoardPosition previousMove);
+        void RetainBoardState();
     }
 }

@@ -8,7 +8,7 @@ using NUnit.Framework;
 namespace Tests.UnitTests.Utils.Extensions
 {
     [TestFixture]
-    public class ScanFromTests
+    public class ScanTests
     {
         [Test]
         public void ScanNorth()

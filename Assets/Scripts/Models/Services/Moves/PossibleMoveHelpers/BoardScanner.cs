@@ -25,7 +25,7 @@ namespace Models.Services.Moves.PossibleMoveHelpers
         /// </summary>
         /// <remarks>
         ///     More confusing stuff due to the mirroring of black and white piece logic. Scanner will scan as though
-        ///     the board perspective is white, then evaluate based on the colour given e.g. flip the board and analyse
+        ///     the board perspective is white, then evaluate based on the colour given e.g. flip the board and return
         ///     the 'opposite' tile.
         /// </remarks>
         /// <param name="direction"></param>

@@ -46,10 +46,20 @@ namespace Models.Services.Moves.PossibleMoveHelpers
         }
 
         public IDictionary<BoardPosition, HashSet<BoardPosition>> PossibleKingMovesWhenInCheck(
-            IDictionary<BoardPosition, HashSet<BoardPosition>> possibleMoves, BoardPosition kingPosition)
+            IDictionary<BoardPosition, HashSet<BoardPosition>> turnMoves,
+            IDictionary<BoardPosition, HashSet<BoardPosition>> nonTurnMoves,
+            BoardPosition kingPosition)
         {
+            // check if previous move is scanning type 
+
+            // if not, remove all possible moves from king moves
+
+            // else remove all possible moves from king moves as well as extended positions for scanning types 
             throw new NotImplementedException();
         }
+
+        //TODO new abstraction: manipulateDictionaries of board position -> hashset board position
+        // except, intersect, 
 
         // this will need to change when all non turn moves are evaluated for check, to catch discovered check, and double check
         // if two checks are found exit early and return an empty hashset - this will intersect with all moves producing no moves

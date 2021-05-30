@@ -7,7 +7,7 @@ using NUnit.Framework;
 namespace Tests.UnitTests.PossibleMoves.Helpers
 {
     [TestFixture]
-    public class GenericBoardScannerTests
+    public class ScanFromTests
     {
         [Test]
         public void ScanNorth()

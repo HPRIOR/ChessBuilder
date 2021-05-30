@@ -8,6 +8,10 @@ namespace Models.Services.Interfaces
         bool IsTrue { get; }
 
         IDictionary<BoardPosition, HashSet<BoardPosition>> PossibleNonKingMovesWhenInCheck(
-            IDictionary<BoardPosition, HashSet<BoardPosition>> possibleMoves);
+            IDictionary<BoardPosition, HashSet<BoardPosition>> possibleMoves, BoardPosition kingPosition);
+
+        IDictionary<BoardPosition, HashSet<BoardPosition>> PossibleKingMovesWhenInCheck(
+            IDictionary<BoardPosition, HashSet<BoardPosition>> possibleMoves, BoardPosition kingPosition
+        );
     }
 }

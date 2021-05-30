@@ -1,18 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Models.Services.Interfaces;
 using Models.State.Board;
+using Models.State.PieceState;
 
 namespace Models.Services.Moves.PossibleMoveHelpers
 {
     public class CheckedState : ICheckedState
     {
+        private static readonly HashSet<PieceType> _scanningPieces = new HashSet<PieceType>
+        {
+            PieceType.BlackRook,
+            PieceType.WhiteRook,
+            PieceType.BlackQueen,
+            PieceType.WhiteQueen,
+            PieceType.BlackBishop,
+            PieceType.WhiteBishop
+        };
+
         private readonly BoardState _boardState;
 
         private readonly HashSet<BoardPosition> _positionsBetweenKingAndCheckPiece;
         private readonly IPossibleMoveFactory _possibleMoveFactory;
         private readonly BoardPosition _previousMove;
+
 
         // TODO 1. inject possible move factory to this; 2. Check all non-turn moves for check; 3. Inject into PossibleMoveGen;
         public CheckedState(BoardState boardState,
@@ -50,12 +61,21 @@ namespace Models.Services.Moves.PossibleMoveHelpers
             IDictionary<BoardPosition, HashSet<BoardPosition>> nonTurnMoves,
             BoardPosition kingPosition)
         {
-            // check if previous move is scanning type 
+            var checkingPiece = _boardState.Board[_previousMove.X, _previousMove.Y].CurrentPiece;
+            // check if checking piece is scanning type 
+            if (_scanningPieces.Contains(checkingPiece.Type))
+            {
+                // remove all possible moves from king moves as well as extended positions for scanning types 
+            }
 
             // if not, remove all possible moves from king moves
+            foreach (var nonTurnMove in nonTurnMoves)
+            {
+                var kingMoves = turnMoves[kingPosition];
+                turnMoves[kingPosition] = new HashSet<BoardPosition>(kingMoves.Except(nonTurnMove.Value));
+            }
 
-            // else remove all possible moves from king moves as well as extended positions for scanning types 
-            throw new NotImplementedException();
+            return turnMoves;
         }
 
         //TODO new abstraction: manipulateDictionaries of board position -> hashset board position

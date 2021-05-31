@@ -23,34 +23,49 @@ namespace Models.Services.Moves.PossibleMoveHelpers
                 var nonTurnPieceType = boardState.Board[nonTurnMove.Key.X, nonTurnMove.Key.Y].CurrentPiece.Type;
                 var nonTurnPieceIsBlackPawn = nonTurnPieceType.Equals(PieceType.BlackPawn);
                 var nonTurnPieceIsWhitePawn = nonTurnPieceType.Equals(PieceType.WhitePawn);
+                var nonPawnPiece = !nonTurnPieceIsBlackPawn && !nonTurnPieceIsWhitePawn;
 
                 if (nonTurnPieceIsBlackPawn)
-                {
-                    var kingMoves = turnMoves[kingPosition];
-                    var blackPawnTakingMoves = new HashSet<BoardPosition>
-                    {
-                        nonTurnPiecePosition.Add(Move.In(Direction.SE)),
-                        nonTurnPiecePosition.Add(Move.In(Direction.SW))
-                    };
-                    turnMoves[kingPosition] = new HashSet<BoardPosition>(kingMoves.Except(blackPawnTakingMoves));
-                }
+                    RemoveBlackPawnMovesFromKingMoves(turnMoves, kingPosition, nonTurnPiecePosition);
                 else if (nonTurnPieceIsWhitePawn)
-                {
-                    var kingMoves = turnMoves[kingPosition];
-                    var whitePawnTakingMoves = new HashSet<BoardPosition>
-                    {
-                        nonTurnPiecePosition.Add(Move.In(Direction.NE)),
-                        nonTurnPiecePosition.Add(Move.In(Direction.NW))
-                    };
-                    turnMoves[kingPosition] = new HashSet<BoardPosition>(kingMoves.Except(whitePawnTakingMoves));
-                }
+                    RemoveWhitePawnMovesFromKingMoves(turnMoves, kingPosition, nonTurnPiecePosition);
 
-                if (!nonTurnPieceIsBlackPawn && !nonTurnPieceIsWhitePawn)
-                {
-                    var kingMoves = turnMoves[kingPosition];
-                    turnMoves[kingPosition] = new HashSet<BoardPosition>(kingMoves.Except(nonTurnMove.Value));
-                }
+                if (nonPawnPiece) RemoveNonPawnNonTurnMovesFromKingMoves(turnMoves, kingPosition, nonTurnMove);
             }
+        }
+
+        private static void RemoveNonPawnNonTurnMovesFromKingMoves(
+            IDictionary<BoardPosition, HashSet<BoardPosition>> turnMoves, BoardPosition kingPosition,
+            KeyValuePair<BoardPosition, HashSet<BoardPosition>> nonTurnMove)
+        {
+            var kingMoves = turnMoves[kingPosition];
+            turnMoves[kingPosition] = new HashSet<BoardPosition>(kingMoves.Except(nonTurnMove.Value));
+        }
+
+        private static void RemoveWhitePawnMovesFromKingMoves(
+            IDictionary<BoardPosition, HashSet<BoardPosition>> turnMoves, BoardPosition kingPosition,
+            BoardPosition nonTurnPiecePosition)
+        {
+            var kingMoves = turnMoves[kingPosition];
+            var whitePawnTakingMoves = new HashSet<BoardPosition>
+            {
+                nonTurnPiecePosition.Add(Move.In(Direction.NE)),
+                nonTurnPiecePosition.Add(Move.In(Direction.NW))
+            };
+            turnMoves[kingPosition] = new HashSet<BoardPosition>(kingMoves.Except(whitePawnTakingMoves));
+        }
+
+        private static void RemoveBlackPawnMovesFromKingMoves(
+            IDictionary<BoardPosition, HashSet<BoardPosition>> turnMoves, BoardPosition kingPosition,
+            BoardPosition nonTurnPiecePosition)
+        {
+            var kingMoves = turnMoves[kingPosition];
+            var blackPawnTakingMoves = new HashSet<BoardPosition>
+            {
+                nonTurnPiecePosition.Add(Move.In(Direction.SE)),
+                nonTurnPiecePosition.Add(Move.In(Direction.SW))
+            };
+            turnMoves[kingPosition] = new HashSet<BoardPosition>(kingMoves.Except(blackPawnTakingMoves));
         }
     }
 }

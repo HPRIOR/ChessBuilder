@@ -308,8 +308,6 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
 
         // king cannot take protected piece
 
-        // pawn attack moves are taken away from king 
-
         // pieces are pinned 
 
         // escape pin by taking checking piece

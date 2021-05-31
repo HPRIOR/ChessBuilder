@@ -20,7 +20,7 @@ namespace Models.Services.Moves.PossibleMoveGenerators
 
 
         public IDictionary<BoardPosition, HashSet<BoardPosition>> GetPossibleMoves(BoardState boardState,
-            PieceColour turn, BoardPosition previousMove)
+            PieceColour turn)
         {
             _boardEval.EvaluateBoard(boardState, turn);
             var turnMoves = _boardEval.TurnMoves;

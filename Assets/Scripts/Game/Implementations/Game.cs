@@ -14,7 +14,7 @@ namespace Game.Implementations
 
         public void Start()
         {
-            GameState.UpdateBoardState(InitBoard(), new BoardPosition(4, 0));
+            GameState.UpdateBoardState(InitBoard());
         }
 
         [Inject]

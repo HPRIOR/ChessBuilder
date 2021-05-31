@@ -10,12 +10,13 @@ namespace Models.Services.Moves.PossibleMoveGenerators
     public class AllPossibleMovesGenerator : IAllPossibleMovesGenerator
     {
         private readonly IBoardEval _boardEval;
-        private readonly IPossibleMoveFactory _possibleMoveFactory;
+        private readonly KingMoveFilter _kingMoveFilter;
 
         public AllPossibleMovesGenerator(IPossibleMoveFactory possibleMoveFactory, IBoardEval boardEval)
         {
             _possibleMoveFactory = possibleMoveFactory;
             _boardEval = boardEval;
+            _kingMoveFilter = kingMoveFilter;
         }
 
 
@@ -36,26 +37,11 @@ namespace Models.Services.Moves.PossibleMoveGenerators
             else
             {
                 if (!kingPosition.Equals(new BoardPosition(8, 8))) // using out of bounds as null
-                    turnMoves = RemoveNonTurnMovesFromAvailableKingMoves(nonTurnMoves, turnMoves, kingPosition);
+                    _kingMoveFilter.RemoveNonTurnMovesFromKingMoves(turnMoves, nonTurnMoves, kingPosition, boardState);
             }
 
             // find king moves
             // find pinned pieces
-            return turnMoves;
-        }
-
-
-        private IDictionary<BoardPosition, HashSet<BoardPosition>> RemoveNonTurnMovesFromAvailableKingMoves(
-            IDictionary<BoardPosition, HashSet<BoardPosition>> nonTurnMoves,
-            IDictionary<BoardPosition, HashSet<BoardPosition>> turnMoves,
-            BoardPosition kingPosition)
-        {
-            foreach (var nonTurnMove in nonTurnMoves)
-            {
-                var kingMoves = turnMoves[kingPosition];
-                turnMoves[kingPosition] = new HashSet<BoardPosition>(kingMoves.Except(nonTurnMove.Value));
-            }
-
             return turnMoves;
         }
     }

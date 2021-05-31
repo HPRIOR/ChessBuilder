@@ -3,15 +3,15 @@ using Models.State.Board;
 
 namespace Models.Services.Interfaces
 {
-    public interface ICheckedState
+    public interface ICheckedStateManager
     {
-        bool IsTrue { get; }
+        bool IsCheck { get; }
 
         void EvaluateCheck(
             IDictionary<BoardPosition, HashSet<BoardPosition>> nonTurnMoves,
             BoardPosition kingPosition);
 
-        IDictionary<BoardPosition, HashSet<BoardPosition>> PossibleMovesWhenInCheck(
+        IDictionary<BoardPosition, HashSet<BoardPosition>> UpdatePossibleMovesWhenInCheck(
             IDictionary<BoardPosition, HashSet<BoardPosition>> turnMoves,
             IDictionary<BoardPosition, HashSet<BoardPosition>> nonTurnMoves,
             BoardPosition kingPosition);

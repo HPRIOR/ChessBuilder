@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using Models.Services.Interfaces;
 using Models.Services.Moves.PossibleMoveHelpers;
 using Models.State.Board;
@@ -12,9 +11,8 @@ namespace Models.Services.Moves.PossibleMoveGenerators
         private readonly IBoardEval _boardEval;
         private readonly KingMoveFilter _kingMoveFilter;
 
-        public AllPossibleMovesGenerator(IPossibleMoveFactory possibleMoveFactory, IBoardEval boardEval)
+        public AllPossibleMovesGenerator(IBoardEval boardEval, KingMoveFilter kingMoveFilter)
         {
-            _possibleMoveFactory = possibleMoveFactory;
             _boardEval = boardEval;
             _kingMoveFilter = kingMoveFilter;
         }
@@ -28,11 +26,11 @@ namespace Models.Services.Moves.PossibleMoveGenerators
             var nonTurnMoves = _boardEval.NonTurnMoves;
             var kingPosition = _boardEval.KingPosition;
 
-            var checkedState = new CheckedState(boardState, previousMove, _possibleMoveFactory);
-            checkedState.EvaluateCheck(nonTurnMoves, kingPosition);
-            if (checkedState.IsTrue)
+            var checkManager = new CheckedStateManager(boardState, _kingMoveFilter);
+            checkManager.EvaluateCheck(nonTurnMoves, kingPosition);
+            if (checkManager.IsCheck)
             {
-                turnMoves = checkedState.PossibleMovesWhenInCheck(turnMoves, nonTurnMoves, kingPosition);
+                checkManager.UpdatePossibleMovesWhenInCheck(turnMoves, nonTurnMoves, kingPosition);
             }
             else
             {
@@ -40,7 +38,6 @@ namespace Models.Services.Moves.PossibleMoveGenerators
                     _kingMoveFilter.RemoveNonTurnMovesFromKingMoves(turnMoves, nonTurnMoves, kingPosition, boardState);
             }
 
-            // find king moves
             // find pinned pieces
             return turnMoves;
         }

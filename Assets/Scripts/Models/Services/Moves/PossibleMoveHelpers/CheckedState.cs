@@ -9,7 +9,7 @@ namespace Models.Services.Moves.PossibleMoveHelpers
 {
     public class CheckedState : ICheckedState
     {
-        private static readonly HashSet<PieceType> _scanningPieces = new HashSet<PieceType>
+        private static readonly HashSet<PieceType> ScanningPieces = new HashSet<PieceType>
         {
             PieceType.BlackRook,
             PieceType.WhiteRook,
@@ -20,42 +20,50 @@ namespace Models.Services.Moves.PossibleMoveHelpers
         };
 
         private readonly BoardState _boardState;
-
-        private readonly HashSet<BoardPosition> _positionsBetweenKingAndCheckPiece;
         private readonly IPossibleMoveFactory _possibleMoveFactory;
         private readonly BoardPosition _previousMove;
+        private IEnumerable<BoardPosition> _checkingPieces;
+
+        private HashSet<BoardPosition> _positionsBetweenKingAndCheckPiece;
 
 
         // TODO 1. inject possible move factory to this; 2. Check all non-turn moves for check; 3. Inject into PossibleMoveGen;
         public CheckedState(BoardState boardState,
             BoardPosition previousMove,
-            IPossibleMoveFactory possibleMoveFactory,
-            BoardPosition kingPosition)
+            IPossibleMoveFactory possibleMoveFactory)
         {
             _boardState = boardState;
             _previousMove = previousMove;
             _possibleMoveFactory = possibleMoveFactory;
-
-            // check for condition and return pieces between checked king and checking piece
-            var checkedPositions = GetPositionsBetweenCheckedKing(kingPosition);
-            _positionsBetweenKingAndCheckPiece = checkedPositions;
-            IsTrue = checkedPositions.Any();
         }
 
-        public bool IsTrue { get; }
+        public bool IsTrue { get; private set; }
 
+
+        public void EvaluateCheck(IDictionary<BoardPosition, HashSet<BoardPosition>> nonTurnMoves,
+            BoardPosition kingPosition)
+        {
+            var checkingPieces = GetCheckingPieces(nonTurnMoves, kingPosition).ToList();
+            if (checkingPieces.Count == 1)
+                _positionsBetweenKingAndCheckPiece = GetPositionsBetweenCheckedKing(kingPosition);
+            IsTrue = checkingPieces.Any();
+            _checkingPieces = checkingPieces;
+        }
 
         public IDictionary<BoardPosition, HashSet<BoardPosition>> PossibleMovesWhenInCheck(
             IDictionary<BoardPosition, HashSet<BoardPosition>> turnMoves,
-            IDictionary<BoardPosition, HashSet<BoardPosition>> nonTurnMoves, BoardPosition kingPosition)
+            IDictionary<BoardPosition, HashSet<BoardPosition>> nonTurnMoves,
+            BoardPosition kingPosition)
         {
-            turnMoves = PossibleNonKingMovesWhenInCheck(turnMoves, kingPosition);
+            if (_checkingPieces.Count() == 1) turnMoves = PossibleNonKingMovesWhenInCheck(turnMoves, kingPosition);
+            if (_checkingPieces.Count() > 1) turnMoves = RemoveAllNonKingMoves(turnMoves, kingPosition);
             turnMoves = PossibleKingMovesWhenInCheck(turnMoves, nonTurnMoves, kingPosition);
             return turnMoves;
         }
 
         private IDictionary<BoardPosition, HashSet<BoardPosition>> PossibleNonKingMovesWhenInCheck(
-            IDictionary<BoardPosition, HashSet<BoardPosition>> turnMoves, BoardPosition kingPosition)
+            IDictionary<BoardPosition, HashSet<BoardPosition>> turnMoves,
+            BoardPosition kingPosition)
         {
             foreach (var keyVal in turnMoves)
             {
@@ -74,7 +82,7 @@ namespace Models.Services.Moves.PossibleMoveHelpers
             var checkingPiece = _boardState.Board[_previousMove.X, _previousMove.Y].CurrentPiece;
             RemoveNonTurnMoves(turnMoves, nonTurnMoves, kingPosition);
             // check if checking piece is scanning type 
-            if (_scanningPieces.Contains(checkingPiece.Type))
+            if (ScanningPieces.Contains(checkingPiece.Type))
             {
                 // remove extended 
                 var movesExtendedThroughKing = _previousMove.Scan(_previousMove.DirectionTo(kingPosition));
@@ -82,8 +90,15 @@ namespace Models.Services.Moves.PossibleMoveHelpers
                 turnMoves[kingPosition] = new HashSet<BoardPosition>(kingMoves.Except(movesExtendedThroughKing));
             }
 
-
             return turnMoves;
+        }
+
+        private IEnumerable<BoardPosition> GetCheckingPieces(
+            IDictionary<BoardPosition, HashSet<BoardPosition>> nonTurnMoves, BoardPosition kingPosition)
+        {
+            return nonTurnMoves
+                .Where(nonTurnMove => nonTurnMove.Value.Contains(kingPosition))
+                .Select(nonTurnMove => nonTurnMove.Key);
         }
 
         private static void RemoveNonTurnMoves(IDictionary<BoardPosition, HashSet<BoardPosition>> turnMoves,
@@ -97,12 +112,6 @@ namespace Models.Services.Moves.PossibleMoveHelpers
             }
         }
 
-        //TODO new abstraction: manipulateDictionaries of board position -> hashset board position
-        // except, intersect, 
-
-        // this will need to change when all non turn moves are evaluated for check, to catch discovered check, and double check
-        // if two checks are found exit early and return an empty hashset - this will intersect with all moves producing no moves
-        // hence only the king will be able to move
         private HashSet<BoardPosition> GetPositionsBetweenCheckedKing(BoardPosition kingPosition)
         {
             var movedPiece = _boardState.Board[_previousMove.X, _previousMove.Y].CurrentPiece;
@@ -120,6 +129,16 @@ namespace Models.Services.Moves.PossibleMoveHelpers
                 }
 
             return new HashSet<BoardPosition>();
+        }
+
+        private IDictionary<BoardPosition, HashSet<BoardPosition>> RemoveAllNonKingMoves(
+            IDictionary<BoardPosition, HashSet<BoardPosition>> turnMoves,
+            BoardPosition kingPosition)
+        {
+            foreach (var turnMove in turnMoves)
+                if (!turnMove.Key.Equals(kingPosition))
+                    turnMove.Value.Clear();
+            return turnMoves;
         }
     }
 }

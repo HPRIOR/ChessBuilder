@@ -49,7 +49,7 @@ namespace Tests.UnitTests.PossibleMoves.Helpers
             var boardState = new BoardState(board);
 
             ICheckedState checkedState =
-                new CheckedState(boardState, new BoardPosition(6, 5), _possibleMoveFactory, new BoardPosition(0, 0));
+                new CheckedState(boardState, new BoardPosition(6, 5), _possibleMoveFactory);
 
             Assert.IsFalse(checkedState.IsTrue);
         }
@@ -64,7 +64,7 @@ namespace Tests.UnitTests.PossibleMoves.Helpers
             var boardState = new BoardState(board);
 
             ICheckedState checkedState =
-                new CheckedState(boardState, new BoardPosition(7, 7), _possibleMoveFactory, new BoardPosition(0, 0));
+                new CheckedState(boardState, new BoardPosition(7, 7), _possibleMoveFactory);
 
             Assert.IsTrue(checkedState.IsTrue);
         }
@@ -80,7 +80,7 @@ namespace Tests.UnitTests.PossibleMoves.Helpers
             var boardState = new BoardState(board);
 
             ICheckedState checkedState =
-                new CheckedState(boardState, new BoardPosition(7, 7), _possibleMoveFactory, new BoardPosition(0, 0));
+                new CheckedState(boardState, new BoardPosition(7, 7), _possibleMoveFactory);
 
             var possibleMoves = new Dictionary<BoardPosition, HashSet<BoardPosition>>
             {

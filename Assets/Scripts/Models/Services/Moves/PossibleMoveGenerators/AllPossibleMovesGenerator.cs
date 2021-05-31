@@ -27,7 +27,8 @@ namespace Models.Services.Moves.PossibleMoveGenerators
             var nonTurnMoves = _boardEval.NonTurnMoves;
             var kingPosition = _boardEval.KingPosition;
 
-            var checkedState = new CheckedState(boardState, previousMove, _possibleMoveFactory, kingPosition);
+            var checkedState = new CheckedState(boardState, previousMove, _possibleMoveFactory);
+            checkedState.EvaluateCheck(nonTurnMoves, kingPosition);
             if (checkedState.IsTrue)
             {
                 turnMoves = checkedState.PossibleMovesWhenInCheck(turnMoves, nonTurnMoves, kingPosition);

@@ -148,5 +148,25 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
                 _allPossibleMovesGenerator.GetPossibleMoves(boardState, PieceColour.Black, new BoardPosition(1, 1));
             Assert.AreEqual(0, possibleMoves[new BoardPosition(4, 6)].Count());
         }
+
+        [Test]
+        public void WhenCheckByMoreThanOnePiece_OnlyKingCanMove()
+        {
+            var board = _boardGenerator.GenerateBoard();
+            board[1, 6].CurrentPiece = new Piece(PieceType.BlackKing);
+            board[4, 6].CurrentPiece = new Piece(PieceType.BlackQueen);
+            board[1, 1].CurrentPiece = new Piece(PieceType.WhiteQueen);
+            board[6, 1].CurrentPiece = new Piece(PieceType.WhiteQueen);
+            var boardState = new BoardState(board);
+
+            var possibleMoves =
+                _allPossibleMovesGenerator.GetPossibleMoves(boardState, PieceColour.Black, new BoardPosition(1, 1));
+
+            // no moves for black queen 
+            Assert.AreEqual(0, possibleMoves[new BoardPosition(4, 6)].Count());
+
+            // moves for black king 
+            Assert.IsTrue(possibleMoves[new BoardPosition(1, 6)].Any());
+        }
     }
 }

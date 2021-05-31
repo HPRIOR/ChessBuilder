@@ -25,6 +25,7 @@ namespace Bindings.MonoInstallers
             PositionTranslatorInstaller.Install(Container);
             BoardScannerInstaller.Install(Container);
             BoardEvalInstaller.Install(Container);
+            NonTurnRemoverInstaller.Install(Container);
         }
     }
 }

@@ -30,6 +30,7 @@ namespace Bindings.Utils
             PossibleRookMovesInstaller.Install(container);
             PossibleMoveFactoryInstaller.Install(container);
             BoardEvalInstaller.Install(container);
+            NonTurnRemoverInstaller.Install(container);
         }
     }
 }

@@ -55,15 +55,15 @@ namespace Models.Services.Moves.PossibleMoveHelpers
         }
 
         private IDictionary<BoardPosition, HashSet<BoardPosition>> PossibleNonKingMovesWhenInCheck(
-            IDictionary<BoardPosition, HashSet<BoardPosition>> possibleMoves, BoardPosition kingPosition)
+            IDictionary<BoardPosition, HashSet<BoardPosition>> turnMoves, BoardPosition kingPosition)
         {
-            foreach (var keyVal in possibleMoves)
+            foreach (var keyVal in turnMoves)
             {
                 var notKingPiece = !keyVal.Key.Equals(kingPosition);
                 if (notKingPiece) keyVal.Value.IntersectWith(_positionsBetweenKingAndCheckPiece);
             }
 
-            return possibleMoves;
+            return turnMoves;
         }
 
         private IDictionary<BoardPosition, HashSet<BoardPosition>> PossibleKingMovesWhenInCheck(

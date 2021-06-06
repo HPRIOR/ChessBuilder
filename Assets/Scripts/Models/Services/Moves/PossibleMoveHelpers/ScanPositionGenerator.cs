@@ -53,9 +53,9 @@ namespace Models.Services.Moves.PossibleMoveHelpers
 
         private static IEnumerable<int> GetExclusiveValuesAccordingToPosition(
             int init, int dest,
-            Func<int, int, IEnumerable<int>> GetValueFunc)
+            Func<int, int, IEnumerable<int>> getValueFunc)
         {
-            return init > dest ? GetValueFunc(init, dest + 1) : GetValueFunc(init, dest - 1);
+            return init > dest ? getValueFunc(init, dest + 1) : getValueFunc(init, dest - 1);
         }
     }
 }

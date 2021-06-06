@@ -135,12 +135,6 @@ namespace Models.Services.Moves.PossibleMoveHelpers
                     turnMove.Value.Clear();
         }
 
-        private State.PieceState.Piece GetCheckingPiece()
-        {
-            var checkingBoardPosition = _checkingPieces.First();
-            return _boardState.Board[checkingBoardPosition.X, checkingBoardPosition.Y].CurrentPiece;
-        }
-
         private State.PieceState.Piece GetPieceAt(BoardPosition boardPosition)
         {
             return _boardState.Board[boardPosition.X, boardPosition.Y].CurrentPiece;

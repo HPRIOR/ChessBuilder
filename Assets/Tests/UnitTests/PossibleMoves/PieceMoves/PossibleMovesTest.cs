@@ -305,8 +305,24 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
             Assert.That(possibleKingMoves.Contains(new BoardPosition(5, 5)), Is.False);
         }
 
+        [Test]
+        public void KingCannotTakeProtectedPiece()
+        {
+            var board = _boardGenerator.GenerateBoard();
+            board[4, 4].CurrentPiece = new Piece(PieceType.WhiteKing);
+            board[4, 5].CurrentPiece = new Piece(PieceType.BlackPawn);
+            board[7, 5].CurrentPiece = new Piece(PieceType.BlackRook);
 
-        // king cannot take protected piece
+            var boardState = new BoardState(board);
+
+            var possibleMoves =
+                _allPossibleMovesGenerator.GetPossibleMoves(boardState, PieceColour.White);
+
+            var possibleKingMoves = possibleMoves[new BoardPosition(4, 4)];
+
+            Assert.That(possibleKingMoves.Contains(new BoardPosition(4, 5)), Is.False);
+        }
+
 
         // pieces are pinned 
 

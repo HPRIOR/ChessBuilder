@@ -18,6 +18,7 @@ namespace Models.Services.Moves.PossibleMoveHelpers
         public IDictionary<BoardPosition, HashSet<BoardPosition>> NonTurnMoves { get; private set; }
         public BoardPosition KingPosition { get; private set; } = new BoardPosition(8, 8);
 
+        // TODO refactor
         public void EvaluateBoard(BoardState boardState, PieceColour turn)
         {
             var board = boardState.Board;

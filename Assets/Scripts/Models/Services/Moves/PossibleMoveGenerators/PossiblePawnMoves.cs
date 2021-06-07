@@ -19,6 +19,7 @@ namespace Models.Services.Moves.PossibleMoveGenerators
             _tileEvaluator = tileEvaluatorFactory.Create(pieceColour);
         }
 
+        // TODO: refactor me
         public IEnumerable<BoardPosition> GetPossiblePieceMoves(BoardPosition originPosition, BoardState boardState)
         {
             var potentialMoves = new List<BoardPosition>();

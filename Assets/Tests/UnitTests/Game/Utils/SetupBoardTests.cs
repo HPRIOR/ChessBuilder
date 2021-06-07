@@ -50,7 +50,7 @@ namespace Tests.UnitTests.Game.Utils
                 (PieceType.WhiteKnight, new BoardPosition(7, 0))
             };
 
-            var boardState = _boardSetup.SetupBoard(pieces);
+            var boardState = _boardSetup.SetupBoardWith(pieces);
 
             Assert.That(boardState.Board[1, 2].CurrentPiece.Type, Is.EqualTo(PieceType.BlackQueen));
             Assert.That(boardState.Board[3, 3].CurrentPiece.Type, Is.EqualTo(PieceType.BlackKnight));

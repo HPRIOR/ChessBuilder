@@ -5,14 +5,14 @@ namespace Models.Services.Moves.Factories.PossibleMoveGeneratorFactories
 {
     public class PossibleKingMovesFactory
     {
-        private readonly PossibleKingMoves.Factory _factory;
+        private readonly KingTurnMoves.Factory _factory;
 
-        public PossibleKingMovesFactory(PossibleKingMoves.Factory factory)
+        public PossibleKingMovesFactory(KingTurnMoves.Factory factory)
         {
             _factory = factory;
         }
 
-        public PossibleKingMoves Create(PieceColour pieceColour)
+        public KingTurnMoves Create(PieceColour pieceColour)
         {
             return _factory.Create(pieceColour);
         }

@@ -29,8 +29,8 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
             Container.UnbindAll();
         }
 
-        private PossiblePawnMoves _whitePawnMoves;
-        private PossiblePawnMoves _blackPawnMoves;
+        private PawnTurnMoves _whitePawnTurnMoves;
+        private PawnTurnMoves _blackPawnTurnMoves;
         private BoardSetup _boardSetup;
 
         private void InstallBindings()
@@ -39,14 +39,14 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
             PositionTranslatorInstaller.Install(Container);
             TileEvaluatorInstaller.Install(Container);
             BoardGeneratorInstaller.Install(Container);
-            PossiblePawnMovesInstaller.Install(Container);
+            PawnTurnMovesInstaller.Install(Container);
         }
 
         private void ResolveContainer()
         {
             var pawnMovesFactory = Container.Resolve<PossiblePawnMovesFactory>();
-            _whitePawnMoves = pawnMovesFactory.Create(PieceColour.White);
-            _blackPawnMoves = pawnMovesFactory.Create(PieceColour.Black);
+            _whitePawnTurnMoves = pawnMovesFactory.Create(PieceColour.White);
+            _blackPawnTurnMoves = pawnMovesFactory.Create(PieceColour.Black);
 
             _boardSetup = Container.Resolve<BoardSetup>();
         }
@@ -61,7 +61,7 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
 
             var boardState = _boardSetup.SetupBoardWith(pieces);
 
-            var possibleMoves = _whitePawnMoves.GetPossiblePieceMoves(new BoardPosition(4, 1), boardState);
+            var possibleMoves = _whitePawnTurnMoves.GetPossiblePieceMoves(new BoardPosition(4, 1), boardState);
             var expectedMoves = new List<BoardPosition>
             {
                 new BoardPosition(4, 2)
@@ -81,7 +81,7 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
 
             var boardState = _boardSetup.SetupBoardWith(pieces);
 
-            var possibleMoves = _blackPawnMoves.GetPossiblePieceMoves(new BoardPosition(4, 6), boardState);
+            var possibleMoves = _blackPawnTurnMoves.GetPossiblePieceMoves(new BoardPosition(4, 6), boardState);
             var expectedMoves = new List<BoardPosition>
             {
                 new BoardPosition(4, 5)
@@ -103,7 +103,7 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
 
             var boardState = _boardSetup.SetupBoardWith(pieces);
 
-            var possibleMoves = _whitePawnMoves.GetPossiblePieceMoves(new BoardPosition(4, 1), boardState);
+            var possibleMoves = _whitePawnTurnMoves.GetPossiblePieceMoves(new BoardPosition(4, 1), boardState);
             var expectedMoves = new List<BoardPosition>
             {
                 new BoardPosition(4, 2),
@@ -127,7 +127,7 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
 
             var boardState = _boardSetup.SetupBoardWith(pieces);
 
-            var possibleMoves = _blackPawnMoves.GetPossiblePieceMoves(new BoardPosition(4, 6), boardState);
+            var possibleMoves = _blackPawnTurnMoves.GetPossiblePieceMoves(new BoardPosition(4, 6), boardState);
             var expectedMoves = new List<BoardPosition>
             {
                 new BoardPosition(4, 5),
@@ -150,7 +150,7 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
 
             var boardState = _boardSetup.SetupBoardWith(pieces);
 
-            var possibleMoves = _whitePawnMoves.GetPossiblePieceMoves(new BoardPosition(4, 1), boardState);
+            var possibleMoves = _whitePawnTurnMoves.GetPossiblePieceMoves(new BoardPosition(4, 1), boardState);
             var expectedMoves = new List<BoardPosition>();
 
             Assert.That(possibleMoves, Is.EquivalentTo(expectedMoves));
@@ -169,7 +169,7 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
 
             var boardState = _boardSetup.SetupBoardWith(pieces);
 
-            var possibleMoves = _blackPawnMoves.GetPossiblePieceMoves(new BoardPosition(4, 6), boardState);
+            var possibleMoves = _blackPawnTurnMoves.GetPossiblePieceMoves(new BoardPosition(4, 6), boardState);
             var expectedMoves = new List<BoardPosition>();
 
             Assert.That(possibleMoves, Is.EquivalentTo(expectedMoves));

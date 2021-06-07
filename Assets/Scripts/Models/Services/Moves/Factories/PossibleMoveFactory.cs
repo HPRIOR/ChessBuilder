@@ -55,7 +55,7 @@ namespace Models.Services.Moves.Factories
                 {PieceType.WhiteKing, _possibleKingMovesFactory.Create(PieceColour.White)},
                 {PieceType.BlackQueen, _possibleQueenMovesFactory.Create(PieceColour.Black)},
                 {PieceType.WhiteQueen, _possibleQueenMovesFactory.Create(PieceColour.White)},
-                {PieceType.NullPiece, new NullPossibleMoveGenerator()}
+                {PieceType.NullPiece, new NullMoveGenerator()}
             };
         }
     }

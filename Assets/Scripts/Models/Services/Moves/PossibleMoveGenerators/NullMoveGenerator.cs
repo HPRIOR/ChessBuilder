@@ -4,7 +4,7 @@ using Models.State.Board;
 
 namespace Models.Services.Moves.PossibleMoveGenerators
 {
-    public class NullPossibleMoveGenerator : IPieceMoveGenerator
+    public class NullMoveGenerator : IPieceMoveGenerator
     {
         public IEnumerable<BoardPosition> GetPossiblePieceMoves(BoardPosition originPosition, BoardState boardState)
         {

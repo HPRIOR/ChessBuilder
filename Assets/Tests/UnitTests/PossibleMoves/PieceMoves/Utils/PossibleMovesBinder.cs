@@ -13,12 +13,12 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves.Utils
             BoardGeneratorInstaller.Install(Container);
             PieceSpawnerInstaller.Install(Container);
             PossibleMoveFactoryInstaller.Install(Container);
-            PossibleBishopMovesInstaller.Install(Container);
-            PossibleKingMovesInstaller.Install(Container);
-            PossibleKnightMovesInstaller.Install(Container);
-            PossiblePawnMovesInstaller.Install(Container);
-            PossibleQueenMovesInstaller.Install(Container);
-            PossibleRookMovesInstaller.Install(Container);
+            BishopTurnMovesInstaller.Install(Container);
+            KingTurnMovesInstaller.Install(Container);
+            KnightTurnMovesInstaller.Install(Container);
+            PawnTurnMovesInstaller.Install(Container);
+            QueenTurnMovesInstaller.Install(Container);
+            RookTurnMovesInstaller.Install(Container);
             TileEvaluatorInstaller.Install(Container);
             BoardScannerInstaller.Install(Container);
             PositionTranslatorInstaller.Install(Container);

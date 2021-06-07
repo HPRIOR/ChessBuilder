@@ -29,13 +29,13 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
             Container.UnbindAll();
         }
 
-        private PossibleKnightMoves _whiteKnightMoves;
-        private PossibleKnightMoves _blackKnightMoves;
+        private KnightTurnMoves _whiteKnightTurnMoves;
+        private KnightTurnMoves _blackKnightTurnMoves;
         private BoardSetup _boardSetup;
 
         private void InstallBindings()
         {
-            PossibleKnightMovesInstaller.Install(Container);
+            KnightTurnMovesInstaller.Install(Container);
             BoardSetupInstaller.Install(Container);
             TileEvaluatorInstaller.Install(Container);
             PositionTranslatorInstaller.Install(Container);
@@ -46,8 +46,8 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
         {
             _boardSetup = Container.Resolve<BoardSetup>();
             var knightMovesFactory = Container.Resolve<PossibleKnightMovesFactory>();
-            _whiteKnightMoves = knightMovesFactory.Create(PieceColour.White);
-            _blackKnightMoves = knightMovesFactory.Create(PieceColour.Black);
+            _whiteKnightTurnMoves = knightMovesFactory.Create(PieceColour.White);
+            _blackKnightTurnMoves = knightMovesFactory.Create(PieceColour.Black);
         }
 
         [Test]
@@ -60,7 +60,7 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
 
             var boardState = _boardSetup.SetupBoardWith(pieces);
 
-            var possibleMoves = _whiteKnightMoves.GetPossiblePieceMoves(new BoardPosition(4, 4), boardState);
+            var possibleMoves = _whiteKnightTurnMoves.GetPossiblePieceMoves(new BoardPosition(4, 4), boardState);
             var expectedMoves = new List<BoardPosition>
             {
                 new BoardPosition(5, 6),
@@ -87,7 +87,7 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
 
             var boardState = _boardSetup.SetupBoardWith(pieces);
 
-            var possibleMoves = _blackKnightMoves.GetPossiblePieceMoves(new BoardPosition(4, 4), boardState);
+            var possibleMoves = _blackKnightTurnMoves.GetPossiblePieceMoves(new BoardPosition(4, 4), boardState);
             var expectedMoves = new List<BoardPosition>
             {
                 new BoardPosition(5, 6),
@@ -115,7 +115,7 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
 
             var boardState = _boardSetup.SetupBoardWith(pieces);
 
-            var possibleMoves = _whiteKnightMoves.GetPossiblePieceMoves(new BoardPosition(4, 4), boardState);
+            var possibleMoves = _whiteKnightTurnMoves.GetPossiblePieceMoves(new BoardPosition(4, 4), boardState);
             var expectedMoves = new List<BoardPosition>
             {
                 new BoardPosition(6, 5),
@@ -142,7 +142,7 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
 
             var boardState = _boardSetup.SetupBoardWith(pieces);
 
-            var possibleMoves = _blackKnightMoves.GetPossiblePieceMoves(new BoardPosition(4, 4), boardState);
+            var possibleMoves = _blackKnightTurnMoves.GetPossiblePieceMoves(new BoardPosition(4, 4), boardState);
             var expectedMoves = new List<BoardPosition>
             {
                 new BoardPosition(6, 5),
@@ -169,7 +169,7 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
 
             var boardState = _boardSetup.SetupBoardWith(pieces);
 
-            var possibleMoves = _whiteKnightMoves.GetPossiblePieceMoves(new BoardPosition(4, 4), boardState);
+            var possibleMoves = _whiteKnightTurnMoves.GetPossiblePieceMoves(new BoardPosition(4, 4), boardState);
             var expectedMoves = new List<BoardPosition>
             {
                 new BoardPosition(5, 6),
@@ -196,7 +196,7 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
 
             var boardState = _boardSetup.SetupBoardWith(pieces);
 
-            var possibleMoves = _blackKnightMoves.GetPossiblePieceMoves(new BoardPosition(4, 4), boardState);
+            var possibleMoves = _blackKnightTurnMoves.GetPossiblePieceMoves(new BoardPosition(4, 4), boardState);
             var expectedMoves = new List<BoardPosition>
             {
                 new BoardPosition(5, 6),
@@ -223,7 +223,7 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
 
             var boardState = _boardSetup.SetupBoardWith(pieces);
 
-            var possibleMoves = _whiteKnightMoves.GetPossiblePieceMoves(new BoardPosition(7, 7), boardState);
+            var possibleMoves = _whiteKnightTurnMoves.GetPossiblePieceMoves(new BoardPosition(7, 7), boardState);
             var expectedMoves = new List<BoardPosition>
             {
                 new BoardPosition(5, 6),
@@ -244,7 +244,7 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
 
             var boardState = _boardSetup.SetupBoardWith(pieces);
 
-            var possibleMoves = _blackKnightMoves.GetPossiblePieceMoves(new BoardPosition(7, 7), boardState);
+            var possibleMoves = _blackKnightTurnMoves.GetPossiblePieceMoves(new BoardPosition(7, 7), boardState);
             var expectedMoves = new List<BoardPosition>
             {
                 new BoardPosition(5, 6),
@@ -265,7 +265,7 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
 
             var boardState = _boardSetup.SetupBoardWith(pieces);
 
-            var possibleMoves = _whiteKnightMoves.GetPossiblePieceMoves(new BoardPosition(7, 4), boardState);
+            var possibleMoves = _whiteKnightTurnMoves.GetPossiblePieceMoves(new BoardPosition(7, 4), boardState);
             var expectedMoves = new List<BoardPosition>
             {
                 new BoardPosition(6, 6),
@@ -288,7 +288,7 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
 
             var boardState = _boardSetup.SetupBoardWith(pieces);
 
-            var possibleMoves = _blackKnightMoves.GetPossiblePieceMoves(new BoardPosition(7, 4), boardState);
+            var possibleMoves = _blackKnightTurnMoves.GetPossiblePieceMoves(new BoardPosition(7, 4), boardState);
             var expectedMoves = new List<BoardPosition>
             {
                 new BoardPosition(6, 6),

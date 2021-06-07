@@ -29,13 +29,13 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
             Container.UnbindAll();
         }
 
-        private PossibleRookMoves _whiteRookMoves;
-        private PossibleRookMoves _blackRookMoves;
+        private RookTurnMoves _whiteRookTurnMoves;
+        private RookTurnMoves _blackRookTurnMoves;
         private BoardSetup _boardSetup;
 
         private void InstallBindings()
         {
-            PossibleRookMovesInstaller.Install(Container);
+            RookTurnMovesInstaller.Install(Container);
             BoardSetupInstaller.Install(Container);
             PositionTranslatorInstaller.Install(Container);
             TileEvaluatorInstaller.Install(Container);
@@ -46,8 +46,8 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
         private void ResolveContainer()
         {
             var rookMovesFactory = Container.Resolve<PossibleRookMovesFactory>();
-            _whiteRookMoves = rookMovesFactory.Create(PieceColour.White);
-            _blackRookMoves = rookMovesFactory.Create(PieceColour.Black);
+            _whiteRookTurnMoves = rookMovesFactory.Create(PieceColour.White);
+            _blackRookTurnMoves = rookMovesFactory.Create(PieceColour.Black);
 
             _boardSetup = Container.Resolve<BoardSetup>();
         }
@@ -62,7 +62,7 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
 
             var boardState = _boardSetup.SetupBoardWith(pieces);
 
-            var possibleMoves = _whiteRookMoves.GetPossiblePieceMoves(new BoardPosition(4, 4), boardState);
+            var possibleMoves = _whiteRookTurnMoves.GetPossiblePieceMoves(new BoardPosition(4, 4), boardState);
             var expectedMoves = new List<BoardPosition>
             {
                 new BoardPosition(0, 4), // horizontal
@@ -95,7 +95,7 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
 
             var boardState = _boardSetup.SetupBoardWith(pieces);
 
-            var possibleMoves = _blackRookMoves.GetPossiblePieceMoves(new BoardPosition(4, 4), boardState);
+            var possibleMoves = _blackRookTurnMoves.GetPossiblePieceMoves(new BoardPosition(4, 4), boardState);
             var expectedMoves = new List<BoardPosition>
             {
                 new BoardPosition(0, 4), // horizontal
@@ -129,7 +129,7 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
 
             var boardState = _boardSetup.SetupBoardWith(pieces);
 
-            var possibleMoves = _whiteRookMoves.GetPossiblePieceMoves(new BoardPosition(4, 4), boardState);
+            var possibleMoves = _whiteRookTurnMoves.GetPossiblePieceMoves(new BoardPosition(4, 4), boardState);
             var expectedMoves = new List<BoardPosition>
             {
                 new BoardPosition(0, 4), // horizontal
@@ -162,7 +162,7 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
 
             var boardState = _boardSetup.SetupBoardWith(pieces);
 
-            var possibleMoves = _blackRookMoves.GetPossiblePieceMoves(new BoardPosition(4, 4), boardState);
+            var possibleMoves = _blackRookTurnMoves.GetPossiblePieceMoves(new BoardPosition(4, 4), boardState);
             var expectedMoves = new List<BoardPosition>
             {
                 new BoardPosition(0, 4), // horizontal
@@ -195,7 +195,7 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
 
             var boardState = _boardSetup.SetupBoardWith(pieces);
 
-            var possibleMoves = _whiteRookMoves.GetPossiblePieceMoves(new BoardPosition(4, 4), boardState);
+            var possibleMoves = _whiteRookTurnMoves.GetPossiblePieceMoves(new BoardPosition(4, 4), boardState);
             var expectedMoves = new List<BoardPosition>
             {
                 new BoardPosition(0, 4), // horizontal
@@ -227,7 +227,7 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
 
             var boardState = _boardSetup.SetupBoardWith(pieces);
 
-            var possibleMoves = _blackRookMoves.GetPossiblePieceMoves(new BoardPosition(4, 4), boardState);
+            var possibleMoves = _blackRookTurnMoves.GetPossiblePieceMoves(new BoardPosition(4, 4), boardState);
             var expectedMoves = new List<BoardPosition>
             {
                 new BoardPosition(0, 4), // horizontal

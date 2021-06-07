@@ -22,12 +22,12 @@ namespace Bindings.Utils
             PieceMoverInstaller.Install(container);
             PieceSpawnerInstaller.Install(container);
             AllPossibleMovesGeneratorInstaller.Install(container);
-            PossibleBishopMovesInstaller.Install(container);
-            PossibleKingMovesInstaller.Install(container);
-            PossibleKnightMovesInstaller.Install(container);
-            PossiblePawnMovesInstaller.Install(container);
-            PossibleQueenMovesInstaller.Install(container);
-            PossibleRookMovesInstaller.Install(container);
+            BishopTurnMovesInstaller.Install(container);
+            KingTurnMovesInstaller.Install(container);
+            KnightTurnMovesInstaller.Install(container);
+            PawnTurnMovesInstaller.Install(container);
+            QueenTurnMovesInstaller.Install(container);
+            RookTurnMovesInstaller.Install(container);
             PossibleMoveFactoryInstaller.Install(container);
             BoardEvalInstaller.Install(container);
             NonTurnRemoverInstaller.Install(container);

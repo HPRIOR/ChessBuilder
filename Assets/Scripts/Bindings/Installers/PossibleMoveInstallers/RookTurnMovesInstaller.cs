@@ -5,12 +5,12 @@ using Zenject;
 
 namespace Bindings.Installers.PossibleMoveInstallers
 {
-    public class PossibleQueenMovesInstaller : Installer<PossibleQueenMovesInstaller>
+    public class RookTurnMovesInstaller : Installer<RookTurnMovesInstaller>
     {
         public override void InstallBindings()
         {
-            Container.Bind<PossibleQueenMovesFactory>().AsSingle();
-            Container.BindFactory<PieceColour, PossibleQueenMoves, PossibleQueenMoves.Factory>().FromNew();
+            Container.Bind<PossibleRookMovesFactory>().AsSingle();
+            Container.BindFactory<PieceColour, RookTurnMoves, RookTurnMoves.Factory>().FromNew();
         }
     }
 }

@@ -7,12 +7,12 @@ using Zenject;
 
 namespace Models.Services.Moves.PossibleMoveGenerators
 {
-    public class PossibleKnightMoves : IPieceMoveGenerator
+    public class KnightTurnMoves : IPieceMoveGenerator
     {
         private readonly IPositionTranslator _positionTranslator;
         private readonly ITileEvaluator _tileEvaluator;
 
-        public PossibleKnightMoves(PieceColour pieceColour, IPositionTranslatorFactory positionTranslatorFactory,
+        public KnightTurnMoves(PieceColour pieceColour, IPositionTranslatorFactory positionTranslatorFactory,
             ITileEvaluatorFactory tileEvaluatorFactory)
         {
             _positionTranslator = positionTranslatorFactory.Create(pieceColour);
@@ -65,7 +65,7 @@ namespace Models.Services.Moves.PossibleMoveGenerators
             return lateralMoves.Concat(verticalMoves);
         }
 
-        public class Factory : PlaceholderFactory<PieceColour, PossibleKnightMoves>
+        public class Factory : PlaceholderFactory<PieceColour, KnightTurnMoves>
         {
         }
     }

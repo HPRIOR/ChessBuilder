@@ -5,14 +5,14 @@ namespace Models.Services.Moves.Factories.PossibleMoveGeneratorFactories
 {
     public class PossibleBishopMovesFactory
     {
-        private readonly PossibleBishopMoves.Factory _factory;
+        private readonly BishopTurnMoves.Factory _factory;
 
-        public PossibleBishopMovesFactory(PossibleBishopMoves.Factory factory)
+        public PossibleBishopMovesFactory(BishopTurnMoves.Factory factory)
         {
             _factory = factory;
         }
 
-        public PossibleBishopMoves Create(PieceColour pieceColour)
+        public BishopTurnMoves Create(PieceColour pieceColour)
         {
             return _factory.Create(pieceColour);
         }

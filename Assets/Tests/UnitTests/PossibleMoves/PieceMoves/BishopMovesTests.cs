@@ -29,13 +29,13 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
             Container.UnbindAll();
         }
 
-        private PossibleBishopMoves _whiteBishopMoves;
-        private PossibleBishopMoves _blackBishopMoves;
+        private BishopTurnMoves _whiteBishopTurnMoves;
+        private BishopTurnMoves _blackBishopTurnMoves;
         private BoardSetup _boardSetup;
 
         private void InstallBindings()
         {
-            PossibleBishopMovesInstaller.Install(Container);
+            BishopTurnMovesInstaller.Install(Container);
             BoardSetupInstaller.Install(Container);
             BoardScannerInstaller.Install(Container);
             TileEvaluatorInstaller.Install(Container);
@@ -46,8 +46,8 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
         private void ResolveContainer()
         {
             var bishopMovesFactory = Container.Resolve<PossibleBishopMovesFactory>();
-            _whiteBishopMoves = bishopMovesFactory.Create(PieceColour.White);
-            _blackBishopMoves = bishopMovesFactory.Create(PieceColour.Black);
+            _whiteBishopTurnMoves = bishopMovesFactory.Create(PieceColour.White);
+            _blackBishopTurnMoves = bishopMovesFactory.Create(PieceColour.Black);
             _boardSetup = Container.Resolve<BoardSetup>();
         }
 
@@ -61,7 +61,7 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
 
             var boardState = _boardSetup.SetupBoardWith(pieces);
 
-            var possibleMoves = _whiteBishopMoves.GetPossiblePieceMoves(new BoardPosition(4, 4), boardState);
+            var possibleMoves = _whiteBishopTurnMoves.GetPossiblePieceMoves(new BoardPosition(4, 4), boardState);
             var expectedMoves = new List<BoardPosition>
             {
                 new BoardPosition(0, 0),
@@ -91,7 +91,7 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
 
             var boardState = _boardSetup.SetupBoardWith(pieces);
 
-            var possibleMoves = _blackBishopMoves.GetPossiblePieceMoves(new BoardPosition(4, 4), boardState);
+            var possibleMoves = _blackBishopTurnMoves.GetPossiblePieceMoves(new BoardPosition(4, 4), boardState);
             var expectedMoves = new List<BoardPosition>
             {
                 new BoardPosition(0, 0),
@@ -122,7 +122,7 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
 
             var boardState = _boardSetup.SetupBoardWith(pieces);
 
-            var possibleMoves = _whiteBishopMoves.GetPossiblePieceMoves(new BoardPosition(4, 4), boardState);
+            var possibleMoves = _whiteBishopTurnMoves.GetPossiblePieceMoves(new BoardPosition(4, 4), boardState);
             var expectedMoves = new List<BoardPosition>
             {
                 new BoardPosition(0, 0),
@@ -152,7 +152,7 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
 
             var boardState = _boardSetup.SetupBoardWith(pieces);
 
-            var possibleMoves = _blackBishopMoves.GetPossiblePieceMoves(new BoardPosition(4, 4), boardState);
+            var possibleMoves = _blackBishopTurnMoves.GetPossiblePieceMoves(new BoardPosition(4, 4), boardState);
             var expectedMoves = new List<BoardPosition>
             {
                 new BoardPosition(0, 0),
@@ -183,7 +183,7 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
 
             var boardState = _boardSetup.SetupBoardWith(pieces);
 
-            var possibleMoves = _whiteBishopMoves.GetPossiblePieceMoves(new BoardPosition(4, 4), boardState);
+            var possibleMoves = _whiteBishopTurnMoves.GetPossiblePieceMoves(new BoardPosition(4, 4), boardState);
             var expectedMoves = new List<BoardPosition>
             {
                 new BoardPosition(0, 0),
@@ -212,7 +212,7 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
 
             var boardState = _boardSetup.SetupBoardWith(pieces);
 
-            var possibleMoves = _blackBishopMoves.GetPossiblePieceMoves(new BoardPosition(4, 4), boardState);
+            var possibleMoves = _blackBishopTurnMoves.GetPossiblePieceMoves(new BoardPosition(4, 4), boardState);
             var expectedMoves = new List<BoardPosition>
             {
                 new BoardPosition(0, 0),

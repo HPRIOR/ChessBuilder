@@ -13,12 +13,12 @@ namespace Bindings.MonoInstallers
             PossibleMoveFactoryInstaller.Install(Container);
             AllPossibleMovesGeneratorInstaller.Install(Container);
 
-            PossibleBishopMovesInstaller.Install(Container);
-            PossibleKingMovesInstaller.Install(Container);
-            PossibleKnightMovesInstaller.Install(Container);
-            PossiblePawnMovesInstaller.Install(Container);
-            PossibleQueenMovesInstaller.Install(Container);
-            PossibleRookMovesInstaller.Install(Container);
+            BishopTurnMovesInstaller.Install(Container);
+            KingTurnMovesInstaller.Install(Container);
+            KnightTurnMovesInstaller.Install(Container);
+            PawnTurnMovesInstaller.Install(Container);
+            QueenTurnMovesInstaller.Install(Container);
+            RookTurnMovesInstaller.Install(Container);
 
             MoveValidatorInstaller.Install(Container);
             TileEvaluatorInstaller.Install(Container);

@@ -29,13 +29,13 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
             Container.UnbindAll();
         }
 
-        private PossibleQueenMoves _blackQueenMoves;
-        private PossibleQueenMoves _whiteQueenMoves;
+        private QueenTurnMoves _blackQueenTurnMoves;
+        private QueenTurnMoves _whiteQueenTurnMoves;
         private BoardSetup _boardSetup;
 
         private void InstallBindings()
         {
-            PossibleQueenMovesInstaller.Install(Container);
+            QueenTurnMovesInstaller.Install(Container);
             BoardSetupInstaller.Install(Container);
             PositionTranslatorInstaller.Install(Container);
             TileEvaluatorInstaller.Install(Container);
@@ -46,8 +46,8 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
         private void ResolveContainer()
         {
             var queenMovesFactory = Container.Resolve<PossibleQueenMovesFactory>();
-            _blackQueenMoves = queenMovesFactory.Create(PieceColour.Black);
-            _whiteQueenMoves = queenMovesFactory.Create(PieceColour.White);
+            _blackQueenTurnMoves = queenMovesFactory.Create(PieceColour.Black);
+            _whiteQueenTurnMoves = queenMovesFactory.Create(PieceColour.White);
 
             _boardSetup = Container.Resolve<BoardSetup>();
         }
@@ -62,7 +62,7 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
 
             var boardState = _boardSetup.SetupBoardWith(pieces);
 
-            var possibleMoves = _whiteQueenMoves.GetPossiblePieceMoves(new BoardPosition(4, 4), boardState);
+            var possibleMoves = _whiteQueenTurnMoves.GetPossiblePieceMoves(new BoardPosition(4, 4), boardState);
             var expectedMoves = new List<BoardPosition>
             {
                 new BoardPosition(0, 0), // bottom-left to top-right diagonal
@@ -108,7 +108,7 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
 
             var boardState = _boardSetup.SetupBoardWith(pieces);
 
-            var possibleMoves = _blackQueenMoves.GetPossiblePieceMoves(new BoardPosition(4, 4), boardState);
+            var possibleMoves = _blackQueenTurnMoves.GetPossiblePieceMoves(new BoardPosition(4, 4), boardState);
             var expectedMoves = new List<BoardPosition>
             {
                 new BoardPosition(0, 0), // bottom-left to top-right diagonal
@@ -154,7 +154,7 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
 
             var boardState = _boardSetup.SetupBoardWith(pieces);
 
-            var possibleMoves = _whiteQueenMoves.GetPossiblePieceMoves(new BoardPosition(4, 4), boardState);
+            var possibleMoves = _whiteQueenTurnMoves.GetPossiblePieceMoves(new BoardPosition(4, 4), boardState);
             var expectedMoves = new List<BoardPosition>
             {
                 new BoardPosition(0, 0), // bottom-left to top-right diagonal
@@ -199,7 +199,7 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
 
             var boardState = _boardSetup.SetupBoardWith(pieces);
 
-            var possibleMoves = _blackQueenMoves.GetPossiblePieceMoves(new BoardPosition(4, 4), boardState);
+            var possibleMoves = _blackQueenTurnMoves.GetPossiblePieceMoves(new BoardPosition(4, 4), boardState);
             var expectedMoves = new List<BoardPosition>
             {
                 new BoardPosition(0, 0), // bottom-left to top-right diagonal
@@ -244,7 +244,7 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
 
             var boardState = _boardSetup.SetupBoardWith(pieces);
 
-            var possibleMoves = _whiteQueenMoves.GetPossiblePieceMoves(new BoardPosition(4, 4), boardState);
+            var possibleMoves = _whiteQueenTurnMoves.GetPossiblePieceMoves(new BoardPosition(4, 4), boardState);
             var expectedMoves = new List<BoardPosition>
             {
                 new BoardPosition(0, 0), // bottom-left to top-right diagonal
@@ -287,7 +287,7 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
 
             var boardState = _boardSetup.SetupBoardWith(pieces);
 
-            var possibleMoves = _blackQueenMoves.GetPossiblePieceMoves(new BoardPosition(4, 4), boardState);
+            var possibleMoves = _blackQueenTurnMoves.GetPossiblePieceMoves(new BoardPosition(4, 4), boardState);
             var expectedMoves = new List<BoardPosition>
             {
                 new BoardPosition(0, 0), // bottom-left to top-right diagonal

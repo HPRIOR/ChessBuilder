@@ -1,6 +1,6 @@
 ﻿namespace Models.Services.Interfaces
 {
-    public interface IPossibleMoveFactory
+    public interface IMoveGeneratorRepository
     {
         IPieceMoveGenerator GetPossibleMoveGenerator(State.PieceState.Piece piece);
     }

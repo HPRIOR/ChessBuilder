@@ -18,7 +18,7 @@ namespace Models.Services.Moves.PossibleMoveGenerators.TurnMoves
             ITileEvaluatorFactory tileEvaluatorFactory)
         {
             _positionTranslator = positionTranslatorFactory.Create(pieceColour);
-            _tileEvaluator = tileEvaluatorFactory.Create(pieceColour);
+            _tileEvaluator = tileEvaluatorFactory.Create(pieceColour, false);
         }
 
         public IEnumerable<BoardPosition> GetPossiblePieceMoves(BoardPosition originPosition, BoardState boardState)

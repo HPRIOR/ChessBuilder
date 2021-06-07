@@ -22,7 +22,7 @@ namespace Tests.UnitTests.BoardTests
 
         private BoardState GetBoardState()
         {
-            return new BoardState(_boardGenerator.GenerateBoard());
+            return new BoardState();
         }
 
         [Test]

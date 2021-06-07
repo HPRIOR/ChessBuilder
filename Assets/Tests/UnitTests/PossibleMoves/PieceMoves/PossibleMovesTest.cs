@@ -37,7 +37,7 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
         [Test]
         public void WithNoPieces_NoPossibleMoves()
         {
-            var boardState = new BoardState(_boardGenerator);
+            var boardState = new BoardState();
             var possibleMoves =
                 _allPossibleMovesGenerator.GetPossibleMoves(boardState, PieceColour.White);
             Assert.AreEqual(0, possibleMoves.SelectMany(x => x.Value).Count());

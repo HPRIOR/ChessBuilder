@@ -41,7 +41,7 @@ namespace Tests.UnitTests.Controllers.PieceMovers
         [Test]
         public void GeneratesNewBoard()
         {
-            var boardState = new BoardState(_boardGenerator);
+            var boardState = new BoardState();
             var newState =
                 _pieceMover.GenerateNewBoardState(boardState, new BoardPosition(1, 1), new BoardPosition(2, 2));
             Assert.AreNotSame(newState, boardState);

@@ -48,7 +48,7 @@ namespace Tests.UnitTests.Game
         [Test]
         public void BoardStateIsUpdated_WhenPassedBoardState()
         {
-            var boardState = new BoardState(_boardGenerator);
+            var boardState = new BoardState();
             _gameStateController.UpdateBoardState(boardState);
 
             Assert.AreSame(boardState, _gameStateController.CurrentBoardState);
@@ -63,7 +63,7 @@ namespace Tests.UnitTests.Game
             Debug.Assert(turnEventInvoker != null, nameof(turnEventInvoker) + " != null");
             turnEventInvoker.GameStateChangeEvent += mockFunc;
 
-            var boardState = new BoardState(_boardGenerator);
+            var boardState = new BoardState();
             _gameStateController.UpdateBoardState(boardState);
 
             Assert.AreEqual(1, count);

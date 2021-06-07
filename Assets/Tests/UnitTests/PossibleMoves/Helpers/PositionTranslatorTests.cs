@@ -63,7 +63,7 @@ namespace Tests.UnitTests.PossibleMoves.Helpers
         public void WhenPieceColourIsBlack_TilIsMirrored()
         {
             var positionTranslator = _positionTranslatorFactory.Create(PieceColour.Black);
-            var board = new BoardState(_boardGenerator);
+            var board = new BoardState();
             board.Board[7, 7].CurrentPiece = new Piece(PieceType.BlackKnight);
             var mirroredTile = positionTranslator.GetRelativeTileAt(new BoardPosition(0, 0), board);
             Assert.AreEqual(PieceType.BlackKnight, mirroredTile.CurrentPiece.Type);
@@ -73,7 +73,7 @@ namespace Tests.UnitTests.PossibleMoves.Helpers
         public void WhenPieceColourIsWhite_TilIsSame()
         {
             var positionTranslator = _positionTranslatorFactory.Create(PieceColour.White);
-            var board = new BoardState(_boardGenerator);
+            var board = new BoardState();
             board.Board[7, 7].CurrentPiece = new Piece(PieceType.BlackKnight);
             var mirroredTile = positionTranslator.GetRelativeTileAt(new BoardPosition(7, 7), board);
             Assert.AreEqual(PieceType.BlackKnight, mirroredTile.CurrentPiece.Type);

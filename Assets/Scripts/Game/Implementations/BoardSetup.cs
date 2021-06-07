@@ -17,7 +17,7 @@ namespace Game.Implementations
 
         public BoardState SetupBoard(IEnumerable<(PieceType piece, BoardPosition boardPosition)> pieces)
         {
-            var boardState = new BoardState(_boardGenerator.GenerateBoard());
+            var boardState = new BoardState();
             var board = boardState.Board;
             pieces.ToList().ForEach(tup =>
                 board[tup.boardPosition.X, tup.boardPosition.Y].CurrentPiece = new Piece(tup.piece));

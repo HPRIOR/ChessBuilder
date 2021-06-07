@@ -16,9 +16,9 @@ namespace Models.Services.Moves.Factories
             _reversedTileEvalFactory = reversedTileEvalFactory;
         }
 
-        public ITileEvaluator Create(PieceColour pieceColour, bool reversed)
+        public ITileEvaluator Create(PieceColour pieceColour, bool turnMove)
         {
-            if (reversed) return _reversedTileEvalFactory.Create(pieceColour);
+            if (!turnMove) return _reversedTileEvalFactory.Create(pieceColour);
             return _tileEvalFactory.Create(pieceColour);
         }
     }

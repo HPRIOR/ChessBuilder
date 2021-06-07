@@ -4,6 +4,6 @@ namespace Models.Services.Interfaces
 {
     public interface ITileEvaluatorFactory
     {
-        ITileEvaluator Create(PieceColour pieceColour);
+        ITileEvaluator Create(PieceColour pieceColour, bool reversed);
     }
 }

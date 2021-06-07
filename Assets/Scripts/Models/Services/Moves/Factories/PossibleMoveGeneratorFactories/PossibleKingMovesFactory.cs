@@ -1,4 +1,4 @@
-﻿using Models.Services.Moves.PossibleMoveGenerators;
+﻿using Models.Services.Moves.PossibleMoveGenerators.TurnMoves;
 using Models.State.PieceState;
 
 namespace Models.Services.Moves.Factories.PossibleMoveGeneratorFactories

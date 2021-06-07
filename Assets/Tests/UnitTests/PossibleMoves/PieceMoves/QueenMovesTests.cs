@@ -5,7 +5,7 @@ using Bindings.Installers.PieceInstallers;
 using Bindings.Installers.PossibleMoveInstallers;
 using Game.Implementations;
 using Models.Services.Moves.Factories.PossibleMoveGeneratorFactories;
-using Models.Services.Moves.PossibleMoveGenerators;
+using Models.Services.Moves.PossibleMoveGenerators.TurnMoves;
 using Models.State.Board;
 using Models.State.PieceState;
 using NUnit.Framework;

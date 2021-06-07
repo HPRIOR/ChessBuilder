@@ -6,7 +6,7 @@ using Models.State.Board;
 using Models.State.PieceState;
 using Zenject;
 
-namespace Models.Services.Moves.PossibleMoveGenerators
+namespace Models.Services.Moves.PossibleMoveGenerators.TurnMoves
 {
     public class RookTurnMoves : IPieceMoveGenerator
     {

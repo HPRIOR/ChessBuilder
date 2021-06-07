@@ -47,6 +47,9 @@ namespace Tests.UnitTests.Controllers.PieceMovers
             Assert.AreNotSame(newState, boardState);
         }
 
+
+        // TODO test class internals are not same reference when updated
+
         [Test]
         public void EvacuatedTileIsNull()
         {

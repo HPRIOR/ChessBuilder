@@ -4,6 +4,6 @@ namespace Models.Services.Interfaces
 {
     public interface IBoardScannerFactory
     {
-        IBoardScanner Create(PieceColour pieceColour);
+        IBoardScanner Create(PieceColour pieceColour, bool turnMove);
     }
 }

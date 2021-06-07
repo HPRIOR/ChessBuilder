@@ -14,10 +14,11 @@ namespace Models.Services.Moves.PossibleMoveHelpers
 
         public BoardScanner(
             PieceColour pieceColour,
+            bool turnMove,
             ITileEvaluatorFactory tileEvaluatorFactory,
             IPositionTranslatorFactory positionTranslatorFactory)
         {
-            _tileEvaluator = tileEvaluatorFactory.Create(pieceColour, false);
+            _tileEvaluator = tileEvaluatorFactory.Create(pieceColour, turnMove);
             _positionTranslator = positionTranslatorFactory.Create(pieceColour);
         }
 
@@ -62,7 +63,7 @@ namespace Models.Services.Moves.PossibleMoveHelpers
             return _tileEvaluator.FriendlyPieceIn(_positionTranslator.GetRelativeTileAt(boardPosition, boardState));
         }
 
-        public class Factory : PlaceholderFactory<PieceColour, BoardScanner>
+        public class Factory : PlaceholderFactory<PieceColour, bool, BoardScanner>
         {
         }
     }

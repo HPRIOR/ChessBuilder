@@ -4,8 +4,8 @@ using Bindings.Installers.GameInstallers;
 using Bindings.Installers.MoveInstallers;
 using Bindings.Installers.PieceInstallers;
 using Game.Implementations;
+using Models.Services.Interfaces;
 using Models.Services.Moves.Factories.PossibleMoveGeneratorFactories;
-using Models.Services.Moves.PossibleMoveGenerators.TurnMoves;
 using Models.State.Board;
 using Models.State.PieceState;
 using NUnit.Framework;
@@ -29,13 +29,13 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
             Container.UnbindAll();
         }
 
-        private QueenTurnMoves _blackQueenTurnMoves;
-        private QueenTurnMoves _whiteQueenTurnMoves;
+        private IPieceMoveGenerator _blackQueenTurnMoves;
+        private IPieceMoveGenerator _whiteQueenTurnMoves;
         private BoardSetup _boardSetup;
 
         private void InstallBindings()
         {
-            QueenTurnMovesInstaller.Install(Container);
+            PossibleMovesFactoryInstaller.Install(Container);
             BoardSetupInstaller.Install(Container);
             PositionTranslatorInstaller.Install(Container);
             TileEvaluatorInstaller.Install(Container);
@@ -45,9 +45,9 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
 
         private void ResolveContainer()
         {
-            var queenMovesFactory = Container.Resolve<PossibleQueenMovesFactory>();
-            _blackQueenTurnMoves = queenMovesFactory.Create(PieceColour.Black);
-            _whiteQueenTurnMoves = queenMovesFactory.Create(PieceColour.White);
+            var possibleMovesFactory = Container.Resolve<PossibleMovesFactory>();
+            _blackQueenTurnMoves = possibleMovesFactory.Create(PieceType.BlackQueen, true);
+            _whiteQueenTurnMoves = possibleMovesFactory.Create(PieceType.WhiteQueen, true);
 
             _boardSetup = Container.Resolve<BoardSetup>();
         }

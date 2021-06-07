@@ -4,8 +4,8 @@ using Bindings.Installers.GameInstallers;
 using Bindings.Installers.MoveInstallers;
 using Bindings.Installers.PieceInstallers;
 using Game.Implementations;
+using Models.Services.Interfaces;
 using Models.Services.Moves.Factories.PossibleMoveGeneratorFactories;
-using Models.Services.Moves.PossibleMoveGenerators.TurnMoves;
 using Models.State.Board;
 using Models.State.PieceState;
 using NUnit.Framework;
@@ -29,13 +29,13 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
             Container.UnbindAll();
         }
 
-        private BishopTurnMoves _whiteBishopTurnMoves;
-        private BishopTurnMoves _blackBishopTurnMoves;
+        private IPieceMoveGenerator _whiteBishopTurnMoves;
+        private IPieceMoveGenerator _blackBishopTurnMoves;
         private BoardSetup _boardSetup;
 
         private void InstallBindings()
         {
-            BishopTurnMovesInstaller.Install(Container);
+            PossibleMovesFactoryInstaller.Install(Container);
             BoardSetupInstaller.Install(Container);
             BoardScannerInstaller.Install(Container);
             TileEvaluatorInstaller.Install(Container);
@@ -45,9 +45,9 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
 
         private void ResolveContainer()
         {
-            var bishopMovesFactory = Container.Resolve<PossibleBishopMovesFactory>();
-            _whiteBishopTurnMoves = bishopMovesFactory.Create(PieceColour.White);
-            _blackBishopTurnMoves = bishopMovesFactory.Create(PieceColour.Black);
+            var bishopMovesFactory = Container.Resolve<PossibleMovesFactory>();
+            _whiteBishopTurnMoves = bishopMovesFactory.Create(PieceType.WhiteBishop, true);
+            _blackBishopTurnMoves = bishopMovesFactory.Create(PieceType.BlackBishop, true);
             _boardSetup = Container.Resolve<BoardSetup>();
         }
 

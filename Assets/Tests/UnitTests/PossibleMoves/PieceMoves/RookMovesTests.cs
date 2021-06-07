@@ -4,8 +4,8 @@ using Bindings.Installers.GameInstallers;
 using Bindings.Installers.MoveInstallers;
 using Bindings.Installers.PieceInstallers;
 using Game.Implementations;
+using Models.Services.Interfaces;
 using Models.Services.Moves.Factories.PossibleMoveGeneratorFactories;
-using Models.Services.Moves.PossibleMoveGenerators.TurnMoves;
 using Models.State.Board;
 using Models.State.PieceState;
 using NUnit.Framework;
@@ -29,13 +29,13 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
             Container.UnbindAll();
         }
 
-        private RookTurnMoves _whiteRookTurnMoves;
-        private RookTurnMoves _blackRookTurnMoves;
+        private IPieceMoveGenerator _whiteRookTurnMoves;
+        private IPieceMoveGenerator _blackRookTurnMoves;
         private BoardSetup _boardSetup;
 
         private void InstallBindings()
         {
-            RookTurnMovesInstaller.Install(Container);
+            PossibleMovesFactoryInstaller.Install(Container);
             BoardSetupInstaller.Install(Container);
             PositionTranslatorInstaller.Install(Container);
             TileEvaluatorInstaller.Install(Container);
@@ -45,9 +45,9 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
 
         private void ResolveContainer()
         {
-            var rookMovesFactory = Container.Resolve<PossibleRookMovesFactory>();
-            _whiteRookTurnMoves = rookMovesFactory.Create(PieceColour.White);
-            _blackRookTurnMoves = rookMovesFactory.Create(PieceColour.Black);
+            var possibleMovesFactory = Container.Resolve<PossibleMovesFactory>();
+            _whiteRookTurnMoves = possibleMovesFactory.Create(PieceType.WhiteRook, true);
+            _blackRookTurnMoves = possibleMovesFactory.Create(PieceType.BlackRook, true);
 
             _boardSetup = Container.Resolve<BoardSetup>();
         }

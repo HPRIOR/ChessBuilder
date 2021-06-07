@@ -17,7 +17,7 @@ namespace Models.Services.Moves.PossibleMoveHelpers
             ITileEvaluatorFactory tileEvaluatorFactory,
             IPositionTranslatorFactory positionTranslatorFactory)
         {
-            _tileEvaluator = tileEvaluatorFactory.Create(pieceColour);
+            _tileEvaluator = tileEvaluatorFactory.Create(pieceColour, false);
             _positionTranslator = positionTranslatorFactory.Create(pieceColour);
         }
 

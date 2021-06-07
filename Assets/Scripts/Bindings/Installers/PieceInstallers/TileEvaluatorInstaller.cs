@@ -12,6 +12,7 @@ namespace Bindings.Installers.PieceInstallers
         {
             Container.Bind<ITileEvaluatorFactory>().To<TileEvaluatorFactory>().AsSingle();
             Container.BindFactory<PieceColour, TileEvaluator, TileEvaluator.Factory>().FromNew();
+            Container.BindFactory<PieceColour, ReversedTileEvaluator, ReversedTileEvaluator.Factory>().FromNew();
         }
     }
 }

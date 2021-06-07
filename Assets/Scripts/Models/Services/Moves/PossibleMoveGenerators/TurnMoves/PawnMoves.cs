@@ -7,12 +7,12 @@ using Zenject;
 
 namespace Models.Services.Moves.PossibleMoveGenerators.TurnMoves
 {
-    public class PawnTurnMoves : IPieceMoveGenerator
+    public class PawnMoves : IPieceMoveGenerator
     {
         private readonly IPositionTranslator _positionTranslator;
         private readonly ITileEvaluator _tileEvaluator;
 
-        public PawnTurnMoves(PieceColour pieceColour, IPositionTranslatorFactory positionTranslatorFactory,
+        public PawnMoves(PieceColour pieceColour, bool turnMove, IPositionTranslatorFactory positionTranslatorFactory,
             ITileEvaluatorFactory tileEvaluatorFactory)
         {
             _positionTranslator = positionTranslatorFactory.Create(pieceColour);
@@ -57,7 +57,7 @@ namespace Models.Services.Moves.PossibleMoveGenerators.TurnMoves
             return potentialMoves;
         }
 
-        public class Factory : PlaceholderFactory<PieceColour, PawnTurnMoves>
+        public class Factory : PlaceholderFactory<PieceColour, bool, PawnMoves>
         {
         }
     }

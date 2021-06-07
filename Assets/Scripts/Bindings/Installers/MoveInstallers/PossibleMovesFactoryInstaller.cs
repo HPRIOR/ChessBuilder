@@ -10,12 +10,12 @@ namespace Bindings.Installers.MoveInstallers
         public override void InstallBindings()
         {
             Container.Bind<PossibleMovesFactory>().AsSingle();
-            Container.BindFactory<PieceColour, QueenTurnMoves, QueenTurnMoves.Factory>().FromNew();
-            Container.BindFactory<PieceColour, RookTurnMoves, RookTurnMoves.Factory>().FromNew();
-            Container.BindFactory<PieceColour, PawnTurnMoves, PawnTurnMoves.Factory>().FromNew();
-            Container.BindFactory<PieceColour, BishopTurnMoves, BishopTurnMoves.Factory>().FromNew();
-            Container.BindFactory<PieceColour, KingTurnMoves, KingTurnMoves.Factory>().FromNew();
-            Container.BindFactory<PieceColour, KnightTurnMoves, KnightTurnMoves.Factory>().FromNew();
+            Container.BindFactory<PieceColour, bool, QueenMoves, QueenMoves.Factory>().FromNew();
+            Container.BindFactory<PieceColour, bool, RookTurnMoves, RookTurnMoves.Factory>().FromNew();
+            Container.BindFactory<PieceColour, bool, PawnMoves, PawnMoves.Factory>().FromNew();
+            Container.BindFactory<PieceColour, bool, BishopMoves, BishopMoves.Factory>().FromNew();
+            Container.BindFactory<PieceColour, bool, KingMoves, KingMoves.Factory>().FromNew();
+            Container.BindFactory<PieceColour, bool, KnightMoves, KnightMoves.Factory>().FromNew();
         }
     }
 }

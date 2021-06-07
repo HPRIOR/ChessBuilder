@@ -47,7 +47,7 @@ namespace Tests.UnitTests.PossibleMoves.Helpers
         [Test]
         public void OnEmptyBoard_WithWhitePiece_OnSWCorner_ScannerGetsAllPositions()
         {
-            var boardScanner = _boardScannerFactory.Create(PieceColour.White);
+            var boardScanner = _boardScannerFactory.Create(PieceColour.White, true);
             var board = new BoardState();
             var positions = boardScanner.ScanIn(Direction.NE, new BoardPosition(0, 0), board);
             var expected = new HashSet<BoardPosition>
@@ -67,7 +67,7 @@ namespace Tests.UnitTests.PossibleMoves.Helpers
         [Test]
         public void OnEmptyBoard_WithBlackPiece_OnNECorner__ScannerGetsAllPositions()
         {
-            var boardScanner = _boardScannerFactory.Create(PieceColour.Black);
+            var boardScanner = _boardScannerFactory.Create(PieceColour.Black, true);
             var board = new BoardState();
             var positions = boardScanner.ScanIn(Direction.NE, new BoardPosition(0, 0), board);
             var expected = new HashSet<BoardPosition>
@@ -87,7 +87,7 @@ namespace Tests.UnitTests.PossibleMoves.Helpers
         [Test]
         public void WithEnemy_OnSWCorner_WithBlackPiece_OnNECorner_ScannerGetsAllPositions()
         {
-            var boardScanner = _boardScannerFactory.Create(PieceColour.Black);
+            var boardScanner = _boardScannerFactory.Create(PieceColour.Black, true);
             var board = new BoardState();
             board.Board[0, 0].CurrentPiece = new Piece(PieceType.WhiteKnight);
             var positions = boardScanner.ScanIn(Direction.NE, new BoardPosition(0, 0), board);
@@ -109,7 +109,7 @@ namespace Tests.UnitTests.PossibleMoves.Helpers
         [Test]
         public void WithEnemy_OnNECorner_WithWhitePiece_OnSWCorner_ScannerGetsAllPositions()
         {
-            var boardScanner = _boardScannerFactory.Create(PieceColour.White);
+            var boardScanner = _boardScannerFactory.Create(PieceColour.White, true);
             var board = new BoardState();
             board.Board[7, 7].CurrentPiece = new Piece(PieceType.BlackBishop);
             var positions = boardScanner.ScanIn(Direction.NE, new BoardPosition(0, 0), board);
@@ -131,7 +131,7 @@ namespace Tests.UnitTests.PossibleMoves.Helpers
         [Test]
         public void WithFriend_OnNECorner_WithWhitePiece_OnSWCorner_ScannerGetsAllPositionsMinusOne()
         {
-            var boardScanner = _boardScannerFactory.Create(PieceColour.White);
+            var boardScanner = _boardScannerFactory.Create(PieceColour.White, true);
             var board = new BoardState();
             board.Board[7, 7].CurrentPiece = new Piece(PieceType.WhiteBishop);
             var positions = boardScanner.ScanIn(Direction.NE, new BoardPosition(0, 0), board);
@@ -152,7 +152,7 @@ namespace Tests.UnitTests.PossibleMoves.Helpers
         [Test]
         public void WithFriend_OnSWCorner_WithBlackPiece_OnNECorner_ScannerGetsAllPositionsMinusOne()
         {
-            var boardScanner = _boardScannerFactory.Create(PieceColour.Black);
+            var boardScanner = _boardScannerFactory.Create(PieceColour.Black, true);
             var board = new BoardState();
             board.Board[0, 0].CurrentPiece = new Piece(PieceType.BlackKnight);
             var positions = boardScanner.ScanIn(Direction.NE, new BoardPosition(0, 0), board);
@@ -172,7 +172,7 @@ namespace Tests.UnitTests.PossibleMoves.Helpers
         [Test]
         public void WithFriend_InMiddle_WithWhitePiece_OnSWCorner_ScannerIsBlocked()
         {
-            var boardScanner = _boardScannerFactory.Create(PieceColour.White);
+            var boardScanner = _boardScannerFactory.Create(PieceColour.White, true);
             var board = new BoardState();
             board.Board[4, 4].CurrentPiece = new Piece(PieceType.WhiteBishop);
             var positions = boardScanner.ScanIn(Direction.NE, new BoardPosition(0, 0), board);
@@ -189,7 +189,7 @@ namespace Tests.UnitTests.PossibleMoves.Helpers
         [Test]
         public void WithFriend_InMiddle_WithBlackPiece_OnNECorner_ScannerIsBlocked()
         {
-            var boardScanner = _boardScannerFactory.Create(PieceColour.Black);
+            var boardScanner = _boardScannerFactory.Create(PieceColour.Black, true);
             var board = new BoardState();
             board.Board[4, 4].CurrentPiece = new Piece(PieceType.BlackKnight);
             var positions = boardScanner.ScanIn(Direction.NE, new BoardPosition(0, 0), board);
@@ -205,7 +205,7 @@ namespace Tests.UnitTests.PossibleMoves.Helpers
         [Test]
         public void WithEnemy_InMiddle_WithWhitePiece_OnSWCorner_ScannerStopsOnFriend()
         {
-            var boardScanner = _boardScannerFactory.Create(PieceColour.White);
+            var boardScanner = _boardScannerFactory.Create(PieceColour.White, true);
             var board = new BoardState();
             board.Board[4, 4].CurrentPiece = new Piece(PieceType.BlackBishop);
             var positions = boardScanner.ScanIn(Direction.NE, new BoardPosition(0, 0), board);
@@ -224,7 +224,7 @@ namespace Tests.UnitTests.PossibleMoves.Helpers
         [Test]
         public void WithEnemy_InMiddle_WithBlackPiece_OnNECorner_ScannerStopsOnFriend()
         {
-            var boardScanner = _boardScannerFactory.Create(PieceColour.Black);
+            var boardScanner = _boardScannerFactory.Create(PieceColour.Black, true);
             var board = new BoardState();
             board.Board[4, 4].CurrentPiece = new Piece(PieceType.WhiteKnight);
             var positions = boardScanner.ScanIn(Direction.NE, new BoardPosition(0, 0), board);
@@ -243,7 +243,7 @@ namespace Tests.UnitTests.PossibleMoves.Helpers
             [Values(0, 1, 2, 3, 4, 5, 6, 7)] int x
         )
         {
-            var boardScanner = _boardScannerFactory.Create(PieceColour.White);
+            var boardScanner = _boardScannerFactory.Create(PieceColour.White, true);
             var board = new BoardState();
             var positions = boardScanner.ScanIn(Direction.N, new BoardPosition(x, 0), board);
 

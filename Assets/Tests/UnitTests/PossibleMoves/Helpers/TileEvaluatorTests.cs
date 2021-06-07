@@ -40,7 +40,7 @@ namespace Tests.UnitTests.PossibleMoves.Helpers
         [Test]
         public void Identifies_NoPieceInTile_True()
         {
-            var tileEval = _tileEvaluatorFactory.Create(PieceColour.White, false);
+            var tileEval = _tileEvaluatorFactory.Create(PieceColour.White, true);
             var tile = new Tile(new BoardPosition(1, 1)) {CurrentPiece = new Piece(PieceType.NullPiece)};
             Assert.IsTrue(tileEval.NoPieceIn(tile));
         }
@@ -50,7 +50,7 @@ namespace Tests.UnitTests.PossibleMoves.Helpers
             [Values] PieceType pieceType
         )
         {
-            var tileEval = _tileEvaluatorFactory.Create(PieceColour.White, false);
+            var tileEval = _tileEvaluatorFactory.Create(PieceColour.White, true);
             var tile = new Tile(new BoardPosition(1, 1)) {CurrentPiece = new Piece(pieceType)};
             if (pieceType != PieceType.NullPiece)
                 Assert.IsFalse(tileEval.NoPieceIn(tile));
@@ -59,7 +59,7 @@ namespace Tests.UnitTests.PossibleMoves.Helpers
         [Test]
         public void WithBlackPiece_IdentifiesFriendlyPieceInTile()
         {
-            var tileEval = _tileEvaluatorFactory.Create(PieceColour.Black, false);
+            var tileEval = _tileEvaluatorFactory.Create(PieceColour.Black, true);
             var tile = new Tile(new BoardPosition(1, 1)) {CurrentPiece = new Piece(PieceType.BlackBishop)};
             Assert.IsTrue(tileEval.FriendlyPieceIn(tile));
         }
@@ -67,7 +67,7 @@ namespace Tests.UnitTests.PossibleMoves.Helpers
         [Test]
         public void WithWhitePiece_IdentifiesFriendlyPieceInTile()
         {
-            var tileEval = _tileEvaluatorFactory.Create(PieceColour.White, false);
+            var tileEval = _tileEvaluatorFactory.Create(PieceColour.White, true);
             var tile = new Tile(new BoardPosition(1, 1)) {CurrentPiece = new Piece(PieceType.WhiteBishop)};
             Assert.IsTrue(tileEval.FriendlyPieceIn(tile));
         }
@@ -75,7 +75,7 @@ namespace Tests.UnitTests.PossibleMoves.Helpers
         [Test]
         public void WithWhitePiece_IdentifiesOpposingPieceInTile()
         {
-            var tileEval = _tileEvaluatorFactory.Create(PieceColour.White, false);
+            var tileEval = _tileEvaluatorFactory.Create(PieceColour.White, true);
             var tile = new Tile(new BoardPosition(1, 1)) {CurrentPiece = new Piece(PieceType.BlackBishop)};
             Assert.IsTrue(tileEval.OpposingPieceIn(tile));
         }
@@ -83,7 +83,7 @@ namespace Tests.UnitTests.PossibleMoves.Helpers
         [Test]
         public void WithBlackPiece_IdentifiesOpposingPieceInTile()
         {
-            var tileEval = _tileEvaluatorFactory.Create(PieceColour.Black, false);
+            var tileEval = _tileEvaluatorFactory.Create(PieceColour.Black, true);
             var tile = new Tile(new BoardPosition(1, 1)) {CurrentPiece = new Piece(PieceType.WhiteBishop)};
             Assert.IsTrue(tileEval.OpposingPieceIn(tile));
         }

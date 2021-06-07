@@ -6,12 +6,12 @@ using Models.State.PieceState;
 
 namespace Models.Services.Moves.PossibleMoveGenerators
 {
-    public class AllPossibleMovesGenerator : IAllPossibleMovesGenerator
+    public class PossibleTurnMovesGenerator : IAllPossibleMovesGenerator
     {
         private readonly IBoardEval _boardEval;
         private readonly KingMoveFilter _kingMoveFilter;
 
-        public AllPossibleMovesGenerator(IBoardEval boardEval, KingMoveFilter kingMoveFilter)
+        public PossibleTurnMovesGenerator(IBoardEval boardEval, KingMoveFilter kingMoveFilter)
         {
             _boardEval = boardEval;
             _kingMoveFilter = kingMoveFilter;

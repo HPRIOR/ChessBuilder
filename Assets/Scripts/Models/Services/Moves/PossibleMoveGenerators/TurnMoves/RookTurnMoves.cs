@@ -16,7 +16,7 @@ namespace Models.Services.Moves.PossibleMoveGenerators.TurnMoves
         public RookTurnMoves(PieceColour pieceColour, bool turnMove, IBoardScannerFactory boardScannerFactory,
             IPositionTranslatorFactory positionTranslatorFactory)
         {
-            _boardScanner = boardScannerFactory.Create(pieceColour);
+            _boardScanner = boardScannerFactory.Create(pieceColour, turnMove);
             _positionTranslator = positionTranslatorFactory.Create(pieceColour);
         }
 

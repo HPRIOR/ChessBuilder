@@ -18,7 +18,7 @@ namespace Models.Services.Moves.PossibleMoveGenerators.TurnMoves
             IBoardScannerFactory boardScannerFactory)
         {
             _positionTranslator = positionTranslatorFactory.Create(pieceColour);
-            _boardScanner = boardScannerFactory.Create(pieceColour);
+            _boardScanner = boardScannerFactory.Create(pieceColour, turnMove);
         }
 
         public IEnumerable<BoardPosition> GetPossiblePieceMoves(BoardPosition originPosition, BoardState boardState)

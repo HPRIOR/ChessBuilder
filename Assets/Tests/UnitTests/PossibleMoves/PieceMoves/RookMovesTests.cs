@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using Bindings.Installers.BoardInstallers;
 using Bindings.Installers.GameInstallers;
+using Bindings.Installers.MoveInstallers;
 using Bindings.Installers.PieceInstallers;
-using Bindings.Installers.PossibleMoveInstallers;
 using Game.Implementations;
 using Models.Services.Moves.Factories.PossibleMoveGeneratorFactories;
 using Models.Services.Moves.PossibleMoveGenerators.TurnMoves;

@@ -1,5 +1,5 @@
-﻿using Bindings.Installers.PieceInstallers;
-using Bindings.Installers.PossibleMoveInstallers;
+﻿using Bindings.Installers.MoveInstallers;
+using Bindings.Installers.PieceInstallers;
 using Zenject;
 
 namespace Bindings.MonoInstallers

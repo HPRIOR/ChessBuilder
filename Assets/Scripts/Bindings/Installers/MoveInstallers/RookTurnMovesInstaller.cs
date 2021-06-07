@@ -3,7 +3,7 @@ using Models.Services.Moves.PossibleMoveGenerators.TurnMoves;
 using Models.State.PieceState;
 using Zenject;
 
-namespace Bindings.Installers.PossibleMoveInstallers
+namespace Bindings.Installers.MoveInstallers
 {
     public class RookTurnMovesInstaller : Installer<RookTurnMovesInstaller>
     {

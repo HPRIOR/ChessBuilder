@@ -1,8 +1,8 @@
 ﻿using Bindings.Installers.BoardInstallers;
 using Bindings.Installers.GameInstallers;
 using Bindings.Installers.InputInstallers;
+using Bindings.Installers.MoveInstallers;
 using Bindings.Installers.PieceInstallers;
-using Bindings.Installers.PossibleMoveInstallers;
 using Zenject;
 
 namespace Bindings.Utils

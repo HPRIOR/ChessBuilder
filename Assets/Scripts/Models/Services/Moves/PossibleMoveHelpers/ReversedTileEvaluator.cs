@@ -16,7 +16,7 @@ namespace Models.Services.Moves.PossibleMoveHelpers
 
         public bool NoPieceIn(Tile tile)
         {
-            return tile.CurrentPiece.Type == PieceType.NullPiece;
+            return tile.CurrentPiece.Type != PieceType.NullPiece;
         }
 
         public bool FriendlyPieceIn(Tile tile)

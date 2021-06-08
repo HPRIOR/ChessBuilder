@@ -13,7 +13,7 @@ using Zenject;
 namespace Tests.UnitTests.PossibleMoves.Helpers
 {
     [TestFixture]
-    public class ReversedBoardScanner : ZenjectUnitTestFixture
+    public class ReversedBoardScannerTests : ZenjectUnitTestFixture
     {
         [SetUp]
         public void Init()

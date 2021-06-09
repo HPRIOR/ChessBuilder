@@ -6,19 +6,15 @@ namespace Models.Services.Moves.Factories
 {
     public class TileEvaluatorFactory : ITileEvaluatorFactory
     {
-        private readonly ReversedTileEvaluator.Factory _reversedTileEvalFactory;
         private readonly TileEvaluator.Factory _tileEvalFactory;
 
-        public TileEvaluatorFactory(TileEvaluator.Factory tileEvalFactory,
-            ReversedTileEvaluator.Factory reversedTileEvalFactory)
+        public TileEvaluatorFactory(TileEvaluator.Factory tileEvalFactory)
         {
             _tileEvalFactory = tileEvalFactory;
-            _reversedTileEvalFactory = reversedTileEvalFactory;
         }
 
-        public ITileEvaluator Create(PieceColour pieceColour, bool turnMove)
+        public ITileEvaluator Create(PieceColour pieceColour)
         {
-            if (!turnMove) return _reversedTileEvalFactory.Create(pieceColour);
             return _tileEvalFactory.Create(pieceColour);
         }
     }

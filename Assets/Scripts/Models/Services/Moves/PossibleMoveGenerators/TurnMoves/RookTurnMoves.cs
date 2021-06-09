@@ -13,10 +13,10 @@ namespace Models.Services.Moves.PossibleMoveGenerators.TurnMoves
         private readonly IBoardScanner _boardScanner;
         private readonly IPositionTranslator _positionTranslator;
 
-        public RookTurnMoves(PieceColour pieceColour, bool turnMove, IBoardScannerFactory boardScannerFactory,
+        public RookTurnMoves(PieceColour pieceColour, IBoardScannerFactory boardScannerFactory,
             IPositionTranslatorFactory positionTranslatorFactory)
         {
-            _boardScanner = boardScannerFactory.Create(pieceColour, turnMove);
+            _boardScanner = boardScannerFactory.Create(pieceColour);
             _positionTranslator = positionTranslatorFactory.Create(pieceColour);
         }
 
@@ -29,7 +29,7 @@ namespace Models.Services.Moves.PossibleMoveGenerators.TurnMoves
                 _boardScanner.ScanIn(direction, relativePosition, boardState));
         }
 
-        public class Factory : PlaceholderFactory<PieceColour, bool, RookTurnMoves>
+        public class Factory : PlaceholderFactory<PieceColour, RookTurnMoves>
         {
         }
     }

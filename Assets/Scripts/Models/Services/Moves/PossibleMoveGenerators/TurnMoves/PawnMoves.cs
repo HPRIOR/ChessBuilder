@@ -12,11 +12,11 @@ namespace Models.Services.Moves.PossibleMoveGenerators.TurnMoves
         private readonly IPositionTranslator _positionTranslator;
         private readonly ITileEvaluator _tileEvaluator;
 
-        public PawnMoves(PieceColour pieceColour, bool turnMove, IPositionTranslatorFactory positionTranslatorFactory,
+        public PawnMoves(PieceColour pieceColour, IPositionTranslatorFactory positionTranslatorFactory,
             ITileEvaluatorFactory tileEvaluatorFactory)
         {
             _positionTranslator = positionTranslatorFactory.Create(pieceColour);
-            _tileEvaluator = tileEvaluatorFactory.Create(pieceColour, turnMove);
+            _tileEvaluator = tileEvaluatorFactory.Create(pieceColour);
         }
 
         // TODO: refactor me
@@ -57,7 +57,7 @@ namespace Models.Services.Moves.PossibleMoveGenerators.TurnMoves
             return potentialMoves;
         }
 
-        public class Factory : PlaceholderFactory<PieceColour, bool, PawnMoves>
+        public class Factory : PlaceholderFactory<PieceColour, PawnMoves>
         {
         }
     }

@@ -13,9 +13,9 @@ namespace Models.Services.Moves.Factories
             _boardScannerFactory = boardScannerFactory;
         }
 
-        public IBoardScanner Create(PieceColour pieceColour, bool turnMove)
+        public IBoardScanner Create(PieceColour pieceColour)
         {
-            return _boardScannerFactory.Create(pieceColour, turnMove);
+            return _boardScannerFactory.Create(pieceColour);
         }
     }
 }

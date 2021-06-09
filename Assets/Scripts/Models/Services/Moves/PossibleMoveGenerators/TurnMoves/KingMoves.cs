@@ -14,11 +14,11 @@ namespace Models.Services.Moves.PossibleMoveGenerators.TurnMoves
         private readonly IPositionTranslator _positionTranslator;
         private readonly ITileEvaluator _tileEvaluator;
 
-        public KingMoves(PieceColour pieceColour, bool turnMove, IPositionTranslatorFactory positionTranslatorFactory,
+        public KingMoves(PieceColour pieceColour, IPositionTranslatorFactory positionTranslatorFactory,
             ITileEvaluatorFactory tileEvaluatorFactory)
         {
             _positionTranslator = positionTranslatorFactory.Create(pieceColour);
-            _tileEvaluator = tileEvaluatorFactory.Create(pieceColour, turnMove);
+            _tileEvaluator = tileEvaluatorFactory.Create(pieceColour);
         }
 
         public IEnumerable<BoardPosition> GetPossiblePieceMoves(BoardPosition originPosition, BoardState boardState)
@@ -41,7 +41,7 @@ namespace Models.Services.Moves.PossibleMoveGenerators.TurnMoves
             return potentialMoves;
         }
 
-        public class Factory : PlaceholderFactory<PieceColour, bool, KingMoves>
+        public class Factory : PlaceholderFactory<PieceColour, KingMoves>
         {
         }
     }

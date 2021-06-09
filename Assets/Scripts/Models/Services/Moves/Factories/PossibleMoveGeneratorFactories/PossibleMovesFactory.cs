@@ -38,24 +38,24 @@ namespace Models.Services.Moves.Factories.PossibleMoveGeneratorFactories
             return pieceType switch
             {
                 PieceType.NullPiece => new NullMoveGenerator(),
-                PieceType.BlackKing => _kingTurnMovesFactory.Create(PieceColour.Black, turnMove),
-                PieceType.BlackQueen => _queenTurnMovesFactory.Create(PieceColour.Black, turnMove),
-                PieceType.BlackRook => _rookMovesFactory.Create(PieceColour.Black, turnMove),
-                PieceType.BlackBishop => _bishopMovesFactory.Create(PieceColour.Black, turnMove),
-                PieceType.BlackKnight => _knightMovesFactory.Create(PieceColour.Black, turnMove),
+                PieceType.BlackKing => _kingTurnMovesFactory.Create(PieceColour.Black),
+                PieceType.BlackQueen => _queenTurnMovesFactory.Create(PieceColour.Black),
+                PieceType.BlackRook => _rookMovesFactory.Create(PieceColour.Black),
+                PieceType.BlackBishop => _bishopMovesFactory.Create(PieceColour.Black),
+                PieceType.BlackKnight => _knightMovesFactory.Create(PieceColour.Black),
                 PieceType.BlackPawn => turnMove switch
                 {
-                    true => _pawnMovesFactory.Create(PieceColour.Black, true),
+                    true => _pawnMovesFactory.Create(PieceColour.Black),
                     false => _pawnNonMovesFactory.Create(PieceColour.Black)
                 },
-                PieceType.WhiteKing => _kingTurnMovesFactory.Create(PieceColour.White, turnMove),
-                PieceType.WhiteQueen => _queenTurnMovesFactory.Create(PieceColour.White, turnMove),
-                PieceType.WhiteRook => _rookMovesFactory.Create(PieceColour.White, turnMove),
-                PieceType.WhiteBishop => _bishopMovesFactory.Create(PieceColour.White, turnMove),
-                PieceType.WhiteKnight => _knightMovesFactory.Create(PieceColour.White, turnMove),
+                PieceType.WhiteKing => _kingTurnMovesFactory.Create(PieceColour.White),
+                PieceType.WhiteQueen => _queenTurnMovesFactory.Create(PieceColour.White),
+                PieceType.WhiteRook => _rookMovesFactory.Create(PieceColour.White),
+                PieceType.WhiteBishop => _bishopMovesFactory.Create(PieceColour.White),
+                PieceType.WhiteKnight => _knightMovesFactory.Create(PieceColour.White),
                 PieceType.WhitePawn => turnMove switch
                 {
-                    true => _pawnMovesFactory.Create(PieceColour.White, true),
+                    true => _pawnMovesFactory.Create(PieceColour.White),
                     false => _pawnNonMovesFactory.Create(PieceColour.White)
                 },
                 _ => throw new ArgumentOutOfRangeException(nameof(pieceType), pieceType, null)

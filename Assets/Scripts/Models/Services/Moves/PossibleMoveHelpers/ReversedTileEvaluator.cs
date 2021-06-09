@@ -26,7 +26,7 @@ namespace Models.Services.Moves.PossibleMoveHelpers
 
         public bool OpposingPieceIn(Tile tile)
         {
-            return !(tile.CurrentPiece.Type is PieceType.NullPiece) && tile.CurrentPiece.Colour == _pieceColour;
+            return !(tile.CurrentPiece.Type is PieceType.NullPiece) && tile.CurrentPiece.Colour != _pieceColour;
         }
 
         public class Factory : PlaceholderFactory<PieceColour, ReversedTileEvaluator>

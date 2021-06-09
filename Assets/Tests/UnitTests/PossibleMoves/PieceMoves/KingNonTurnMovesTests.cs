@@ -121,6 +121,7 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
             var expectedMoves = new List<BoardPosition>
             {
                 new BoardPosition(5, 5),
+                new BoardPosition(4, 5),
                 new BoardPosition(4, 3),
                 new BoardPosition(3, 3),
                 new BoardPosition(5, 4),

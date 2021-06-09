@@ -2,6 +2,6 @@
 {
     public interface IMoveGeneratorRepository
     {
-        IPieceMoveGenerator GetPossibleMoveGenerator(State.PieceState.Piece piece);
+        IPieceMoveGenerator GetPossibleMoveGenerator(State.PieceState.Piece piece, bool turnMove);
     }
 }

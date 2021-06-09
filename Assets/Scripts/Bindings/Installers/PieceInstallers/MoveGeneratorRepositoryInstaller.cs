@@ -1,5 +1,5 @@
 ﻿using Models.Services.Interfaces;
-using Models.Services.Moves.Factories;
+using Models.Services.Moves.PossibleMoveHelpers;
 using Zenject;
 
 namespace Bindings.Installers.PieceInstallers

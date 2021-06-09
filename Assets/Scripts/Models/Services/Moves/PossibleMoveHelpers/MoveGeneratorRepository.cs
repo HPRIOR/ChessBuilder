@@ -4,8 +4,7 @@ using Models.Services.Moves.Factories.PossibleMoveGeneratorFactories;
 using Models.Services.Moves.PossibleMoveGenerators.TurnMoves;
 using Models.State.PieceState;
 
-//TODO rename to repository
-namespace Models.Services.Moves.Factories
+namespace Models.Services.Moves.PossibleMoveHelpers
 {
     public class MoveGeneratorRepository : IMoveGeneratorRepository
     {

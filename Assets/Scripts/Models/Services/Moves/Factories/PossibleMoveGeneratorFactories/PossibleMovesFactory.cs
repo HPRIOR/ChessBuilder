@@ -8,6 +8,7 @@ namespace Models.Services.Moves.Factories.PossibleMoveGeneratorFactories
     public class PossibleMovesFactory
     {
         private readonly BishopMoves.Factory _bishopMovesFactory;
+        private readonly BishopNonTurnMoves.Factory _bishopNonTurnMovesFactory;
         private readonly KingMoves.Factory _kingTurnMovesFactory;
         private readonly KnightMoves.Factory _knightMovesFactory;
         private readonly PawnMoves.Factory _pawnMovesFactory;
@@ -19,6 +20,7 @@ namespace Models.Services.Moves.Factories.PossibleMoveGeneratorFactories
             PawnMoves.Factory pawnMovesFactory,
             PawnNonTurnMoves.Factory pawnNonMovesFactory,
             BishopMoves.Factory bishopMovesFactory,
+            BishopNonTurnMoves.Factory bishopNonTurnMovesFactory,
             RookTurnMoves.Factory rookMovesFactory,
             KnightMoves.Factory knightMovesFactory,
             KingMoves.Factory kingTurnMovesFactory,
@@ -27,6 +29,7 @@ namespace Models.Services.Moves.Factories.PossibleMoveGeneratorFactories
             _pawnMovesFactory = pawnMovesFactory;
             _pawnNonMovesFactory = pawnNonMovesFactory;
             _bishopMovesFactory = bishopMovesFactory;
+            _bishopNonTurnMovesFactory = bishopNonTurnMovesFactory;
             _rookMovesFactory = rookMovesFactory;
             _knightMovesFactory = knightMovesFactory;
             _kingTurnMovesFactory = kingTurnMovesFactory;
@@ -41,7 +44,11 @@ namespace Models.Services.Moves.Factories.PossibleMoveGeneratorFactories
                 PieceType.BlackKing => _kingTurnMovesFactory.Create(PieceColour.Black),
                 PieceType.BlackQueen => _queenTurnMovesFactory.Create(PieceColour.Black),
                 PieceType.BlackRook => _rookMovesFactory.Create(PieceColour.Black),
-                PieceType.BlackBishop => _bishopMovesFactory.Create(PieceColour.Black),
+                PieceType.BlackBishop => turnMove switch
+                {
+                    true => _bishopMovesFactory.Create(PieceColour.Black),
+                    false => _bishopNonTurnMovesFactory.Create(PieceColour.Black)
+                },
                 PieceType.BlackKnight => _knightMovesFactory.Create(PieceColour.Black),
                 PieceType.BlackPawn => turnMove switch
                 {
@@ -51,7 +58,11 @@ namespace Models.Services.Moves.Factories.PossibleMoveGeneratorFactories
                 PieceType.WhiteKing => _kingTurnMovesFactory.Create(PieceColour.White),
                 PieceType.WhiteQueen => _queenTurnMovesFactory.Create(PieceColour.White),
                 PieceType.WhiteRook => _rookMovesFactory.Create(PieceColour.White),
-                PieceType.WhiteBishop => _bishopMovesFactory.Create(PieceColour.White),
+                PieceType.WhiteBishop => turnMove switch
+                {
+                    true => _bishopMovesFactory.Create(PieceColour.White),
+                    false => _bishopNonTurnMovesFactory.Create(PieceColour.White)
+                },
                 PieceType.WhiteKnight => _knightMovesFactory.Create(PieceColour.White),
                 PieceType.WhitePawn => turnMove switch
                 {

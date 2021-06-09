@@ -16,7 +16,7 @@ namespace Models.Services.Moves.PossibleMoveGenerators.TurnMoves
         public BishopMoves(PieceColour pieceColour, IBoardScannerFactory boardScannerFactory,
             IPositionTranslatorFactory positionTranslatorFactory)
         {
-            _boardScanner = boardScannerFactory.Create(pieceColour);
+            _boardScanner = boardScannerFactory.Create(pieceColour, Turn.Turn);
             _positionTranslator = positionTranslatorFactory.Create(pieceColour);
         }
 

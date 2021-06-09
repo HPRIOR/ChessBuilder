@@ -14,6 +14,7 @@ namespace Bindings.Installers.MoveInstallers
             Container.BindFactory<PieceColour, RookTurnMoves, RookTurnMoves.Factory>().FromNew();
             Container.BindFactory<PieceColour, PawnMoves, PawnMoves.Factory>().FromNew();
             Container.BindFactory<PieceColour, BishopMoves, BishopMoves.Factory>().FromNew();
+            Container.BindFactory<PieceColour, BishopNonTurnMoves, BishopNonTurnMoves.Factory>().FromNew();
             Container.BindFactory<PieceColour, KingMoves, KingMoves.Factory>().FromNew();
             Container.BindFactory<PieceColour, KnightMoves, KnightMoves.Factory>().FromNew();
             Container.BindFactory<PieceColour, PawnNonTurnMoves, PawnNonTurnMoves.Factory>().FromNew();

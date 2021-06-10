@@ -45,10 +45,7 @@ namespace Models.Services.Moves.PossibleMoveGenerators
             if (checkManager.IsCheck)
                 checkManager.UpdatePossibleMovesWhenInCheck(_boardInfo);
             else
-            {
-                if (!kingPosition.Equals(new BoardPosition(8, 8))) // using out of bounds as null
-                    KingMoveFilter.RemoveNonTurnMovesFromKingMoves(turnMoves, nonTurnMoves, kingPosition);
-            }
+                KingMoveFilter.RemoveNonTurnMovesFromKingMoves(turnMoves, nonTurnMoves, kingPosition);
 
             // find pinned pieces
             return turnMoves;

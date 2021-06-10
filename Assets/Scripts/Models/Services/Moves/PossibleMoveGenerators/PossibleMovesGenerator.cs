@@ -9,12 +9,10 @@ namespace Models.Services.Moves.PossibleMoveGenerators
     public class PossibleTurnMovesGenerator : IAllPossibleMovesGenerator
     {
         private readonly IBoardInfo _boardInfo;
-        private readonly KingMoveFilter _kingMoveFilter;
 
-        public PossibleTurnMovesGenerator(IBoardInfo boardInfo, KingMoveFilter kingMoveFilter)
+        public PossibleTurnMovesGenerator(IBoardInfo boardInfo)
         {
             _boardInfo = boardInfo;
-            _kingMoveFilter = kingMoveFilter;
         }
 
         /// <summary>
@@ -40,7 +38,8 @@ namespace Models.Services.Moves.PossibleMoveGenerators
             var nonTurnMoves = _boardInfo.NonTurnMoves;
             var kingPosition = _boardInfo.KingPosition; // will be set to 8,8 by default if no king present (as null)
 
-            var checkManager = new CheckedStateManager(boardState, _kingMoveFilter);
+            var checkManager = new CheckedStateManager(boardState);
+
             checkManager.EvaluateCheck(nonTurnMoves, kingPosition);
             if (checkManager.IsCheck)
                 checkManager.UpdatePossibleMovesWhenInCheck(_boardInfo);

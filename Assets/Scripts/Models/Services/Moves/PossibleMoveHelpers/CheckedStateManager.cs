@@ -20,13 +20,11 @@ namespace Models.Services.Moves.PossibleMoveHelpers
         };
 
         private readonly BoardState _boardState;
-        private readonly KingMoveFilter _kingMoveFilter;
         private IEnumerable<BoardPosition> _checkingPieces;
 
-        public CheckedStateManager(BoardState boardState, KingMoveFilter kingMoveFilter)
+        public CheckedStateManager(BoardState boardState)
         {
             _boardState = boardState;
-            _kingMoveFilter = kingMoveFilter;
         }
 
         public bool IsCheck { get; private set; }

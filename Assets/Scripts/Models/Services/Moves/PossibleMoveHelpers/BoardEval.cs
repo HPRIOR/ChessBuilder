@@ -43,7 +43,7 @@ namespace Models.Services.Moves.PossibleMoveHelpers
                 if (notPiecesTurn)
                 {
                     var boardPos = tile.BoardPosition;
-                    var possibleMoves = _moveGeneratorRepository.GetPossibleMoveGenerator(currentPiece, true)
+                    var possibleMoves = _moveGeneratorRepository.GetPossibleMoveGenerator(currentPiece, false)
                         .GetPossiblePieceMoves(boardPos, boardState);
                     nonTurnMoves.Add(boardPos, new HashSet<BoardPosition>(possibleMoves));
                 }

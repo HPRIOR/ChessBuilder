@@ -42,7 +42,7 @@ namespace Models.Services.Moves.PossibleMoveGenerators
             checkManager.EvaluateCheck(nonTurnMoves, kingPosition);
             if (checkManager.IsCheck)
             {
-                checkManager.UpdatePossibleMovesWhenInCheck(turnMoves, nonTurnMoves, kingPosition);
+                checkManager.UpdatePossibleMovesWhenInCheck(_boardEval);
             }
             else
             {

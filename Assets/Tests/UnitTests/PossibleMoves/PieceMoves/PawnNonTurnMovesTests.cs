@@ -126,7 +126,7 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
         }
 
         [Test]
-        public void WithOpposingPieceOnBoard_White_PawnIsBlockedOnEitherSide()
+        public void WithOpposingPieceOnBoard_White_PawnIsNotBlockedOnEitherSide()
         {
             var pieces = new List<(PieceType, BoardPosition)>
             {
@@ -139,8 +139,8 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
             var possibleMoves = _whiteNonTurnPawnMoves.GetPossiblePieceMoves(new BoardPosition(4, 4), boardState)
                 .ToList();
 
-            Assert.That(possibleMoves, Does.Not.Contains(new BoardPosition(3, 5)));
-            Assert.That(possibleMoves, Does.Not.Contains(new BoardPosition(5, 5)));
+            Assert.That(possibleMoves, Does.Contain(new BoardPosition(3, 5)));
+            Assert.That(possibleMoves, Does.Contain(new BoardPosition(5, 5)));
         }
 
 
@@ -217,7 +217,7 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
         }
 
         [Test]
-        public void WithOpposingPieceOnBoard_Black_PawnIsBlockedOnEitherSide()
+        public void WithOpposingPieceOnBoard_Black_PawnIsNotBlockedOnEitherSide()
         {
             var pieces = new List<(PieceType, BoardPosition)>
             {
@@ -230,8 +230,8 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
             var possibleMoves = _blackNonTurnPawnMoves.GetPossiblePieceMoves(new BoardPosition(4, 4), boardState)
                 .ToList();
 
-            Assert.That(possibleMoves, Does.Not.Contains(new BoardPosition(3, 3)));
-            Assert.That(possibleMoves, Does.Not.Contains(new BoardPosition(5, 3)));
+            Assert.That(possibleMoves, Does.Contain(new BoardPosition(3, 3)));
+            Assert.That(possibleMoves, Does.Contain(new BoardPosition(5, 3)));
         }
     }
 }

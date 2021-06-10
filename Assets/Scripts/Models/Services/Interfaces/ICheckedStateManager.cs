@@ -11,6 +11,6 @@ namespace Models.Services.Interfaces
             IDictionary<BoardPosition, HashSet<BoardPosition>> nonTurnMoves,
             BoardPosition kingPosition);
 
-        void UpdatePossibleMovesWhenInCheck(IBoardEval boardEval);
+        void UpdatePossibleMovesWhenInCheck(IBoardInfo boardInfo);
     }
 }

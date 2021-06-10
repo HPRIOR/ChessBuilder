@@ -6,15 +6,14 @@ using Models.State.PieceState;
 
 namespace Models.Services.Moves.PossibleMoveGenerators
 {
-    //TODO: simplify this logic by pulling checked state manager and King move filter into this class 
     public class PossibleTurnMovesGenerator : IAllPossibleMovesGenerator
     {
-        private readonly IBoardEval _boardEval;
+        private readonly IBoardInfo _boardInfo;
         private readonly KingMoveFilter _kingMoveFilter;
 
-        public PossibleTurnMovesGenerator(IBoardEval boardEval, KingMoveFilter kingMoveFilter)
+        public PossibleTurnMovesGenerator(IBoardInfo boardInfo, KingMoveFilter kingMoveFilter)
         {
-            _boardEval = boardEval;
+            _boardInfo = boardInfo;
             _kingMoveFilter = kingMoveFilter;
         }
 
@@ -34,17 +33,17 @@ namespace Models.Services.Moves.PossibleMoveGenerators
         public IDictionary<BoardPosition, HashSet<BoardPosition>> GetPossibleMoves(BoardState boardState,
             PieceColour turn)
         {
-            _boardEval.EvaluateBoard(boardState, turn);
-            var turnMoves = _boardEval.TurnMoves;
-            var nonTurnMoves = _boardEval.NonTurnMoves;
-            var kingPosition = _boardEval.KingPosition; // will be set to 8,8 by default if no king present (as null)
+            // board info will mess with concurrent execution because it is stateful and not instantiated 
+            // for each call 
+            _boardInfo.EvaluateBoard(boardState, turn);
+            var turnMoves = _boardInfo.TurnMoves;
+            var nonTurnMoves = _boardInfo.NonTurnMoves;
+            var kingPosition = _boardInfo.KingPosition; // will be set to 8,8 by default if no king present (as null)
 
             var checkManager = new CheckedStateManager(boardState, _kingMoveFilter);
             checkManager.EvaluateCheck(nonTurnMoves, kingPosition);
             if (checkManager.IsCheck)
-            {
-                checkManager.UpdatePossibleMovesWhenInCheck(_boardEval);
-            }
+                checkManager.UpdatePossibleMovesWhenInCheck(_boardInfo);
             else
             {
                 if (!kingPosition.Equals(new BoardPosition(8, 8))) // using out of bounds as null

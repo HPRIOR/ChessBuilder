@@ -5,11 +5,11 @@ using Models.State.PieceState;
 
 namespace Models.Services.Moves.PossibleMoveHelpers
 {
-    public class BoardEval : IBoardEval
+    public class BoardInfo : IBoardInfo
     {
         private readonly IMoveGeneratorRepository _moveGeneratorRepository;
 
-        public BoardEval(IMoveGeneratorRepository moveGeneratorRepository)
+        public BoardInfo(IMoveGeneratorRepository moveGeneratorRepository)
         {
             _moveGeneratorRepository = moveGeneratorRepository;
         }

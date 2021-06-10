@@ -4,7 +4,7 @@ using Models.State.PieceState;
 
 namespace Models.Services.Interfaces
 {
-    public interface IBoardEval
+    public interface IBoardInfo
     {
         IDictionary<BoardPosition, HashSet<BoardPosition>> TurnMoves { get; }
         IDictionary<BoardPosition, HashSet<BoardPosition>> NonTurnMoves { get; }

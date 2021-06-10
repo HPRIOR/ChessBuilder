@@ -8,7 +8,7 @@ namespace Bindings.Installers.PieceInstallers
     {
         public override void InstallBindings()
         {
-            Container.Bind<IBoardEval>().To<BoardEval>().AsSingle();
+            Container.Bind<IBoardInfo>().To<BoardInfo>().AsSingle();
         }
     }
 }

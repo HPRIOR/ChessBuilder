@@ -50,17 +50,17 @@ namespace Models.Services.Moves.PossibleMoveHelpers
         /// <summary>
         ///     Updates turn move dictionary with the possible moves available under check
         /// </summary>
-        /// <param name="boardEval"></param>
+        /// <param name="boardInfo"></param>
         /// <returns></returns>
-        public void UpdatePossibleMovesWhenInCheck(IBoardEval boardEval)
+        public void UpdatePossibleMovesWhenInCheck(IBoardInfo boardInfo)
         {
             var checkedWithSinglePiece = _checkingPieces.Count() == 1;
             var checkedWithMultiplePieces = _checkingPieces.Count() > 1;
 
             if (checkedWithSinglePiece)
-                UpdateWithInterceptingMoves(boardEval.TurnMoves, boardEval.NonTurnMoves, boardEval.KingPosition);
-            if (checkedWithMultiplePieces) RemoveAllNonKingMoves(boardEval.TurnMoves, boardEval.KingPosition);
-            RemoveNonTurnMovesFromKingMoves(boardEval.TurnMoves, boardEval.NonTurnMoves, boardEval.KingPosition);
+                UpdateWithInterceptingMoves(boardInfo.TurnMoves, boardInfo.NonTurnMoves, boardInfo.KingPosition);
+            if (checkedWithMultiplePieces) RemoveAllNonKingMoves(boardInfo.TurnMoves, boardInfo.KingPosition);
+            RemoveNonTurnMovesFromKingMoves(boardInfo.TurnMoves, boardInfo.NonTurnMoves, boardInfo.KingPosition);
         }
 
         /// <summary>

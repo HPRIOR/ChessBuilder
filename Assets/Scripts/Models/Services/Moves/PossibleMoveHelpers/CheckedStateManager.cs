@@ -94,11 +94,11 @@ namespace Models.Services.Moves.PossibleMoveHelpers
             BoardPosition kingPosition)
         {
             // this won't remove the moves of scanning pieces past king 
-            _kingMoveFilter.RemoveNonTurnMovesFromKingMoves(turnMoves, nonTurnMoves, kingPosition, _boardState);
+            KingMoveFilter.RemoveNonTurnMovesFromKingMoves(turnMoves, nonTurnMoves, kingPosition);
 
             // extra logic needed here to do that
             foreach (var checkingBoardPosition in _checkingPieces)
-                if (ScanningPieces.Contains(GetPieceAt(checkingBoardPosition).Type))
+                if (ScanningPieces.Contains(PieceAt(checkingBoardPosition).Type))
                 {
                     // remove extended possible moves that go 'through' king
                     var movesExtendedThroughKing =
@@ -142,9 +142,7 @@ namespace Models.Services.Moves.PossibleMoveHelpers
                     turnMove.Value.Clear();
         }
 
-        private State.PieceState.Piece GetPieceAt(BoardPosition boardPosition)
-        {
-            return _boardState.Board[boardPosition.X, boardPosition.Y].CurrentPiece;
-        }
+        private State.PieceState.Piece PieceAt(BoardPosition boardPosition) =>
+            _boardState.Board[boardPosition.X, boardPosition.Y].CurrentPiece;
     }
 }

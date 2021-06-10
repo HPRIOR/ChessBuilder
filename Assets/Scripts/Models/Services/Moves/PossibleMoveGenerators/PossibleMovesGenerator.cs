@@ -6,6 +6,7 @@ using Models.State.PieceState;
 
 namespace Models.Services.Moves.PossibleMoveGenerators
 {
+    //TODO: simplify this logic by pulling checked state manager and King move filter into this class 
     public class PossibleTurnMovesGenerator : IAllPossibleMovesGenerator
     {
         private readonly IBoardEval _boardEval;

@@ -4,11 +4,11 @@ using Zenject;
 
 namespace Bindings.Installers.PieceInstallers
 {
-    public class BoardEvalInstaller : Installer<BoardEvalInstaller>
+    public class BoardInfoInstaller : Installer<BoardInfoInstaller>
     {
         public override void InstallBindings()
         {
-            Container.Bind<IBoardInfo>().To<BoardInfo>().AsSingle();
+            Container.Bind<IBoardInfo>().To<BoardInfo>().AsTransient();
         }
     }
 }

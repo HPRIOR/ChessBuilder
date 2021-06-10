@@ -12,7 +12,7 @@ namespace Models.Services.Moves.Factories.PossibleMoveGeneratorFactories
         private readonly KingNonTurnMoves.Factory _kingNonTurnMovesFactory;
         private readonly KingMoves.Factory _kingTurnMovesFactory;
         private readonly KnightMoves.Factory _knightMovesFactory;
-        private readonly KingNonTurnMoves.Factory _knightNonTurnMovesFactory;
+        private readonly KnightNonTurnMoves.Factory _knightNonTurnMovesFactory;
         private readonly PawnMoves.Factory _pawnMovesFactory;
         private readonly PawnNonTurnMoves.Factory _pawnNonMovesFactory;
         private readonly QueenNonTurnMoves.Factory _queenNonTurnMovesFactory;
@@ -28,7 +28,7 @@ namespace Models.Services.Moves.Factories.PossibleMoveGeneratorFactories
             RookTurnMoves.Factory rookMovesFactory,
             RookNonTurnMoves.Factory rookNonTurnMovesFactory,
             KnightMoves.Factory knightMovesFactory,
-            KingNonTurnMoves.Factory knightNonTurnMovesFactory,
+            KnightNonTurnMoves.Factory knightNonTurnMovesFactory,
             KingMoves.Factory kingTurnMovesFactory,
             KingNonTurnMoves.Factory kingNonTurnMovesFactory,
             QueenMoves.Factory queenTurnMovesFactory,

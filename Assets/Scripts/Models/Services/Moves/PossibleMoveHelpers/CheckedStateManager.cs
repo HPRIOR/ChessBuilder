@@ -57,10 +57,10 @@ namespace Models.Services.Moves.PossibleMoveHelpers
             var checkedWithSinglePiece = _checkingPieces.Count() == 1;
             var checkedWithMultiplePieces = _checkingPieces.Count() > 1;
 
-            if (checkedWithSinglePiece) UpdateWithInterceptingMoves(turnMoves, nonTurnMoves, kingPosition);
-            if (checkedWithMultiplePieces) RemoveAllNonKingMoves(turnMoves, kingPosition);
-            RemoveNonTurnMovesFromKingMoves(turnMoves, nonTurnMoves, kingPosition);
-            return turnMoves;
+            if (checkedWithSinglePiece)
+                UpdateWithInterceptingMoves(boardEval.TurnMoves, boardEval.NonTurnMoves, boardEval.KingPosition);
+            if (checkedWithMultiplePieces) RemoveAllNonKingMoves(boardEval.TurnMoves, boardEval.KingPosition);
+            RemoveNonTurnMovesFromKingMoves(boardEval.TurnMoves, boardEval.NonTurnMoves, boardEval.KingPosition);
         }
 
         /// <summary>

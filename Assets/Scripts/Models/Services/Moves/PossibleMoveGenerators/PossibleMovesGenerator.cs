@@ -36,7 +36,7 @@ namespace Models.Services.Moves.PossibleMoveGenerators
             _boardEval.EvaluateBoard(boardState, turn);
             var turnMoves = _boardEval.TurnMoves;
             var nonTurnMoves = _boardEval.NonTurnMoves;
-            var kingPosition = _boardEval.KingPosition;
+            var kingPosition = _boardEval.KingPosition; // will be set to 8,8 by default if no king present (as null)
 
             var checkManager = new CheckedStateManager(boardState, _kingMoveFilter);
             checkManager.EvaluateCheck(nonTurnMoves, kingPosition);

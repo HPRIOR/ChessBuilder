@@ -73,7 +73,7 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
 
 
         [Test]
-        public void WithEnemyPiece_White_RookIsBlocked()
+        public void WithEnemyPiece_White_RookIsNotBlocked()
         {
             var pieces = new List<(PieceType, BoardPosition)>
             {
@@ -87,7 +87,7 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
                 .ToList();
 
 
-            Assert.That(possibleMoves, Does.Not.Contains(new BoardPosition(4, 5)));
+            Assert.That(possibleMoves, Does.Contain(new BoardPosition(4, 5)));
             Assert.That(possibleMoves, Does.Not.Contains(new BoardPosition(4, 6)));
         }
 
@@ -112,7 +112,7 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
 
 
         [Test]
-        public void WithEnemyPiece_Black_RookIsBlocked()
+        public void WithEnemyPiece_Black_RookIsNotBlocked()
         {
             var pieces = new List<(PieceType, BoardPosition)>
             {
@@ -126,7 +126,7 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
                 .ToList();
 
 
-            Assert.That(possibleMoves, Does.Not.Contains(new BoardPosition(4, 5)));
+            Assert.That(possibleMoves, Does.Contain(new BoardPosition(4, 5)));
             Assert.That(possibleMoves, Does.Not.Contains(new BoardPosition(4, 6)));
         }
     }

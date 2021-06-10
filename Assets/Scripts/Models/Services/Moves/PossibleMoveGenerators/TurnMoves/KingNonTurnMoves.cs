@@ -9,16 +9,13 @@ using Zenject;
 
 namespace Models.Services.Moves.PossibleMoveGenerators.TurnMoves
 {
-    public class KingMoves : IPieceMoveGenerator
+    public class KingNonTurnMoves : IPieceMoveGenerator
     {
         private readonly IPositionTranslator _positionTranslator;
-        private readonly ITileEvaluator _tileEvaluator;
 
-        public KingMoves(PieceColour pieceColour, IPositionTranslatorFactory positionTranslatorFactory,
-            ITileEvaluatorFactory tileEvaluatorFactory)
+        public KingNonTurnMoves(PieceColour pieceColour, IPositionTranslatorFactory positionTranslatorFactory)
         {
             _positionTranslator = positionTranslatorFactory.Create(pieceColour);
-            _tileEvaluator = tileEvaluatorFactory.Create(pieceColour);
         }
 
         public IEnumerable<BoardPosition> GetPossiblePieceMoves(BoardPosition originPosition, BoardState boardState)
@@ -32,16 +29,13 @@ namespace Models.Services.Moves.PossibleMoveGenerators.TurnMoves
                 var newRelativePosition = _positionTranslator.GetRelativePosition(newPosition);
                 if (0 > newPosition.X || newPosition.X > 7
                                       || 0 > newPosition.Y || newPosition.Y > 7) return;
-                var potentialMoveTile = _positionTranslator.GetRelativeTileAt(newPosition, boardState);
-                if (_tileEvaluator.OpposingPieceIn(potentialMoveTile) ||
-                    potentialMoveTile.CurrentPiece.Type == PieceType.NullPiece)
-                    potentialMoves.Add(newRelativePosition);
+                potentialMoves.Add(newRelativePosition);
             });
 
             return potentialMoves;
         }
 
-        public class Factory : PlaceholderFactory<PieceColour, KingMoves>
+        public class Factory : PlaceholderFactory<PieceColour, KingNonTurnMoves>
         {
         }
     }

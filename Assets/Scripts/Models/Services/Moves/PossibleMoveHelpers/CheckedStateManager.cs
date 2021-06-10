@@ -68,6 +68,12 @@ namespace Models.Services.Moves.PossibleMoveHelpers
             return turnMoves;
         }
 
+        /// <summary>
+        ///     Removes positions not between king and checking piece from all non king, turn moves
+        /// </summary>
+        /// <param name="turnMoves"></param>
+        /// <param name="nonTurnMoves"></param>
+        /// <param name="kingPosition"></param>
         private void UpdateWithInterceptingMoves(
             IDictionary<BoardPosition, HashSet<BoardPosition>> turnMoves,
             IDictionary<BoardPosition, HashSet<BoardPosition>> nonTurnMoves,
@@ -80,6 +86,7 @@ namespace Models.Services.Moves.PossibleMoveHelpers
                 if (notKingPiece) keyVal.Value.IntersectWith(positionsBetweenKingAndCheckPiece);
             }
         }
+
 
         private void RemoveNonTurnMovesFromKingMoves(
             IDictionary<BoardPosition, HashSet<BoardPosition>> turnMoves,

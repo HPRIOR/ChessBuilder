@@ -7,34 +7,21 @@ using Zenject;
 
 namespace Models.Services.Moves.PossibleMoveGenerators.TurnMoves
 {
-    public class KnightMoves : IPieceMoveGenerator
+    public class KnightNonTurnMoves : IPieceMoveGenerator
     {
         private readonly IPositionTranslator _positionTranslator;
-        private readonly ITileEvaluator _tileEvaluator;
 
-        public KnightMoves(PieceColour pieceColour, IPositionTranslatorFactory positionTranslatorFactory,
-            ITileEvaluatorFactory tileEvaluatorFactory)
+        public KnightNonTurnMoves(PieceColour pieceColour, IPositionTranslatorFactory positionTranslatorFactory)
         {
             _positionTranslator = positionTranslatorFactory.Create(pieceColour);
-            _tileEvaluator = tileEvaluatorFactory.Create(pieceColour);
         }
 
         public IEnumerable<BoardPosition> GetPossiblePieceMoves(BoardPosition originPosition, BoardState boardState)
         {
-            bool CoordInBounds((int X, int Y) coord)
-            {
-                return 0 <= coord.X && coord.X <= 7 && 0 <= coord.Y && coord.Y <= 7;
-            }
-
-            bool FriendlyPieceNotInTile((int X, int Y) coord)
-            {
-                return !_tileEvaluator.FriendlyPieceIn(
-                    _positionTranslator.GetRelativeTileAt(new BoardPosition(coord.X, coord.Y), boardState));
-            }
+            bool CoordInBounds((int X, int Y) coord) => 0 <= coord.X && coord.X <= 7 && 0 <= coord.Y && coord.Y <= 7;
 
             var moveCoords = GetMoveCoords(_positionTranslator.GetRelativePosition(originPosition))
                 .Where(CoordInBounds)
-                .Where(FriendlyPieceNotInTile)
                 .Select(coord => new BoardPosition(coord.X, coord.Y))
                 .Select(pos => _positionTranslator.GetRelativePosition(pos));
 
@@ -65,7 +52,7 @@ namespace Models.Services.Moves.PossibleMoveGenerators.TurnMoves
             return lateralMoves.Concat(verticalMoves);
         }
 
-        public class Factory : PlaceholderFactory<PieceColour, KnightMoves>
+        public class Factory : PlaceholderFactory<PieceColour, KnightNonTurnMoves>
         {
         }
     }

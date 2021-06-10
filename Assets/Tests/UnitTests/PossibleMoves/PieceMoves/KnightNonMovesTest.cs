@@ -89,7 +89,7 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
 
 
         [Test]
-        public void WithOpposingPiece_White_KnightIsBlocked()
+        public void WithOpposingPiece_White_KnightIsNotBlocked()
         {
             var pieces = new List<(PieceType, BoardPosition)>
             {
@@ -102,12 +102,12 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
             var possibleMoves = _whiteKnightNonTurnMoves.GetPossiblePieceMoves(new BoardPosition(4, 4), boardState)
                 .ToList();
 
-            Assert.That(possibleMoves, Does.Not.Contains(new BoardPosition(5, 2)));
+            Assert.That(possibleMoves, Does.Contain(new BoardPosition(5, 2)));
         }
 
 
         [Test]
-        public void WithOpposingPiece_Black_KnightIsBlocked()
+        public void WithOpposingPiece_Black_KnightIsNotBlocked()
         {
             var pieces = new List<(PieceType, BoardPosition)>
             {
@@ -120,7 +120,7 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
             var possibleMoves = _blackKnightNonTurnMoves.GetPossiblePieceMoves(new BoardPosition(4, 4), boardState)
                 .ToList();
 
-            Assert.That(possibleMoves, Does.Not.Contains(new BoardPosition(5, 2)));
+            Assert.That(possibleMoves, Does.Contain(new BoardPosition(5, 2)));
         }
     }
 }

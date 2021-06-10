@@ -14,11 +14,11 @@ namespace Models.Services.Moves.PossibleMoveGenerators.TurnMoves
         private readonly IBoardScanner _boardScanner;
         private readonly IPositionTranslator _positionTranslator;
 
-        public QueenMoves(PieceColour pieceColour, bool turnMove, IPositionTranslatorFactory positionTranslatorFactory,
+        public QueenMoves(PieceColour pieceColour, IPositionTranslatorFactory positionTranslatorFactory,
             IBoardScannerFactory boardScannerFactory)
         {
             _positionTranslator = positionTranslatorFactory.Create(pieceColour);
-            _boardScanner = boardScannerFactory.Create(pieceColour, turnMove);
+            _boardScanner = boardScannerFactory.Create(pieceColour, Turn.Turn);
         }
 
         public IEnumerable<BoardPosition> GetPossiblePieceMoves(BoardPosition originPosition, BoardState boardState)
@@ -32,7 +32,7 @@ namespace Models.Services.Moves.PossibleMoveGenerators.TurnMoves
                 .SelectMany(direction => _boardScanner.ScanIn(direction, relativePosition, boardState));
         }
 
-        public class Factory : PlaceholderFactory<PieceColour, bool, QueenMoves>
+        public class Factory : PlaceholderFactory<PieceColour, QueenMoves>
         {
         }
     }

@@ -7,12 +7,12 @@ using Zenject;
 
 namespace Models.Services.Moves.PossibleMoveHelpers
 {
-    public class BoardScanner : IBoardScanner
+    public class NonTurnBoardScanner : IBoardScanner
     {
         private readonly IPositionTranslator _positionTranslator;
         private readonly ITileEvaluator _tileEvaluator;
 
-        public BoardScanner(
+        public NonTurnBoardScanner(
             PieceColour pieceColour,
             ITileEvaluatorFactory tileEvaluatorFactory,
             IPositionTranslatorFactory positionTranslatorFactory)
@@ -38,7 +38,8 @@ namespace Models.Services.Moves.PossibleMoveHelpers
             var newPosition = currentPosition.Add(Move.In(direction));
             if (PieceCannotMoveTo(newPosition, boardState))
                 return new List<BoardPosition>();
-            if (TileContainsOpposingPieceAt(newPosition, boardState))
+            if (TileContainsOpposingPieceAt(newPosition, boardState) ||
+                TileContainsFriendlyPieceAt(newPosition, boardState))
                 return new List<BoardPosition> {_positionTranslator.GetRelativePosition(newPosition)};
             return ScanIn(direction, newPosition, boardState)
                 .Concat(new List<BoardPosition> {_positionTranslator.GetRelativePosition(newPosition)});
@@ -48,7 +49,7 @@ namespace Models.Services.Moves.PossibleMoveHelpers
         {
             var x = boardPosition.X;
             var y = boardPosition.Y;
-            return 0 > x || x > 7 || 0 > y || y > 7 || TileContainsFriendlyPieceAt(boardPosition, boardState);
+            return 0 > x || x > 7 || 0 > y || y > 7;
         }
 
         // TODO refactor so that position translator result is passed through instead of calculated each time
@@ -62,7 +63,7 @@ namespace Models.Services.Moves.PossibleMoveHelpers
             return _tileEvaluator.FriendlyPieceIn(_positionTranslator.GetRelativeTileAt(boardPosition, boardState));
         }
 
-        public class Factory : PlaceholderFactory<PieceColour, BoardScanner>
+        public class Factory : PlaceholderFactory<PieceColour, NonTurnBoardScanner>
         {
         }
     }

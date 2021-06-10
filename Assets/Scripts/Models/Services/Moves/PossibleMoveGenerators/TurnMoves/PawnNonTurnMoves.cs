@@ -31,20 +31,14 @@ namespace Models.Services.Moves.PossibleMoveGenerators.TurnMoves
                 var topLeftTile =
                     _positionTranslator.GetRelativeTileAt(originPosition.Add(Move.In(Direction.NW)), boardState);
 
-                if (_tileEvaluator.FriendlyPieceIn(topLeftTile) || _tileEvaluator.NoPieceIn(topLeftTile))
-                    potentialMoves.Add(
-                        topLeftTile.BoardPosition
-                    );
+                potentialMoves.Add(topLeftTile.BoardPosition);
             }
 
             if (originPosition.X < 7)
             {
                 var topRightTile =
                     _positionTranslator.GetRelativeTileAt(originPosition.Add(Move.In(Direction.NE)), boardState);
-                if (_tileEvaluator.FriendlyPieceIn(topRightTile) || _tileEvaluator.NoPieceIn(topRightTile))
-                    potentialMoves.Add(
-                        topRightTile.BoardPosition
-                    );
+                potentialMoves.Add(topRightTile.BoardPosition);
             }
 
             return potentialMoves;

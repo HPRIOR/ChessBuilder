@@ -23,7 +23,7 @@ namespace Bindings.Utils
             PieceSpawnerInstaller.Install(container);
             AllPossibleMovesGeneratorInstaller.Install(container);
             MoveGeneratorRepositoryInstaller.Install(container);
-            BoardEvalInstaller.Install(container);
+            BoardInfoInstaller.Install(container);
             KingMoveFilterInstaller.Install(container);
             PossibleMovesFactoryInstaller.Install(container);
         }

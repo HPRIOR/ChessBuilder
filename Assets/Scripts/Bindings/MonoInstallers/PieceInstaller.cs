@@ -19,7 +19,7 @@ namespace Bindings.MonoInstallers
             TileEvaluatorInstaller.Install(Container);
             PositionTranslatorInstaller.Install(Container);
             BoardScannerInstaller.Install(Container);
-            BoardEvalInstaller.Install(Container);
+            BoardInfoInstaller.Install(Container);
             KingMoveFilterInstaller.Install(Container);
         }
     }

@@ -17,7 +17,7 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves.Utils
             PositionTranslatorInstaller.Install(Container);
             AllPossibleMovesGeneratorInstaller.Install(Container);
             PossibleMovesFactoryInstaller.Install(Container);
-            BoardEvalInstaller.Install(Container);
+            BoardInfoInstaller.Install(Container);
             KingMoveFilterInstaller.Install(Container);
         }
     }

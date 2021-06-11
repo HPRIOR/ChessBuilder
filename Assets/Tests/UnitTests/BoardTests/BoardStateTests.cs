@@ -22,7 +22,7 @@ namespace Tests.UnitTests.BoardTests
 
         private BoardState GetBoardState()
         {
-            return new BoardState(_boardGenerator.GenerateBoard());
+            return new BoardState();
         }
 
         [Test]
@@ -54,12 +54,7 @@ namespace Tests.UnitTests.BoardTests
         {
             var boardState = GetBoardState();
 
-            Assert.DoesNotThrow(() =>
-                {
-                    Debug.Log(boardState.Board[7, 7].CurrentPiece);
-                    Debug.ClearDeveloperConsole();
-                }
-            );
+            Assert.AreEqual(64, boardState.Board.Length);
         }
 
         [Test]

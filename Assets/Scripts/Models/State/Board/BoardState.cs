@@ -1,5 +1,4 @@
 ﻿using System;
-using Models.Services.Interfaces;
 
 namespace Models.State.Board
 {
@@ -10,9 +9,15 @@ namespace Models.State.Board
             Board = board;
         }
 
-        public BoardState(IBoardGenerator boardGenerator)
+        public BoardState()
         {
-            Board = boardGenerator.GenerateBoard();
+            var board = new Tile[8, 8];
+            for (var i = 0; i < 8; i++)
+            for (var j = 0; j < 8; j++)
+                board[i, j] = new Tile(
+                    new BoardPosition(i, j)
+                );
+            Board = board;
         }
 
         public Tile[,] Board { get; }

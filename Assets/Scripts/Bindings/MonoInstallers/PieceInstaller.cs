@@ -1,5 +1,5 @@
-﻿using Bindings.Installers.PieceInstallers;
-using Bindings.Installers.PossibleMoveInstallers;
+﻿using Bindings.Installers.MoveInstallers;
+using Bindings.Installers.PieceInstallers;
 using Zenject;
 
 namespace Bindings.MonoInstallers
@@ -10,21 +10,17 @@ namespace Bindings.MonoInstallers
         {
             PieceSpawnerInstaller.Install(Container);
             PieceMoverInstaller.Install(Container);
-            PossibleMoveFactoryInstaller.Install(Container);
+            MoveGeneratorRepositoryInstaller.Install(Container);
             AllPossibleMovesGeneratorInstaller.Install(Container);
 
-            PossibleBishopMovesInstaller.Install(Container);
-            PossibleKingMovesInstaller.Install(Container);
-            PossibleKnightMovesInstaller.Install(Container);
-            PossiblePawnMovesInstaller.Install(Container);
-            PossibleQueenMovesInstaller.Install(Container);
-            PossibleRookMovesInstaller.Install(Container);
 
+            PossibleMovesFactoryInstaller.Install(Container);
             MoveValidatorInstaller.Install(Container);
             TileEvaluatorInstaller.Install(Container);
             PositionTranslatorInstaller.Install(Container);
             BoardScannerInstaller.Install(Container);
-            BoardEvalInstaller.Install(Container);
+            BoardInfoInstaller.Install(Container);
+            KingMoveFilterInstaller.Install(Container);
         }
     }
 }

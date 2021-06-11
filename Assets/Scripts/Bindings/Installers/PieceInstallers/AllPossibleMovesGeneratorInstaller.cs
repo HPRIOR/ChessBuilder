@@ -8,7 +8,7 @@ namespace Bindings.Installers.PieceInstallers
     {
         public override void InstallBindings()
         {
-            Container.Bind<IAllPossibleMovesGenerator>().To<AllPossibleMovesGenerator>().AsSingle();
+            Container.Bind<IAllPossibleMovesGenerator>().To<PossibleTurnMovesGenerator>().AsSingle();
         }
     }
 }

@@ -428,5 +428,24 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
             var possibleQueenMoves = possibleMoves[new BoardPosition(4, 3)];
             Assert.That(possibleQueenMoves.Count(), Is.GreaterThan(0));
         }
+
+
+        [Test]
+        public void WhenPinned_PieceCanMoveIntoAnotherBlockingPosition()
+        {
+            var board = _boardGenerator.GenerateBoard();
+            board[3, 4].CurrentPiece = new Piece(PieceType.WhiteKing);
+            board[4, 3].CurrentPiece = new Piece(PieceType.WhiteQueen);
+            board[7, 0].CurrentPiece = new Piece(PieceType.BlackBishop);
+
+            var boardState = new BoardState(board);
+
+            var possibleMoves =
+                _allPossibleMovesGenerator.GetPossibleMoves(boardState, PieceColour.White);
+
+            var possibleQueenMoves = possibleMoves[new BoardPosition(4, 3)];
+            Assert.That(possibleQueenMoves,
+                Does.Contain(new List<BoardPosition> {new BoardPosition(5, 2), new BoardPosition(6, 1)}));
+        }
     }
 }

@@ -323,6 +323,23 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
             Assert.That(possibleKingMoves.Contains(new BoardPosition(4, 5)), Is.False);
         }
 
+        [Test]
+        public void RookCanPinPiece()
+        {
+            var board = _boardGenerator.GenerateBoard();
+            board[3, 4].CurrentPiece = new Piece(PieceType.WhiteKing);
+            board[4, 4].CurrentPiece = new Piece(PieceType.WhitePawn);
+            board[7, 4].CurrentPiece = new Piece(PieceType.BlackRook);
+
+            var boardState = new BoardState(board);
+
+            var possibleMoves =
+                _allPossibleMovesGenerator.GetPossibleMoves(boardState, PieceColour.White);
+
+            var possiblePawnMoves = possibleMoves[new BoardPosition(4, 4)];
+            Assert.AreEqual(0, possiblePawnMoves.Count());
+        }
+
 
         // pieces are pinned 
 

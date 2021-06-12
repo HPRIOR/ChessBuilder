@@ -9,10 +9,12 @@ namespace Models.Services.Moves.PossibleMoveGenerators
     public class PossibleTurnMovesGenerator : IAllPossibleMovesGenerator
     {
         private readonly IBoardInfo _boardInfo;
+        private readonly PinnedPieceFilter _pinnedPieceFilter;
 
-        public PossibleTurnMovesGenerator(IBoardInfo boardInfo)
+        public PossibleTurnMovesGenerator(IBoardInfo boardInfo, PinnedPieceFilter pinnedPieceFilter)
         {
             _boardInfo = boardInfo;
+            _pinnedPieceFilter = pinnedPieceFilter;
         }
 
         /// <summary>
@@ -46,7 +48,7 @@ namespace Models.Services.Moves.PossibleMoveGenerators
             else
                 KingMoveFilter.RemoveNonTurnMovesFromKingMoves(turnMoves, nonTurnMoves, kingPosition);
 
-            // find pinned pieces
+            _pinnedPieceFilter.FilterMoves(_boardInfo, boardState);
             return turnMoves;
         }
     }

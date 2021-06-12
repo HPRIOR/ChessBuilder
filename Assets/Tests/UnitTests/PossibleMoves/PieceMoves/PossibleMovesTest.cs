@@ -323,9 +323,110 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
             Assert.That(possibleKingMoves.Contains(new BoardPosition(4, 5)), Is.False);
         }
 
+        [Test]
+        public void RookCanPinPiece()
+        {
+            var board = _boardGenerator.GenerateBoard();
+            board[3, 4].CurrentPiece = new Piece(PieceType.WhiteKing);
+            board[4, 4].CurrentPiece = new Piece(PieceType.WhitePawn);
+            board[7, 4].CurrentPiece = new Piece(PieceType.BlackRook);
 
-        // pieces are pinned 
+            var boardState = new BoardState(board);
 
-        // escape pin by taking checking piece
+            var possibleMoves =
+                _allPossibleMovesGenerator.GetPossibleMoves(boardState, PieceColour.White);
+
+            var possiblePawnMoves = possibleMoves[new BoardPosition(4, 4)];
+            Assert.AreEqual(0, possiblePawnMoves.Count());
+        }
+
+
+        [Test]
+        public void QueenCanPinPiece()
+        {
+            var board = _boardGenerator.GenerateBoard();
+            board[3, 4].CurrentPiece = new Piece(PieceType.WhiteKing);
+            board[4, 4].CurrentPiece = new Piece(PieceType.WhitePawn);
+            board[7, 4].CurrentPiece = new Piece(PieceType.BlackQueen);
+
+            var boardState = new BoardState(board);
+
+            var possibleMoves =
+                _allPossibleMovesGenerator.GetPossibleMoves(boardState, PieceColour.White);
+
+            var possiblePawnMoves = possibleMoves[new BoardPosition(4, 4)];
+            Assert.AreEqual(0, possiblePawnMoves.Count());
+        }
+
+
+        [Test]
+        public void BishopCanPinPiece()
+        {
+            var board = _boardGenerator.GenerateBoard();
+            board[3, 4].CurrentPiece = new Piece(PieceType.WhiteKing);
+            board[4, 3].CurrentPiece = new Piece(PieceType.WhitePawn);
+            board[7, 0].CurrentPiece = new Piece(PieceType.BlackBishop);
+
+            var boardState = new BoardState(board);
+
+            var possibleMoves =
+                _allPossibleMovesGenerator.GetPossibleMoves(boardState, PieceColour.White);
+
+            var possiblePawnMoves = possibleMoves[new BoardPosition(4, 3)];
+            Assert.AreEqual(0, possiblePawnMoves.Count());
+        }
+
+        [Test]
+        public void WhenPinned_PieceCanTakePinningPiece()
+        {
+            var board = _boardGenerator.GenerateBoard();
+            board[3, 4].CurrentPiece = new Piece(PieceType.WhiteKing);
+            board[4, 3].CurrentPiece = new Piece(PieceType.WhiteQueen);
+            board[7, 0].CurrentPiece = new Piece(PieceType.BlackBishop);
+
+            var boardState = new BoardState(board);
+
+            var possibleMoves =
+                _allPossibleMovesGenerator.GetPossibleMoves(boardState, PieceColour.White);
+
+            var possibleQueenMoves = possibleMoves[new BoardPosition(4, 3)];
+            Assert.That(possibleQueenMoves, Does.Contain(new BoardPosition(7, 0)));
+        }
+
+        [Test]
+        public void PinIsBlockedByFriendInBetween()
+        {
+            var board = _boardGenerator.GenerateBoard();
+            board[3, 4].CurrentPiece = new Piece(PieceType.WhiteKing);
+            board[4, 3].CurrentPiece = new Piece(PieceType.WhiteQueen);
+            board[6, 1].CurrentPiece = new Piece(PieceType.BlackBishop);
+            board[7, 0].CurrentPiece = new Piece(PieceType.BlackBishop);
+
+            var boardState = new BoardState(board);
+
+            var possibleMoves =
+                _allPossibleMovesGenerator.GetPossibleMoves(boardState, PieceColour.White);
+
+            var possibleQueenMoves = possibleMoves[new BoardPosition(4, 3)];
+            Assert.That(possibleQueenMoves.Count(), Is.GreaterThan(0));
+        }
+
+        [Test]
+        public void PinIsBlockedByEnemyInBetween()
+        {
+            var board = _boardGenerator.GenerateBoard();
+            board[3, 4].CurrentPiece = new Piece(PieceType.WhiteKing);
+            board[4, 3].CurrentPiece = new Piece(PieceType.WhiteQueen);
+            board[6, 1].CurrentPiece = new Piece(PieceType.WhiteBishop);
+            board[7, 0].CurrentPiece = new Piece(PieceType.BlackBishop);
+
+            var boardState = new BoardState(board);
+
+            var possibleMoves =
+                _allPossibleMovesGenerator.GetPossibleMoves(boardState, PieceColour.White);
+
+            var possibleQueenMoves = possibleMoves[new BoardPosition(4, 3)];
+            Assert.That(possibleQueenMoves.Count(), Is.GreaterThan(0));
+        }
     }
 }

@@ -26,6 +26,7 @@ namespace Bindings.Utils
             BoardInfoInstaller.Install(container);
             KingMoveFilterInstaller.Install(container);
             PossibleMovesFactoryInstaller.Install(container);
+            PinnedPieceFilterInstaller.Install(container);
         }
     }
 }

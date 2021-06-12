@@ -19,6 +19,7 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves.Utils
             PossibleMovesFactoryInstaller.Install(Container);
             BoardInfoInstaller.Install(Container);
             KingMoveFilterInstaller.Install(Container);
+            PinnedPieceFilterInstaller.Install(Container);
         }
     }
 }

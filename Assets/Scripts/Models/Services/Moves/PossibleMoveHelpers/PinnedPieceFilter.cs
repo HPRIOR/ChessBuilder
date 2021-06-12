@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Models.Services.Interfaces;
 using Models.State.Board;
 using Models.State.PieceState;
 using Models.Utils.ExtensionMethods.BoardPos;
@@ -15,24 +16,41 @@ namespace Models.Services.Moves.PossibleMoveHelpers
         };
 
 
-        public void FilterMoves(BoardInfo boardInfo, BoardState boardState)
+        public void FilterMoves(IBoardInfo boardInfo, BoardState boardState)
         {
             var turnMoves = boardInfo.TurnMoves;
             var nonTurnScanningMoves = GetScanningPieces(boardInfo.NonTurnMoves, boardState);
             var kingPosition = boardInfo.KingPosition;
             var turnPieces = new HashSet<BoardPosition>(turnMoves.Keys);
-
+            turnPieces.Remove(kingPosition);
             foreach (var moves in nonTurnScanningMoves)
             {
-                var turnPiecePosition = moves.Value.Intersect(turnPieces).ToList(); // One or none
-                var nonTurnMoveContainsTurnPiece = turnPiecePosition.Any();
-                if (nonTurnMoveContainsTurnPiece &&
-                    TheNextPieceIsKing(moves.Key, turnPiecePosition.First(), kingPosition, boardState))
-                    turnMoves[turnPiecePosition.First()].Clear();
+                var turnPiecePositionIntersect = moves.Value.Intersect(turnPieces).ToList(); // One or none
+                var nonTurnMovesContainTurnPiece = turnPiecePositionIntersect.Any();
+
+                if (
+                    nonTurnMovesContainTurnPiece &&
+                    DirectionOfPinPointsToKing(kingPosition, turnPiecePositionIntersect.First(), moves.Key) &&
+                    TheNextPieceIsKing(moves.Key, turnPiecePositionIntersect.First(), kingPosition, boardState)
+                )
+                {
+                    bool NotThePinningPiece(BoardPosition boardPos) =>
+                        !boardPos.Equals(moves.Key); //
+
+                    turnMoves[turnPiecePositionIntersect.First()].RemoveWhere(NotThePinningPiece);
+                }
             }
         }
 
-        private bool ContainsNonKingPiece(BoardState boardState, BoardPosition kingPosition,
+        private static bool DirectionOfPinPointsToKing(BoardPosition kingPosition, BoardPosition pinnedPosition,
+            BoardPosition pinningPosition)
+        {
+            var pinDirection = pinningPosition.DirectionTo(pinnedPosition);
+            var pinnedToKingDirection = pinnedPosition.DirectionTo(kingPosition);
+            return pinDirection == pinnedToKingDirection;
+        }
+
+        private static bool ContainsNonKingPiece(BoardState boardState, BoardPosition kingPosition,
             BoardPosition targetPosition)
         {
             var (x, y) = (targetPosition.X, targetPosition.Y);
@@ -41,13 +59,20 @@ namespace Models.Services.Moves.PossibleMoveHelpers
         }
 
 
-        private bool TheNextPieceIsKing(BoardPosition scanningPiecePosition, BoardPosition turnPiecePosition,
+        private static bool TheNextPieceIsKing(BoardPosition scanningPiecePosition, BoardPosition turnPiecePosition,
             BoardPosition kingPosition, BoardState boardState)
         {
             var scannedBoardPositions =
                 scanningPiecePosition.Scan(scanningPiecePosition.DirectionTo(turnPiecePosition));
             foreach (var scannedBoardPosition in scannedBoardPositions)
-                return !ContainsNonKingPiece(boardState, kingPosition, scannedBoardPosition);
+            {
+                if (scannedBoardPosition.Equals(kingPosition)) return true;
+
+                if (ContainsNonKingPiece(boardState, kingPosition,
+                    scannedBoardPosition)) // escape early if piece obstructs possible king 
+                    return false;
+            }
+
             return false;
         }
 

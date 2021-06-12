@@ -20,15 +20,10 @@ namespace Models.State.Board
         public Piece CurrentPiece { get; set; }
         public BoardPosition BoardPosition { get; }
 
-        public object Clone()
-        {
-            return new Tile(BoardPosition, CurrentPiece);
-        }
+        public object Clone() => new Tile(BoardPosition, CurrentPiece);
 
-        public override string ToString()
-        {
-            return $"Tile at ({BoardPosition.X}, {BoardPosition.Y}) containing" +
-                   $" {CurrentPiece}";
-        }
+        public override string ToString() =>
+            $"Tile at ({BoardPosition.X}, {BoardPosition.Y}) containing" +
+            $" {CurrentPiece}";
     }
 }

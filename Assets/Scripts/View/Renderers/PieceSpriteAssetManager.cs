@@ -6,12 +6,12 @@ namespace View.Renderers
     internal static class PieceSpriteAssetManager
     {
         private static readonly IDictionary<PieceType, string> PieceSpriteAssetManagerDict =
-            new Dictionary<PieceType, string>()
+            new Dictionary<PieceType, string>
             {
                 {PieceType.BlackPawn, "Assets/Sprites/ChessPieces/240x240/240px-Chess_pdt45.svg.png"},
-                {PieceType.BlackBishop,"Assets/Sprites/ChessPieces/240x240/240px-Chess_bdt45.svg.png" },
+                {PieceType.BlackBishop, "Assets/Sprites/ChessPieces/240x240/240px-Chess_bdt45.svg.png"},
                 {PieceType.BlackKnight, "Assets/Sprites/ChessPieces/240x240/240px-Chess_ndt45.svg.png"},
-                {PieceType.BlackRook, "Assets/Sprites/ChessPieces/240x240/240px-Chess_rdt45.svg.png" },
+                {PieceType.BlackRook, "Assets/Sprites/ChessPieces/240x240/240px-Chess_rdt45.svg.png"},
                 {PieceType.BlackKing, "Assets/Sprites/ChessPieces/240x240/240px-Chess_kdt45.svg.png"},
                 {PieceType.BlackQueen, "Assets/Sprites/ChessPieces/240x240/240px-Chess_qdt45.svg.png"},
                 {PieceType.WhitePawn, "Assets/Sprites/ChessPieces/240x240/240px-Chess_plt45.svg.png"},

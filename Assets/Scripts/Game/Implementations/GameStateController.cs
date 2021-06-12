@@ -42,9 +42,6 @@ namespace Game.Implementations
 
         public event Action<BoardState, BoardState> GameStateChangeEvent;
 
-        private PieceColour ChangeTurn()
-        {
-            return Turn == PieceColour.White ? PieceColour.Black : PieceColour.White;
-        }
+        private PieceColour ChangeTurn() => Turn == PieceColour.White ? PieceColour.Black : PieceColour.White;
     }
 }

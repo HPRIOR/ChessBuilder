@@ -14,6 +14,6 @@
         WhiteRook,
         WhiteBishop,
         WhiteKnight,
-        WhitePawn,
+        WhitePawn
     }
 }

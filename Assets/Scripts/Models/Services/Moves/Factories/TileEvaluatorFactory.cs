@@ -13,9 +13,6 @@ namespace Models.Services.Moves.Factories
             _tileEvalFactory = tileEvalFactory;
         }
 
-        public ITileEvaluator Create(PieceColour pieceColour)
-        {
-            return _tileEvalFactory.Create(pieceColour);
-        }
+        public ITileEvaluator Create(PieceColour pieceColour) => _tileEvalFactory.Create(pieceColour);
     }
 }

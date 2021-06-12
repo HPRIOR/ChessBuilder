@@ -57,11 +57,9 @@ namespace View.UserInput
             _dragAndDropCommandFactory = dragAndDropCommandFactory;
         }
 
-        private BoardPosition GetNearestBoardPosition(Vector2 position)
-        {
-            return new BoardPosition(ConvertAxisToNearestBoardIndex(position.x),
+        private BoardPosition GetNearestBoardPosition(Vector2 position) =>
+            new BoardPosition(ConvertAxisToNearestBoardIndex(position.x),
                 ConvertAxisToNearestBoardIndex(position.y));
-        }
 
         private int ConvertAxisToNearestBoardIndex(float axis)
         {

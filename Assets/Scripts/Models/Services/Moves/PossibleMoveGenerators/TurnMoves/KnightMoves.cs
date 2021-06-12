@@ -21,16 +21,11 @@ namespace Models.Services.Moves.PossibleMoveGenerators.TurnMoves
 
         public IEnumerable<BoardPosition> GetPossiblePieceMoves(BoardPosition originPosition, BoardState boardState)
         {
-            bool CoordInBounds((int X, int Y) coord)
-            {
-                return 0 <= coord.X && coord.X <= 7 && 0 <= coord.Y && coord.Y <= 7;
-            }
+            bool CoordInBounds((int X, int Y) coord) => 0 <= coord.X && coord.X <= 7 && 0 <= coord.Y && coord.Y <= 7;
 
-            bool FriendlyPieceNotInTile((int X, int Y) coord)
-            {
-                return !_tileEvaluator.FriendlyPieceIn(
+            bool FriendlyPieceNotInTile((int X, int Y) coord) =>
+                !_tileEvaluator.FriendlyPieceIn(
                     _positionTranslator.GetRelativeTileAt(new BoardPosition(coord.X, coord.Y), boardState));
-            }
 
             var moveCoords = GetMoveCoords(_positionTranslator.GetRelativePosition(originPosition))
                 .Where(CoordInBounds)

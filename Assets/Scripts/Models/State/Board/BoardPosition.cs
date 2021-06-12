@@ -15,19 +15,12 @@ namespace Models.State.Board
             Vector = new Vector2(x + 0.5f, y + 0.5f);
         }
 
-        public override string ToString()
-        {
-            return $"{X}, {Y}";
-        }
+        public override string ToString() => $"{X}, {Y}";
 
-        public BoardPosition Add(BoardPosition boardPosition)
-        {
-            return new BoardPosition(X + boardPosition.X, Y + boardPosition.Y);
-        }
+        public BoardPosition Add(BoardPosition boardPosition) =>
+            new BoardPosition(X + boardPosition.X, Y + boardPosition.Y);
 
-        public bool Equals(BoardPosition comparedBoardPosition)
-        {
-            return comparedBoardPosition.X == X && comparedBoardPosition.Y == Y;
-        }
+        public bool Equals(BoardPosition comparedBoardPosition) =>
+            comparedBoardPosition.X == X && comparedBoardPosition.Y == Y;
     }
 }

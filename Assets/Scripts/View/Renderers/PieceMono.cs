@@ -31,10 +31,7 @@ namespace View.Renderers
             BoardPosition = boardPosition;
         }
 
-        public override string ToString()
-        {
-            return $"{Info}\n{BoardPosition}\n";
-        }
+        public override string ToString() => $"{Info}\n{BoardPosition}\n";
 
         public class Factory : PlaceholderFactory<IPieceInfo, BoardPosition, PieceMono>
         {

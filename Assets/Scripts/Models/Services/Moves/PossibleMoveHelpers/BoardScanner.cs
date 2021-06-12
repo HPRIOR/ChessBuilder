@@ -52,15 +52,11 @@ namespace Models.Services.Moves.PossibleMoveHelpers
         }
 
         // TODO refactor so that position translator result is passed through instead of calculated each time
-        private bool TileContainsOpposingPieceAt(BoardPosition boardPosition, BoardState boardState)
-        {
-            return _tileEvaluator.OpposingPieceIn(_positionTranslator.GetRelativeTileAt(boardPosition, boardState));
-        }
+        private bool TileContainsOpposingPieceAt(BoardPosition boardPosition, BoardState boardState) =>
+            _tileEvaluator.OpposingPieceIn(_positionTranslator.GetRelativeTileAt(boardPosition, boardState));
 
-        private bool TileContainsFriendlyPieceAt(BoardPosition boardPosition, BoardState boardState)
-        {
-            return _tileEvaluator.FriendlyPieceIn(_positionTranslator.GetRelativeTileAt(boardPosition, boardState));
-        }
+        private bool TileContainsFriendlyPieceAt(BoardPosition boardPosition, BoardState boardState) =>
+            _tileEvaluator.FriendlyPieceIn(_positionTranslator.GetRelativeTileAt(boardPosition, boardState));
 
         public class Factory : PlaceholderFactory<PieceColour, BoardScanner>
         {

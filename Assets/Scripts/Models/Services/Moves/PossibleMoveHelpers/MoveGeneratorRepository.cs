@@ -21,14 +21,11 @@ namespace Models.Services.Moves.PossibleMoveHelpers
             _nonMovePieceGenerator = GetPieceMoveGenerators(false);
         }
 
-        public IPieceMoveGenerator GetPossibleMoveGenerator(State.PieceState.Piece piece, bool turnMove)
-        {
-            return turnMove ? _pieceMoveGenerators[piece.Type] : _nonMovePieceGenerator[piece.Type];
-        }
+        public IPieceMoveGenerator GetPossibleMoveGenerator(State.PieceState.Piece piece, bool turnMove) =>
+            turnMove ? _pieceMoveGenerators[piece.Type] : _nonMovePieceGenerator[piece.Type];
 
-        private Dictionary<PieceType, IPieceMoveGenerator> GetPieceMoveGenerators(bool turnMove)
-        {
-            return new Dictionary<PieceType, IPieceMoveGenerator>
+        private Dictionary<PieceType, IPieceMoveGenerator> GetPieceMoveGenerators(bool turnMove) =>
+            new Dictionary<PieceType, IPieceMoveGenerator>
             {
                 {PieceType.BlackPawn, _possibleMovesFactory.Create(PieceType.BlackPawn, turnMove)},
                 {PieceType.WhitePawn, _possibleMovesFactory.Create(PieceType.WhitePawn, turnMove)},
@@ -44,6 +41,5 @@ namespace Models.Services.Moves.PossibleMoveHelpers
                 {PieceType.WhiteQueen, _possibleMovesFactory.Create(PieceType.WhiteQueen, turnMove)},
                 {PieceType.NullPiece, new NullMoveGenerator()}
             };
-        }
     }
 }

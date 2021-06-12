@@ -18,9 +18,6 @@ namespace Models.Services.Moves.PossibleMoveHelpers
                 {Direction.NW, new BoardPosition(-1, 1)}
             };
 
-        public static BoardPosition In(Direction direction)
-        {
-            return DirectionMovement[direction];
-        }
+        public static BoardPosition In(Direction direction) => DirectionMovement[direction];
     }
 }

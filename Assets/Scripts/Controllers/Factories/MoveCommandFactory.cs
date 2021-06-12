@@ -12,9 +12,7 @@ namespace Controllers.Factories
             _movePieceCommandFactory = movePieceCommandFactory;
         }
 
-        public MoveCommand Create(BoardPosition from, BoardPosition destination)
-        {
-            return _movePieceCommandFactory.Create(from, destination);
-        }
+        public MoveCommand Create(BoardPosition from, BoardPosition destination) =>
+            _movePieceCommandFactory.Create(from, destination);
     }
 }

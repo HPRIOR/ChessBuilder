@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Controllers.Interfaces;
 
 namespace Controllers.Commands
@@ -28,7 +29,7 @@ namespace Controllers.Commands
 
         public void UndoCommand()
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
     }
 }

@@ -21,6 +21,7 @@ namespace Bindings.MonoInstallers
             BoardScannerInstaller.Install(Container);
             BoardInfoInstaller.Install(Container);
             KingMoveFilterInstaller.Install(Container);
+            PinnedPieceFilterInstaller.Install(Container);
         }
     }
 }

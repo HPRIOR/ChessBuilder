@@ -33,13 +33,19 @@ namespace Models.Services.Moves.PossibleMoveHelpers
                     DirectionOfPinPointsToKing(kingPosition, turnPiecePositionIntersect.First(), moves.Key) &&
                     TheNextPieceIsKing(moves.Key, turnPiecePositionIntersect.First(), kingPosition, boardState)
                 )
-                {
-                    bool NotThePinningPiece(BoardPosition boardPos) =>
-                        !boardPos.Equals(moves.Key); //
-
-                    turnMoves[turnPiecePositionIntersect.First()].RemoveWhere(NotThePinningPiece);
-                }
+                    turnMoves[turnPiecePositionIntersect.First()].IntersectWith(PossibleEscapeMoves(moves));
             }
+        }
+
+        private static HashSet<BoardPosition> PossibleEscapeMoves(
+            KeyValuePair<BoardPosition, HashSet<BoardPosition>> moves)
+        {
+            var pinningMoves = new HashSet<BoardPosition>
+            {
+                moves.Key
+            };
+            pinningMoves.UnionWith(moves.Value);
+            return pinningMoves;
         }
 
         private static bool DirectionOfPinPointsToKing(BoardPosition kingPosition, BoardPosition pinnedPosition,

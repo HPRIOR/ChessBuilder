@@ -445,7 +445,8 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
 
             var possibleQueenMoves = possibleMoves[new BoardPosition(4, 3)];
             Assert.That(possibleQueenMoves,
-                Does.Contain(new List<BoardPosition> {new BoardPosition(5, 2), new BoardPosition(6, 1)}));
+                Is.EquivalentTo(new List<BoardPosition>
+                    {new BoardPosition(7, 0), new BoardPosition(5, 2), new BoardPosition(6, 1)}));
         }
     }
 }

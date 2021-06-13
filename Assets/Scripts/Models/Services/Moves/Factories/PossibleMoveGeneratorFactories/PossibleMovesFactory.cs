@@ -1,6 +1,6 @@
 ﻿using System;
 using Models.Services.Interfaces;
-using Models.Services.Moves.PossibleMoveGenerators.TurnMoves;
+using Models.Services.Moves.MoveGenerators.TurnMoves;
 using Models.State.PieceState;
 
 namespace Models.Services.Moves.Factories.PossibleMoveGeneratorFactories

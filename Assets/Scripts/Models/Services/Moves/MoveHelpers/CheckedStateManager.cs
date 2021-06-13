@@ -5,7 +5,7 @@ using Models.State.Board;
 using Models.State.PieceState;
 using Models.Utils.ExtensionMethods.BoardPos;
 
-namespace Models.Services.Moves.PossibleMoveHelpers
+namespace Models.Services.Moves.MoveHelpers
 {
     public class CheckedStateManager : ICheckedStateManager
     {

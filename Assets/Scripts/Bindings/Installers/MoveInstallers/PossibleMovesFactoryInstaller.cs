@@ -1,5 +1,5 @@
 ﻿using Models.Services.Moves.Factories.PossibleMoveGeneratorFactories;
-using Models.Services.Moves.PossibleMoveGenerators.TurnMoves;
+using Models.Services.Moves.MoveGenerators.TurnMoves;
 using Models.State.PieceState;
 using Zenject;
 

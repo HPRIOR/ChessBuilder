@@ -2,7 +2,7 @@
 using System.Linq;
 using Models.State.Board;
 
-namespace Models.Services.Moves.PossibleMoveHelpers
+namespace Models.Services.Moves.MoveHelpers
 {
     public class KingMoveFilter
     {

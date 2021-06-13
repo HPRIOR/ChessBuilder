@@ -3,7 +3,7 @@ using Models.Services.Interfaces;
 using Models.State.Board;
 using Models.State.PieceState;
 
-namespace Models.Services.Moves.PossibleMoveHelpers
+namespace Models.Services.Moves.MoveHelpers
 {
     public class BoardInfo : IBoardInfo
     {

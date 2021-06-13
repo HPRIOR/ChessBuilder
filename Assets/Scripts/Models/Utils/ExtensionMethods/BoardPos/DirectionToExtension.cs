@@ -1,5 +1,5 @@
 ﻿using System;
-using Models.Services.Moves.PossibleMoveHelpers;
+using Models.Services.Moves.MoveHelpers;
 using Models.State.Board;
 
 namespace Models.Utils.ExtensionMethods.BoardPos

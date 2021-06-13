@@ -4,7 +4,7 @@ using Models.State.Board;
 using Models.State.PieceState;
 using Zenject;
 
-namespace Models.Services.Moves.PossibleMoveHelpers
+namespace Models.Services.Moves.MoveHelpers
 {
     public class PositionTranslator : IPositionTranslator
     {

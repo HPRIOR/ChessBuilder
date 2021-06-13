@@ -2,20 +2,23 @@
 using System.Collections.Generic;
 using System.Linq;
 using Models.Services.Interfaces;
-using Models.Services.Moves.PossibleMoveHelpers;
+using Models.Services.Moves.MoveHelpers;
 using Models.State.Board;
 using Models.State.PieceState;
 using Zenject;
 
-namespace Models.Services.Moves.PossibleMoveGenerators.TurnMoves
+namespace Models.Services.Moves.MoveGenerators.TurnMoves
 {
-    public class KingNonTurnMoves : IPieceMoveGenerator
+    public class KingMoves : IPieceMoveGenerator
     {
         private readonly IPositionTranslator _positionTranslator;
+        private readonly ITileEvaluator _tileEvaluator;
 
-        public KingNonTurnMoves(PieceColour pieceColour, IPositionTranslatorFactory positionTranslatorFactory)
+        public KingMoves(PieceColour pieceColour, IPositionTranslatorFactory positionTranslatorFactory,
+            ITileEvaluatorFactory tileEvaluatorFactory)
         {
             _positionTranslator = positionTranslatorFactory.Create(pieceColour);
+            _tileEvaluator = tileEvaluatorFactory.Create(pieceColour);
         }
 
         public IEnumerable<BoardPosition> GetPossiblePieceMoves(BoardPosition originPosition, BoardState boardState)
@@ -29,13 +32,16 @@ namespace Models.Services.Moves.PossibleMoveGenerators.TurnMoves
                 var newRelativePosition = _positionTranslator.GetRelativePosition(newPosition);
                 if (0 > newPosition.X || newPosition.X > 7
                                       || 0 > newPosition.Y || newPosition.Y > 7) return;
-                potentialMoves.Add(newRelativePosition);
+                var potentialMoveTile = _positionTranslator.GetRelativeTileAt(newPosition, boardState);
+                if (_tileEvaluator.OpposingPieceIn(potentialMoveTile) ||
+                    potentialMoveTile.CurrentPiece.Type == PieceType.NullPiece)
+                    potentialMoves.Add(newRelativePosition);
             });
 
             return potentialMoves;
         }
 
-        public class Factory : PlaceholderFactory<PieceColour, KingNonTurnMoves>
+        public class Factory : PlaceholderFactory<PieceColour, KingMoves>
         {
         }
     }

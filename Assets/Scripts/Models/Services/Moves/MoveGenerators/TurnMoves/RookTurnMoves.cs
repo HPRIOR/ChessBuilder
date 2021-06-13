@@ -1,22 +1,22 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Models.Services.Interfaces;
-using Models.Services.Moves.PossibleMoveHelpers;
+using Models.Services.Moves.MoveHelpers;
 using Models.State.Board;
 using Models.State.PieceState;
 using Zenject;
 
-namespace Models.Services.Moves.PossibleMoveGenerators.TurnMoves
+namespace Models.Services.Moves.MoveGenerators.TurnMoves
 {
-    public class RookNonTurnMoves : IPieceMoveGenerator
+    public class RookTurnMoves : IPieceMoveGenerator
     {
         private readonly IBoardScanner _boardScanner;
         private readonly IPositionTranslator _positionTranslator;
 
-        public RookNonTurnMoves(PieceColour pieceColour, IBoardScannerFactory boardScannerFactory,
+        public RookTurnMoves(PieceColour pieceColour, IBoardScannerFactory boardScannerFactory,
             IPositionTranslatorFactory positionTranslatorFactory)
         {
-            _boardScanner = boardScannerFactory.Create(pieceColour, Turn.NonTurn);
+            _boardScanner = boardScannerFactory.Create(pieceColour, Turn.Turn);
             _positionTranslator = positionTranslatorFactory.Create(pieceColour);
         }
 
@@ -29,7 +29,7 @@ namespace Models.Services.Moves.PossibleMoveGenerators.TurnMoves
                 _boardScanner.ScanIn(direction, relativePosition, boardState));
         }
 
-        public class Factory : PlaceholderFactory<PieceColour, RookNonTurnMoves>
+        public class Factory : PlaceholderFactory<PieceColour, RookTurnMoves>
         {
         }
     }

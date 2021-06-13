@@ -2,7 +2,7 @@
 using Models.Services.Interfaces;
 using Models.State.Board;
 
-namespace Models.Services.Moves.PossibleMoveGenerators.TurnMoves
+namespace Models.Services.Moves.MoveGenerators.TurnMoves
 {
     public class NullMoveGenerator : IPieceMoveGenerator
     {

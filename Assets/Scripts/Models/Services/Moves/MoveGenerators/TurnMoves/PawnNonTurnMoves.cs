@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using Models.Services.Interfaces;
-using Models.Services.Moves.PossibleMoveHelpers;
+using Models.Services.Moves.MoveHelpers;
 using Models.State.Board;
 using Models.State.PieceState;
 using Zenject;
 
-namespace Models.Services.Moves.PossibleMoveGenerators.TurnMoves
+namespace Models.Services.Moves.MoveGenerators.TurnMoves
 {
     public class PawnNonTurnMoves : IPieceMoveGenerator
     {

@@ -1,4 +1,4 @@
-﻿namespace Models.Services.Moves.PossibleMoveHelpers
+﻿namespace Models.Services.Moves.MoveHelpers
 {
     public enum Turn
     {

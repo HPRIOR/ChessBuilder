@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using Models.Services.Interfaces;
 using Models.Services.Moves.Factories.PossibleMoveGeneratorFactories;
-using Models.Services.Moves.PossibleMoveGenerators.TurnMoves;
+using Models.Services.Moves.MoveGenerators.TurnMoves;
 using Models.State.PieceState;
 
-namespace Models.Services.Moves.PossibleMoveHelpers
+namespace Models.Services.Moves.MoveHelpers
 {
     public class MoveGeneratorRepository : IMoveGeneratorRepository
     {

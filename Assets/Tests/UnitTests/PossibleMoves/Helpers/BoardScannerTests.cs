@@ -3,7 +3,7 @@ using System.Linq;
 using Bindings.Installers.BoardInstallers;
 using Bindings.Installers.PieceInstallers;
 using Models.Services.Interfaces;
-using Models.Services.Moves.PossibleMoveHelpers;
+using Models.Services.Moves.MoveHelpers;
 using Models.State.Board;
 using Models.State.PieceState;
 using NUnit.Framework;

@@ -3,9 +3,9 @@ using Models.Services.Interfaces;
 using Models.Services.Moves.MoveGenerators.TurnMoves;
 using Models.State.PieceState;
 
-namespace Models.Services.Moves.Factories.PossibleMoveGeneratorFactories
+namespace Models.Services.Moves.Factories
 {
-    public class PossibleMovesFactory
+    public class MovesFactory
     {
         private readonly BishopMoves.Factory _bishopMovesFactory;
         private readonly BishopNonTurnMoves.Factory _bishopNonTurnMovesFactory;
@@ -20,7 +20,7 @@ namespace Models.Services.Moves.Factories.PossibleMoveGeneratorFactories
         private readonly RookTurnMoves.Factory _rookMovesFactory;
         private readonly RookNonTurnMoves.Factory _rookNonTurnMovesFactory;
 
-        public PossibleMovesFactory(
+        public MovesFactory(
             PawnMoves.Factory pawnMovesFactory,
             PawnNonTurnMoves.Factory pawnNonMovesFactory,
             BishopMoves.Factory bishopMovesFactory,

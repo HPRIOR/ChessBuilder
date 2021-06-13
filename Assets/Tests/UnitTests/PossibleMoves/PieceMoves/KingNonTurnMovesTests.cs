@@ -5,7 +5,7 @@ using Bindings.Installers.MoveInstallers;
 using Bindings.Installers.PieceInstallers;
 using Game.Implementations;
 using Models.Services.Interfaces;
-using Models.Services.Moves.Factories.PossibleMoveGeneratorFactories;
+using Models.Services.Moves.Factories;
 using Models.State.Board;
 using Models.State.PieceState;
 using NUnit.Framework;
@@ -44,7 +44,7 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
 
         private void ResolveContainer()
         {
-            var possibleMovesFactory = Container.Resolve<PossibleMovesFactory>();
+            var possibleMovesFactory = Container.Resolve<MovesFactory>();
             _whiteKingNonTurnMoves = possibleMovesFactory.Create(PieceType.WhiteKing, false);
             _blackKingNonTurnMoves = possibleMovesFactory.Create(PieceType.BlackKing, false);
             _boardSetup = Container.Resolve<BoardSetup>();

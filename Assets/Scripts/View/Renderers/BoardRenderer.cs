@@ -60,7 +60,7 @@ namespace View.Renderers
             {
                 var currentPiece = tile.CurrentPiece;
                 if (currentPiece.Type != PieceType.NullPiece)
-                    _pieceSpawner.CreatePiece(currentPiece.Type, tile.BoardPosition);
+                    _pieceSpawner.CreatePiece(currentPiece.Type, tile.Position);
             }
         }
 

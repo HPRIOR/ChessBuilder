@@ -7,15 +7,15 @@ namespace Models.Services.Moves.MoveHelpers
     public class KingMoveFilter
     {
         public static void RemoveNonTurnMovesFromKingMoves(
-            IDictionary<BoardPosition, HashSet<BoardPosition>> turnMoves,
-            IDictionary<BoardPosition, HashSet<BoardPosition>> nonTurnMoves,
-            BoardPosition kingPosition)
+            IDictionary<Position, HashSet<Position>> turnMoves,
+            IDictionary<Position, HashSet<Position>> nonTurnMoves,
+            Position kingPosition)
         {
-            if (!kingPosition.Equals(new BoardPosition(8, 8)))
+            if (!kingPosition.Equals(new Position(8, 8)))
                 foreach (var nonTurnMove in nonTurnMoves)
                 {
                     var kingMoves = turnMoves[kingPosition];
-                    turnMoves[kingPosition] = new HashSet<BoardPosition>(kingMoves.Except(nonTurnMove.Value));
+                    turnMoves[kingPosition] = new HashSet<Position>(kingMoves.Except(nonTurnMove.Value));
                 }
         }
     }

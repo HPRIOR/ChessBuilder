@@ -7,18 +7,18 @@ namespace Models.Utils.ExtensionMethods.BoardPos
 {
     public static class ScanExtension
     {
-        public static IEnumerable<BoardPosition> Scan(this BoardPosition position, Direction inDirection)
+        public static IEnumerable<Position> Scan(this Position position, Direction inDirection)
         {
             var newPosition = position.Add(Move.In(inDirection));
             return PieceCannotMoveTo(newPosition)
-                ? new List<BoardPosition>()
-                : Scan(newPosition, inDirection).Concat(new List<BoardPosition> {newPosition});
+                ? new List<Position>()
+                : Scan(newPosition, inDirection).Concat(new List<Position> {newPosition});
         }
 
-        private static bool PieceCannotMoveTo(BoardPosition boardPosition)
+        private static bool PieceCannotMoveTo(Position position)
         {
-            var x = boardPosition.X;
-            var y = boardPosition.Y;
+            var x = position.X;
+            var y = position.Y;
             return 0 > x || x > 7 || 0 > y || y > 7;
         }
     }

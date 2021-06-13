@@ -20,9 +20,9 @@ namespace Models.Services.Moves.MoveGenerators.TurnMoves
         }
 
         // TODO: refactor me
-        public IEnumerable<BoardPosition> GetPossiblePieceMoves(BoardPosition originPosition, BoardState boardState)
+        public IEnumerable<Position> GetPossiblePieceMoves(Position originPosition, BoardState boardState)
         {
-            var potentialMoves = new List<BoardPosition>();
+            var potentialMoves = new List<Position>();
 
             originPosition = _positionTranslator.GetRelativePosition(originPosition);
 

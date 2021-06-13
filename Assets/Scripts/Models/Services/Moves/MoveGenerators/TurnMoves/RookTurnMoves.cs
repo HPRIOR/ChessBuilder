@@ -20,7 +20,7 @@ namespace Models.Services.Moves.MoveGenerators.TurnMoves
             _positionTranslator = positionTranslatorFactory.Create(pieceColour);
         }
 
-        public IEnumerable<BoardPosition> GetPossiblePieceMoves(BoardPosition originPosition, BoardState boardState)
+        public IEnumerable<Position> GetPossiblePieceMoves(Position originPosition, BoardState boardState)
         {
             var relativePosition = _positionTranslator.GetRelativePosition(originPosition);
             var possibleDirections = new List<Direction> {Direction.N, Direction.E, Direction.S, Direction.W};

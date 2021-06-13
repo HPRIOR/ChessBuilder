@@ -55,75 +55,75 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
         [Test]
         public void WithFriendlyPiece_White_QueenCanDefend()
         {
-            var pieces = new List<(PieceType, BoardPosition)>
+            var pieces = new List<(PieceType, Position)>
             {
-                (PieceType.WhiteQueen, new BoardPosition(4, 4)),
-                (PieceType.WhitePawn, new BoardPosition(4, 5))
+                (PieceType.WhiteQueen, new Position(4, 4)),
+                (PieceType.WhitePawn, new Position(4, 5))
             };
 
             var boardState = _boardSetup.SetupBoardWith(pieces);
 
-            var possibleMoves = _whiteQueenNonTurnMoves.GetPossiblePieceMoves(new BoardPosition(4, 4), boardState)
+            var possibleMoves = _whiteQueenNonTurnMoves.GetPossiblePieceMoves(new Position(4, 4), boardState)
                 .ToList();
 
-            Assert.That(possibleMoves, Does.Contain(new BoardPosition(4, 5)));
-            Assert.That(possibleMoves, Does.Not.Contains(new BoardPosition(4, 6)));
+            Assert.That(possibleMoves, Does.Contain(new Position(4, 5)));
+            Assert.That(possibleMoves, Does.Not.Contains(new Position(4, 6)));
         }
 
 
         [Test]
         public void WithEnemyPiece_White_QueenIsNotBlocked()
         {
-            var pieces = new List<(PieceType, BoardPosition)>
+            var pieces = new List<(PieceType, Position)>
             {
-                (PieceType.WhiteQueen, new BoardPosition(4, 4)),
-                (PieceType.BlackPawn, new BoardPosition(4, 6))
+                (PieceType.WhiteQueen, new Position(4, 4)),
+                (PieceType.BlackPawn, new Position(4, 6))
             };
 
             var boardState = _boardSetup.SetupBoardWith(pieces);
 
-            var possibleMoves = _whiteQueenNonTurnMoves.GetPossiblePieceMoves(new BoardPosition(4, 4), boardState)
+            var possibleMoves = _whiteQueenNonTurnMoves.GetPossiblePieceMoves(new Position(4, 4), boardState)
                 .ToList();
 
-            Assert.That(possibleMoves, Does.Contain(new BoardPosition(4, 6)));
-            Assert.That(possibleMoves, Does.Not.Contains(new BoardPosition(4, 7)));
+            Assert.That(possibleMoves, Does.Contain(new Position(4, 6)));
+            Assert.That(possibleMoves, Does.Not.Contains(new Position(4, 7)));
         }
 
         [Test]
         public void WithFriendlyPiece_Black_QueenCanDefend()
         {
-            var pieces = new List<(PieceType, BoardPosition)>
+            var pieces = new List<(PieceType, Position)>
             {
-                (PieceType.BlackQueen, new BoardPosition(4, 4)),
-                (PieceType.BlackPawn, new BoardPosition(4, 5))
+                (PieceType.BlackQueen, new Position(4, 4)),
+                (PieceType.BlackPawn, new Position(4, 5))
             };
 
             var boardState = _boardSetup.SetupBoardWith(pieces);
 
-            var possibleMoves = _blackQueenNonTurnMoves.GetPossiblePieceMoves(new BoardPosition(4, 4), boardState)
+            var possibleMoves = _blackQueenNonTurnMoves.GetPossiblePieceMoves(new Position(4, 4), boardState)
                 .ToList();
 
-            Assert.That(possibleMoves, Does.Contain(new BoardPosition(4, 5)));
-            Assert.That(possibleMoves, Does.Not.Contains(new BoardPosition(4, 6)));
+            Assert.That(possibleMoves, Does.Contain(new Position(4, 5)));
+            Assert.That(possibleMoves, Does.Not.Contains(new Position(4, 6)));
         }
 
 
         [Test]
         public void WithEnemyPiece_Black_QueenIsNotBlocked()
         {
-            var pieces = new List<(PieceType, BoardPosition)>
+            var pieces = new List<(PieceType, Position)>
             {
-                (PieceType.BlackQueen, new BoardPosition(4, 4)),
-                (PieceType.WhitePawn, new BoardPosition(4, 6))
+                (PieceType.BlackQueen, new Position(4, 4)),
+                (PieceType.WhitePawn, new Position(4, 6))
             };
 
             var boardState = _boardSetup.SetupBoardWith(pieces);
 
-            var possibleMoves = _blackQueenNonTurnMoves.GetPossiblePieceMoves(new BoardPosition(4, 4), boardState)
+            var possibleMoves = _blackQueenNonTurnMoves.GetPossiblePieceMoves(new Position(4, 4), boardState)
                 .ToList();
 
-            Assert.That(possibleMoves, Does.Contain(new BoardPosition(4, 6)));
-            Assert.That(possibleMoves, Does.Not.Contains(new BoardPosition(4, 7)));
+            Assert.That(possibleMoves, Does.Contain(new Position(4, 6)));
+            Assert.That(possibleMoves, Does.Not.Contains(new Position(4, 7)));
         }
     }
 }

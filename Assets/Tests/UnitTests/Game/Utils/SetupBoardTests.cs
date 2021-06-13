@@ -41,13 +41,13 @@ namespace Tests.UnitTests.Game.Utils
         [Test]
         public void BoardIsSetup()
         {
-            var pieces = new List<(PieceType piece, BoardPosition boardPosition)>
+            var pieces = new List<(PieceType piece, Position boardPosition)>
             {
-                (PieceType.BlackQueen, new BoardPosition(1, 2)),
-                (PieceType.BlackKnight, new BoardPosition(3, 3)),
-                (PieceType.WhiteQueen, new BoardPosition(7, 7)),
-                (PieceType.WhitePawn, new BoardPosition(5, 5)),
-                (PieceType.WhiteKnight, new BoardPosition(7, 0))
+                (PieceType.BlackQueen, new Position(1, 2)),
+                (PieceType.BlackKnight, new Position(3, 3)),
+                (PieceType.WhiteQueen, new Position(7, 7)),
+                (PieceType.WhitePawn, new Position(5, 5)),
+                (PieceType.WhiteKnight, new Position(7, 0))
             };
 
             var boardState = _boardSetup.SetupBoardWith(pieces);

@@ -53,24 +53,24 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
         [Test]
         public void OnEmptyBoard_White_KingCanMoveAroundItself()
         {
-            var pieces = new List<(PieceType, BoardPosition)>
+            var pieces = new List<(PieceType, Position)>
             {
-                (PieceType.WhiteKing, new BoardPosition(4, 4))
+                (PieceType.WhiteKing, new Position(4, 4))
             };
 
             var boardState = _boardSetup.SetupBoardWith(pieces);
 
-            var possibleMoves = _whiteKingTurnMoves.GetPossiblePieceMoves(new BoardPosition(4, 4), boardState);
-            var expectedMoves = new List<BoardPosition>
+            var possibleMoves = _whiteKingTurnMoves.GetPossiblePieceMoves(new Position(4, 4), boardState);
+            var expectedMoves = new List<Position>
             {
-                new BoardPosition(5, 5),
-                new BoardPosition(4, 5),
-                new BoardPosition(4, 3),
-                new BoardPosition(3, 3),
-                new BoardPosition(5, 4),
-                new BoardPosition(5, 3),
-                new BoardPosition(3, 4),
-                new BoardPosition(3, 5)
+                new Position(5, 5),
+                new Position(4, 5),
+                new Position(4, 3),
+                new Position(3, 3),
+                new Position(5, 4),
+                new Position(5, 3),
+                new Position(3, 4),
+                new Position(3, 5)
             };
 
             Assert.That(possibleMoves, Is.EquivalentTo(expectedMoves));
@@ -79,24 +79,24 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
         [Test]
         public void OnEmptyBoard_Black_KingCanMoveAroundItself()
         {
-            var pieces = new List<(PieceType, BoardPosition)>
+            var pieces = new List<(PieceType, Position)>
             {
-                (PieceType.BlackKing, new BoardPosition(4, 4))
+                (PieceType.BlackKing, new Position(4, 4))
             };
 
             var boardState = _boardSetup.SetupBoardWith(pieces);
 
-            var possibleMoves = _blackKingTurnMoves.GetPossiblePieceMoves(new BoardPosition(4, 4), boardState);
-            var expectedMoves = new List<BoardPosition>
+            var possibleMoves = _blackKingTurnMoves.GetPossiblePieceMoves(new Position(4, 4), boardState);
+            var expectedMoves = new List<Position>
             {
-                new BoardPosition(5, 5),
-                new BoardPosition(4, 5),
-                new BoardPosition(4, 3),
-                new BoardPosition(3, 3),
-                new BoardPosition(5, 4),
-                new BoardPosition(5, 3),
-                new BoardPosition(3, 4),
-                new BoardPosition(3, 5)
+                new Position(5, 5),
+                new Position(4, 5),
+                new Position(4, 3),
+                new Position(3, 3),
+                new Position(5, 4),
+                new Position(5, 3),
+                new Position(3, 4),
+                new Position(3, 5)
             };
 
             Assert.That(possibleMoves, Is.EquivalentTo(expectedMoves));
@@ -106,19 +106,19 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
         [Test]
         public void OnCorner_White_KingMovesRestricted()
         {
-            var pieces = new List<(PieceType, BoardPosition)>
+            var pieces = new List<(PieceType, Position)>
             {
-                (PieceType.WhiteKing, new BoardPosition(7, 7))
+                (PieceType.WhiteKing, new Position(7, 7))
             };
 
             var boardState = _boardSetup.SetupBoardWith(pieces);
 
-            var possibleMoves = _whiteKingTurnMoves.GetPossiblePieceMoves(new BoardPosition(7, 7), boardState);
-            var expectedMoves = new List<BoardPosition>
+            var possibleMoves = _whiteKingTurnMoves.GetPossiblePieceMoves(new Position(7, 7), boardState);
+            var expectedMoves = new List<Position>
             {
-                new BoardPosition(6, 7),
-                new BoardPosition(6, 6),
-                new BoardPosition(7, 6)
+                new Position(6, 7),
+                new Position(6, 6),
+                new Position(7, 6)
             };
 
             Assert.That(possibleMoves, Is.EquivalentTo(expectedMoves));
@@ -128,19 +128,19 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
         [Test]
         public void OnCorner_Black_KingMovesRestricted()
         {
-            var pieces = new List<(PieceType, BoardPosition)>
+            var pieces = new List<(PieceType, Position)>
             {
-                (PieceType.BlackKing, new BoardPosition(7, 7))
+                (PieceType.BlackKing, new Position(7, 7))
             };
 
             var boardState = _boardSetup.SetupBoardWith(pieces);
 
-            var possibleMoves = _blackKingTurnMoves.GetPossiblePieceMoves(new BoardPosition(7, 7), boardState);
-            var expectedMoves = new List<BoardPosition>
+            var possibleMoves = _blackKingTurnMoves.GetPossiblePieceMoves(new Position(7, 7), boardState);
+            var expectedMoves = new List<Position>
             {
-                new BoardPosition(6, 7),
-                new BoardPosition(6, 6),
-                new BoardPosition(7, 6)
+                new Position(6, 7),
+                new Position(6, 6),
+                new Position(7, 6)
             };
 
             Assert.That(possibleMoves, Is.EquivalentTo(expectedMoves));
@@ -149,26 +149,26 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
         [Test]
         public void WithEnemies_White_KingCanTake()
         {
-            var pieces = new List<(PieceType, BoardPosition)>
+            var pieces = new List<(PieceType, Position)>
             {
-                (PieceType.WhiteKing, new BoardPosition(4, 4)),
-                (PieceType.BlackPawn, new BoardPosition(4, 5)),
-                (PieceType.BlackPawn, new BoardPosition(3, 3))
+                (PieceType.WhiteKing, new Position(4, 4)),
+                (PieceType.BlackPawn, new Position(4, 5)),
+                (PieceType.BlackPawn, new Position(3, 3))
             };
 
             var boardState = _boardSetup.SetupBoardWith(pieces);
 
-            var possibleMoves = _whiteKingTurnMoves.GetPossiblePieceMoves(new BoardPosition(4, 4), boardState);
-            var expectedMoves = new List<BoardPosition>
+            var possibleMoves = _whiteKingTurnMoves.GetPossiblePieceMoves(new Position(4, 4), boardState);
+            var expectedMoves = new List<Position>
             {
-                new BoardPosition(5, 5),
-                new BoardPosition(4, 5),
-                new BoardPosition(4, 3),
-                new BoardPosition(3, 3),
-                new BoardPosition(5, 4),
-                new BoardPosition(5, 3),
-                new BoardPosition(3, 4),
-                new BoardPosition(3, 5)
+                new Position(5, 5),
+                new Position(4, 5),
+                new Position(4, 3),
+                new Position(3, 3),
+                new Position(5, 4),
+                new Position(5, 3),
+                new Position(3, 4),
+                new Position(3, 5)
             };
 
             Assert.That(possibleMoves, Is.EquivalentTo(expectedMoves));
@@ -177,26 +177,26 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
         [Test]
         public void WithEnemies_Black_KingCanTake()
         {
-            var pieces = new List<(PieceType, BoardPosition)>
+            var pieces = new List<(PieceType, Position)>
             {
-                (PieceType.BlackKing, new BoardPosition(4, 4)),
-                (PieceType.WhitePawn, new BoardPosition(4, 5)),
-                (PieceType.WhitePawn, new BoardPosition(3, 3))
+                (PieceType.BlackKing, new Position(4, 4)),
+                (PieceType.WhitePawn, new Position(4, 5)),
+                (PieceType.WhitePawn, new Position(3, 3))
             };
 
             var boardState = _boardSetup.SetupBoardWith(pieces);
 
-            var possibleMoves = _blackKingTurnMoves.GetPossiblePieceMoves(new BoardPosition(4, 4), boardState);
-            var expectedMoves = new List<BoardPosition>
+            var possibleMoves = _blackKingTurnMoves.GetPossiblePieceMoves(new Position(4, 4), boardState);
+            var expectedMoves = new List<Position>
             {
-                new BoardPosition(5, 5),
-                new BoardPosition(4, 5),
-                new BoardPosition(4, 3),
-                new BoardPosition(3, 3),
-                new BoardPosition(5, 4),
-                new BoardPosition(5, 3),
-                new BoardPosition(3, 4),
-                new BoardPosition(3, 5)
+                new Position(5, 5),
+                new Position(4, 5),
+                new Position(4, 3),
+                new Position(3, 3),
+                new Position(5, 4),
+                new Position(5, 3),
+                new Position(3, 4),
+                new Position(3, 5)
             };
 
             Assert.That(possibleMoves, Is.EquivalentTo(expectedMoves));
@@ -206,24 +206,24 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
         [Test]
         public void WithFriends_White_KingIsBlocked()
         {
-            var pieces = new List<(PieceType, BoardPosition)>
+            var pieces = new List<(PieceType, Position)>
             {
-                (PieceType.WhiteKing, new BoardPosition(4, 4)),
-                (PieceType.WhitePawn, new BoardPosition(4, 5)),
-                (PieceType.WhitePawn, new BoardPosition(3, 3))
+                (PieceType.WhiteKing, new Position(4, 4)),
+                (PieceType.WhitePawn, new Position(4, 5)),
+                (PieceType.WhitePawn, new Position(3, 3))
             };
 
             var boardState = _boardSetup.SetupBoardWith(pieces);
 
-            var possibleMoves = _whiteKingTurnMoves.GetPossiblePieceMoves(new BoardPosition(4, 4), boardState);
-            var expectedMoves = new List<BoardPosition>
+            var possibleMoves = _whiteKingTurnMoves.GetPossiblePieceMoves(new Position(4, 4), boardState);
+            var expectedMoves = new List<Position>
             {
-                new BoardPosition(5, 5),
-                new BoardPosition(4, 3),
-                new BoardPosition(5, 4),
-                new BoardPosition(5, 3),
-                new BoardPosition(3, 4),
-                new BoardPosition(3, 5)
+                new Position(5, 5),
+                new Position(4, 3),
+                new Position(5, 4),
+                new Position(5, 3),
+                new Position(3, 4),
+                new Position(3, 5)
             };
 
             Assert.That(possibleMoves, Is.EquivalentTo(expectedMoves));
@@ -233,24 +233,24 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
         [Test]
         public void WithFriends_Black_KingIsBlocked()
         {
-            var pieces = new List<(PieceType, BoardPosition)>
+            var pieces = new List<(PieceType, Position)>
             {
-                (PieceType.BlackKing, new BoardPosition(4, 4)),
-                (PieceType.BlackPawn, new BoardPosition(4, 5)),
-                (PieceType.BlackPawn, new BoardPosition(3, 3))
+                (PieceType.BlackKing, new Position(4, 4)),
+                (PieceType.BlackPawn, new Position(4, 5)),
+                (PieceType.BlackPawn, new Position(3, 3))
             };
 
             var boardState = _boardSetup.SetupBoardWith(pieces);
 
-            var possibleMoves = _blackKingTurnMoves.GetPossiblePieceMoves(new BoardPosition(4, 4), boardState);
-            var expectedMoves = new List<BoardPosition>
+            var possibleMoves = _blackKingTurnMoves.GetPossiblePieceMoves(new Position(4, 4), boardState);
+            var expectedMoves = new List<Position>
             {
-                new BoardPosition(5, 5),
-                new BoardPosition(4, 3),
-                new BoardPosition(5, 4),
-                new BoardPosition(5, 3),
-                new BoardPosition(3, 4),
-                new BoardPosition(3, 5)
+                new Position(5, 5),
+                new Position(4, 3),
+                new Position(5, 4),
+                new Position(5, 3),
+                new Position(3, 4),
+                new Position(3, 5)
             };
 
             Assert.That(possibleMoves, Is.EquivalentTo(expectedMoves));

@@ -6,8 +6,8 @@ namespace Controllers.PieceMovers
 {
     public class PieceMover : IPieceMover
     {
-        public BoardState GenerateNewBoardState(BoardState originalBoardState, BoardPosition from,
-            BoardPosition destination)
+        public BoardState GenerateNewBoardState(BoardState originalBoardState, Position from,
+            Position destination)
         {
             var newBoardState = (BoardState) originalBoardState.Clone();
             // get swapped pieces

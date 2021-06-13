@@ -10,7 +10,7 @@ namespace Bindings.Installers.InputInstallers
         public override void InstallBindings()
         {
             Container.Bind<MoveCommandFactory>().AsSingle();
-            Container.BindFactory<BoardPosition, BoardPosition, MoveCommand, MoveCommand.Factory>().FromNew();
+            Container.BindFactory<Position, Position, MoveCommand, MoveCommand.Factory>().FromNew();
         }
     }
 }

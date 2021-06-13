@@ -56,76 +56,76 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
         [Test]
         public void WithFriendlyPiece_White_BishopCanDefend()
         {
-            var pieces = new List<(PieceType, BoardPosition)>
+            var pieces = new List<(PieceType, Position)>
             {
-                (PieceType.WhiteBishop, new BoardPosition(4, 4)),
-                (PieceType.WhitePawn, new BoardPosition(6, 6))
+                (PieceType.WhiteBishop, new Position(4, 4)),
+                (PieceType.WhitePawn, new Position(6, 6))
             };
 
             var boardState = _boardSetup.SetupBoardWith(pieces);
 
-            var possibleMoves = _whiteBishopNonTurnMoves.GetPossiblePieceMoves(new BoardPosition(4, 4), boardState)
+            var possibleMoves = _whiteBishopNonTurnMoves.GetPossiblePieceMoves(new Position(4, 4), boardState)
                 .ToList();
 
-            Assert.That(possibleMoves, Does.Contain(new BoardPosition(6, 6)));
-            Assert.That(possibleMoves, Does.Not.Contains(new BoardPosition(7, 7)));
+            Assert.That(possibleMoves, Does.Contain(new Position(6, 6)));
+            Assert.That(possibleMoves, Does.Not.Contains(new Position(7, 7)));
         }
 
 
         [Test]
         public void WithFriendlyPiece_Black_BishopCanDefend()
         {
-            var pieces = new List<(PieceType, BoardPosition)>
+            var pieces = new List<(PieceType, Position)>
             {
-                (PieceType.BlackBishop, new BoardPosition(4, 4)),
-                (PieceType.BlackPawn, new BoardPosition(6, 6))
+                (PieceType.BlackBishop, new Position(4, 4)),
+                (PieceType.BlackPawn, new Position(6, 6))
             };
 
             var boardState = _boardSetup.SetupBoardWith(pieces);
 
-            var possibleMoves = _blackBishopNonTurnMoves.GetPossiblePieceMoves(new BoardPosition(4, 4), boardState)
+            var possibleMoves = _blackBishopNonTurnMoves.GetPossiblePieceMoves(new Position(4, 4), boardState)
                 .ToList();
 
-            Assert.That(possibleMoves, Does.Contain(new BoardPosition(6, 6)));
-            Assert.That(possibleMoves, Does.Not.Contains(new BoardPosition(7, 7)));
+            Assert.That(possibleMoves, Does.Contain(new Position(6, 6)));
+            Assert.That(possibleMoves, Does.Not.Contains(new Position(7, 7)));
         }
 
 
         [Test]
         public void WithOpposingPiece_White_BishopIsNotBlocked()
         {
-            var pieces = new List<(PieceType, BoardPosition)>
+            var pieces = new List<(PieceType, Position)>
             {
-                (PieceType.WhiteBishop, new BoardPosition(4, 4)),
-                (PieceType.BlackPawn, new BoardPosition(6, 6))
+                (PieceType.WhiteBishop, new Position(4, 4)),
+                (PieceType.BlackPawn, new Position(6, 6))
             };
 
             var boardState = _boardSetup.SetupBoardWith(pieces);
 
-            var possibleMoves = _whiteBishopNonTurnMoves.GetPossiblePieceMoves(new BoardPosition(4, 4), boardState)
+            var possibleMoves = _whiteBishopNonTurnMoves.GetPossiblePieceMoves(new Position(4, 4), boardState)
                 .ToList();
 
-            Assert.That(possibleMoves, Does.Contain(new BoardPosition(6, 6)));
-            Assert.That(possibleMoves, Does.Not.Contains(new BoardPosition(7, 7)));
+            Assert.That(possibleMoves, Does.Contain(new Position(6, 6)));
+            Assert.That(possibleMoves, Does.Not.Contains(new Position(7, 7)));
         }
 
 
         [Test]
         public void WithOpposingPiece_Black_BishopIsNotBlocked()
         {
-            var pieces = new List<(PieceType, BoardPosition)>
+            var pieces = new List<(PieceType, Position)>
             {
-                (PieceType.BlackBishop, new BoardPosition(4, 4)),
-                (PieceType.WhitePawn, new BoardPosition(6, 6))
+                (PieceType.BlackBishop, new Position(4, 4)),
+                (PieceType.WhitePawn, new Position(6, 6))
             };
 
             var boardState = _boardSetup.SetupBoardWith(pieces);
 
-            var possibleMoves = _blackBishopNonTurnMoves.GetPossiblePieceMoves(new BoardPosition(4, 4), boardState)
+            var possibleMoves = _blackBishopNonTurnMoves.GetPossiblePieceMoves(new Position(4, 4), boardState)
                 .ToList();
 
-            Assert.That(possibleMoves, Does.Contain(new BoardPosition(6, 6)));
-            Assert.That(possibleMoves, Does.Not.Contains(new BoardPosition(7, 7)));
+            Assert.That(possibleMoves, Does.Contain(new Position(6, 6)));
+            Assert.That(possibleMoves, Does.Not.Contains(new Position(7, 7)));
         }
     }
 }

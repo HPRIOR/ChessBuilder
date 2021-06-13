@@ -18,9 +18,9 @@ namespace Models.Services.Moves.MoveGenerators.TurnMoves
             _positionTranslator = positionTranslatorFactory.Create(pieceColour);
         }
 
-        public IEnumerable<BoardPosition> GetPossiblePieceMoves(BoardPosition originPosition, BoardState boardState)
+        public IEnumerable<Position> GetPossiblePieceMoves(Position originPosition, BoardState boardState)
         {
-            var potentialMoves = new List<BoardPosition>();
+            var potentialMoves = new List<Position>();
             var relativePosition = _positionTranslator.GetRelativePosition(originPosition);
 
             Enum.GetValues(typeof(Direction)).Cast<Direction>().ToList().ForEach(direction =>

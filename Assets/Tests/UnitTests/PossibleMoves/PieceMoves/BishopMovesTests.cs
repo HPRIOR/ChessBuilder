@@ -54,29 +54,29 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
         [Test]
         public void OnEmptyBoard_White_BishopCanMove()
         {
-            var pieces = new List<(PieceType, BoardPosition)>
+            var pieces = new List<(PieceType, Position)>
             {
-                (PieceType.WhiteBishop, new BoardPosition(4, 4))
+                (PieceType.WhiteBishop, new Position(4, 4))
             };
 
             var boardState = _boardSetup.SetupBoardWith(pieces);
 
-            var possibleMoves = _whiteBishopTurnMoves.GetPossiblePieceMoves(new BoardPosition(4, 4), boardState);
-            var expectedMoves = new List<BoardPosition>
+            var possibleMoves = _whiteBishopTurnMoves.GetPossiblePieceMoves(new Position(4, 4), boardState);
+            var expectedMoves = new List<Position>
             {
-                new BoardPosition(0, 0),
-                new BoardPosition(1, 1),
-                new BoardPosition(2, 2),
-                new BoardPosition(3, 3),
-                new BoardPosition(5, 5),
-                new BoardPosition(6, 6),
-                new BoardPosition(7, 7),
-                new BoardPosition(5, 3),
-                new BoardPosition(6, 2),
-                new BoardPosition(7, 1),
-                new BoardPosition(3, 5),
-                new BoardPosition(2, 6),
-                new BoardPosition(1, 7)
+                new Position(0, 0),
+                new Position(1, 1),
+                new Position(2, 2),
+                new Position(3, 3),
+                new Position(5, 5),
+                new Position(6, 6),
+                new Position(7, 7),
+                new Position(5, 3),
+                new Position(6, 2),
+                new Position(7, 1),
+                new Position(3, 5),
+                new Position(2, 6),
+                new Position(1, 7)
             };
             Assert.That(possibleMoves, Is.EquivalentTo(expectedMoves));
         }
@@ -84,29 +84,29 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
         [Test]
         public void OnEmptyBoard_Black_BishopCanMove()
         {
-            var pieces = new List<(PieceType, BoardPosition)>
+            var pieces = new List<(PieceType, Position)>
             {
-                (PieceType.BlackBishop, new BoardPosition(4, 4))
+                (PieceType.BlackBishop, new Position(4, 4))
             };
 
             var boardState = _boardSetup.SetupBoardWith(pieces);
 
-            var possibleMoves = _blackBishopTurnMoves.GetPossiblePieceMoves(new BoardPosition(4, 4), boardState);
-            var expectedMoves = new List<BoardPosition>
+            var possibleMoves = _blackBishopTurnMoves.GetPossiblePieceMoves(new Position(4, 4), boardState);
+            var expectedMoves = new List<Position>
             {
-                new BoardPosition(0, 0),
-                new BoardPosition(1, 1),
-                new BoardPosition(2, 2),
-                new BoardPosition(3, 3),
-                new BoardPosition(5, 5),
-                new BoardPosition(6, 6),
-                new BoardPosition(7, 7),
-                new BoardPosition(5, 3),
-                new BoardPosition(6, 2),
-                new BoardPosition(7, 1),
-                new BoardPosition(3, 5),
-                new BoardPosition(2, 6),
-                new BoardPosition(1, 7)
+                new Position(0, 0),
+                new Position(1, 1),
+                new Position(2, 2),
+                new Position(3, 3),
+                new Position(5, 5),
+                new Position(6, 6),
+                new Position(7, 7),
+                new Position(5, 3),
+                new Position(6, 2),
+                new Position(7, 1),
+                new Position(3, 5),
+                new Position(2, 6),
+                new Position(1, 7)
             };
             Assert.That(possibleMoves, Is.EquivalentTo(expectedMoves));
         }
@@ -114,29 +114,29 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
         [Test]
         public void WithOpposingPiece_White_BishopCanTake()
         {
-            var pieces = new List<(PieceType, BoardPosition)>
+            var pieces = new List<(PieceType, Position)>
             {
-                (PieceType.WhiteBishop, new BoardPosition(4, 4)),
-                (PieceType.BlackKnight, new BoardPosition(6, 6))
+                (PieceType.WhiteBishop, new Position(4, 4)),
+                (PieceType.BlackKnight, new Position(6, 6))
             };
 
             var boardState = _boardSetup.SetupBoardWith(pieces);
 
-            var possibleMoves = _whiteBishopTurnMoves.GetPossiblePieceMoves(new BoardPosition(4, 4), boardState);
-            var expectedMoves = new List<BoardPosition>
+            var possibleMoves = _whiteBishopTurnMoves.GetPossiblePieceMoves(new Position(4, 4), boardState);
+            var expectedMoves = new List<Position>
             {
-                new BoardPosition(0, 0),
-                new BoardPosition(1, 1),
-                new BoardPosition(2, 2),
-                new BoardPosition(3, 3),
-                new BoardPosition(5, 5),
-                new BoardPosition(6, 6),
-                new BoardPosition(5, 3),
-                new BoardPosition(6, 2),
-                new BoardPosition(7, 1),
-                new BoardPosition(3, 5),
-                new BoardPosition(2, 6),
-                new BoardPosition(1, 7)
+                new Position(0, 0),
+                new Position(1, 1),
+                new Position(2, 2),
+                new Position(3, 3),
+                new Position(5, 5),
+                new Position(6, 6),
+                new Position(5, 3),
+                new Position(6, 2),
+                new Position(7, 1),
+                new Position(3, 5),
+                new Position(2, 6),
+                new Position(1, 7)
             };
             Assert.That(possibleMoves, Is.EquivalentTo(expectedMoves));
         }
@@ -144,29 +144,29 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
         [Test]
         public void WithOpposingPiece_Black_BishopCanTake()
         {
-            var pieces = new List<(PieceType, BoardPosition)>
+            var pieces = new List<(PieceType, Position)>
             {
-                (PieceType.BlackBishop, new BoardPosition(4, 4)),
-                (PieceType.WhiteKnight, new BoardPosition(6, 6))
+                (PieceType.BlackBishop, new Position(4, 4)),
+                (PieceType.WhiteKnight, new Position(6, 6))
             };
 
             var boardState = _boardSetup.SetupBoardWith(pieces);
 
-            var possibleMoves = _blackBishopTurnMoves.GetPossiblePieceMoves(new BoardPosition(4, 4), boardState);
-            var expectedMoves = new List<BoardPosition>
+            var possibleMoves = _blackBishopTurnMoves.GetPossiblePieceMoves(new Position(4, 4), boardState);
+            var expectedMoves = new List<Position>
             {
-                new BoardPosition(0, 0),
-                new BoardPosition(1, 1),
-                new BoardPosition(2, 2),
-                new BoardPosition(3, 3),
-                new BoardPosition(5, 5),
-                new BoardPosition(6, 6),
-                new BoardPosition(5, 3),
-                new BoardPosition(6, 2),
-                new BoardPosition(7, 1),
-                new BoardPosition(3, 5),
-                new BoardPosition(2, 6),
-                new BoardPosition(1, 7)
+                new Position(0, 0),
+                new Position(1, 1),
+                new Position(2, 2),
+                new Position(3, 3),
+                new Position(5, 5),
+                new Position(6, 6),
+                new Position(5, 3),
+                new Position(6, 2),
+                new Position(7, 1),
+                new Position(3, 5),
+                new Position(2, 6),
+                new Position(1, 7)
             };
             Assert.That(possibleMoves, Is.EquivalentTo(expectedMoves));
         }
@@ -175,28 +175,28 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
         [Test]
         public void WithFriendlyPiece_White_BishopIsBlocked()
         {
-            var pieces = new List<(PieceType, BoardPosition)>
+            var pieces = new List<(PieceType, Position)>
             {
-                (PieceType.WhiteBishop, new BoardPosition(4, 4)),
-                (PieceType.WhiteBishop, new BoardPosition(6, 6))
+                (PieceType.WhiteBishop, new Position(4, 4)),
+                (PieceType.WhiteBishop, new Position(6, 6))
             };
 
             var boardState = _boardSetup.SetupBoardWith(pieces);
 
-            var possibleMoves = _whiteBishopTurnMoves.GetPossiblePieceMoves(new BoardPosition(4, 4), boardState);
-            var expectedMoves = new List<BoardPosition>
+            var possibleMoves = _whiteBishopTurnMoves.GetPossiblePieceMoves(new Position(4, 4), boardState);
+            var expectedMoves = new List<Position>
             {
-                new BoardPosition(0, 0),
-                new BoardPosition(1, 1),
-                new BoardPosition(2, 2),
-                new BoardPosition(3, 3),
-                new BoardPosition(5, 5),
-                new BoardPosition(5, 3),
-                new BoardPosition(6, 2),
-                new BoardPosition(7, 1),
-                new BoardPosition(3, 5),
-                new BoardPosition(2, 6),
-                new BoardPosition(1, 7)
+                new Position(0, 0),
+                new Position(1, 1),
+                new Position(2, 2),
+                new Position(3, 3),
+                new Position(5, 5),
+                new Position(5, 3),
+                new Position(6, 2),
+                new Position(7, 1),
+                new Position(3, 5),
+                new Position(2, 6),
+                new Position(1, 7)
             };
             Assert.That(possibleMoves, Is.EquivalentTo(expectedMoves));
         }
@@ -204,28 +204,28 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
         [Test]
         public void WithFriendlyPiece_Black_BishopIsBlocked()
         {
-            var pieces = new List<(PieceType, BoardPosition)>
+            var pieces = new List<(PieceType, Position)>
             {
-                (PieceType.BlackBishop, new BoardPosition(4, 4)),
-                (PieceType.BlackBishop, new BoardPosition(6, 6))
+                (PieceType.BlackBishop, new Position(4, 4)),
+                (PieceType.BlackBishop, new Position(6, 6))
             };
 
             var boardState = _boardSetup.SetupBoardWith(pieces);
 
-            var possibleMoves = _blackBishopTurnMoves.GetPossiblePieceMoves(new BoardPosition(4, 4), boardState);
-            var expectedMoves = new List<BoardPosition>
+            var possibleMoves = _blackBishopTurnMoves.GetPossiblePieceMoves(new Position(4, 4), boardState);
+            var expectedMoves = new List<Position>
             {
-                new BoardPosition(0, 0),
-                new BoardPosition(1, 1),
-                new BoardPosition(2, 2),
-                new BoardPosition(3, 3),
-                new BoardPosition(5, 5),
-                new BoardPosition(5, 3),
-                new BoardPosition(6, 2),
-                new BoardPosition(7, 1),
-                new BoardPosition(3, 5),
-                new BoardPosition(2, 6),
-                new BoardPosition(1, 7)
+                new Position(0, 0),
+                new Position(1, 1),
+                new Position(2, 2),
+                new Position(3, 3),
+                new Position(5, 5),
+                new Position(5, 3),
+                new Position(6, 2),
+                new Position(7, 1),
+                new Position(3, 5),
+                new Position(2, 6),
+                new Position(1, 7)
             };
             Assert.That(possibleMoves, Is.EquivalentTo(expectedMoves));
         }

@@ -14,10 +14,10 @@ namespace Models.Services.Piece
             _pieceFactory = pieceFactory;
         }
 
-        public PieceMono CreatePiece(PieceType pieceType, BoardPosition boardPosition)
+        public PieceMono CreatePiece(PieceType pieceType, Position position)
         {
-            var piece = _pieceFactory.Create(new PieceInfo(pieceType), boardPosition);
-            piece.BoardPosition = boardPosition;
+            var piece = _pieceFactory.Create(new PieceInfo(pieceType), position);
+            piece.Position = position;
             return piece;
         }
     }

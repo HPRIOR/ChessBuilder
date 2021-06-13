@@ -19,27 +19,27 @@ namespace Models.Services.Moves.MoveGenerators.TurnMoves
             _tileEvaluator = tileEvaluatorFactory.Create(pieceColour);
         }
 
-        public IEnumerable<BoardPosition> GetPossiblePieceMoves(BoardPosition originPosition, BoardState boardState)
+        public IEnumerable<Position> GetPossiblePieceMoves(Position originPosition, BoardState boardState)
         {
             bool CoordInBounds((int X, int Y) coord) => 0 <= coord.X && coord.X <= 7 && 0 <= coord.Y && coord.Y <= 7;
 
             bool FriendlyPieceNotInTile((int X, int Y) coord) =>
                 !_tileEvaluator.FriendlyPieceIn(
-                    _positionTranslator.GetRelativeTileAt(new BoardPosition(coord.X, coord.Y), boardState));
+                    _positionTranslator.GetRelativeTileAt(new Position(coord.X, coord.Y), boardState));
 
             var moveCoords = GetMoveCoords(_positionTranslator.GetRelativePosition(originPosition))
                 .Where(CoordInBounds)
                 .Where(FriendlyPieceNotInTile)
-                .Select(coord => new BoardPosition(coord.X, coord.Y))
+                .Select(coord => new Position(coord.X, coord.Y))
                 .Select(pos => _positionTranslator.GetRelativePosition(pos));
 
             return moveCoords;
         }
 
-        private static IEnumerable<(int X, int Y)> GetMoveCoords(BoardPosition boardPosition)
+        private static IEnumerable<(int X, int Y)> GetMoveCoords(Position position)
         {
-            var x = boardPosition.X;
-            var y = boardPosition.Y;
+            var x = position.X;
+            var y = position.Y;
             var squareXs = new List<int> {x + 2, x - 2};
             var squareYs = new List<int> {y + 2, y - 2};
 

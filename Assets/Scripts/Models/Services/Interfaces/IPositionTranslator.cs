@@ -4,8 +4,8 @@ namespace Models.Services.Interfaces
 {
     public interface IPositionTranslator
     {
-        BoardPosition GetRelativePosition(BoardPosition originalPosition);
+        Position GetRelativePosition(Position originalPosition);
 
-        Tile GetRelativeTileAt(BoardPosition boardPosition, BoardState fromBoard);
+        Tile GetRelativeTileAt(Position position, BoardState fromBoard);
     }
 }

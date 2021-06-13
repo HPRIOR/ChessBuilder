@@ -21,7 +21,7 @@ namespace Models.Services.Moves.MoveHelpers
             var turnMoves = boardInfo.TurnMoves;
             var nonTurnScanningMoves = GetScanningPieces(boardInfo.NonTurnMoves, boardState);
             var kingPosition = boardInfo.KingPosition;
-            var turnPieces = new HashSet<BoardPosition>(turnMoves.Keys);
+            var turnPieces = new HashSet<Position>(turnMoves.Keys);
             turnPieces.Remove(kingPosition);
             foreach (var moves in nonTurnScanningMoves)
             {
@@ -37,10 +37,10 @@ namespace Models.Services.Moves.MoveHelpers
             }
         }
 
-        private static HashSet<BoardPosition> PossibleEscapeMoves(
-            KeyValuePair<BoardPosition, HashSet<BoardPosition>> moves)
+        private static HashSet<Position> PossibleEscapeMoves(
+            KeyValuePair<Position, HashSet<Position>> moves)
         {
-            var pinningMoves = new HashSet<BoardPosition>
+            var pinningMoves = new HashSet<Position>
             {
                 moves.Key
             };
@@ -48,16 +48,16 @@ namespace Models.Services.Moves.MoveHelpers
             return pinningMoves;
         }
 
-        private static bool DirectionOfPinPointsToKing(BoardPosition kingPosition, BoardPosition pinnedPosition,
-            BoardPosition pinningPosition)
+        private static bool DirectionOfPinPointsToKing(Position kingPosition, Position pinnedPosition,
+            Position pinningPosition)
         {
             var pinDirection = pinningPosition.DirectionTo(pinnedPosition);
             var pinnedToKingDirection = pinnedPosition.DirectionTo(kingPosition);
             return pinDirection == pinnedToKingDirection;
         }
 
-        private static bool ContainsNonKingPiece(BoardState boardState, BoardPosition kingPosition,
-            BoardPosition targetPosition)
+        private static bool ContainsNonKingPiece(BoardState boardState, Position kingPosition,
+            Position targetPosition)
         {
             var (x, y) = (targetPosition.X, targetPosition.Y);
             return !targetPosition.Equals(kingPosition) &&
@@ -65,8 +65,8 @@ namespace Models.Services.Moves.MoveHelpers
         }
 
 
-        private static bool TheNextPieceIsKing(BoardPosition scanningPiecePosition, BoardPosition turnPiecePosition,
-            BoardPosition kingPosition, BoardState boardState)
+        private static bool TheNextPieceIsKing(Position scanningPiecePosition, Position turnPiecePosition,
+            Position kingPosition, BoardState boardState)
         {
             var scannedBoardPositions =
                 scanningPiecePosition.Scan(scanningPiecePosition.DirectionTo(turnPiecePosition));
@@ -82,15 +82,15 @@ namespace Models.Services.Moves.MoveHelpers
             return false;
         }
 
-        private bool PieceIsScanner(KeyValuePair<BoardPosition, HashSet<BoardPosition>> pieceMoves,
+        private bool PieceIsScanner(KeyValuePair<Position, HashSet<Position>> pieceMoves,
             BoardState boardState)
         {
             var pieceAtBoardPosition = boardState.Board[pieceMoves.Key.X, pieceMoves.Key.Y].CurrentPiece.Type;
             return _scanningPieces.Contains(pieceAtBoardPosition);
         }
 
-        private IDictionary<BoardPosition, HashSet<BoardPosition>> GetScanningPieces(
-            IDictionary<BoardPosition, HashSet<BoardPosition>> moves, BoardState boardState) =>
+        private IDictionary<Position, HashSet<Position>> GetScanningPieces(
+            IDictionary<Position, HashSet<Position>> moves, BoardState boardState) =>
             moves
                 .Where(keyVal => PieceIsScanner(keyVal, boardState))
                 .ToDictionary(keyVal => keyVal.Key, keyVal => keyVal.Value);

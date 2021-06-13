@@ -6,9 +6,9 @@ namespace Models.Services.Interfaces
 {
     public interface IBoardInfo
     {
-        IDictionary<BoardPosition, HashSet<BoardPosition>> TurnMoves { get; }
-        IDictionary<BoardPosition, HashSet<BoardPosition>> NonTurnMoves { get; }
-        BoardPosition KingPosition { get; }
+        IDictionary<Position, HashSet<Position>> TurnMoves { get; }
+        IDictionary<Position, HashSet<Position>> NonTurnMoves { get; }
+        Position KingPosition { get; }
 
         void EvaluateBoard(BoardState boardState, PieceColour turn);
     }

@@ -21,7 +21,7 @@ namespace Models.Services.Moves.MoveGenerators.TurnMoves
             _boardScanner = boardScannerFactory.Create(pieceColour, Turn.NonTurn);
         }
 
-        public IEnumerable<BoardPosition> GetPossiblePieceMoves(BoardPosition originPosition, BoardState boardState)
+        public IEnumerable<Position> GetPossiblePieceMoves(Position originPosition, BoardState boardState)
         {
             var relativePosition = _positionTranslator.GetRelativePosition(originPosition);
 

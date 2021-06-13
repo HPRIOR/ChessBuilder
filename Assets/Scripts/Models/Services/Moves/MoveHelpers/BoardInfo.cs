@@ -14,16 +14,16 @@ namespace Models.Services.Moves.MoveHelpers
             _moveGeneratorRepository = moveGeneratorRepository;
         }
 
-        public IDictionary<BoardPosition, HashSet<BoardPosition>> TurnMoves { get; private set; }
-        public IDictionary<BoardPosition, HashSet<BoardPosition>> NonTurnMoves { get; private set; }
-        public BoardPosition KingPosition { get; private set; } = new BoardPosition(8, 8);
+        public IDictionary<Position, HashSet<Position>> TurnMoves { get; private set; }
+        public IDictionary<Position, HashSet<Position>> NonTurnMoves { get; private set; }
+        public Position KingPosition { get; private set; } = new Position(8, 8);
 
         // TODO refactor
         public void EvaluateBoard(BoardState boardState, PieceColour turn)
         {
             var board = boardState.Board;
-            var turnMoves = new Dictionary<BoardPosition, HashSet<BoardPosition>>();
-            var nonTurnMoves = new Dictionary<BoardPosition, HashSet<BoardPosition>>();
+            var turnMoves = new Dictionary<Position, HashSet<Position>>();
+            var nonTurnMoves = new Dictionary<Position, HashSet<Position>>();
             foreach (var tile in board)
             {
                 var currentPiece = tile.CurrentPiece;
@@ -32,20 +32,20 @@ namespace Models.Services.Moves.MoveHelpers
                 if (piecesTurn)
                 {
                     if (currentPiece.Type == PieceType.BlackKing || currentPiece.Type == PieceType.WhiteKing)
-                        KingPosition = tile.BoardPosition;
-                    var boardPos = tile.BoardPosition;
+                        KingPosition = tile.Position;
+                    var boardPos = tile.Position;
                     var possibleMoves = _moveGeneratorRepository.GetPossibleMoveGenerator(currentPiece, true)
                         .GetPossiblePieceMoves(boardPos, boardState);
 
-                    turnMoves.Add(boardPos, new HashSet<BoardPosition>(possibleMoves));
+                    turnMoves.Add(boardPos, new HashSet<Position>(possibleMoves));
                 }
 
                 if (notPiecesTurn)
                 {
-                    var boardPos = tile.BoardPosition;
+                    var boardPos = tile.Position;
                     var possibleMoves = _moveGeneratorRepository.GetPossibleMoveGenerator(currentPiece, false)
                         .GetPossiblePieceMoves(boardPos, boardState);
-                    nonTurnMoves.Add(boardPos, new HashSet<BoardPosition>(possibleMoves));
+                    nonTurnMoves.Add(boardPos, new HashSet<Position>(possibleMoves));
                 }
 
                 TurnMoves = turnMoves;

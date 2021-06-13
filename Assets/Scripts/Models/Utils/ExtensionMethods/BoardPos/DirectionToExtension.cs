@@ -6,7 +6,7 @@ namespace Models.Utils.ExtensionMethods.BoardPos
 {
     public static class DirectionToExtension
     {
-        public static Direction DirectionTo(this BoardPosition origin, BoardPosition target)
+        public static Direction DirectionTo(this Position origin, Position target)
         {
             if (target.X == origin.X && target.Y > origin.Y) return Direction.N;
             if (target.X == origin.X && target.Y < origin.Y) return Direction.S;

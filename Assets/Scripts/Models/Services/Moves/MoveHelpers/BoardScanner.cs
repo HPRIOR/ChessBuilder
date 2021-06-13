@@ -32,31 +32,31 @@ namespace Models.Services.Moves.MoveHelpers
         /// <param name="currentPosition"></param>
         /// <param name="boardState"></param>
         /// <returns></returns>
-        public IEnumerable<BoardPosition> ScanIn(Direction direction, BoardPosition currentPosition,
+        public IEnumerable<Position> ScanIn(Direction direction, Position currentPosition,
             BoardState boardState)
         {
             var newPosition = currentPosition.Add(Move.In(direction));
             if (PieceCannotMoveTo(newPosition, boardState))
-                return new List<BoardPosition>();
+                return new List<Position>();
             if (TileContainsOpposingPieceAt(newPosition, boardState))
-                return new List<BoardPosition> {_positionTranslator.GetRelativePosition(newPosition)};
+                return new List<Position> {_positionTranslator.GetRelativePosition(newPosition)};
             return ScanIn(direction, newPosition, boardState)
-                .Concat(new List<BoardPosition> {_positionTranslator.GetRelativePosition(newPosition)});
+                .Concat(new List<Position> {_positionTranslator.GetRelativePosition(newPosition)});
         }
 
-        private bool PieceCannotMoveTo(BoardPosition boardPosition, BoardState boardState)
+        private bool PieceCannotMoveTo(Position position, BoardState boardState)
         {
-            var x = boardPosition.X;
-            var y = boardPosition.Y;
-            return 0 > x || x > 7 || 0 > y || y > 7 || TileContainsFriendlyPieceAt(boardPosition, boardState);
+            var x = position.X;
+            var y = position.Y;
+            return 0 > x || x > 7 || 0 > y || y > 7 || TileContainsFriendlyPieceAt(position, boardState);
         }
 
         // TODO refactor so that position translator result is passed through instead of calculated each time
-        private bool TileContainsOpposingPieceAt(BoardPosition boardPosition, BoardState boardState) =>
-            _tileEvaluator.OpposingPieceIn(_positionTranslator.GetRelativeTileAt(boardPosition, boardState));
+        private bool TileContainsOpposingPieceAt(Position position, BoardState boardState) =>
+            _tileEvaluator.OpposingPieceIn(_positionTranslator.GetRelativeTileAt(position, boardState));
 
-        private bool TileContainsFriendlyPieceAt(BoardPosition boardPosition, BoardState boardState) =>
-            _tileEvaluator.FriendlyPieceIn(_positionTranslator.GetRelativeTileAt(boardPosition, boardState));
+        private bool TileContainsFriendlyPieceAt(Position position, BoardState boardState) =>
+            _tileEvaluator.FriendlyPieceIn(_positionTranslator.GetRelativeTileAt(position, boardState));
 
         public class Factory : PlaceholderFactory<PieceColour, BoardScanner>
         {

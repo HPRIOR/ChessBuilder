@@ -20,10 +20,7 @@ namespace Tests.UnitTests.BoardTests
 
         private IBoardGenerator _boardGenerator;
 
-        private BoardState GetBoardState()
-        {
-            return new BoardState();
-        }
+        private BoardState GetBoardState() => new BoardState();
 
         [Test]
         public void BindsCorrectly()
@@ -63,7 +60,7 @@ namespace Tests.UnitTests.BoardTests
         )
         {
             var boardState = GetBoardState();
-            Assert.AreEqual(new BoardPosition(x, y), boardState.Board[x, y].BoardPosition);
+            Assert.AreEqual(new Position(x, y), boardState.Board[x, y].Position);
         }
 
         [Test]
@@ -72,7 +69,7 @@ namespace Tests.UnitTests.BoardTests
         )
         {
             var boardState = GetBoardState();
-            Assert.AreEqual(boardState.Board[x, y].BoardPosition, new BoardPosition(x, y));
+            Assert.AreEqual(boardState.Board[x, y].Position, new Position(x, y));
         }
 
         [Test]
@@ -90,7 +87,7 @@ namespace Tests.UnitTests.BoardTests
         )
         {
             var boardState = GetBoardState();
-            Assert.AreEqual(boardState.Board[x, y].BoardPosition.Vector,
+            Assert.AreEqual(boardState.Board[x, y].Position.Vector,
                 new Vector2(x + 0.5f, y + 0.5f));
         }
     }

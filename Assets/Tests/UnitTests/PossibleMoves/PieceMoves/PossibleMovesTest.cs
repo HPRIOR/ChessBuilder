@@ -116,13 +116,13 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
 
             var possibleMoves =
                 _allPossibleMovesGenerator.GetPossibleMoves(boardState, PieceColour.Black);
-            Assert.AreEqual(6, possibleMoves[new BoardPosition(1, 6)].Count());
+            Assert.AreEqual(6, possibleMoves[new Position(1, 6)].Count());
         }
 
         [Test]
         public void WhenChecked_BlackQueenCanIntercept()
         {
-            var blackQueenPosition = new BoardPosition(4, 6);
+            var blackQueenPosition = new Position(4, 6);
             var board = _boardGenerator.GenerateBoard();
             board[1, 6].CurrentPiece = new Piece(PieceType.BlackKing);
             board[4, 6].CurrentPiece = new Piece(PieceType.BlackQueen);
@@ -132,7 +132,7 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
             var possibleMoves =
                 _allPossibleMovesGenerator.GetPossibleMoves(boardState, PieceColour.Black);
             Assert.AreEqual(1, possibleMoves[blackQueenPosition].Count());
-            Assert.IsTrue(possibleMoves[blackQueenPosition].Contains(new BoardPosition(1, 3)));
+            Assert.IsTrue(possibleMoves[blackQueenPosition].Contains(new Position(1, 3)));
         }
 
         [Test]
@@ -147,7 +147,7 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
 
             var possibleMoves =
                 _allPossibleMovesGenerator.GetPossibleMoves(boardState, PieceColour.Black);
-            Assert.AreEqual(0, possibleMoves[new BoardPosition(4, 6)].Count());
+            Assert.AreEqual(0, possibleMoves[new Position(4, 6)].Count());
         }
 
         [Test]
@@ -164,10 +164,10 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
                 _allPossibleMovesGenerator.GetPossibleMoves(boardState, PieceColour.Black);
 
             // no moves for black queen 
-            Assert.AreEqual(0, possibleMoves[new BoardPosition(4, 6)].Count());
+            Assert.AreEqual(0, possibleMoves[new Position(4, 6)].Count());
 
             // moves for black king 
-            Assert.IsTrue(possibleMoves[new BoardPosition(1, 6)].Any());
+            Assert.IsTrue(possibleMoves[new Position(1, 6)].Any());
         }
 
         [Test]
@@ -182,14 +182,14 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
             var possibleMoves =
                 _allPossibleMovesGenerator.GetPossibleMoves(boardState, PieceColour.Black);
 
-            var expectedMoves = new HashSet<BoardPosition>
+            var expectedMoves = new HashSet<Position>
             {
-                new BoardPosition(0, 6),
-                new BoardPosition(0, 5),
-                new BoardPosition(2, 6),
-                new BoardPosition(2, 7)
+                new Position(0, 6),
+                new Position(0, 5),
+                new Position(2, 6),
+                new Position(2, 7)
             };
-            var kingMoves = possibleMoves[new BoardPosition(1, 6)];
+            var kingMoves = possibleMoves[new Position(1, 6)];
             Assert.That(kingMoves, Is.EquivalentTo(expectedMoves));
         }
 
@@ -206,13 +206,13 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
             var possibleMoves =
                 _allPossibleMovesGenerator.GetPossibleMoves(boardState, PieceColour.White);
 
-            var expected = new HashSet<BoardPosition>
+            var expected = new HashSet<Position>
             {
-                new BoardPosition(3, 3),
-                new BoardPosition(4, 4),
-                new BoardPosition(5, 5)
+                new Position(3, 3),
+                new Position(4, 4),
+                new Position(5, 5)
             };
-            Assert.That(possibleMoves[new BoardPosition(3, 5)], Is.EquivalentTo(expected));
+            Assert.That(possibleMoves[new Position(3, 5)], Is.EquivalentTo(expected));
         }
 
         [Test]
@@ -228,11 +228,11 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
             var possibleMoves =
                 _allPossibleMovesGenerator.GetPossibleMoves(boardState, PieceColour.White);
 
-            var expected = new HashSet<BoardPosition>
+            var expected = new HashSet<Position>
             {
-                new BoardPosition(1, 1)
+                new Position(1, 1)
             };
-            Assert.That(possibleMoves[new BoardPosition(3, 3)], Is.EquivalentTo(expected));
+            Assert.That(possibleMoves[new Position(3, 3)], Is.EquivalentTo(expected));
         }
 
         [Test]
@@ -248,7 +248,7 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
             var possibleMoves =
                 _allPossibleMovesGenerator.GetPossibleMoves(boardState, PieceColour.White);
 
-            Assert.That(possibleMoves[new BoardPosition(4, 2)].Any(), Is.False);
+            Assert.That(possibleMoves[new Position(4, 2)].Any(), Is.False);
         }
 
         [Test]
@@ -263,7 +263,7 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
             var possibleMoves =
                 _allPossibleMovesGenerator.GetPossibleMoves(boardState, PieceColour.White);
 
-            Assert.That(possibleMoves[new BoardPosition(0, 0)].Any(), Is.True);
+            Assert.That(possibleMoves[new Position(0, 0)].Any(), Is.True);
         }
 
         [Test]
@@ -278,11 +278,11 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
             var possibleMoves =
                 _allPossibleMovesGenerator.GetPossibleMoves(boardState, PieceColour.White);
 
-            var possibleKingMoves = possibleMoves[new BoardPosition(4, 4)];
+            var possibleKingMoves = possibleMoves[new Position(4, 4)];
 
-            Assert.That(possibleKingMoves.Contains(new BoardPosition(4, 5)), Is.True);
-            Assert.That(possibleKingMoves.Contains(new BoardPosition(3, 5)), Is.False);
-            Assert.That(possibleKingMoves.Contains(new BoardPosition(5, 5)), Is.False);
+            Assert.That(possibleKingMoves.Contains(new Position(4, 5)), Is.True);
+            Assert.That(possibleKingMoves.Contains(new Position(3, 5)), Is.False);
+            Assert.That(possibleKingMoves.Contains(new Position(5, 5)), Is.False);
         }
 
         [Test]
@@ -298,11 +298,11 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
             var possibleMoves =
                 _allPossibleMovesGenerator.GetPossibleMoves(boardState, PieceColour.White);
 
-            var possibleKingMoves = possibleMoves[new BoardPosition(4, 4)];
+            var possibleKingMoves = possibleMoves[new Position(4, 4)];
 
-            Assert.That(possibleKingMoves.Contains(new BoardPosition(4, 5)), Is.True);
-            Assert.That(possibleKingMoves.Contains(new BoardPosition(3, 5)), Is.False);
-            Assert.That(possibleKingMoves.Contains(new BoardPosition(5, 5)), Is.False);
+            Assert.That(possibleKingMoves.Contains(new Position(4, 5)), Is.True);
+            Assert.That(possibleKingMoves.Contains(new Position(3, 5)), Is.False);
+            Assert.That(possibleKingMoves.Contains(new Position(5, 5)), Is.False);
         }
 
         [Test]
@@ -318,9 +318,9 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
             var possibleMoves =
                 _allPossibleMovesGenerator.GetPossibleMoves(boardState, PieceColour.White);
 
-            var possibleKingMoves = possibleMoves[new BoardPosition(4, 4)];
+            var possibleKingMoves = possibleMoves[new Position(4, 4)];
 
-            Assert.That(possibleKingMoves.Contains(new BoardPosition(4, 5)), Is.False);
+            Assert.That(possibleKingMoves.Contains(new Position(4, 5)), Is.False);
         }
 
         [Test]
@@ -336,7 +336,7 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
             var possibleMoves =
                 _allPossibleMovesGenerator.GetPossibleMoves(boardState, PieceColour.White);
 
-            var possiblePawnMoves = possibleMoves[new BoardPosition(4, 4)];
+            var possiblePawnMoves = possibleMoves[new Position(4, 4)];
             Assert.AreEqual(0, possiblePawnMoves.Count());
         }
 
@@ -354,7 +354,7 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
             var possibleMoves =
                 _allPossibleMovesGenerator.GetPossibleMoves(boardState, PieceColour.White);
 
-            var possiblePawnMoves = possibleMoves[new BoardPosition(4, 4)];
+            var possiblePawnMoves = possibleMoves[new Position(4, 4)];
             Assert.AreEqual(0, possiblePawnMoves.Count());
         }
 
@@ -372,7 +372,7 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
             var possibleMoves =
                 _allPossibleMovesGenerator.GetPossibleMoves(boardState, PieceColour.White);
 
-            var possiblePawnMoves = possibleMoves[new BoardPosition(4, 3)];
+            var possiblePawnMoves = possibleMoves[new Position(4, 3)];
             Assert.AreEqual(0, possiblePawnMoves.Count());
         }
 
@@ -389,8 +389,8 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
             var possibleMoves =
                 _allPossibleMovesGenerator.GetPossibleMoves(boardState, PieceColour.White);
 
-            var possibleQueenMoves = possibleMoves[new BoardPosition(4, 3)];
-            Assert.That(possibleQueenMoves, Does.Contain(new BoardPosition(7, 0)));
+            var possibleQueenMoves = possibleMoves[new Position(4, 3)];
+            Assert.That(possibleQueenMoves, Does.Contain(new Position(7, 0)));
         }
 
         [Test]
@@ -407,7 +407,7 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
             var possibleMoves =
                 _allPossibleMovesGenerator.GetPossibleMoves(boardState, PieceColour.White);
 
-            var possibleQueenMoves = possibleMoves[new BoardPosition(4, 3)];
+            var possibleQueenMoves = possibleMoves[new Position(4, 3)];
             Assert.That(possibleQueenMoves.Count(), Is.GreaterThan(0));
         }
 
@@ -425,7 +425,7 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
             var possibleMoves =
                 _allPossibleMovesGenerator.GetPossibleMoves(boardState, PieceColour.White);
 
-            var possibleQueenMoves = possibleMoves[new BoardPosition(4, 3)];
+            var possibleQueenMoves = possibleMoves[new Position(4, 3)];
             Assert.That(possibleQueenMoves.Count(), Is.GreaterThan(0));
         }
 
@@ -443,10 +443,10 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
             var possibleMoves =
                 _allPossibleMovesGenerator.GetPossibleMoves(boardState, PieceColour.White);
 
-            var possibleQueenMoves = possibleMoves[new BoardPosition(4, 3)];
+            var possibleQueenMoves = possibleMoves[new Position(4, 3)];
             Assert.That(possibleQueenMoves,
-                Is.EquivalentTo(new List<BoardPosition>
-                    {new BoardPosition(7, 0), new BoardPosition(5, 2), new BoardPosition(6, 1)}));
+                Is.EquivalentTo(new List<Position>
+                    {new Position(7, 0), new Position(5, 2), new Position(6, 1)}));
         }
     }
 }

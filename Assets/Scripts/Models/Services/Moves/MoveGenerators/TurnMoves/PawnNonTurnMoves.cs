@@ -19,9 +19,9 @@ namespace Models.Services.Moves.MoveGenerators.TurnMoves
             _tileEvaluator = tileEvaluatorFactory.Create(pieceColour);
         }
 
-        public IEnumerable<BoardPosition> GetPossiblePieceMoves(BoardPosition originPosition, BoardState boardState)
+        public IEnumerable<Position> GetPossiblePieceMoves(Position originPosition, BoardState boardState)
         {
-            var potentialMoves = new List<BoardPosition>();
+            var potentialMoves = new List<Position>();
             originPosition = _positionTranslator.GetRelativePosition(originPosition);
 
             if (originPosition.Y == 7) return potentialMoves;
@@ -31,14 +31,14 @@ namespace Models.Services.Moves.MoveGenerators.TurnMoves
                 var topLeftTile =
                     _positionTranslator.GetRelativeTileAt(originPosition.Add(Move.In(Direction.NW)), boardState);
 
-                potentialMoves.Add(topLeftTile.BoardPosition);
+                potentialMoves.Add(topLeftTile.Position);
             }
 
             if (originPosition.X < 7)
             {
                 var topRightTile =
                     _positionTranslator.GetRelativeTileAt(originPosition.Add(Move.In(Direction.NE)), boardState);
-                potentialMoves.Add(topRightTile.BoardPosition);
+                potentialMoves.Add(topRightTile.Position);
             }
 
             return potentialMoves;

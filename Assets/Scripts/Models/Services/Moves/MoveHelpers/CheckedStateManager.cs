@@ -20,7 +20,7 @@ namespace Models.Services.Moves.MoveHelpers
         };
 
         private readonly BoardState _boardState;
-        private IEnumerable<BoardPosition> _checkingPieces;
+        private IEnumerable<Position> _checkingPieces;
 
         public CheckedStateManager(BoardState boardState)
         {
@@ -37,8 +37,8 @@ namespace Models.Services.Moves.MoveHelpers
         /// </summary>
         /// <param name="nonTurnMoves"></param>
         /// <param name="kingPosition"></param>
-        public void EvaluateCheck(IDictionary<BoardPosition, HashSet<BoardPosition>> nonTurnMoves,
-            BoardPosition kingPosition)
+        public void EvaluateCheck(IDictionary<Position, HashSet<Position>> nonTurnMoves,
+            Position kingPosition)
         {
             var checkingPieces = GetCheckingPieces(nonTurnMoves, kingPosition).ToList();
             _checkingPieces = checkingPieces;
@@ -68,9 +68,9 @@ namespace Models.Services.Moves.MoveHelpers
         /// <param name="nonTurnMoves"></param>
         /// <param name="kingPosition"></param>
         private void UpdateWithInterceptingMoves(
-            IDictionary<BoardPosition, HashSet<BoardPosition>> turnMoves,
-            IDictionary<BoardPosition, HashSet<BoardPosition>> nonTurnMoves,
-            BoardPosition kingPosition)
+            IDictionary<Position, HashSet<Position>> turnMoves,
+            IDictionary<Position, HashSet<Position>> nonTurnMoves,
+            Position kingPosition)
         {
             var positionsBetweenKingAndCheckPiece = GetPositionsBetweenCheckedKing(kingPosition, nonTurnMoves);
             foreach (var keyVal in turnMoves)
@@ -82,9 +82,9 @@ namespace Models.Services.Moves.MoveHelpers
 
 
         private void RemoveNonTurnMovesFromKingMoves(
-            IDictionary<BoardPosition, HashSet<BoardPosition>> turnMoves,
-            IDictionary<BoardPosition, HashSet<BoardPosition>> nonTurnMoves,
-            BoardPosition kingPosition)
+            IDictionary<Position, HashSet<Position>> turnMoves,
+            IDictionary<Position, HashSet<Position>> nonTurnMoves,
+            Position kingPosition)
         {
             // this won't remove the moves of scanning pieces past king 
             KingMoveFilter.RemoveNonTurnMovesFromKingMoves(turnMoves, nonTurnMoves, kingPosition);
@@ -97,21 +97,21 @@ namespace Models.Services.Moves.MoveHelpers
                     var movesExtendedThroughKing =
                         checkingBoardPosition.Scan(checkingBoardPosition.DirectionTo(kingPosition));
                     var kingMoves = turnMoves[kingPosition];
-                    turnMoves[kingPosition] = new HashSet<BoardPosition>(kingMoves.Except(movesExtendedThroughKing));
+                    turnMoves[kingPosition] = new HashSet<Position>(kingMoves.Except(movesExtendedThroughKing));
                 }
         }
 
 
-        private IEnumerable<BoardPosition> GetCheckingPieces(
-            IDictionary<BoardPosition, HashSet<BoardPosition>> nonTurnMoves, BoardPosition kingPosition)
+        private IEnumerable<Position> GetCheckingPieces(
+            IDictionary<Position, HashSet<Position>> nonTurnMoves, Position kingPosition)
         {
             return nonTurnMoves
                 .Where(nonTurnMove => nonTurnMove.Value.Contains(kingPosition))
                 .Select(nonTurnMove => nonTurnMove.Key);
         }
 
-        private HashSet<BoardPosition> GetPositionsBetweenCheckedKing(BoardPosition kingPosition,
-            IDictionary<BoardPosition, HashSet<BoardPosition>> nonTurnMoves)
+        private HashSet<Position> GetPositionsBetweenCheckedKing(Position kingPosition,
+            IDictionary<Position, HashSet<Position>> nonTurnMoves)
         {
             var checkingPiecePosition = _checkingPieces.First();
             var possibleMoves = nonTurnMoves[checkingPiecePosition];
@@ -119,23 +119,23 @@ namespace Models.Services.Moves.MoveHelpers
                 if (kingPosition.Equals(boardPosition))
                 {
                     var result = ScanPositionGenerator.GetPositionsBetween(boardPosition, checkingPiecePosition)
-                        .Concat(new List<BoardPosition> {checkingPiecePosition});
-                    return new HashSet<BoardPosition>(result);
+                        .Concat(new List<Position> {checkingPiecePosition});
+                    return new HashSet<Position>(result);
                 }
 
-            return new HashSet<BoardPosition>();
+            return new HashSet<Position>();
         }
 
         private static void RemoveAllNonKingMoves(
-            IDictionary<BoardPosition, HashSet<BoardPosition>> turnMoves,
-            BoardPosition kingPosition)
+            IDictionary<Position, HashSet<Position>> turnMoves,
+            Position kingPosition)
         {
             foreach (var turnMove in turnMoves)
                 if (!turnMove.Key.Equals(kingPosition))
                     turnMove.Value.Clear();
         }
 
-        private State.PieceState.Piece PieceAt(BoardPosition boardPosition) =>
-            _boardState.Board[boardPosition.X, boardPosition.Y].CurrentPiece;
+        private State.PieceState.Piece PieceAt(Position position) =>
+            _boardState.Board[position.X, position.Y].CurrentPiece;
     }
 }

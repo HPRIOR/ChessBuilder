@@ -15,15 +15,15 @@ namespace Models.Services.Moves.MoveHelpers
             _pieceColour = pieceColour;
         }
 
-        public BoardPosition GetRelativePosition(BoardPosition originalPosition) =>
+        public Position GetRelativePosition(Position originalPosition) =>
             _pieceColour == PieceColour.White
                 ? originalPosition
-                : new BoardPosition(Math.Abs(originalPosition.X - 7), Math.Abs(originalPosition.Y - 7));
+                : new Position(Math.Abs(originalPosition.X - 7), Math.Abs(originalPosition.Y - 7));
 
-        public Tile GetRelativeTileAt(BoardPosition boardPosition, BoardState boardState) =>
+        public Tile GetRelativeTileAt(Position position, BoardState boardState) =>
             _pieceColour == PieceColour.White
-                ? boardState.Board[boardPosition.X, boardPosition.Y]
-                : boardState.Board[Math.Abs(boardPosition.X - 7), Math.Abs(boardPosition.Y - 7)];
+                ? boardState.Board[position.X, position.Y]
+                : boardState.Board[Math.Abs(position.X - 7), Math.Abs(position.Y - 7)];
 
         public class Factory : PlaceholderFactory<PieceColour, PositionTranslator>
         {

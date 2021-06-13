@@ -30,7 +30,7 @@ namespace Models.Services.Moves.MoveGenerators
         /// <param name="boardState"></param>
         /// <param name="turn"></param>
         /// <returns></returns>
-        public IDictionary<BoardPosition, HashSet<BoardPosition>> GetPossibleMoves(BoardState boardState,
+        public IDictionary<Position, HashSet<Position>> GetPossibleMoves(BoardState boardState,
             PieceColour turn)
         {
             // board info will mess with concurrent execution because it is stateful and not instantiated 

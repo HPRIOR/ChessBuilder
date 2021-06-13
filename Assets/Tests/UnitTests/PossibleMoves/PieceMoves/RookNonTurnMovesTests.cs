@@ -55,79 +55,79 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
         [Test]
         public void WithFriendlyPiece_White_RookCanDefend()
         {
-            var pieces = new List<(PieceType, BoardPosition)>
+            var pieces = new List<(PieceType, Position)>
             {
-                (PieceType.WhiteRook, new BoardPosition(4, 4)),
-                (PieceType.WhitePawn, new BoardPosition(4, 5))
+                (PieceType.WhiteRook, new Position(4, 4)),
+                (PieceType.WhitePawn, new Position(4, 5))
             };
 
             var boardState = _boardSetup.SetupBoardWith(pieces);
 
-            var possibleMoves = _whiteRookNonTurnMoves.GetPossiblePieceMoves(new BoardPosition(4, 4), boardState)
+            var possibleMoves = _whiteRookNonTurnMoves.GetPossiblePieceMoves(new Position(4, 4), boardState)
                 .ToList();
 
 
-            Assert.That(possibleMoves, Does.Contain(new BoardPosition(4, 5)));
-            Assert.That(possibleMoves, Does.Not.Contains(new BoardPosition(4, 6)));
+            Assert.That(possibleMoves, Does.Contain(new Position(4, 5)));
+            Assert.That(possibleMoves, Does.Not.Contains(new Position(4, 6)));
         }
 
 
         [Test]
         public void WithEnemyPiece_White_RookIsNotBlocked()
         {
-            var pieces = new List<(PieceType, BoardPosition)>
+            var pieces = new List<(PieceType, Position)>
             {
-                (PieceType.WhiteRook, new BoardPosition(4, 4)),
-                (PieceType.BlackPawn, new BoardPosition(4, 5))
+                (PieceType.WhiteRook, new Position(4, 4)),
+                (PieceType.BlackPawn, new Position(4, 5))
             };
 
             var boardState = _boardSetup.SetupBoardWith(pieces);
 
-            var possibleMoves = _whiteRookNonTurnMoves.GetPossiblePieceMoves(new BoardPosition(4, 4), boardState)
+            var possibleMoves = _whiteRookNonTurnMoves.GetPossiblePieceMoves(new Position(4, 4), boardState)
                 .ToList();
 
 
-            Assert.That(possibleMoves, Does.Contain(new BoardPosition(4, 5)));
-            Assert.That(possibleMoves, Does.Not.Contains(new BoardPosition(4, 6)));
+            Assert.That(possibleMoves, Does.Contain(new Position(4, 5)));
+            Assert.That(possibleMoves, Does.Not.Contains(new Position(4, 6)));
         }
 
         [Test]
         public void WithFriendlyPiece_Black_RookCanDefend()
         {
-            var pieces = new List<(PieceType, BoardPosition)>
+            var pieces = new List<(PieceType, Position)>
             {
-                (PieceType.BlackRook, new BoardPosition(4, 4)),
-                (PieceType.BlackPawn, new BoardPosition(4, 5))
+                (PieceType.BlackRook, new Position(4, 4)),
+                (PieceType.BlackPawn, new Position(4, 5))
             };
 
             var boardState = _boardSetup.SetupBoardWith(pieces);
 
-            var possibleMoves = _blackRookNonTurnMoves.GetPossiblePieceMoves(new BoardPosition(4, 4), boardState)
+            var possibleMoves = _blackRookNonTurnMoves.GetPossiblePieceMoves(new Position(4, 4), boardState)
                 .ToList();
 
 
-            Assert.That(possibleMoves, Does.Contain(new BoardPosition(4, 5)));
-            Assert.That(possibleMoves, Does.Not.Contains(new BoardPosition(4, 6)));
+            Assert.That(possibleMoves, Does.Contain(new Position(4, 5)));
+            Assert.That(possibleMoves, Does.Not.Contains(new Position(4, 6)));
         }
 
 
         [Test]
         public void WithEnemyPiece_Black_RookIsNotBlocked()
         {
-            var pieces = new List<(PieceType, BoardPosition)>
+            var pieces = new List<(PieceType, Position)>
             {
-                (PieceType.BlackRook, new BoardPosition(4, 4)),
-                (PieceType.WhitePawn, new BoardPosition(4, 5))
+                (PieceType.BlackRook, new Position(4, 4)),
+                (PieceType.WhitePawn, new Position(4, 5))
             };
 
             var boardState = _boardSetup.SetupBoardWith(pieces);
 
-            var possibleMoves = _blackRookNonTurnMoves.GetPossiblePieceMoves(new BoardPosition(4, 4), boardState)
+            var possibleMoves = _blackRookNonTurnMoves.GetPossiblePieceMoves(new Position(4, 4), boardState)
                 .ToList();
 
 
-            Assert.That(possibleMoves, Does.Contain(new BoardPosition(4, 5)));
-            Assert.That(possibleMoves, Does.Not.Contains(new BoardPosition(4, 6)));
+            Assert.That(possibleMoves, Does.Contain(new Position(4, 5)));
+            Assert.That(possibleMoves, Does.Not.Contains(new Position(4, 6)));
         }
     }
 }

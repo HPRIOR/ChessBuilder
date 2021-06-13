@@ -7,10 +7,10 @@ namespace Models.Services.Moves.MoveHelpers
 {
     public static class ScanPositionGenerator
     {
-        public static IEnumerable<BoardPosition> GetPositionsBetween(BoardPosition init, BoardPosition dest)
+        public static IEnumerable<Position> GetPositionsBetween(Position init, Position dest)
         {
             if (init.Equals(dest))
-                return new List<BoardPosition>();
+                return new List<Position>();
             if (init.X == dest.X && init.Y != dest.Y)
                 return GetExclusivePositionsWithConstant(init.Y, dest.Y, init.X, true);
             if (init.Y == dest.Y && init.X != dest.X)
@@ -18,21 +18,21 @@ namespace Models.Services.Moves.MoveHelpers
             var xs = GetExclusiveValuesAccordingToPosition(init.X, dest.X, GetValues);
             var ys = GetExclusiveValuesAccordingToPosition(init.Y, dest.Y, GetValues);
             return xs
-                .Zip(ys, (x, y) => new BoardPosition(x, y))
+                .Zip(ys, (x, y) => new Position(x, y))
                 .ToList();
         }
 
-        private static IEnumerable<BoardPosition> GetExclusivePositionsWithConstant(int init, int dest, int constant,
+        private static IEnumerable<Position> GetExclusivePositionsWithConstant(int init, int dest, int constant,
             bool xConstant)
         {
-            static BoardPosition XConstantFunc(int y, int x) => new BoardPosition(x, y);
+            static Position XConstantFunc(int y, int x) => new Position(x, y);
 
-            static BoardPosition YConstantFunc(int x, int y) => new BoardPosition(x, y);
+            static Position YConstantFunc(int x, int y) => new Position(x, y);
 
             var constantList = Enumerable.Range(0, Math.Abs(init - dest)).Select(x => constant).ToList();
             return
                 GetExclusiveValuesAccordingToPosition(init, dest, GetValues)
-                    .Zip(constantList, xConstant ? (Func<int, int, BoardPosition>) XConstantFunc : YConstantFunc)
+                    .Zip(constantList, xConstant ? (Func<int, int, Position>) XConstantFunc : YConstantFunc)
                     .ToList();
         }
 

@@ -5,25 +5,25 @@ namespace Models.State.Board
 {
     public class Tile : ICloneable
     {
-        private Tile(BoardPosition boardPosition, Piece currentPiece)
+        private Tile(Position position, Piece currentPiece)
         {
-            BoardPosition = boardPosition;
+            Position = position;
             CurrentPiece = currentPiece;
         }
 
-        public Tile(BoardPosition boardPosition)
+        public Tile(Position position)
         {
-            BoardPosition = boardPosition;
+            Position = position;
             CurrentPiece = new Piece(PieceType.NullPiece);
         }
 
         public Piece CurrentPiece { get; set; }
-        public BoardPosition BoardPosition { get; }
+        public Position Position { get; }
 
-        public object Clone() => new Tile(BoardPosition, CurrentPiece);
+        public object Clone() => new Tile(Position, CurrentPiece);
 
         public override string ToString() =>
-            $"Tile at ({BoardPosition.X}, {BoardPosition.Y}) containing" +
+            $"Tile at ({Position.X}, {Position.Y}) containing" +
             $" {CurrentPiece}";
     }
 }

@@ -8,8 +8,8 @@ namespace Models.Services.Interfaces
         bool IsCheck { get; }
 
         void EvaluateCheck(
-            IDictionary<BoardPosition, HashSet<BoardPosition>> nonTurnMoves,
-            BoardPosition kingPosition);
+            IDictionary<Position, HashSet<Position>> nonTurnMoves,
+            Position kingPosition);
 
         void UpdatePossibleMovesWhenInCheck(IBoardInfo boardInfo);
     }

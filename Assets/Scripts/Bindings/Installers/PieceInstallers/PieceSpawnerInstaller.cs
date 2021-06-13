@@ -17,7 +17,7 @@ namespace Bindings.Installers.PieceInstallers
         public override void InstallBindings()
         {
             Container.Bind<IPieceSpawner>().To<PieceSpawner>().AsSingle();
-            Container.BindFactory<IPieceInfo, BoardPosition, PieceMono, PieceMono.Factory>()
+            Container.BindFactory<IPieceInfo, Position, PieceMono, PieceMono.Factory>()
                 .FromComponentInNewPrefab(_piecePrefab);
         }
     }

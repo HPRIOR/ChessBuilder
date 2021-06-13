@@ -10,8 +10,8 @@ namespace Controllers.PieceMovers
          * Keep move validator taking possible move argument. This will allow it to be used in other commands, and on
          * arbitrary board states
          */
-        public bool ValidateMove(IDictionary<BoardPosition, HashSet<BoardPosition>> possibleMoves,
-            BoardPosition from, BoardPosition destination)
+        public bool ValidateMove(IDictionary<Position, HashSet<Position>> possibleMoves,
+            Position from, Position destination)
         {
             if (from.Equals(destination)) return false;
             if (possibleMoves.ContainsKey(from))

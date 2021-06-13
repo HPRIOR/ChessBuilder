@@ -59,10 +59,10 @@ namespace Tests.UnitTests.PossibleMoves.Helpers
 
             _boardInfo.EvaluateBoard(boardState, PieceColour.Black);
 
-            Assert.That(_boardInfo.TurnMoves, Contains.Key(new BoardPosition(7, 7)));
-            Assert.That(_boardInfo.TurnMoves, Contains.Key(new BoardPosition(7, 6)));
-            Assert.That(_boardInfo.NonTurnMoves, Contains.Key(new BoardPosition(1, 1)));
-            Assert.That(_boardInfo.NonTurnMoves, Contains.Key(new BoardPosition(1, 2)));
+            Assert.That(_boardInfo.TurnMoves, Contains.Key(new Position(7, 7)));
+            Assert.That(_boardInfo.TurnMoves, Contains.Key(new Position(7, 6)));
+            Assert.That(_boardInfo.NonTurnMoves, Contains.Key(new Position(1, 1)));
+            Assert.That(_boardInfo.NonTurnMoves, Contains.Key(new Position(1, 2)));
             Assert.That(_boardInfo.TurnMoves.Count(), Is.EqualTo(2));
             Assert.That(_boardInfo.NonTurnMoves.Count(), Is.EqualTo(2));
         }
@@ -81,10 +81,10 @@ namespace Tests.UnitTests.PossibleMoves.Helpers
 
             _boardInfo.EvaluateBoard(boardState, PieceColour.White);
 
-            Assert.That(_boardInfo.TurnMoves, Contains.Key(new BoardPosition(1, 1)));
-            Assert.That(_boardInfo.TurnMoves, Contains.Key(new BoardPosition(1, 2)));
-            Assert.That(_boardInfo.NonTurnMoves, Contains.Key(new BoardPosition(7, 7)));
-            Assert.That(_boardInfo.NonTurnMoves, Contains.Key(new BoardPosition(7, 6)));
+            Assert.That(_boardInfo.TurnMoves, Contains.Key(new Position(1, 1)));
+            Assert.That(_boardInfo.TurnMoves, Contains.Key(new Position(1, 2)));
+            Assert.That(_boardInfo.NonTurnMoves, Contains.Key(new Position(7, 7)));
+            Assert.That(_boardInfo.NonTurnMoves, Contains.Key(new Position(7, 6)));
             Assert.That(_boardInfo.TurnMoves.Count(), Is.EqualTo(2));
             Assert.That(_boardInfo.NonTurnMoves.Count(), Is.EqualTo(2));
         }
@@ -103,7 +103,7 @@ namespace Tests.UnitTests.PossibleMoves.Helpers
 
             _boardInfo.EvaluateBoard(boardState, PieceColour.Black);
 
-            Assert.That(_boardInfo.KingPosition, Is.EqualTo(new BoardPosition(7, 7)));
+            Assert.That(_boardInfo.KingPosition, Is.EqualTo(new Position(7, 7)));
         }
 
 
@@ -121,7 +121,7 @@ namespace Tests.UnitTests.PossibleMoves.Helpers
 
             _boardInfo.EvaluateBoard(boardState, PieceColour.White);
 
-            Assert.That(_boardInfo.KingPosition, Is.EqualTo(new BoardPosition(1, 1)));
+            Assert.That(_boardInfo.KingPosition, Is.EqualTo(new Position(1, 1)));
         }
 
         [Test]
@@ -136,7 +136,7 @@ namespace Tests.UnitTests.PossibleMoves.Helpers
 
             _boardInfo.EvaluateBoard(boardState, PieceColour.White);
 
-            Assert.That(_boardInfo.KingPosition, Is.EqualTo(new BoardPosition(8, 8)));
+            Assert.That(_boardInfo.KingPosition, Is.EqualTo(new Position(8, 8)));
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using Models.Services.Interfaces;
 using Models.Services.Moves.Factories;
-using Models.Services.Moves.PossibleMoveHelpers;
+using Models.Services.Moves.MoveHelpers;
 using Models.State.PieceState;
 using Zenject;
 

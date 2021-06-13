@@ -6,6 +6,6 @@ namespace Models.Services.Interfaces
 {
     public interface IPieceSpawner
     {
-        PieceMono CreatePiece(PieceType pieceType, BoardPosition BoardPosition);
+        PieceMono CreatePiece(PieceType pieceType, Position position);
     }
 }

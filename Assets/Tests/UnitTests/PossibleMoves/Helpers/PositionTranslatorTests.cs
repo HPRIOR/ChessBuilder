@@ -43,20 +43,20 @@ namespace Tests.UnitTests.PossibleMoves.Helpers
         public void WhenPieceColourIsBlack_PositionIsMirrored()
         {
             var positionTranslator = _positionTranslatorFactory.Create(PieceColour.Black);
-            var mirroredPosOne = positionTranslator.GetRelativePosition(new BoardPosition(0, 0));
-            var mirroredPosTwo = positionTranslator.GetRelativePosition(new BoardPosition(6, 1));
-            Assert.AreEqual(new BoardPosition(7, 7), mirroredPosOne);
-            Assert.AreEqual(new BoardPosition(1, 6), mirroredPosTwo);
+            var mirroredPosOne = positionTranslator.GetRelativePosition(new Position(0, 0));
+            var mirroredPosTwo = positionTranslator.GetRelativePosition(new Position(6, 1));
+            Assert.AreEqual(new Position(7, 7), mirroredPosOne);
+            Assert.AreEqual(new Position(1, 6), mirroredPosTwo);
         }
 
         [Test]
         public void WhenPieceColourIsWhite_PositionIsSame()
         {
             var positionTranslator = _positionTranslatorFactory.Create(PieceColour.White);
-            var mirroredPosOne = positionTranslator.GetRelativePosition(new BoardPosition(0, 0));
-            var mirroredPosTwo = positionTranslator.GetRelativePosition(new BoardPosition(6, 1));
-            Assert.AreEqual(new BoardPosition(0, 0), mirroredPosOne);
-            Assert.AreEqual(new BoardPosition(6, 1), mirroredPosTwo);
+            var mirroredPosOne = positionTranslator.GetRelativePosition(new Position(0, 0));
+            var mirroredPosTwo = positionTranslator.GetRelativePosition(new Position(6, 1));
+            Assert.AreEqual(new Position(0, 0), mirroredPosOne);
+            Assert.AreEqual(new Position(6, 1), mirroredPosTwo);
         }
 
         [Test]
@@ -65,7 +65,7 @@ namespace Tests.UnitTests.PossibleMoves.Helpers
             var positionTranslator = _positionTranslatorFactory.Create(PieceColour.Black);
             var board = new BoardState();
             board.Board[7, 7].CurrentPiece = new Piece(PieceType.BlackKnight);
-            var mirroredTile = positionTranslator.GetRelativeTileAt(new BoardPosition(0, 0), board);
+            var mirroredTile = positionTranslator.GetRelativeTileAt(new Position(0, 0), board);
             Assert.AreEqual(PieceType.BlackKnight, mirroredTile.CurrentPiece.Type);
         }
 
@@ -75,7 +75,7 @@ namespace Tests.UnitTests.PossibleMoves.Helpers
             var positionTranslator = _positionTranslatorFactory.Create(PieceColour.White);
             var board = new BoardState();
             board.Board[7, 7].CurrentPiece = new Piece(PieceType.BlackKnight);
-            var mirroredTile = positionTranslator.GetRelativeTileAt(new BoardPosition(7, 7), board);
+            var mirroredTile = positionTranslator.GetRelativeTileAt(new Position(7, 7), board);
             Assert.AreEqual(PieceType.BlackKnight, mirroredTile.CurrentPiece.Type);
         }
     }

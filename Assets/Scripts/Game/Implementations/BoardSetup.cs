@@ -15,7 +15,7 @@ namespace Game.Implementations
             _boardGenerator = boardGenerator;
         }
 
-        public BoardState SetupBoardWith(IEnumerable<(PieceType piece, BoardPosition boardPosition)> pieces)
+        public BoardState SetupBoardWith(IEnumerable<(PieceType piece, Position boardPosition)> pieces)
         {
             var boardState = new BoardState();
             var board = boardState.Board;

@@ -10,14 +10,14 @@ namespace Controllers.Commands
     {
         private static IPieceMover _pieceMover;
         private static IMoveValidator _moveValidator;
-        private readonly BoardPosition _destination;
-        private readonly BoardPosition _from;
+        private readonly Position _destination;
+        private readonly Position _from;
         private readonly IGameState _gameState;
         private readonly BoardState _stateTransitionedFrom;
 
         public MoveCommand(
-            BoardPosition from,
-            BoardPosition destination,
+            Position from,
+            Position destination,
             IPieceMover pieceMover,
             IMoveValidator moveValidator,
             IGameState gameState
@@ -55,7 +55,7 @@ namespace Controllers.Commands
             _gameState.UpdateBoardState(_stateTransitionedFrom);
         }
 
-        public class Factory : PlaceholderFactory<BoardPosition, BoardPosition, MoveCommand>
+        public class Factory : PlaceholderFactory<Position, Position, MoveCommand>
         {
         }
     }

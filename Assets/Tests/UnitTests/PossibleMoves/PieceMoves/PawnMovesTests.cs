@@ -5,7 +5,7 @@ using Bindings.Installers.MoveInstallers;
 using Bindings.Installers.PieceInstallers;
 using Game.Implementations;
 using Models.Services.Interfaces;
-using Models.Services.Moves.Factories.PossibleMoveGeneratorFactories;
+using Models.Services.Moves.Factories;
 using Models.State.Board;
 using Models.State.PieceState;
 using NUnit.Framework;
@@ -44,7 +44,7 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
 
         private void ResolveContainer()
         {
-            var possibleMoveFactory = Container.Resolve<PossibleMovesFactory>();
+            var possibleMoveFactory = Container.Resolve<MovesFactory>();
             _whitePawnTurnMoves = possibleMoveFactory.Create(PieceType.WhitePawn, true);
             _blackPawnTurnMoves = possibleMoveFactory.Create(PieceType.BlackPawn, true);
 
@@ -54,17 +54,17 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
         [Test]
         public void White_PawnCanMoveForward()
         {
-            var pieces = new List<(PieceType, BoardPosition )>
+            var pieces = new List<(PieceType, Position )>
             {
-                (PieceType.WhitePawn, new BoardPosition(4, 1))
+                (PieceType.WhitePawn, new Position(4, 1))
             };
 
             var boardState = _boardSetup.SetupBoardWith(pieces);
 
-            var possibleMoves = _whitePawnTurnMoves.GetPossiblePieceMoves(new BoardPosition(4, 1), boardState);
-            var expectedMoves = new List<BoardPosition>
+            var possibleMoves = _whitePawnTurnMoves.GetPossiblePieceMoves(new Position(4, 1), boardState);
+            var expectedMoves = new List<Position>
             {
-                new BoardPosition(4, 2)
+                new Position(4, 2)
             };
 
             Assert.That(possibleMoves, Is.EquivalentTo(expectedMoves));
@@ -74,17 +74,17 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
         [Test]
         public void Black_PawnCanMoveForward()
         {
-            var pieces = new List<(PieceType, BoardPosition )>
+            var pieces = new List<(PieceType, Position )>
             {
-                (PieceType.BlackPawn, new BoardPosition(4, 6))
+                (PieceType.BlackPawn, new Position(4, 6))
             };
 
             var boardState = _boardSetup.SetupBoardWith(pieces);
 
-            var possibleMoves = _blackPawnTurnMoves.GetPossiblePieceMoves(new BoardPosition(4, 6), boardState);
-            var expectedMoves = new List<BoardPosition>
+            var possibleMoves = _blackPawnTurnMoves.GetPossiblePieceMoves(new Position(4, 6), boardState);
+            var expectedMoves = new List<Position>
             {
-                new BoardPosition(4, 5)
+                new Position(4, 5)
             };
 
             Assert.That(possibleMoves, Is.EquivalentTo(expectedMoves));
@@ -94,21 +94,21 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
         [Test]
         public void White_PawnCanTakeDiagonally()
         {
-            var pieces = new List<(PieceType, BoardPosition )>
+            var pieces = new List<(PieceType, Position )>
             {
-                (PieceType.WhitePawn, new BoardPosition(4, 1)),
-                (PieceType.BlackPawn, new BoardPosition(5, 2)),
-                (PieceType.BlackPawn, new BoardPosition(3, 2))
+                (PieceType.WhitePawn, new Position(4, 1)),
+                (PieceType.BlackPawn, new Position(5, 2)),
+                (PieceType.BlackPawn, new Position(3, 2))
             };
 
             var boardState = _boardSetup.SetupBoardWith(pieces);
 
-            var possibleMoves = _whitePawnTurnMoves.GetPossiblePieceMoves(new BoardPosition(4, 1), boardState);
-            var expectedMoves = new List<BoardPosition>
+            var possibleMoves = _whitePawnTurnMoves.GetPossiblePieceMoves(new Position(4, 1), boardState);
+            var expectedMoves = new List<Position>
             {
-                new BoardPosition(4, 2),
-                new BoardPosition(5, 2),
-                new BoardPosition(3, 2)
+                new Position(4, 2),
+                new Position(5, 2),
+                new Position(3, 2)
             };
 
             Assert.That(possibleMoves, Is.EquivalentTo(expectedMoves));
@@ -118,21 +118,21 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
         [Test]
         public void Black_PawnCanTakeDiagonally()
         {
-            var pieces = new List<(PieceType, BoardPosition )>
+            var pieces = new List<(PieceType, Position )>
             {
-                (PieceType.BlackPawn, new BoardPosition(4, 6)),
-                (PieceType.WhitePawn, new BoardPosition(3, 5)),
-                (PieceType.WhitePawn, new BoardPosition(5, 5))
+                (PieceType.BlackPawn, new Position(4, 6)),
+                (PieceType.WhitePawn, new Position(3, 5)),
+                (PieceType.WhitePawn, new Position(5, 5))
             };
 
             var boardState = _boardSetup.SetupBoardWith(pieces);
 
-            var possibleMoves = _blackPawnTurnMoves.GetPossiblePieceMoves(new BoardPosition(4, 6), boardState);
-            var expectedMoves = new List<BoardPosition>
+            var possibleMoves = _blackPawnTurnMoves.GetPossiblePieceMoves(new Position(4, 6), boardState);
+            var expectedMoves = new List<Position>
             {
-                new BoardPosition(4, 5),
-                new BoardPosition(5, 5),
-                new BoardPosition(3, 5)
+                new Position(4, 5),
+                new Position(5, 5),
+                new Position(3, 5)
             };
 
             Assert.That(possibleMoves, Is.EquivalentTo(expectedMoves));
@@ -141,17 +141,17 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
         [Test]
         public void White_PawnIsBlockedByFriendlyPiece()
         {
-            var pieces = new List<(PieceType, BoardPosition )>
+            var pieces = new List<(PieceType, Position )>
             {
-                (PieceType.WhitePawn, new BoardPosition(4, 1)),
-                (PieceType.WhitePawn, new BoardPosition(4, 2))
+                (PieceType.WhitePawn, new Position(4, 1)),
+                (PieceType.WhitePawn, new Position(4, 2))
             };
 
 
             var boardState = _boardSetup.SetupBoardWith(pieces);
 
-            var possibleMoves = _whitePawnTurnMoves.GetPossiblePieceMoves(new BoardPosition(4, 1), boardState);
-            var expectedMoves = new List<BoardPosition>();
+            var possibleMoves = _whitePawnTurnMoves.GetPossiblePieceMoves(new Position(4, 1), boardState);
+            var expectedMoves = new List<Position>();
 
             Assert.That(possibleMoves, Is.EquivalentTo(expectedMoves));
         }
@@ -160,17 +160,17 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
         [Test]
         public void Black_PawnIsBlockedByFriendlyPiece()
         {
-            var pieces = new List<(PieceType, BoardPosition )>
+            var pieces = new List<(PieceType, Position )>
             {
-                (PieceType.BlackPawn, new BoardPosition(4, 6)),
-                (PieceType.BlackPawn, new BoardPosition(4, 5))
+                (PieceType.BlackPawn, new Position(4, 6)),
+                (PieceType.BlackPawn, new Position(4, 5))
             };
 
 
             var boardState = _boardSetup.SetupBoardWith(pieces);
 
-            var possibleMoves = _blackPawnTurnMoves.GetPossiblePieceMoves(new BoardPosition(4, 6), boardState);
-            var expectedMoves = new List<BoardPosition>();
+            var possibleMoves = _blackPawnTurnMoves.GetPossiblePieceMoves(new Position(4, 6), boardState);
+            var expectedMoves = new List<Position>();
 
             Assert.That(possibleMoves, Is.EquivalentTo(expectedMoves));
         }

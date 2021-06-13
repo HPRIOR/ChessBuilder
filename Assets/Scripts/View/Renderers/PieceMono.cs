@@ -9,7 +9,7 @@ namespace View.Renderers
     public class PieceMono : MonoBehaviour
     {
         private SpriteRenderer _spriteRenderer;
-        public BoardPosition BoardPosition { get; set; }
+        public Position Position { get; set; }
         public IPieceInfo Info { get; private set; }
 
         private void Start()
@@ -18,22 +18,22 @@ namespace View.Renderers
             if (Info.SpriteAssetPath != "")
                 _spriteRenderer.sprite = AssetDatabase.LoadAssetAtPath<Sprite>(Info.SpriteAssetPath);
             gameObject.transform.parent = GameObject.FindGameObjectWithTag("Pieces")?.transform;
-            gameObject.transform.position = BoardPosition.Vector;
+            gameObject.transform.position = Position.Vector;
         }
 
         [Inject]
         public void Construct(
             IPieceInfo pieceInfo,
-            BoardPosition boardPosition
+            Position position
         )
         {
             Info = pieceInfo;
-            BoardPosition = boardPosition;
+            Position = position;
         }
 
-        public override string ToString() => $"{Info}\n{BoardPosition}\n";
+        public override string ToString() => $"{Info}\n{Position}\n";
 
-        public class Factory : PlaceholderFactory<IPieceInfo, BoardPosition, PieceMono>
+        public class Factory : PlaceholderFactory<IPieceInfo, Position, PieceMono>
         {
         }
     }

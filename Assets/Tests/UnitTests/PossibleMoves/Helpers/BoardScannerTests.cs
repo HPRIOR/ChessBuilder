@@ -3,7 +3,7 @@ using System.Linq;
 using Bindings.Installers.BoardInstallers;
 using Bindings.Installers.PieceInstallers;
 using Models.Services.Interfaces;
-using Models.Services.Moves.PossibleMoveHelpers;
+using Models.Services.Moves.MoveHelpers;
 using Models.State.Board;
 using Models.State.PieceState;
 using NUnit.Framework;
@@ -49,16 +49,16 @@ namespace Tests.UnitTests.PossibleMoves.Helpers
         {
             var boardScanner = _boardScannerFactory.Create(PieceColour.White, Turn.Turn);
             var board = new BoardState();
-            var positions = boardScanner.ScanIn(Direction.NE, new BoardPosition(0, 0), board);
-            var expected = new HashSet<BoardPosition>
+            var positions = boardScanner.ScanIn(Direction.NE, new Position(0, 0), board);
+            var expected = new HashSet<Position>
             {
-                new BoardPosition(1, 1),
-                new BoardPosition(2, 2),
-                new BoardPosition(3, 3),
-                new BoardPosition(4, 4),
-                new BoardPosition(5, 5),
-                new BoardPosition(6, 6),
-                new BoardPosition(7, 7)
+                new Position(1, 1),
+                new Position(2, 2),
+                new Position(3, 3),
+                new Position(4, 4),
+                new Position(5, 5),
+                new Position(6, 6),
+                new Position(7, 7)
             };
             Assert.AreEqual(expected.Count(), positions.Count());
             foreach (var boardPosition in positions) Assert.AreEqual(true, expected.Contains(boardPosition));
@@ -69,16 +69,16 @@ namespace Tests.UnitTests.PossibleMoves.Helpers
         {
             var boardScanner = _boardScannerFactory.Create(PieceColour.Black, Turn.Turn);
             var board = new BoardState();
-            var positions = boardScanner.ScanIn(Direction.NE, new BoardPosition(0, 0), board);
-            var expected = new HashSet<BoardPosition>
+            var positions = boardScanner.ScanIn(Direction.NE, new Position(0, 0), board);
+            var expected = new HashSet<Position>
             {
-                new BoardPosition(0, 0),
-                new BoardPosition(1, 1),
-                new BoardPosition(2, 2),
-                new BoardPosition(3, 3),
-                new BoardPosition(4, 4),
-                new BoardPosition(5, 5),
-                new BoardPosition(6, 6)
+                new Position(0, 0),
+                new Position(1, 1),
+                new Position(2, 2),
+                new Position(3, 3),
+                new Position(4, 4),
+                new Position(5, 5),
+                new Position(6, 6)
             };
             Assert.AreEqual(expected.Count(), positions.Count());
             foreach (var boardPosition in positions) Assert.AreEqual(true, expected.Contains(boardPosition));
@@ -90,16 +90,16 @@ namespace Tests.UnitTests.PossibleMoves.Helpers
             var boardScanner = _boardScannerFactory.Create(PieceColour.Black, Turn.Turn);
             var board = new BoardState();
             board.Board[0, 0].CurrentPiece = new Piece(PieceType.WhiteKnight);
-            var positions = boardScanner.ScanIn(Direction.NE, new BoardPosition(0, 0), board);
-            var expected = new HashSet<BoardPosition>
+            var positions = boardScanner.ScanIn(Direction.NE, new Position(0, 0), board);
+            var expected = new HashSet<Position>
             {
-                new BoardPosition(0, 0),
-                new BoardPosition(1, 1),
-                new BoardPosition(2, 2),
-                new BoardPosition(3, 3),
-                new BoardPosition(4, 4),
-                new BoardPosition(5, 5),
-                new BoardPosition(6, 6)
+                new Position(0, 0),
+                new Position(1, 1),
+                new Position(2, 2),
+                new Position(3, 3),
+                new Position(4, 4),
+                new Position(5, 5),
+                new Position(6, 6)
             };
             Assert.AreEqual(expected.Count(), positions.Count());
             foreach (var boardPosition in positions) Assert.AreEqual(true, expected.Contains(boardPosition));
@@ -112,16 +112,16 @@ namespace Tests.UnitTests.PossibleMoves.Helpers
             var boardScanner = _boardScannerFactory.Create(PieceColour.White, Turn.Turn);
             var board = new BoardState();
             board.Board[7, 7].CurrentPiece = new Piece(PieceType.BlackBishop);
-            var positions = boardScanner.ScanIn(Direction.NE, new BoardPosition(0, 0), board);
-            var expected = new HashSet<BoardPosition>
+            var positions = boardScanner.ScanIn(Direction.NE, new Position(0, 0), board);
+            var expected = new HashSet<Position>
             {
-                new BoardPosition(1, 1),
-                new BoardPosition(2, 2),
-                new BoardPosition(3, 3),
-                new BoardPosition(4, 4),
-                new BoardPosition(5, 5),
-                new BoardPosition(6, 6),
-                new BoardPosition(7, 7)
+                new Position(1, 1),
+                new Position(2, 2),
+                new Position(3, 3),
+                new Position(4, 4),
+                new Position(5, 5),
+                new Position(6, 6),
+                new Position(7, 7)
             };
             Assert.AreEqual(expected.Count(), positions.Count());
             foreach (var boardPosition in positions) Assert.AreEqual(true, expected.Contains(boardPosition));
@@ -134,15 +134,15 @@ namespace Tests.UnitTests.PossibleMoves.Helpers
             var boardScanner = _boardScannerFactory.Create(PieceColour.White, Turn.Turn);
             var board = new BoardState();
             board.Board[7, 7].CurrentPiece = new Piece(PieceType.WhiteBishop);
-            var positions = boardScanner.ScanIn(Direction.NE, new BoardPosition(0, 0), board);
-            var expected = new HashSet<BoardPosition>
+            var positions = boardScanner.ScanIn(Direction.NE, new Position(0, 0), board);
+            var expected = new HashSet<Position>
             {
-                new BoardPosition(1, 1),
-                new BoardPosition(2, 2),
-                new BoardPosition(3, 3),
-                new BoardPosition(4, 4),
-                new BoardPosition(5, 5),
-                new BoardPosition(6, 6)
+                new Position(1, 1),
+                new Position(2, 2),
+                new Position(3, 3),
+                new Position(4, 4),
+                new Position(5, 5),
+                new Position(6, 6)
             };
             Assert.AreEqual(expected.Count(), positions.Count());
             foreach (var boardPosition in positions) Assert.AreEqual(true, expected.Contains(boardPosition));
@@ -155,15 +155,15 @@ namespace Tests.UnitTests.PossibleMoves.Helpers
             var boardScanner = _boardScannerFactory.Create(PieceColour.Black, Turn.Turn);
             var board = new BoardState();
             board.Board[0, 0].CurrentPiece = new Piece(PieceType.BlackKnight);
-            var positions = boardScanner.ScanIn(Direction.NE, new BoardPosition(0, 0), board);
-            var expected = new HashSet<BoardPosition>
+            var positions = boardScanner.ScanIn(Direction.NE, new Position(0, 0), board);
+            var expected = new HashSet<Position>
             {
-                new BoardPosition(1, 1),
-                new BoardPosition(2, 2),
-                new BoardPosition(3, 3),
-                new BoardPosition(4, 4),
-                new BoardPosition(5, 5),
-                new BoardPosition(6, 6)
+                new Position(1, 1),
+                new Position(2, 2),
+                new Position(3, 3),
+                new Position(4, 4),
+                new Position(5, 5),
+                new Position(6, 6)
             };
             foreach (var boardPosition in positions) Assert.AreEqual(true, expected.Contains(boardPosition));
         }
@@ -175,12 +175,12 @@ namespace Tests.UnitTests.PossibleMoves.Helpers
             var boardScanner = _boardScannerFactory.Create(PieceColour.White, Turn.Turn);
             var board = new BoardState();
             board.Board[4, 4].CurrentPiece = new Piece(PieceType.WhiteBishop);
-            var positions = boardScanner.ScanIn(Direction.NE, new BoardPosition(0, 0), board);
-            var expected = new HashSet<BoardPosition>
+            var positions = boardScanner.ScanIn(Direction.NE, new Position(0, 0), board);
+            var expected = new HashSet<Position>
             {
-                new BoardPosition(1, 1),
-                new BoardPosition(2, 2),
-                new BoardPosition(3, 3)
+                new Position(1, 1),
+                new Position(2, 2),
+                new Position(3, 3)
             };
             Assert.AreEqual(expected.Count(), positions.Count());
             foreach (var boardPosition in positions) Assert.AreEqual(true, expected.Contains(boardPosition));
@@ -192,11 +192,11 @@ namespace Tests.UnitTests.PossibleMoves.Helpers
             var boardScanner = _boardScannerFactory.Create(PieceColour.Black, Turn.Turn);
             var board = new BoardState();
             board.Board[4, 4].CurrentPiece = new Piece(PieceType.BlackKnight);
-            var positions = boardScanner.ScanIn(Direction.NE, new BoardPosition(0, 0), board);
-            var expected = new HashSet<BoardPosition>
+            var positions = boardScanner.ScanIn(Direction.NE, new Position(0, 0), board);
+            var expected = new HashSet<Position>
             {
-                new BoardPosition(5, 5),
-                new BoardPosition(6, 6)
+                new Position(5, 5),
+                new Position(6, 6)
             };
             foreach (var boardPosition in positions) Assert.AreEqual(true, expected.Contains(boardPosition));
         }
@@ -208,13 +208,13 @@ namespace Tests.UnitTests.PossibleMoves.Helpers
             var boardScanner = _boardScannerFactory.Create(PieceColour.White, Turn.Turn);
             var board = new BoardState();
             board.Board[4, 4].CurrentPiece = new Piece(PieceType.BlackBishop);
-            var positions = boardScanner.ScanIn(Direction.NE, new BoardPosition(0, 0), board);
-            var expected = new HashSet<BoardPosition>
+            var positions = boardScanner.ScanIn(Direction.NE, new Position(0, 0), board);
+            var expected = new HashSet<Position>
             {
-                new BoardPosition(1, 1),
-                new BoardPosition(2, 2),
-                new BoardPosition(3, 3),
-                new BoardPosition(4, 4)
+                new Position(1, 1),
+                new Position(2, 2),
+                new Position(3, 3),
+                new Position(4, 4)
             };
             Assert.AreEqual(expected.Count(), positions.Count());
             foreach (var boardPosition in positions) Assert.AreEqual(true, expected.Contains(boardPosition));
@@ -227,12 +227,12 @@ namespace Tests.UnitTests.PossibleMoves.Helpers
             var boardScanner = _boardScannerFactory.Create(PieceColour.Black, Turn.Turn);
             var board = new BoardState();
             board.Board[4, 4].CurrentPiece = new Piece(PieceType.WhiteKnight);
-            var positions = boardScanner.ScanIn(Direction.NE, new BoardPosition(0, 0), board);
-            var expected = new HashSet<BoardPosition>
+            var positions = boardScanner.ScanIn(Direction.NE, new Position(0, 0), board);
+            var expected = new HashSet<Position>
             {
-                new BoardPosition(4, 4),
-                new BoardPosition(5, 5),
-                new BoardPosition(6, 6)
+                new Position(4, 4),
+                new Position(5, 5),
+                new Position(6, 6)
             };
             Assert.AreEqual(expected.Count(), positions.Count());
             foreach (var boardPosition in positions) Assert.AreEqual(true, expected.Contains(boardPosition));
@@ -245,17 +245,17 @@ namespace Tests.UnitTests.PossibleMoves.Helpers
         {
             var boardScanner = _boardScannerFactory.Create(PieceColour.White, Turn.Turn);
             var board = new BoardState();
-            var positions = boardScanner.ScanIn(Direction.N, new BoardPosition(x, 0), board);
+            var positions = boardScanner.ScanIn(Direction.N, new Position(x, 0), board);
 
-            var expected = new HashSet<BoardPosition>
+            var expected = new HashSet<Position>
             {
-                new BoardPosition(x, 1),
-                new BoardPosition(x, 2),
-                new BoardPosition(x, 3),
-                new BoardPosition(x, 4),
-                new BoardPosition(x, 5),
-                new BoardPosition(x, 6),
-                new BoardPosition(x, 7)
+                new Position(x, 1),
+                new Position(x, 2),
+                new Position(x, 3),
+                new Position(x, 4),
+                new Position(x, 5),
+                new Position(x, 6),
+                new Position(x, 7)
             };
             Assert.AreEqual(expected.Count(), positions.Count());
             foreach (var boardPosition in positions) Assert.AreEqual(true, expected.Contains(boardPosition));

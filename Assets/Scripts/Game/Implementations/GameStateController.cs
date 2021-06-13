@@ -18,7 +18,7 @@ namespace Game.Implementations
 
         public BoardState CurrentBoardState { get; private set; }
 
-        public IDictionary<BoardPosition, HashSet<BoardPosition>> PossiblePieceMoves { get; private set; }
+        public IDictionary<Position, HashSet<Position>> PossiblePieceMoves { get; private set; }
 
         public PieceColour Turn { get; private set; } = PieceColour.White;
 

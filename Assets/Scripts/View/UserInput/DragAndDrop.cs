@@ -44,7 +44,7 @@ namespace View.UserInput
 
             _commandInvoker.AddCommand(
                 _dragAndDropCommandFactory.Create(
-                    _piece.BoardPosition,
+                    _piece.Position,
                     nearestBoardPosition)
             );
             _isDragging = false;
@@ -57,8 +57,8 @@ namespace View.UserInput
             _dragAndDropCommandFactory = dragAndDropCommandFactory;
         }
 
-        private BoardPosition GetNearestBoardPosition(Vector2 position) =>
-            new BoardPosition(ConvertAxisToNearestBoardIndex(position.x),
+        private Position GetNearestBoardPosition(Vector2 position) =>
+            new Position(ConvertAxisToNearestBoardIndex(position.x),
                 ConvertAxisToNearestBoardIndex(position.y));
 
         private int ConvertAxisToNearestBoardIndex(float axis)

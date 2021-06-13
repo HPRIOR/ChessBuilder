@@ -1,4 +1,4 @@
-﻿using Models.Services.Moves.PossibleMoveHelpers;
+﻿using Models.Services.Moves.MoveHelpers;
 using Zenject;
 
 namespace Bindings.Installers.MoveInstallers

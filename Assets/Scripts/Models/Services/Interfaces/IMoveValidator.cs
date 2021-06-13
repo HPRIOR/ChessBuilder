@@ -5,7 +5,7 @@ namespace Models.Services.Interfaces
 {
     public interface IMoveValidator
     {
-        bool ValidateMove(IDictionary<BoardPosition, HashSet<BoardPosition>> possibleMoves, BoardPosition origin,
-            BoardPosition destination);
+        bool ValidateMove(IDictionary<Position, HashSet<Position>> possibleMoves, Position origin,
+            Position destination);
     }
 }

@@ -43,7 +43,7 @@ namespace Tests.UnitTests.Controllers.PieceMovers
         {
             var boardState = new BoardState();
             var newState =
-                _pieceMover.GenerateNewBoardState(boardState, new BoardPosition(1, 1), new BoardPosition(2, 2));
+                _pieceMover.GenerateNewBoardState(boardState, new Position(1, 1), new Position(2, 2));
             Assert.AreNotSame(newState, boardState);
         }
 
@@ -58,7 +58,7 @@ namespace Tests.UnitTests.Controllers.PieceMovers
             Assert.AreNotEqual(PieceType.NullPiece, board[1, 1].CurrentPiece.Type);
             var boardState = new BoardState(board);
             var newState =
-                _pieceMover.GenerateNewBoardState(boardState, new BoardPosition(1, 1), new BoardPosition(2, 2));
+                _pieceMover.GenerateNewBoardState(boardState, new Position(1, 1), new Position(2, 2));
             Assert.AreEqual(PieceType.NullPiece, newState.Board[1, 1].CurrentPiece.Type);
         }
 
@@ -70,7 +70,7 @@ namespace Tests.UnitTests.Controllers.PieceMovers
             board[2, 2].CurrentPiece = new Piece(PieceType.WhiteKing);
             var boardState = new BoardState(board);
             var newState =
-                _pieceMover.GenerateNewBoardState(boardState, new BoardPosition(1, 1), new BoardPosition(2, 2));
+                _pieceMover.GenerateNewBoardState(boardState, new Position(1, 1), new Position(2, 2));
             Assert.AreEqual(PieceType.BlackKing, newState.Board[2, 2].CurrentPiece.Type);
             Assert.AreEqual(PieceType.NullPiece, newState.Board[1, 1].CurrentPiece.Type);
         }

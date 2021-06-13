@@ -1,5 +1,5 @@
-﻿using Models.Services.Moves.Factories.PossibleMoveGeneratorFactories;
-using Models.Services.Moves.PossibleMoveGenerators.TurnMoves;
+﻿using Models.Services.Moves.Factories;
+using Models.Services.Moves.MoveGenerators.TurnMoves;
 using Models.State.PieceState;
 using Zenject;
 
@@ -9,7 +9,7 @@ namespace Bindings.Installers.MoveInstallers
     {
         public override void InstallBindings()
         {
-            Container.Bind<PossibleMovesFactory>().AsSingle();
+            Container.Bind<MovesFactory>().AsSingle();
             Container.BindFactory<PieceColour, QueenMoves, QueenMoves.Factory>().FromNew();
             Container.BindFactory<PieceColour, QueenNonTurnMoves, QueenNonTurnMoves.Factory>().FromNew();
             Container.BindFactory<PieceColour, RookTurnMoves, RookTurnMoves.Factory>().FromNew();

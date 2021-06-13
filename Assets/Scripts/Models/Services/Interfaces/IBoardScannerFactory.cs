@@ -1,4 +1,4 @@
-﻿using Models.Services.Moves.PossibleMoveHelpers;
+﻿using Models.Services.Moves.MoveHelpers;
 using Models.State.PieceState;
 
 namespace Models.Services.Interfaces

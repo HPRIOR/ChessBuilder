@@ -39,9 +39,9 @@ namespace Tests.UnitTests.Controllers.PieceMovers
         public void RejectsIf_FromEqualsDestination()
         {
             var possibleMoves =
-                new Dictionary<BoardPosition, HashSet<BoardPosition>>();
-            var a = new BoardPosition(1, 1);
-            var b = new BoardPosition(1, 1);
+                new Dictionary<Position, HashSet<Position>>();
+            var a = new Position(1, 1);
+            var b = new Position(1, 1);
             Assert.IsFalse(_moveValidator.ValidateMove(possibleMoves, a, b));
         }
 
@@ -49,12 +49,12 @@ namespace Tests.UnitTests.Controllers.PieceMovers
         public void RejectsIf_NoMovesFound()
         {
             var possibleMoves =
-                new Dictionary<BoardPosition, HashSet<BoardPosition>>
+                new Dictionary<Position, HashSet<Position>>
                 {
-                    {new BoardPosition(1, 1), new HashSet<BoardPosition> {new BoardPosition(7, 7)}}
+                    {new Position(1, 1), new HashSet<Position> {new Position(7, 7)}}
                 };
-            var a = new BoardPosition(1, 1);
-            var b = new BoardPosition(2, 2);
+            var a = new Position(1, 1);
+            var b = new Position(2, 2);
             Assert.IsFalse(_moveValidator.ValidateMove(possibleMoves, a, b));
         }
 
@@ -62,12 +62,12 @@ namespace Tests.UnitTests.Controllers.PieceMovers
         public void AcceptsIf_MovesFound()
         {
             var possibleMoves =
-                new Dictionary<BoardPosition, HashSet<BoardPosition>>
+                new Dictionary<Position, HashSet<Position>>
                 {
-                    {new BoardPosition(1, 1), new HashSet<BoardPosition> {new BoardPosition(2, 2)}}
+                    {new Position(1, 1), new HashSet<Position> {new Position(2, 2)}}
                 };
-            var a = new BoardPosition(1, 1);
-            var b = new BoardPosition(2, 2);
+            var a = new Position(1, 1);
+            var b = new Position(2, 2);
             Assert.IsTrue(_moveValidator.ValidateMove(possibleMoves, a, b));
         }
     }

@@ -4,7 +4,7 @@ using Models.Services.Moves.Factories;
 using Models.Services.Moves.MoveGenerators.TurnMoves;
 using Models.State.PieceState;
 
-namespace Models.Services.Moves.MoveHelpers
+namespace Models.Services.Moves.MoveGenerators
 {
     public class MoveGeneratorRepository : IMoveGeneratorRepository
     {

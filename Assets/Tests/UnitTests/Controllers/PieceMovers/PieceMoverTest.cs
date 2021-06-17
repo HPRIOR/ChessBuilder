@@ -51,7 +51,7 @@ namespace Tests.UnitTests.Controllers.PieceMovers
         // TODO test class internals are not same reference when updated
 
         [Test]
-        public void EvacuatedTileIsNull()
+        public void EvacuatedTilePieceIsNull()
         {
             var board = _boardGenerator.GenerateBoard();
             board[1, 1].CurrentPiece = new Piece(PieceType.BlackKing);
@@ -63,7 +63,7 @@ namespace Tests.UnitTests.Controllers.PieceMovers
         }
 
         [Test]
-        public void TileIsDisplacedOnMove()
+        public void PieceInTileIsDisplacedOnMove()
         {
             var board = _boardGenerator.GenerateBoard();
             board[1, 1].CurrentPiece = new Piece(PieceType.BlackKing);
@@ -73,6 +73,23 @@ namespace Tests.UnitTests.Controllers.PieceMovers
                 _pieceMover.GenerateNewBoardState(boardState, new Position(1, 1), new Position(2, 2));
             Assert.AreEqual(PieceType.BlackKing, newState.Board[2, 2].CurrentPiece.Type);
             Assert.AreEqual(PieceType.NullPiece, newState.Board[1, 1].CurrentPiece.Type);
+        }
+
+
+        [Test]
+        public void TileContainsNewPiece()
+        {
+            var board = _boardGenerator.GenerateBoard();
+            board[1, 1].CurrentPiece = new Piece(PieceType.BlackKing);
+            var boardState = new BoardState(board);
+
+            var oldPiece = board[1, 1].CurrentPiece;
+
+            var newState =
+                _pieceMover.GenerateNewBoardState(boardState, new Position(1, 1), new Position(2, 2));
+
+            var newPiece = board[2, 2].CurrentPiece;
+            Assert.AreNotSame(oldPiece, newPiece);
         }
     }
 }

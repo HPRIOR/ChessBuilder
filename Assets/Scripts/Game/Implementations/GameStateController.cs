@@ -22,8 +22,6 @@ namespace Game.Implementations
 
         public PieceColour Turn { get; private set; } = PieceColour.White;
 
-        // provide an overload which passes in the changed tile. This can be used to check for mate when passed
-        // to generate possible piece moves
         public void UpdateBoardState(BoardState newState)
         {
             var previousState = CurrentBoardState;

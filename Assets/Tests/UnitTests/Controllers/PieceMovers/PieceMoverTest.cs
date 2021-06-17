@@ -88,7 +88,7 @@ namespace Tests.UnitTests.Controllers.PieceMovers
             var newState =
                 _pieceMover.GenerateNewBoardState(boardState, new Position(1, 1), new Position(2, 2));
 
-            var newPiece = board[2, 2].CurrentPiece;
+            var newPiece = newState.Board[2, 2].CurrentPiece;
             Assert.AreNotSame(oldPiece, newPiece);
         }
     }

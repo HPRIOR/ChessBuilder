@@ -9,7 +9,7 @@ using Zenject;
 namespace Tests.UnitTests.PossibleMoves.Helpers
 {
     [TestFixture]
-    public class BoardEvalTests : ZenjectUnitTestFixture
+    public class BoardInfoTests : ZenjectUnitTestFixture
     {
         [SetUp]
         public void Init()

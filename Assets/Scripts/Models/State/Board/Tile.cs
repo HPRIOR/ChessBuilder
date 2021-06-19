@@ -26,7 +26,7 @@ namespace Models.State.Board
 
         public Tile CloneWithDecrementBuildState()
         {
-            var noPieceBeingBuilt = BuildState.BuildingPiece.Type == PieceType.NullPiece;
+            var noPieceBeingBuilt = BuildState.BuildingPiece == PieceType.NullPiece;
             if (noPieceBeingBuilt)
                 return new Tile(Position, CurrentPiece);
             return new Tile(Position, CurrentPiece, BuildState.Decrement()); // decrement build

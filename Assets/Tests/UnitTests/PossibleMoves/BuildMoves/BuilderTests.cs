@@ -58,7 +58,7 @@ namespace Tests.UnitTests.PossibleMoves.BuildMoves
             var newBoardState = _builder.GenerateNewBoardState(boardState, new Position(5, 5), PieceType.BlackKnight);
 
             Assert.That(newBoardState.Board[5, 5].BuildState,
-                Is.EqualTo(new BuildState(3, new Piece(PieceType.BlackKnight))));
+                Is.EqualTo(new BuildState(3, PieceType.BlackKnight)));
         }
     }
 }

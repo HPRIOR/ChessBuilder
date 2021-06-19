@@ -110,7 +110,7 @@ namespace Tests.UnitTests.Controllers.PieceMovers
         {
             var board = _boardGenerator.GenerateBoard();
             board[1, 1].CurrentPiece = new Piece(PieceType.BlackKing);
-            board[5, 5].BuildState = new BuildState(5, new Piece(PieceType.BlackKnight));
+            board[5, 5].BuildState = new BuildState(5, PieceType.BlackKnight);
             var boardState = new BoardState(board);
 
             var newState =
@@ -127,7 +127,7 @@ namespace Tests.UnitTests.Controllers.PieceMovers
         {
             var board = _boardGenerator.GenerateBoard();
             board[1, 1].CurrentPiece = new Piece(PieceType.BlackKing);
-            board[5, 5].BuildState = new BuildState(1, new Piece(PieceType.BlackKnight));
+            board[5, 5].BuildState = new BuildState(1, PieceType.BlackKnight);
             var boardState = new BoardState(board);
 
             var newState =
@@ -142,7 +142,7 @@ namespace Tests.UnitTests.Controllers.PieceMovers
         {
             var board = _boardGenerator.GenerateBoard();
             board[1, 1].CurrentPiece = new Piece(PieceType.BlackKing);
-            board[5, 5].BuildState = new BuildState(1, new Piece(PieceType.BlackKnight));
+            board[5, 5].BuildState = new BuildState(1, PieceType.BlackKnight);
             var boardState = new BoardState(board);
 
             var newState =
@@ -158,7 +158,7 @@ namespace Tests.UnitTests.Controllers.PieceMovers
         {
             var board = _boardGenerator.GenerateBoard();
             board[5, 5].CurrentPiece = new Piece(PieceType.BlackKing);
-            board[5, 5].BuildState = new BuildState(1, new Piece(PieceType.BlackKnight));
+            board[5, 5].BuildState = new BuildState(1, PieceType.BlackKnight);
             var boardState = new BoardState(board);
 
             var newState =
@@ -173,14 +173,14 @@ namespace Tests.UnitTests.Controllers.PieceMovers
         {
             var board = _boardGenerator.GenerateBoard();
             board[5, 5].CurrentPiece = new Piece(PieceType.BlackKing);
-            board[5, 5].BuildState = new BuildState(1, new Piece(PieceType.BlackKnight));
+            board[5, 5].BuildState = new BuildState(1, PieceType.BlackKnight);
             var boardState = new BoardState(board);
 
             var newState =
                 _pieceMover.GenerateNewBoardState(boardState, new Position(1, 1), new Position(2, 2));
 
             Assert.That(newState.Board[5, 5].BuildState,
-                Is.EqualTo(new BuildState(0, new Piece(PieceType.BlackKnight))));
+                Is.EqualTo(new BuildState(0, PieceType.BlackKnight)));
         }
 
         [Test]
@@ -188,7 +188,7 @@ namespace Tests.UnitTests.Controllers.PieceMovers
         {
             var board = _boardGenerator.GenerateBoard();
             board[5, 5].CurrentPiece = new Piece(PieceType.BlackKing);
-            board[5, 5].BuildState = new BuildState(1, new Piece(PieceType.BlackKnight));
+            board[5, 5].BuildState = new BuildState(1, PieceType.BlackKnight);
             var boardState = new BoardState(board);
 
             // update state but don't move blocking piece
@@ -210,7 +210,7 @@ namespace Tests.UnitTests.Controllers.PieceMovers
         {
             var board = _boardGenerator.GenerateBoard();
             board[4, 4].CurrentPiece = new Piece(PieceType.BlackKing);
-            board[5, 5].BuildState = new BuildState(1, new Piece(PieceType.BlackKnight));
+            board[5, 5].BuildState = new BuildState(1, PieceType.BlackKnight);
             var boardState = new BoardState(board);
 
             var firstState =

@@ -12,12 +12,12 @@ namespace Models.Services.Build.Utils
             foreach (var tile in boardState.Board)
             {
                 var buildIsZeroTileIsEmptyAndPieceIsBuilding = tile.BuildState.Turns == 0 &&
-                                                               tile.BuildState.BuildingPiece.Type !=
+                                                               tile.BuildState.BuildingPiece !=
                                                                PieceType.NullPiece &&
                                                                tile.CurrentPiece.Type == PieceType.NullPiece;
                 if (buildIsZeroTileIsEmptyAndPieceIsBuilding)
                 {
-                    tile.CurrentPiece = tile.BuildState.BuildingPiece;
+                    tile.CurrentPiece = new State.PieceState.Piece(tile.BuildState.BuildingPiece);
                     tile.BuildState = new BuildState(); // reset build state
                 }
             }

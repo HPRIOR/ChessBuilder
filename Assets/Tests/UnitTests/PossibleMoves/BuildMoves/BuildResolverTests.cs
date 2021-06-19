@@ -45,7 +45,7 @@ namespace Tests.UnitTests.PossibleMoves.BuildMoves
         public void WillBuildPiece_WhenBuildStateCountIsZero()
         {
             var board = _boardGenerator.GenerateBoard();
-            board[1, 1].BuildState = new BuildState(0, new Piece(PieceType.WhiteQueen));
+            board[1, 1].BuildState = new BuildState(0, PieceType.WhiteQueen);
             var boardState = new BoardState(board);
             _buildResolver.ResolveBuild(boardState);
 
@@ -56,7 +56,7 @@ namespace Tests.UnitTests.PossibleMoves.BuildMoves
         public void WillResetBuildState_WhenPieceIsBuilt()
         {
             var board = _boardGenerator.GenerateBoard();
-            board[1, 1].BuildState = new BuildState(0, new Piece(PieceType.WhiteQueen));
+            board[1, 1].BuildState = new BuildState(0, PieceType.WhiteQueen);
             var boardState = new BoardState(board);
             _buildResolver.ResolveBuild(boardState);
 
@@ -67,7 +67,7 @@ namespace Tests.UnitTests.PossibleMoves.BuildMoves
         public void WillNotBuildPiece_WhenBuildStateCountGreaterThanZero()
         {
             var board = _boardGenerator.GenerateBoard();
-            board[1, 1].BuildState = new BuildState(1, new Piece(PieceType.WhiteQueen));
+            board[1, 1].BuildState = new BuildState(1, PieceType.WhiteQueen);
             var boardState = new BoardState(board);
             _buildResolver.ResolveBuild(boardState);
 
@@ -79,7 +79,7 @@ namespace Tests.UnitTests.PossibleMoves.BuildMoves
         public void WillNotBuildPiece_WhenBuildStatePieceTypeIsNull()
         {
             var board = _boardGenerator.GenerateBoard();
-            board[1, 1].BuildState = new BuildState(0, new Piece(PieceType.NullPiece));
+            board[1, 1].BuildState = new BuildState(0);
             var boardState = new BoardState(board);
             _buildResolver.ResolveBuild(boardState);
 
@@ -92,7 +92,7 @@ namespace Tests.UnitTests.PossibleMoves.BuildMoves
         {
             var board = _boardGenerator.GenerateBoard();
             board[1, 1].CurrentPiece = new Piece(PieceType.BlackKnight);
-            board[1, 1].BuildState = new BuildState(0, new Piece(PieceType.WhiteQueen));
+            board[1, 1].BuildState = new BuildState(0, PieceType.WhiteQueen);
             var boardState = new BoardState(board);
             _buildResolver.ResolveBuild(boardState);
 

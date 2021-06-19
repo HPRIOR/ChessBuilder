@@ -79,7 +79,7 @@ namespace Tests.UnitTests.BoardTests
         [Test]
         public void TileClonedWithDecrementBuildState_Decrements_IfPieceIsBeingBuilt()
         {
-            var tile = new Tile(new Position(1, 1), new BuildState(9, new Piece(PieceType.WhiteQueen)));
+            var tile = new Tile(new Position(1, 1), new BuildState(9, PieceType.WhiteQueen));
             var tileClone = tile.CloneWithDecrementBuildState();
 
             Assert.AreEqual(8, tileClone.BuildState.Turns);
@@ -89,7 +89,7 @@ namespace Tests.UnitTests.BoardTests
         [Test]
         public void TileClonedWithDecrementBuildState_RetainsWaitingBuild_IfPieceIsBeingBuilt_And_FullyDecremented()
         {
-            var tile = new Tile(new Position(1, 1), new BuildState(0, new Piece(PieceType.WhiteQueen)));
+            var tile = new Tile(new Position(1, 1), new BuildState(0, PieceType.WhiteQueen));
             var tileClone = tile.CloneWithDecrementBuildState();
 
             Assert.AreEqual(tile.BuildState.Turns, tileClone.BuildState.Turns);

@@ -85,7 +85,7 @@ namespace Tests.UnitTests.BoardTests
         public void BoardContains_BuildStateWithNullPiece()
         {
             var boardState = GetBoardState();
-            Assert.AreEqual(new Piece(PieceType.NullPiece), boardState.Board[1, 1].BuildState.BuildingPiece);
+            Assert.AreEqual(PieceType.NullPiece, boardState.Board[1, 1].BuildState.BuildingPiece);
         }
 
         [Test]

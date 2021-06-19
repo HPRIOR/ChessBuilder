@@ -12,7 +12,7 @@ namespace Tests.UnitTests.PossibleMoves.BuildMoves
         public void DefaultBuildState_HasNullPiece()
         {
             var buildState = new BuildState();
-            Assert.That(buildState.BuildingPiece.Type, Is.EqualTo(PieceType.NullPiece));
+            Assert.That(buildState.BuildingPiece, Is.EqualTo(PieceType.NullPiece));
         }
 
 

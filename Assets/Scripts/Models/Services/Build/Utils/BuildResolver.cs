@@ -10,12 +10,17 @@ namespace Models.Services.Build.Utils
         public void ResolveBuild(BoardState boardState)
         {
             foreach (var tile in boardState.Board)
-                if (tile.BuildState.BuildingPiece.Type != PieceType.NullPiece &&
-                    tile.CurrentPiece.Type == PieceType.NullPiece)
+            {
+                var buildIsZeroTileIsEmptyAndPieceIsBuilding = tile.BuildState.Turns == 0 &&
+                                                               tile.BuildState.BuildingPiece.Type !=
+                                                               PieceType.NullPiece &&
+                                                               tile.CurrentPiece.Type == PieceType.NullPiece;
+                if (buildIsZeroTileIsEmptyAndPieceIsBuilding)
                 {
                     tile.CurrentPiece = tile.BuildState.BuildingPiece;
                     tile.BuildState = new BuildState(); // reset build state
                 }
+            }
         }
     }
 }

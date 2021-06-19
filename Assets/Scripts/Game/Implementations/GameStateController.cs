@@ -14,11 +14,13 @@ namespace Game.Implementations
         public GameStateController(IAllPossibleMovesGenerator allPossibleMovesGenerator)
         {
             _allPossibleMovesGenerator = allPossibleMovesGenerator;
+            // buildMoveGenerator
         }
 
         public BoardState CurrentBoardState { get; private set; }
 
         public IDictionary<Position, HashSet<Position>> PossiblePieceMoves { get; private set; }
+        //public IEnumerable<Position> PossibleBuildMoves {get; private set;}
 
         public PieceColour Turn { get; private set; } = PieceColour.White;
 
@@ -28,6 +30,7 @@ namespace Game.Implementations
             CurrentBoardState = newState;
 
             PossiblePieceMoves = _allPossibleMovesGenerator.GetPossibleMoves(CurrentBoardState, Turn);
+            // PossibleBuildMoves = _buildMoveGenerator.GetPossibleBuilds(CurrentBoardState, Turn);
 
             Turn = ChangeTurn();
             GameStateChangeEvent?.Invoke(previousState, CurrentBoardState);

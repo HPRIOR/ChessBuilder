@@ -5,10 +5,18 @@ namespace Models.State.BuildState
 {
     public readonly struct BuildState
     {
-        private static readonly IDictionary<PieceType, int> pieceCost = new Dictionary<PieceType, int>
+        private static readonly IDictionary<PieceType, int> PieceCost = new Dictionary<PieceType, int>
         {
-            {PieceType.BlackPawn, 3},
-            {PieceType.WhitePawn, 3}
+            {PieceType.BlackPawn, 1},
+            {PieceType.WhitePawn, 1},
+            {PieceType.BlackBishop, 3},
+            {PieceType.WhiteBishop, 3},
+            {PieceType.BlackKnight, 3},
+            {PieceType.WhiteKnight, 3},
+            {PieceType.BlackRook, 5},
+            {PieceType.WhiteRook, 5},
+            {PieceType.BlackQueen, 5},
+            {PieceType.WhiteQueen, 5}
         };
 
         public PieceType BuildingPiece { get; }
@@ -23,7 +31,7 @@ namespace Models.State.BuildState
         public BuildState(PieceType pieceType)
         {
             BuildingPiece = pieceType;
-            Turns = pieceCost[pieceType];
+            Turns = PieceCost[pieceType];
         }
 
 

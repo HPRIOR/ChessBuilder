@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
-using Models.Services.Moves.MoveHelpers;
 using Models.State.Board;
+using Models.State.PieceState;
 
 namespace Models.Services.Build.Interfaces
 {
     public interface IBuildMoveGenerator
     {
-        IEnumerable<Position> GetPossibleBuildMoves(BoardState currentBoardState, Turn turn);
+        IEnumerable<Position> GetPossibleBuildMoves(BoardState currentBoardState, PieceColour turn);
     }
 }

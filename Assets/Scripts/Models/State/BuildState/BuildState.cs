@@ -15,19 +15,21 @@ namespace Models.State.BuildState
             {PieceType.WhiteKnight, 3},
             {PieceType.BlackRook, 5},
             {PieceType.WhiteRook, 5},
-            {PieceType.BlackQueen, 5},
-            {PieceType.WhiteQueen, 5}
+            {PieceType.BlackQueen, 9},
+            {PieceType.WhiteQueen, 9}
         };
 
         public PieceType BuildingPiece { get; }
         public int Turns { get; }
 
+        // used to instantiate default/null build state, and to decrement build states
         public BuildState(int turns = 0, PieceType buildingPiece = default)
         {
             BuildingPiece = buildingPiece;
             Turns = turns;
         }
 
+        // used to instantiate initial value of BuildState
         public BuildState(PieceType pieceType)
         {
             BuildingPiece = pieceType;

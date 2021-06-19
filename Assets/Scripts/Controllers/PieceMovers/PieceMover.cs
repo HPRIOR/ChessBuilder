@@ -9,7 +9,8 @@ namespace Controllers.PieceMovers
         public BoardState GenerateNewBoardState(BoardState originalBoardState, Position from,
             Position destination)
         {
-            var newBoardState = (BoardState) originalBoardState.Clone();
+            var newBoardState = originalBoardState.CloneWithDecrementBuildState();
+
             // get swapped pieces
             var destinationTile = newBoardState.Board[destination.X, destination.Y];
             var fromTile = newBoardState.Board[from.X, from.Y];

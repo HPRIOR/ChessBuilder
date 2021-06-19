@@ -13,6 +13,7 @@ namespace Bindings.MonoInstallers
             MoveGeneratorRepositoryInstaller.Install(Container);
             AllPossibleMovesGeneratorInstaller.Install(Container);
 
+            BuilderInstaller.Install(Container);
             BuildResolverInstaller.Install(Container);
             PossibleMovesFactoryInstaller.Install(Container);
             MoveValidatorInstaller.Install(Container);

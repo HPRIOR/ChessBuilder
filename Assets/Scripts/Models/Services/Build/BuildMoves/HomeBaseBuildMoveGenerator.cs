@@ -11,6 +11,7 @@ namespace Models.Services.Build.BuildMoves
         public IEnumerable<Position> GetPossibleBuildMoves(BoardState currentBoardState, Turn turn) =>
             throw new NotImplementedException();
 
-        private IEnumerable<Position> BlackBuildMoveGenerator() => throw new NotImplementedException();
+        private IEnumerable<Position> BlackBuildMoveGenerator(BoardState boardState) =>
+            throw new NotImplementedException();
     }
 }

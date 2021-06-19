@@ -48,7 +48,16 @@ namespace Tests.UnitTests.Controllers.PieceMovers
         }
 
 
-        // TODO test class internals are not same reference when updated
+        [Test]
+        public void NewBoardIsDeepCopy()
+        {
+            var boardState = new BoardState();
+            var newState =
+                _pieceMover.GenerateNewBoardState(boardState, new Position(1, 1), new Position(2, 2));
+            Assert.AreNotSame(newState, boardState);
+            Assert.AreNotSame(newState.Board, boardState.Board);
+            Assert.AreNotSame(newState.Board[1, 1], boardState.Board[1, 1]);
+        }
 
         [Test]
         public void EvacuatedTilePieceIsNull()

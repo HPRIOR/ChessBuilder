@@ -47,5 +47,22 @@ namespace Tests.UnitTests.PossibleMoves.BuildMoves
             var newBuildState = buildState.Decrement();
             Assert.That(newBuildState.Turns, Is.EqualTo(9));
         }
+
+
+        [Test]
+        public void InitialBlackQueenBuildState_HasCorrectTurns()
+        {
+            var blackQueenBuildState = new BuildState(PieceType.BlackQueen);
+            Assert.That(blackQueenBuildState.Turns, Is.EqualTo(9));
+        }
+
+
+        [Test]
+        public void InitialWhiteQueenBuildState_HasCorrectTurns()
+        {
+            var blackQueenBuildState = new BuildState(PieceType.WhiteQueen);
+            Assert.That(blackQueenBuildState.Turns, Is.EqualTo(9));
+        }
+        //TODO finish tests for each piece, white/black/ turns/pieceType
     }
 }

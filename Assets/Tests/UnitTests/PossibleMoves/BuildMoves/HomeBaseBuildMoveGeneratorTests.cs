@@ -71,5 +71,37 @@ namespace Tests.UnitTests.PossibleMoves.BuildMoves
 
             Assert.That(blackBuildZone, Is.EquivalentTo(expectedPositions));
         }
+
+
+        [Test]
+        public void OnEmptyBoard_WhiteBuildZoneGenerated()
+        {
+            var board = _boardGenerator.GenerateBoard();
+            var boardState = new BoardState(board);
+
+            var blackBuildZone = _homeBaseBuildGenerator.GetPossibleBuildMoves(boardState, PieceColour.White);
+
+            var expectedPositions = new List<Position>
+            {
+                new Position(7, 0),
+                new Position(6, 0),
+                new Position(5, 0),
+                new Position(4, 0),
+                new Position(3, 0),
+                new Position(2, 0),
+                new Position(1, 0),
+                new Position(0, 0),
+                new Position(7, 1), // second row
+                new Position(6, 1),
+                new Position(5, 1),
+                new Position(4, 1),
+                new Position(3, 1),
+                new Position(2, 1),
+                new Position(1, 1),
+                new Position(0, 1)
+            };
+
+            Assert.That(blackBuildZone, Is.EquivalentTo(expectedPositions));
+        }
     }
 }

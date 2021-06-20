@@ -1,8 +1,6 @@
-﻿using Models.State.Interfaces;
-
-namespace Models.State.PlayerState
+﻿namespace Models.State.PlayerState
 {
-    public readonly struct PlayerState : IPlayerState
+    public readonly struct PlayerState
     {
         public PlayerState(int buildPoints)
         {

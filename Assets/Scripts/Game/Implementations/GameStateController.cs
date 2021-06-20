@@ -11,23 +11,29 @@ namespace Game.Implementations
 {
     public class GameStateController : IGameState, ITurnEventInvoker
     {
+        private const int maxBuildPoints = 39;
         private readonly IAllPossibleMovesGenerator _allPossibleMovesGenerator;
         private readonly IBuildMoveGenerator _buildMoveGenerator;
+        private readonly IBuildPointsCalculator _buildPointsCalculator;
 
+        // TODO Don't hard code max build points 
         public GameStateController(
             IAllPossibleMovesGenerator allPossibleMovesGenerator,
-            IBuildMoveGenerator buildMoveGenerator)
+            IBuildMoveGenerator buildMoveGenerator,
+            IBuildPointsCalculator buildPointsCalculator
+        )
         {
             _allPossibleMovesGenerator = allPossibleMovesGenerator;
             _buildMoveGenerator = buildMoveGenerator;
-            BlackState = new PlayerState(39);
-            WhiteState = new PlayerState(39);
+            _buildPointsCalculator = buildPointsCalculator;
+            BlackState = new PlayerState(maxBuildPoints);
+            WhiteState = new PlayerState(maxBuildPoints);
         }
 
         public BoardState CurrentBoardState { get; private set; }
         public PieceColour Turn { get; private set; } = PieceColour.White;
-        public PlayerState BlackState { get; }
-        public PlayerState WhiteState { get; }
+        public PlayerState BlackState { get; private set; }
+        public PlayerState WhiteState { get; private set; }
         public IDictionary<Position, HashSet<PieceType>> PossibleBuildMoves { get; private set; }
         public IDictionary<Position, HashSet<Position>> PossiblePieceMoves { get; private set; }
 
@@ -35,6 +41,11 @@ namespace Game.Implementations
         {
             var previousState = CurrentBoardState;
             CurrentBoardState = newState;
+
+            BlackState =
+                _buildPointsCalculator.CalculateBuildPoints(PieceColour.Black, CurrentBoardState, maxBuildPoints);
+            WhiteState =
+                _buildPointsCalculator.CalculateBuildPoints(PieceColour.White, CurrentBoardState, maxBuildPoints);
 
             PossiblePieceMoves = _allPossibleMovesGenerator.GetPossibleMoves(CurrentBoardState, Turn);
             PossibleBuildMoves = _buildMoveGenerator.GetPossibleBuildMoves(CurrentBoardState, Turn);

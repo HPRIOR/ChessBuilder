@@ -9,13 +9,13 @@ namespace Models.Services.Build.BuildMoves
 {
     internal class HomeBaseBuildMoveGenerator : IBuildMoveGenerator
     {
-        private static readonly HashSet<PieceType> _blackPieces = new HashSet<PieceType>
+        private static readonly HashSet<PieceType> BlackPieces = new HashSet<PieceType>
         {
             PieceType.BlackBishop, PieceType.BlackKnight, PieceType.BlackPawn, PieceType.BlackQueen,
             PieceType.BlackRook
         };
 
-        private static readonly HashSet<PieceType> _whitePieces = new HashSet<PieceType>
+        private static readonly HashSet<PieceType> WhitePieces = new HashSet<PieceType>
         {
             PieceType.WhiteBishop, PieceType.WhiteKnight, PieceType.WhitePawn, PieceType.WhiteQueen,
             PieceType.WhiteRook
@@ -32,7 +32,7 @@ namespace Models.Services.Build.BuildMoves
             where tile.Position.Y == 7 || tile.Position.Y == 6
             select tile.Position
         ).ToDictionary(x => x,
-            x => _blackPieces);
+            x => BlackPieces);
 
 
         private IDictionary<Position, HashSet<PieceType>> WhiteBuildMoveGenerator(BoardState boardState) =>
@@ -41,6 +41,6 @@ namespace Models.Services.Build.BuildMoves
             where tile.Position.Y == 0 || tile.Position.Y == 1
             select tile.Position
         ).ToDictionary(x => x,
-            x => _whitePieces);
+            x => WhitePieces);
     }
 }

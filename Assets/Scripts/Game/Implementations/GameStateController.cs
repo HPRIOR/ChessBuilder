@@ -28,10 +28,11 @@ namespace Game.Implementations
             _buildPointsCalculator = buildPointsCalculator;
             BlackState = new PlayerState(maxBuildPoints);
             WhiteState = new PlayerState(maxBuildPoints);
+            Turn = PieceColour.White;
         }
 
         public BoardState CurrentBoardState { get; private set; }
-        public PieceColour Turn { get; private set; } = PieceColour.White;
+        public PieceColour Turn { get; private set; }
         public PlayerState BlackState { get; private set; }
         public PlayerState WhiteState { get; private set; }
         public IDictionary<Position, HashSet<PieceType>> PossibleBuildMoves { get; private set; }

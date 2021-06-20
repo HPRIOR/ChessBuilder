@@ -43,6 +43,7 @@ namespace Game.Implementations
             var previousState = CurrentBoardState;
             CurrentBoardState = newState;
 
+            // TODO: this may only need to change for the current turn
             BlackState =
                 _buildPointsCalculator.CalculateBuildPoints(PieceColour.Black, CurrentBoardState, maxBuildPoints);
             WhiteState =

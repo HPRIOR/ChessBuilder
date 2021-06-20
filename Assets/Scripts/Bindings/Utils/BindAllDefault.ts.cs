@@ -11,6 +11,7 @@ namespace Bindings.Utils
     {
         public static void InstallAllTo(DiContainer container)
         {
+            BuildPointsCalculatorInstaller.Install(container);
             HomeBaseBuildMoveGeneratorInstaller.Install(container);
             BoardGeneratorInstaller.Install(container);
             GameStateInstaller.Install(container);

@@ -4,6 +4,7 @@ using Game.Interfaces;
 using Models.Services.Build.Interfaces;
 using Models.Services.Interfaces;
 using Models.State.Board;
+using Models.State.BuildState;
 using Models.State.PieceState;
 using Models.State.PlayerState;
 
@@ -35,7 +36,7 @@ namespace Game.Implementations
         public PieceColour Turn { get; private set; }
         public PlayerState BlackState { get; private set; }
         public PlayerState WhiteState { get; private set; }
-        public IDictionary<Position, HashSet<PieceType>> PossibleBuildMoves { get; private set; }
+        public BuildMoves PossibleBuildMoves { get; private set; }
         public IDictionary<Position, HashSet<Position>> PossiblePieceMoves { get; private set; }
 
         public void UpdateBoardState(BoardState newState)

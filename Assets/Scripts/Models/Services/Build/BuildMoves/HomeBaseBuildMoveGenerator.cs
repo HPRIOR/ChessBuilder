@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using Models.Services.Build.Interfaces;
 using Models.State.Board;
 using Models.State.PieceState;
@@ -21,26 +20,28 @@ namespace Models.Services.Build.BuildMoves
             PieceType.WhiteRook
         };
 
-        public IDictionary<Position, HashSet<PieceType>> GetPossibleBuildMoves(BoardState boardState, PieceColour turn,
-            PlayerState playerState) =>
-            turn == PieceColour.White ? WhiteBuildMoveGenerator(boardState) : BlackBuildMoveGenerator(boardState);
+        public State.BuildState.BuildMoves GetPossibleBuildMoves(BoardState boardState, PieceColour turn,
+            PlayerState playerState) => turn == PieceColour.Black
+            ? new State.BuildState.BuildMoves(GetBlackPositions(), BlackPieces)
+            : new State.BuildState.BuildMoves(GetWhitePositions(), WhitePieces);
+
+        private HashSet<Position> GetWhitePositions()
+        {
+            var result = new HashSet<Position>();
+            for (var y = 0; y < 2; y++)
+            for (var x = 0; x < 8; x++)
+                result.Add(new Position(x, y));
+            return result;
+        }
 
 
-        private IDictionary<Position, HashSet<PieceType>> BlackBuildMoveGenerator(BoardState boardState) =>
-        (
-            from Tile tile in boardState.Board
-            where tile.Position.Y == 7 || tile.Position.Y == 6
-            select tile.Position
-        ).ToDictionary(x => x,
-            x => BlackPieces);
-
-
-        private IDictionary<Position, HashSet<PieceType>> WhiteBuildMoveGenerator(BoardState boardState) =>
-        (
-            from Tile tile in boardState.Board
-            where tile.Position.Y == 0 || tile.Position.Y == 1
-            select tile.Position
-        ).ToDictionary(x => x,
-            x => WhitePieces);
+        private HashSet<Position> GetBlackPositions()
+        {
+            var result = new HashSet<Position>();
+            for (var x = 0; x < 8; x++)
+            for (var y = 7; y > 5; y--)
+                result.Add(new Position(x, y));
+            return result;
+        }
     }
 }

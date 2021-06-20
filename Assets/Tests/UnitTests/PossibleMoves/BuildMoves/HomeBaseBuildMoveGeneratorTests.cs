@@ -161,5 +161,56 @@ namespace Tests.UnitTests.PossibleMoves.BuildMoves
             Assert.That(buildMoves.BuildPositions, Is.EquivalentTo(expectPositions));
             Assert.That(buildMoves.BuildPieces, Is.EquivalentTo(expectedPieces));
         }
+
+
+        [Test]
+        public void WithOnePoint_OnlyPawnCanBeBuild()
+        {
+            var board = _boardGenerator.GenerateBoard();
+            var boardState = new BoardState(board);
+
+            var buildMoves =
+                _homeBaseBuildGenerator.GetPossibleBuildMoves(boardState, PieceColour.White, new PlayerState(1));
+            var expectedPieces = new HashSet<PieceType>
+            {
+                PieceType.WhitePawn
+            };
+
+
+            Assert.That(buildMoves.BuildPieces, Is.EquivalentTo(expectedPieces));
+        }
+
+
+        [Test]
+        public void WithThreePoints_PawnBishopKnightCanBeBuild()
+        {
+            var board = _boardGenerator.GenerateBoard();
+            var boardState = new BoardState(board);
+
+            var buildMoves =
+                _homeBaseBuildGenerator.GetPossibleBuildMoves(boardState, PieceColour.White, new PlayerState(3));
+            var expectedPieces = new HashSet<PieceType>
+            {
+                PieceType.WhitePawn, PieceType.WhiteBishop, PieceType.WhiteKnight
+            };
+
+            Assert.That(buildMoves.BuildPieces, Is.EquivalentTo(expectedPieces));
+        }
+
+        [Test]
+        public void WithFivePoints_PawnBishopKnightRookCanBeBuild()
+        {
+            var board = _boardGenerator.GenerateBoard();
+            var boardState = new BoardState(board);
+
+            var buildMoves =
+                _homeBaseBuildGenerator.GetPossibleBuildMoves(boardState, PieceColour.White, new PlayerState(5));
+            var expectedPieces = new HashSet<PieceType>
+            {
+                PieceType.WhitePawn, PieceType.WhiteBishop, PieceType.WhiteKnight, PieceType.WhiteRook
+            };
+
+            Assert.That(buildMoves.BuildPieces, Is.EquivalentTo(expectedPieces));
+        }
     }
 }

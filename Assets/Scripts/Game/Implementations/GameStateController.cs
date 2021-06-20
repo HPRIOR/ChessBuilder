@@ -20,17 +20,16 @@ namespace Game.Implementations
         {
             _allPossibleMovesGenerator = allPossibleMovesGenerator;
             _buildMoveGenerator = buildMoveGenerator;
+            BlackState = new PlayerState(39);
+            WhiteState = new PlayerState(39);
         }
 
-        public PlayerState BlackState { get; } = new PlayerState(39);
-        public PlayerState WhiteState { get; } = new PlayerState(39);
-        public IEnumerable<Position> PossibleBuildMoves { get; private set; }
-
         public BoardState CurrentBoardState { get; private set; }
-
-        public IDictionary<Position, HashSet<Position>> PossiblePieceMoves { get; private set; }
-
         public PieceColour Turn { get; private set; } = PieceColour.White;
+        public PlayerState BlackState { get; }
+        public PlayerState WhiteState { get; }
+        public IDictionary<Position, HashSet<PieceType>> PossibleBuildMoves { get; private set; }
+        public IDictionary<Position, HashSet<Position>> PossiblePieceMoves { get; private set; }
 
         public void UpdateBoardState(BoardState newState)
         {

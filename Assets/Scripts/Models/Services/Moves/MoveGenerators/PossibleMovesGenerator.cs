@@ -33,8 +33,6 @@ namespace Models.Services.Moves.MoveGenerators
         public IDictionary<Position, HashSet<Position>> GetPossibleMoves(BoardState boardState,
             PieceColour turn)
         {
-            // board info will mess with concurrent execution because it is stateful and not instantiated 
-            // for each call 
             _boardInfo.EvaluateBoard(boardState, turn);
             var turnMoves = _boardInfo.TurnMoves;
             var nonTurnMoves = _boardInfo.NonTurnMoves;

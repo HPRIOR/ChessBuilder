@@ -21,19 +21,20 @@ namespace Models.Services.Moves.MoveHelpers
             var turnMoves = boardInfo.TurnMoves;
             var nonTurnScanningMoves = GetScanningPieces(boardInfo.NonTurnMoves, boardState);
             var kingPosition = boardInfo.KingPosition;
-            var turnPieces = new HashSet<Position>(turnMoves.Keys);
-            turnPieces.Remove(kingPosition);
-            foreach (var moves in nonTurnScanningMoves)
+            var turnPiecePosition = new HashSet<Position>(turnMoves.Keys);
+            turnPiecePosition.Remove(kingPosition);
+            foreach (var nonTurnMoves in nonTurnScanningMoves)
             {
-                var turnPiecePositionIntersect = moves.Value.Intersect(turnPieces).ToList(); // One or none
+                var turnPiecePositionIntersect =
+                    nonTurnMoves.Value.Intersect(turnPiecePosition).ToList(); // One or none
                 var nonTurnMovesContainTurnPiece = turnPiecePositionIntersect.Any();
 
                 if (
                     nonTurnMovesContainTurnPiece &&
-                    DirectionOfPinPointsToKing(kingPosition, turnPiecePositionIntersect.First(), moves.Key) &&
-                    TheNextPieceIsKing(moves.Key, turnPiecePositionIntersect.First(), kingPosition, boardState)
+                    // DirectionOfPinPointsToKing(kingPosition, turnPiecePositionIntersect.First(), moves.Key) &&
+                    TheNextPieceIsKing(nonTurnMoves.Key, turnPiecePositionIntersect.First(), kingPosition, boardState)
                 )
-                    turnMoves[turnPiecePositionIntersect.First()].IntersectWith(PossibleEscapeMoves(moves));
+                    turnMoves[turnPiecePositionIntersect.First()].IntersectWith(PossibleEscapeMoves(nonTurnMoves));
             }
         }
 

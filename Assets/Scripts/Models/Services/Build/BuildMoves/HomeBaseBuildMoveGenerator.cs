@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Models.Services.Build.Interfaces;
 using Models.State.Board;
+using Models.State.BuildState;
 using Models.State.PieceState;
 using Models.State.PlayerState;
 
@@ -22,10 +24,15 @@ namespace Models.Services.Build.BuildMoves
 
         public State.BuildState.BuildMoves GetPossibleBuildMoves(BoardState boardState, PieceColour turn,
             PlayerState playerState) => turn == PieceColour.Black
-            ? new State.BuildState.BuildMoves(GetBlackPositions(), BlackPieces)
-            : new State.BuildState.BuildMoves(GetWhitePositions(), WhitePieces);
+            ? new State.BuildState.BuildMoves(GetBlackPositions(), RemovePiecesByCost(playerState, BlackPieces))
+            : new State.BuildState.BuildMoves(GetWhitePositions(), RemovePiecesByCost(playerState, WhitePieces));
 
-        private HashSet<Position> GetWhitePositions()
+
+        private static HashSet<PieceType> RemovePiecesByCost(PlayerState playerState, IEnumerable<PieceType> pieces) =>
+            new HashSet<PieceType>(pieces.Where(piece => BuildPoints.PieceCost[piece] <= playerState.BuildPoints));
+
+
+        private static HashSet<Position> GetWhitePositions()
         {
             var result = new HashSet<Position>();
             for (var y = 0; y < 2; y++)
@@ -35,7 +42,7 @@ namespace Models.Services.Build.BuildMoves
         }
 
 
-        private HashSet<Position> GetBlackPositions()
+        private static HashSet<Position> GetBlackPositions()
         {
             var result = new HashSet<Position>();
             for (var x = 0; x < 8; x++)

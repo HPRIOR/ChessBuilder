@@ -49,8 +49,7 @@ namespace Controllers.Commands
             if (_moveValidator.ValidateMove(_gameState.PossiblePieceMoves, _from, _destination))
                 return true;
 
-            // return to original state
-            // this will update turn incorrectly
+
             _gameState.RetainBoardState();
             return false;
         }

@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using Bindings.Installers.BoardInstallers;
 using Bindings.Installers.MoveInstallers;
 using Models.Services.Build.Interfaces;
@@ -8,7 +7,6 @@ using Models.State.Board;
 using Models.State.PieceState;
 using Models.State.PlayerState;
 using NUnit.Framework;
-using UnityEngine;
 using Zenject;
 
 namespace Tests.UnitTests.PossibleMoves.BuildMoves
@@ -119,7 +117,6 @@ namespace Tests.UnitTests.PossibleMoves.BuildMoves
                 new Position(0, 0)
             };
 
-            whiteBuildMoves.BuildPositions.ToList().ForEach(x => Debug.Log(x));
             Assert.That(whiteBuildMoves.BuildPositions, Is.EquivalentTo(expectedPositions));
             Assert.That(whiteBuildMoves.BuildPieces, Is.EquivalentTo(expectedPieces));
         }

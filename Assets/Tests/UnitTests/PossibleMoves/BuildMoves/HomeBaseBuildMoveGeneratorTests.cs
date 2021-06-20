@@ -5,6 +5,7 @@ using Models.Services.Build.Interfaces;
 using Models.Services.Interfaces;
 using Models.State.Board;
 using Models.State.PieceState;
+using Models.State.PlayerState;
 using NUnit.Framework;
 using Zenject;
 
@@ -47,7 +48,8 @@ namespace Tests.UnitTests.PossibleMoves.BuildMoves
             var board = _boardGenerator.GenerateBoard();
             var boardState = new BoardState(board);
 
-            var blackBuildZone = _homeBaseBuildGenerator.GetPossibleBuildMoves(boardState, PieceColour.Black);
+            var blackBuildZone =
+                _homeBaseBuildGenerator.GetPossibleBuildMoves(boardState, PieceColour.Black, new PlayerState(100));
             var expectedPieces =
                 new HashSet<PieceType>
                 {
@@ -85,7 +87,8 @@ namespace Tests.UnitTests.PossibleMoves.BuildMoves
             var board = _boardGenerator.GenerateBoard();
             var boardState = new BoardState(board);
 
-            var blackBuildZone = _homeBaseBuildGenerator.GetPossibleBuildMoves(boardState, PieceColour.White);
+            var blackBuildZone =
+                _homeBaseBuildGenerator.GetPossibleBuildMoves(boardState, PieceColour.White, new PlayerState(100));
             var expectedPieces = new HashSet<PieceType>
             {
                 PieceType.WhiteBishop, PieceType.WhiteKnight, PieceType.WhitePawn, PieceType.WhiteQueen,

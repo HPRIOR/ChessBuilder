@@ -3,13 +3,14 @@ using System.Linq;
 using Models.Services.Build.Interfaces;
 using Models.State.Board;
 using Models.State.PieceState;
+using Models.State.PlayerState;
 
 namespace Models.Services.Build.BuildMoves
 {
     internal class HomeBaseBuildMoveGenerator : IBuildMoveGenerator
     {
-        public IDictionary<Position, HashSet<PieceType>>
-            GetPossibleBuildMoves(BoardState boardState, PieceColour turn) =>
+        public IDictionary<Position, HashSet<PieceType>> GetPossibleBuildMoves(BoardState boardState, PieceColour turn,
+            PlayerState playerState) =>
             turn == PieceColour.White ? WhiteBuildMoveGenerator(boardState) : BlackBuildMoveGenerator(boardState);
 
 

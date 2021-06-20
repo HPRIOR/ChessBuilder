@@ -49,7 +49,10 @@ namespace Game.Implementations
                 _buildPointsCalculator.CalculateBuildPoints(PieceColour.White, CurrentBoardState, maxBuildPoints);
 
             PossiblePieceMoves = _allPossibleMovesGenerator.GetPossibleMoves(CurrentBoardState, Turn);
-            PossibleBuildMoves = _buildMoveGenerator.GetPossibleBuildMoves(CurrentBoardState, Turn);
+
+            var relevantPlayerState = Turn == PieceColour.Black ? BlackState : WhiteState;
+            PossibleBuildMoves =
+                _buildMoveGenerator.GetPossibleBuildMoves(CurrentBoardState, Turn, relevantPlayerState);
 
             Turn = ChangeTurn();
             GameStateChangeEvent?.Invoke(previousState, CurrentBoardState);

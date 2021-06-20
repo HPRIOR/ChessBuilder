@@ -106,5 +106,18 @@ namespace Tests.UnitTests.PossibleMoves.BuildMoves
                                  BuildPoints.PieceCost[pawn];
             Assert.That(playerState, Is.EqualTo(new PlayerState(expectedPoints)));
         }
+
+        [Test]
+        public void KingPieceDoesNotCount()
+        {
+            var board = _boardGenerator.GenerateBoard();
+            board[2, 2].CurrentPiece = new Piece(PieceType.BlackKing);
+            var boardState = new BoardState(board);
+
+            const int maxPoints = 10;
+            var playerState = _buildPointsCalculator.CalculateBuildPoints(PieceColour.Black, boardState, maxPoints);
+
+            Assert.That(playerState, Is.EqualTo(new PlayerState(maxPoints)));
+        }
     }
 }

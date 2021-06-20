@@ -6,6 +6,6 @@ namespace Models.Services.Build.Interfaces
 {
     public interface IBuildMoveGenerator
     {
-        IEnumerable<Position> GetPossibleBuildMoves(BoardState boardState, PieceColour turn);
+        IDictionary<Position, HashSet<PieceType>> GetPossibleBuildMoves(BoardState boardState, PieceColour turn);
     }
 }

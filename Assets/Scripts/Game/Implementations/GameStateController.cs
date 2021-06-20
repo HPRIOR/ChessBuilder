@@ -43,6 +43,9 @@ namespace Game.Implementations
             GameStateChangeEvent?.Invoke(previousState, CurrentBoardState);
         }
 
+        /// <summary>
+        ///     Tells UI to update with previous board state
+        /// </summary>
         public void RetainBoardState()
         {
             GameStateChangeEvent?.Invoke(CurrentBoardState, CurrentBoardState);

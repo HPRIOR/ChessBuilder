@@ -11,11 +11,11 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves.Utils
         {
             BoardGeneratorInstaller.Install(Container);
             PieceSpawnerInstaller.Install(Container);
-            MoveGeneratorRepositoryInstaller.Install(Container);
+            MovesGeneratorRepositoryInstaller.Install(Container);
             TileEvaluatorInstaller.Install(Container);
             BoardScannerInstaller.Install(Container);
             PositionTranslatorInstaller.Install(Container);
-            AllPossibleMovesGeneratorInstaller.Install(Container);
+            MovesGeneratorInstaller.Install(Container);
             PossibleMovesFactoryInstaller.Install(Container);
             BoardInfoInstaller.Install(Container);
             KingMoveFilterInstaller.Install(Container);

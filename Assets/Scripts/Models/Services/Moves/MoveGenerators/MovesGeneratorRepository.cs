@@ -6,13 +6,13 @@ using Models.State.PieceState;
 
 namespace Models.Services.Moves.MoveGenerators
 {
-    public class MoveGeneratorRepository : IMoveGeneratorRepository
+    public class MovesGeneratorRepository : IMovesGeneratorRepository
     {
         private readonly MovesFactory _movesFactory;
         private readonly Dictionary<PieceType, IPieceMoveGenerator> _nonMovePieceGenerator;
         private readonly Dictionary<PieceType, IPieceMoveGenerator> _pieceMoveGenerators;
 
-        public MoveGeneratorRepository(
+        public MovesGeneratorRepository(
             MovesFactory movesFactory
         )
         {

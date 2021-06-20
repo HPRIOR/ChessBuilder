@@ -13,18 +13,18 @@ namespace Game.Implementations
     public class GameStateController : IGameState, ITurnEventInvoker
     {
         private const int maxBuildPoints = 39;
-        private readonly IAllPossibleMovesGenerator _allPossibleMovesGenerator;
         private readonly IBuildMoveGenerator _buildMoveGenerator;
         private readonly IBuildPointsCalculator _buildPointsCalculator;
+        private readonly IMovesGenerator _movesGenerator;
 
         // TODO Don't hard code max build points 
         public GameStateController(
-            IAllPossibleMovesGenerator allPossibleMovesGenerator,
+            IMovesGenerator movesGenerator,
             IBuildMoveGenerator buildMoveGenerator,
             IBuildPointsCalculator buildPointsCalculator
         )
         {
-            _allPossibleMovesGenerator = allPossibleMovesGenerator;
+            _movesGenerator = movesGenerator;
             _buildMoveGenerator = buildMoveGenerator;
             _buildPointsCalculator = buildPointsCalculator;
             BlackState = new PlayerState(maxBuildPoints);
@@ -50,7 +50,7 @@ namespace Game.Implementations
             WhiteState =
                 _buildPointsCalculator.CalculateBuildPoints(PieceColour.White, CurrentBoardState, maxBuildPoints);
 
-            PossiblePieceMoves = _allPossibleMovesGenerator.GetPossibleMoves(CurrentBoardState, Turn);
+            PossiblePieceMoves = _movesGenerator.GetPossibleMoves(CurrentBoardState, Turn);
 
             var relevantPlayerState = Turn == PieceColour.Black ? BlackState : WhiteState;
             PossibleBuildMoves =

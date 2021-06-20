@@ -6,12 +6,12 @@ using Models.State.PieceState;
 
 namespace Models.Services.Moves.MoveGenerators
 {
-    public class PossibleTurnMovesGenerator : IAllPossibleMovesGenerator
+    public class MovesGenerator : IMovesGenerator
     {
         private readonly IBoardInfo _boardInfo;
         private readonly PinnedPieceFilter _pinnedPieceFilter;
 
-        public PossibleTurnMovesGenerator(IBoardInfo boardInfo, PinnedPieceFilter pinnedPieceFilter)
+        public MovesGenerator(IBoardInfo boardInfo, PinnedPieceFilter pinnedPieceFilter)
         {
             _boardInfo = boardInfo;
             _pinnedPieceFilter = pinnedPieceFilter;

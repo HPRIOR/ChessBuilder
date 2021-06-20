@@ -43,15 +43,68 @@ namespace Tests.UnitTests.PossibleMoves.BuildMoves
         }
 
         [Test]
-        public void PointsAreSubtracted_ByBuildingPieces()
+        public void PointsAreSubtracted_ByBuildingPiece()
         {
             var board = _boardGenerator.GenerateBoard();
             board[1, 1].BuildState = new BuildState(PieceType.BlackQueen);
             var boardState = new BoardState(board);
 
-            var playerState = _buildPointsCalculator.CalculateBuildPoints(PieceColour.Black, boardState, 10);
+            const int maxPoints = 10;
+            var playerState = _buildPointsCalculator.CalculateBuildPoints(PieceColour.Black, boardState, maxPoints);
 
-            Assert.That(playerState, Is.EqualTo(new PlayerState(1)));
+            var expectedPoints = maxPoints - BuildPoints.PieceCost[PieceType.BlackQueen];
+            Assert.That(playerState, Is.EqualTo(new PlayerState(expectedPoints)));
+        }
+
+
+        [Test]
+        public void PointsAreSubtracted_ByBuildPiece()
+        {
+            var board = _boardGenerator.GenerateBoard();
+            board[1, 1].CurrentPiece = new Piece(PieceType.BlackQueen);
+            var boardState = new BoardState(board);
+
+            const int maxPoints = 10;
+            var playerState = _buildPointsCalculator.CalculateBuildPoints(PieceColour.Black, boardState, maxPoints);
+
+            var expectedPoints = maxPoints - BuildPoints.PieceCost[PieceType.BlackQueen];
+            Assert.That(playerState, Is.EqualTo(new PlayerState(expectedPoints)));
+        }
+
+
+        [Test]
+        public void PointsAreSubtracted_ByBuiltPiece_AndBuildingPiece()
+        {
+            var board = _boardGenerator.GenerateBoard();
+            board[1, 1].BuildState = new BuildState(PieceType.BlackQueen);
+            board[2, 2].CurrentPiece = new Piece(PieceType.BlackPawn);
+            var boardState = new BoardState(board);
+
+            const int maxPoints = 10;
+            var playerState = _buildPointsCalculator.CalculateBuildPoints(PieceColour.Black, boardState, maxPoints);
+
+            var expectedPoints = maxPoints - BuildPoints.PieceCost[PieceType.BlackQueen] -
+                                 BuildPoints.PieceCost[PieceType.BlackPawn];
+            Assert.That(playerState, Is.EqualTo(new PlayerState(expectedPoints)));
+        }
+
+        [Test]
+        public void PointsAreSubtracted_ByBuiltPiece_AndBuildingPiece_ForBothColours([Values] PieceColour pieceColour)
+        {
+            var pawn = pieceColour == PieceColour.Black ? PieceType.BlackPawn : PieceType.WhitePawn;
+            var queen = pieceColour == PieceColour.Black ? PieceType.BlackQueen : PieceType.WhiteQueen;
+
+            var board = _boardGenerator.GenerateBoard();
+            board[1, 1].BuildState = new BuildState(queen);
+            board[2, 2].CurrentPiece = new Piece(pawn);
+            var boardState = new BoardState(board);
+
+            const int maxPoints = 10;
+            var playerState = _buildPointsCalculator.CalculateBuildPoints(pieceColour, boardState, maxPoints);
+
+            var expectedPoints = maxPoints - BuildPoints.PieceCost[queen] -
+                                 BuildPoints.PieceCost[pawn];
+            Assert.That(playerState, Is.EqualTo(new PlayerState(expectedPoints)));
         }
     }
 }

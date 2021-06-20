@@ -448,5 +448,24 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
                 Is.EquivalentTo(new List<Position>
                     {new Position(7, 0), new Position(5, 2), new Position(6, 1)}));
         }
+
+        [Test]
+        public void QueenPinnedByEnemyQueen()
+        {
+            var board = _boardGenerator.GenerateBoard();
+            board[4, 1].CurrentPiece = new Piece(PieceType.WhiteKing);
+            board[3, 2].CurrentPiece = new Piece(PieceType.WhiteQueen);
+            board[1, 4].CurrentPiece = new Piece(PieceType.BlackQueen);
+
+            var boardState = new BoardState(board);
+
+            var possibleMoves =
+                _movesGenerator.GetPossibleMoves(boardState, PieceColour.White);
+
+            var possibleQueenMoves = possibleMoves[new Position(3, 2)];
+            Assert.That(possibleQueenMoves,
+                Is.EquivalentTo(new List<Position>
+                    {new Position(2, 3), new Position(1, 4)}));
+        }
     }
 }

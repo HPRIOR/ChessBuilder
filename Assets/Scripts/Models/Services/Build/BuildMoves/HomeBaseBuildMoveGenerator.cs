@@ -9,6 +9,18 @@ namespace Models.Services.Build.BuildMoves
 {
     internal class HomeBaseBuildMoveGenerator : IBuildMoveGenerator
     {
+        private static readonly HashSet<PieceType> _blackPieces = new HashSet<PieceType>
+        {
+            PieceType.BlackBishop, PieceType.BlackKnight, PieceType.BlackPawn, PieceType.BlackQueen,
+            PieceType.BlackRook
+        };
+
+        private static readonly HashSet<PieceType> _whitePieces = new HashSet<PieceType>
+        {
+            PieceType.WhiteBishop, PieceType.WhiteKnight, PieceType.WhitePawn, PieceType.WhiteQueen,
+            PieceType.WhiteRook
+        };
+
         public IDictionary<Position, HashSet<PieceType>> GetPossibleBuildMoves(BoardState boardState, PieceColour turn,
             PlayerState playerState) =>
             turn == PieceColour.White ? WhiteBuildMoveGenerator(boardState) : BlackBuildMoveGenerator(boardState);
@@ -20,11 +32,7 @@ namespace Models.Services.Build.BuildMoves
             where tile.Position.Y == 7 || tile.Position.Y == 6
             select tile.Position
         ).ToDictionary(x => x,
-            x => new HashSet<PieceType>
-            {
-                PieceType.BlackBishop, PieceType.BlackKnight, PieceType.BlackPawn, PieceType.BlackQueen,
-                PieceType.BlackRook
-            });
+            x => _blackPieces);
 
 
         private IDictionary<Position, HashSet<PieceType>> WhiteBuildMoveGenerator(BoardState boardState) =>
@@ -33,10 +41,6 @@ namespace Models.Services.Build.BuildMoves
             where tile.Position.Y == 0 || tile.Position.Y == 1
             select tile.Position
         ).ToDictionary(x => x,
-            x => new HashSet<PieceType>
-            {
-                PieceType.WhiteBishop, PieceType.WhiteKnight, PieceType.WhitePawn, PieceType.WhiteQueen,
-                PieceType.WhiteRook
-            });
+            x => _whitePieces);
     }
 }

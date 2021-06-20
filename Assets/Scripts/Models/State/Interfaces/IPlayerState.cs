@@ -2,6 +2,6 @@
 {
     public interface IPlayerState
     {
-        int BuildPoints { get; set; }
+        int BuildPoints { get; }
     }
 }

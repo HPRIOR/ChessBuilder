@@ -2,8 +2,13 @@
 
 namespace Models.State.PlayerState
 {
-    public class PlayerState : IPlayerState
+    public readonly struct PlayerState : IPlayerState
     {
-        public int BuildPoints { get; set; }
+        public PlayerState(int buildPoints)
+        {
+            BuildPoints = buildPoints;
+        }
+
+        public int BuildPoints { get; }
     }
 }

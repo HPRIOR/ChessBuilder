@@ -48,28 +48,34 @@ namespace Tests.UnitTests.PossibleMoves.BuildMoves
             var boardState = new BoardState(board);
 
             var blackBuildZone = _homeBaseBuildGenerator.GetPossibleBuildMoves(boardState, PieceColour.Black);
+            var expectedPieces =
+                new HashSet<PieceType>
+                {
+                    PieceType.BlackBishop, PieceType.BlackKnight, PieceType.BlackPawn, PieceType.BlackQueen,
+                    PieceType.BlackRook
+                };
 
-            var expectedPositions = new List<Position>
+            var expectedResult = new Dictionary<Position, HashSet<PieceType>>
             {
-                new Position(7, 7),
-                new Position(6, 7),
-                new Position(5, 7),
-                new Position(4, 7),
-                new Position(3, 7),
-                new Position(2, 7),
-                new Position(1, 7),
-                new Position(0, 7),
-                new Position(7, 6), // second row
-                new Position(6, 6),
-                new Position(5, 6),
-                new Position(4, 6),
-                new Position(3, 6),
-                new Position(2, 6),
-                new Position(1, 6),
-                new Position(0, 6)
+                {new Position(7, 7), expectedPieces},
+                {new Position(6, 7), expectedPieces},
+                {new Position(5, 7), expectedPieces},
+                {new Position(4, 7), expectedPieces},
+                {new Position(3, 7), expectedPieces},
+                {new Position(2, 7), expectedPieces},
+                {new Position(1, 7), expectedPieces},
+                {new Position(0, 7), expectedPieces},
+                {new Position(7, 6), expectedPieces},
+                {new Position(6, 6), expectedPieces},
+                {new Position(5, 6), expectedPieces},
+                {new Position(4, 6), expectedPieces},
+                {new Position(3, 6), expectedPieces},
+                {new Position(2, 6), expectedPieces},
+                {new Position(1, 6), expectedPieces},
+                {new Position(0, 6), expectedPieces}
             };
 
-            Assert.That(blackBuildZone, Is.EquivalentTo(expectedPositions));
+            Assert.That(blackBuildZone, Is.EquivalentTo(expectedResult));
         }
 
 
@@ -80,28 +86,33 @@ namespace Tests.UnitTests.PossibleMoves.BuildMoves
             var boardState = new BoardState(board);
 
             var blackBuildZone = _homeBaseBuildGenerator.GetPossibleBuildMoves(boardState, PieceColour.White);
-
-            var expectedPositions = new List<Position>
+            var expectedPieces = new HashSet<PieceType>
             {
-                new Position(7, 0),
-                new Position(6, 0),
-                new Position(5, 0),
-                new Position(4, 0),
-                new Position(3, 0),
-                new Position(2, 0),
-                new Position(1, 0),
-                new Position(0, 0),
-                new Position(7, 1), // second row
-                new Position(6, 1),
-                new Position(5, 1),
-                new Position(4, 1),
-                new Position(3, 1),
-                new Position(2, 1),
-                new Position(1, 1),
-                new Position(0, 1)
+                PieceType.WhiteBishop, PieceType.WhiteKnight, PieceType.WhitePawn, PieceType.WhiteQueen,
+                PieceType.WhiteRook
             };
 
-            Assert.That(blackBuildZone, Is.EquivalentTo(expectedPositions));
+            var expectedResult = new Dictionary<Position, HashSet<PieceType>>
+            {
+                {new Position(7, 1), expectedPieces},
+                {new Position(6, 1), expectedPieces},
+                {new Position(5, 1), expectedPieces},
+                {new Position(4, 1), expectedPieces},
+                {new Position(3, 1), expectedPieces},
+                {new Position(2, 1), expectedPieces},
+                {new Position(1, 1), expectedPieces},
+                {new Position(0, 1), expectedPieces},
+                {new Position(7, 0), expectedPieces},
+                {new Position(6, 0), expectedPieces},
+                {new Position(5, 0), expectedPieces},
+                {new Position(4, 0), expectedPieces},
+                {new Position(3, 0), expectedPieces},
+                {new Position(2, 0), expectedPieces},
+                {new Position(1, 0), expectedPieces},
+                {new Position(0, 0), expectedPieces}
+            };
+
+            Assert.That(blackBuildZone, Is.EquivalentTo(expectedResult));
         }
     }
 }

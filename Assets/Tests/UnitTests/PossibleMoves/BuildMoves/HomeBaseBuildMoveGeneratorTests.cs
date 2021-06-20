@@ -117,5 +117,42 @@ namespace Tests.UnitTests.PossibleMoves.BuildMoves
 
             Assert.That(blackBuildZone, Is.EquivalentTo(expectedResult));
         }
+
+
+        [Test]
+        public void WithLimitedPoints_PieceCannotBeBuilt()
+        {
+            var board = _boardGenerator.GenerateBoard();
+            var boardState = new BoardState(board);
+
+            var blackBuildZone =
+                _homeBaseBuildGenerator.GetPossibleBuildMoves(boardState, PieceColour.White, new PlayerState(8));
+            var expectedPieces = new HashSet<PieceType>
+            {
+                PieceType.WhiteBishop, PieceType.WhiteKnight, PieceType.WhitePawn, PieceType.WhiteRook
+            };
+
+            var expectedResult = new Dictionary<Position, HashSet<PieceType>>
+            {
+                {new Position(7, 1), expectedPieces},
+                {new Position(6, 1), expectedPieces},
+                {new Position(5, 1), expectedPieces},
+                {new Position(4, 1), expectedPieces},
+                {new Position(3, 1), expectedPieces},
+                {new Position(2, 1), expectedPieces},
+                {new Position(1, 1), expectedPieces},
+                {new Position(0, 1), expectedPieces},
+                {new Position(7, 0), expectedPieces},
+                {new Position(6, 0), expectedPieces},
+                {new Position(5, 0), expectedPieces},
+                {new Position(4, 0), expectedPieces},
+                {new Position(3, 0), expectedPieces},
+                {new Position(2, 0), expectedPieces},
+                {new Position(1, 0), expectedPieces},
+                {new Position(0, 0), expectedPieces}
+            };
+
+            Assert.That(blackBuildZone, Is.EquivalentTo(expectedResult));
+        }
     }
 }

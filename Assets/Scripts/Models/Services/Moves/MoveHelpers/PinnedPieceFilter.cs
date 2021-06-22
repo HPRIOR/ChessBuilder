@@ -11,33 +11,38 @@ namespace Models.Services.Moves.MoveHelpers
     {
         private readonly HashSet<PieceType> _scanningPieces = new HashSet<PieceType>
         {
-            PieceType.BlackBishop, PieceType.BlackQueen, PieceType.BlackRook, PieceType.WhiteBishop,
-            PieceType.WhiteQueen, PieceType.WhiteRook
+            PieceType.BlackBishop,
+            PieceType.BlackQueen,
+            PieceType.BlackRook,
+            PieceType.WhiteBishop,
+            PieceType.WhiteQueen,
+            PieceType.WhiteRook
         };
 
 
         public void FilterMoves(IBoardInfo boardInfo, BoardState boardState)
         {
             var turnMoves = boardInfo.TurnMoves;
-            var nonTurnScanningMoves = GetScanningPieces(boardInfo.NonTurnMoves, boardState);
+            var enemyScanningMoves = GetScanningPiecesMoves(boardInfo.NonTurnMoves, boardState);
             var kingPosition = boardInfo.KingPosition;
             var turnPiecePosition = new HashSet<Position>(turnMoves.Keys);
             turnPiecePosition.Remove(kingPosition);
-            foreach (var nonTurnMoves in nonTurnScanningMoves)
+            foreach (var nonTurnMoves in enemyScanningMoves)
             {
-                var turnPiecePositionIntersect =
+                var turnPiecesPositionWhichCanBeTaken =
                     nonTurnMoves.Value.Intersect(turnPiecePosition).ToList(); // One or none
-                var nonTurnMovesContainTurnPiece = turnPiecePositionIntersect.Any();
-
-                if (
-                    nonTurnMovesContainTurnPiece &&
-                    // DirectionOfPinPointsToKing(kingPosition, turnPiecePositionIntersect.First(), moves.Key) &&
-                    TheNextPieceIsKing(nonTurnMoves.Key, turnPiecePositionIntersect.First(), kingPosition, boardState)
-                )
-                    turnMoves[turnPiecePositionIntersect.First()].IntersectWith(PossibleEscapeMoves(nonTurnMoves));
+                if (!turnPiecesPositionWhichCanBeTaken.Any()) return;
+                foreach (var turnPiece in turnPiecesPositionWhichCanBeTaken)
+                    if (DirectionOfPinPointsToKing(kingPosition, turnPiece, nonTurnMoves.Key))
+                    {
+                        if (TheNextPieceIsKing(nonTurnMoves.Key, turnPiece, kingPosition, boardState))
+                            turnMoves[turnPiece].IntersectWith(PossibleEscapeMoves(nonTurnMoves));
+                        return;
+                    }
             }
         }
 
+        // this will include all the moves of the enemy piece, it should just be those in between the enemy and the king 
         private static HashSet<Position> PossibleEscapeMoves(
             KeyValuePair<Position, HashSet<Position>> moves)
         {
@@ -90,7 +95,7 @@ namespace Models.Services.Moves.MoveHelpers
             return _scanningPieces.Contains(pieceAtBoardPosition);
         }
 
-        private IDictionary<Position, HashSet<Position>> GetScanningPieces(
+        private IDictionary<Position, HashSet<Position>> GetScanningPiecesMoves(
             IDictionary<Position, HashSet<Position>> moves, BoardState boardState) =>
             moves
                 .Where(keyVal => PieceIsScanner(keyVal, boardState))

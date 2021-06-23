@@ -467,5 +467,26 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
                 Is.EquivalentTo(new List<Position>
                     {new Position(2, 3), new Position(1, 4)}));
         }
+
+
+        [Test]
+        public void WithPieceBehindKingOfPinnedPiece_PieceIsPinned()
+        {
+            var board = _boardGenerator.GenerateBoard();
+            board[2, 7].CurrentPiece = new Piece(PieceType.BlackPawn);
+            board[3, 6].CurrentPiece = new Piece(PieceType.BlackKing);
+            board[4, 5].CurrentPiece = new Piece(PieceType.BlackBishop);
+            board[6, 3].CurrentPiece = new Piece(PieceType.WhiteQueen);
+
+            var boardState = new BoardState(board);
+
+            var possibleMoves =
+                _movesGenerator.GetPossibleMoves(boardState, PieceColour.Black);
+
+            var possibleBishopMoves = possibleMoves[new Position(4, 5)];
+            Assert.That(possibleBishopMoves,
+                Is.EquivalentTo(new List<Position>
+                    {new Position(5, 4), new Position(6, 3)}));
+        }
     }
 }

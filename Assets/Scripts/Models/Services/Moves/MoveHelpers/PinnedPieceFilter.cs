@@ -27,31 +27,29 @@ namespace Models.Services.Moves.MoveHelpers
             var kingPosition = boardInfo.KingPosition;
             var turnPiecePosition = new HashSet<Position>(turnMoves.Keys);
             turnPiecePosition.Remove(kingPosition);
-            foreach (var nonTurnMoves in enemyScanningMoves)
+            foreach (var enemyMoves in enemyScanningMoves)
             {
                 var turnPiecesPositionWhichCanBeTaken =
-                    nonTurnMoves.Value.Intersect(turnPiecePosition).ToList(); // One or none
-                if (!turnPiecesPositionWhichCanBeTaken.Any()) return;
+                    enemyMoves.Value.Intersect(turnPiecePosition).ToList();
+                if (!turnPiecesPositionWhichCanBeTaken.Any()) continue;
                 foreach (var turnPiece in turnPiecesPositionWhichCanBeTaken)
-                    if (DirectionOfPinPointsToKing(kingPosition, turnPiece, nonTurnMoves.Key))
+                    if (DirectionOfPinPointsToKing(kingPosition, turnPiece, enemyMoves.Key))
                     {
-                        if (TheNextPieceIsKing(nonTurnMoves.Key, turnPiece, kingPosition, boardState))
-                            turnMoves[turnPiece].IntersectWith(PossibleEscapeMoves(nonTurnMoves));
+                        if (TheNextPieceIsKing(enemyMoves.Key, turnPiece, kingPosition, boardState))
+                            turnMoves[turnPiece]
+                                .IntersectWith(PossibleEscapeMoves(kingPosition, turnPiece, enemyMoves.Key));
                         return;
                     }
             }
         }
 
-        // this will include all the moves of the enemy piece, it should just be those in between the enemy and the king 
         private static HashSet<Position> PossibleEscapeMoves(
-            KeyValuePair<Position, HashSet<Position>> moves)
+            Position kingPosition, Position pinnedPiecePosition, Position pinningPiecePosition)
         {
-            var pinningMoves = new HashSet<Position>
-            {
-                moves.Key
-            };
-            pinningMoves.UnionWith(moves.Value);
-            return pinningMoves;
+            var positionsBetweenPinAndKing = new HashSet<Position>(kingPosition.ScanTo(pinningPiecePosition));
+            positionsBetweenPinAndKing.Remove(pinnedPiecePosition);
+
+            return positionsBetweenPinAndKing;
         }
 
         private static bool DirectionOfPinPointsToKing(Position kingPosition, Position pinnedPosition,
@@ -71,17 +69,20 @@ namespace Models.Services.Moves.MoveHelpers
         }
 
 
-        private static bool TheNextPieceIsKing(Position scanningPiecePosition, Position turnPiecePosition,
+        /*
+         * The order of scanned board positions is wrong, so the logic is incorrect 
+         */
+        private static bool TheNextPieceIsKing(Position enemyPosition, Position turnPiecePosition,
             Position kingPosition, BoardState boardState)
         {
             var scannedBoardPositions =
-                scanningPiecePosition.Scan(scanningPiecePosition.DirectionTo(turnPiecePosition));
-            foreach (var scannedBoardPosition in scannedBoardPositions)
+                turnPiecePosition.Scan(enemyPosition.DirectionTo(kingPosition));
+            foreach (var position in scannedBoardPositions)
             {
-                if (scannedBoardPosition.Equals(kingPosition)) return true;
+                if (position.Equals(kingPosition)) return true;
 
                 if (ContainsNonKingPiece(boardState, kingPosition,
-                    scannedBoardPosition)) // escape early if piece obstructs possible king 
+                    position)) // escape early if piece obstructs possible king 
                     return false;
             }
 

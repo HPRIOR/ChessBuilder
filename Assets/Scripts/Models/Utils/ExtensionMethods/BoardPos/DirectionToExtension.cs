@@ -1,5 +1,4 @@
-﻿using System;
-using Models.Services.Moves.MoveHelpers;
+﻿using Models.Services.Moves.MoveHelpers;
 using Models.State.Board;
 
 namespace Models.Utils.ExtensionMethods.BoardPos
@@ -16,7 +15,7 @@ namespace Models.Utils.ExtensionMethods.BoardPos
             if (target.X < origin.X && target.Y > origin.Y) return Direction.NW;
             if (target.X > origin.X && target.Y < origin.Y) return Direction.SE;
             if (target.X < origin.X && target.Y < origin.Y) return Direction.SW;
-            throw new Exception("No direction found");
+            throw new DirectionException("No direction found");
         }
     }
 }

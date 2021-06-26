@@ -1,8 +1,8 @@
 ﻿using Models.Services.Interfaces;
 using Models.State.Board;
 using Models.State.PieceState;
-using UnityEngine;
 using View.Interfaces;
+using View.Utils;
 
 namespace View.Renderers
 {
@@ -17,7 +17,7 @@ namespace View.Renderers
 
         public void Render(BoardState previousState, BoardState newState)
         {
-            DestroyExistingPieces();
+            GameObjectDestroyer.DestroyChildrenOfObjectWith("Pieces");
             var board = newState.Board;
             foreach (var tile in board)
             {
@@ -25,15 +25,6 @@ namespace View.Renderers
                 if (currentPiece.Type != PieceType.NullPiece)
                     _pieceFactory.CreatePiece(currentPiece.Type, tile.Position);
             }
-        }
-
-
-        private static void DestroyExistingPieces()
-        {
-            var piecesGameObject = GameObject.FindGameObjectWithTag("Pieces");
-            if (piecesGameObject.transform.childCount > 0)
-                foreach (Transform child in piecesGameObject.transform)
-                    Object.Destroy(child.gameObject);
         }
     }
 }

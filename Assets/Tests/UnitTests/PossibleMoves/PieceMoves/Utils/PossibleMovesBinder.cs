@@ -10,7 +10,7 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves.Utils
         public static void InstallBindings(DiContainer Container)
         {
             BoardGeneratorInstaller.Install(Container);
-            PieceSpawnerInstaller.Install(Container);
+            PieceFactoryInstaller.Install(Container);
             MovesGeneratorRepositoryInstaller.Install(Container);
             TileEvaluatorInstaller.Install(Container);
             BoardScannerInstaller.Install(Container);

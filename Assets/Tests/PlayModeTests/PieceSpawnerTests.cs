@@ -13,19 +13,19 @@ namespace Tests.PlayModeTests
 {
     public class PieceSpawnerTests : ZenjectIntegrationTestFixture
     {
-        private IPieceSpawner _pieceSpawner;
+        private IPieceFactory _pieceFactory;
 
         [Inject]
-        public void Construct(IPieceSpawner pieceSpawner)
+        public void Construct(IPieceFactory pieceFactory)
         {
-            _pieceSpawner = pieceSpawner;
+            _pieceFactory = pieceFactory;
         }
 
         private void CommonInstall()
         {
             PreInstall();
 
-            PieceSpawnerInstaller.Install(Container);
+            PieceFactoryInstaller.Install(Container);
             BoardGeneratorInstaller.Install(Container);
 
             PostInstall();
@@ -39,7 +39,7 @@ namespace Tests.PlayModeTests
         )
         {
             CommonInstall();
-            var piece = _pieceSpawner.CreatePiece(pieceType, new Position(x, y));
+            var piece = _pieceFactory.CreatePiece(pieceType, new Position(x, y));
             yield return null;
             Assert.AreEqual(new Position(x, y), piece.Position);
         }
@@ -50,7 +50,7 @@ namespace Tests.PlayModeTests
         )
         {
             CommonInstall();
-            var piece = _pieceSpawner.CreatePiece(pieceType, new Position(0, 0));
+            var piece = _pieceFactory.CreatePiece(pieceType, new Position(0, 0));
             yield return null;
             Assert.AreEqual(pieceType, piece.Info.PieceType);
         }
@@ -61,7 +61,7 @@ namespace Tests.PlayModeTests
         )
         {
             CommonInstall();
-            var piece = _pieceSpawner.CreatePiece(PieceType.WhitePawn, new Position(x, y));
+            var piece = _pieceFactory.CreatePiece(PieceType.WhitePawn, new Position(x, y));
             yield return null;
             Assert.AreEqual(new Vector2(x + 0.5f, y + 0.5f), piece.Position.Vector);
         }

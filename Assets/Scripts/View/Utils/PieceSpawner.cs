@@ -1,23 +1,39 @@
-﻿using Models.Services.Interfaces;
-using Models.State.Board;
-using Models.State.PieceState;
-using View.Renderers;
+﻿using Models.State.Board;
+using Models.State.Interfaces;
+using UnityEditor;
+using UnityEngine;
+using Zenject;
 
 namespace View.Utils
 {
-    public class PieceSpawner : IPieceSpawner
+    public class PieceSpawner : MonoBehaviour
     {
-        private readonly PieceMono.Factory _pieceFactory;
+        private SpriteRenderer _spriteRenderer;
+        public Position Position { get; private set; }
+        public IPieceInfo Info { get; private set; }
 
-        public PieceSpawner(PieceMono.Factory pieceFactory)
+        private void Start()
         {
-            _pieceFactory = pieceFactory;
+            _spriteRenderer = GetComponent<SpriteRenderer>();
+            if (Info.SpriteAssetPath != "")
+                _spriteRenderer.sprite = AssetDatabase.LoadAssetAtPath<Sprite>(Info.SpriteAssetPath);
+
+            // set parent object and piece position
+            gameObject.transform.parent = GameObject.FindGameObjectWithTag("Pieces")?.transform;
+            gameObject.transform.position = Position.Vector;
         }
 
-        public PieceMono CreatePiece(PieceType pieceType, Position position)
+        [Inject]
+        public void Construct(IPieceInfo pieceInfo, Position position)
         {
-            var piece = _pieceFactory.Create(new PieceInfo(pieceType), position);
-            return piece;
+            Info = pieceInfo;
+            Position = position;
+        }
+
+        public override string ToString() => $"{Info}\n{Position}\n";
+
+        public class Factory : PlaceholderFactory<IPieceInfo, Position, PieceSpawner>
+        {
         }
     }
 }

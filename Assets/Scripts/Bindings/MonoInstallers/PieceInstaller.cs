@@ -9,7 +9,7 @@ namespace Bindings.MonoInstallers
     {
         public override void InstallBindings()
         {
-            PieceSpawnerInstaller.Install(Container);
+            PieceFactoryInstaller.Install(Container);
             PieceMoverInstaller.Install(Container);
             MovesGeneratorRepositoryInstaller.Install(Container);
             MovesGeneratorInstaller.Install(Container);

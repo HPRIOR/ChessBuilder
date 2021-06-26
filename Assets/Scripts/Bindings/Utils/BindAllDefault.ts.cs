@@ -22,7 +22,7 @@ namespace Bindings.Utils
             BoardScannerInstaller.Install(container);
             MoveValidatorInstaller.Install(container);
             PieceMoverInstaller.Install(container);
-            PieceSpawnerInstaller.Install(container);
+            PieceFactoryInstaller.Install(container);
             MovesGeneratorInstaller.Install(container);
             MovesGeneratorRepositoryInstaller.Install(container);
             BoardInfoInstaller.Install(container);

@@ -8,11 +8,11 @@ namespace View.Renderers
 {
     public class PieceRenderer : IPieceRenderer
     {
-        private readonly IPieceSpawner _pieceSpawner;
+        private readonly IPieceFactory _pieceFactory;
 
-        public PieceRenderer(IPieceSpawner pieceSpawner)
+        public PieceRenderer(IPieceFactory pieceFactory)
         {
-            _pieceSpawner = pieceSpawner;
+            _pieceFactory = pieceFactory;
         }
 
         public void RenderPieces(BoardState previousState, BoardState newState)
@@ -23,7 +23,7 @@ namespace View.Renderers
             {
                 var currentPiece = tile.CurrentPiece;
                 if (currentPiece.Type != PieceType.NullPiece)
-                    _pieceSpawner.CreatePiece(currentPiece.Type, tile.Position);
+                    _pieceFactory.CreatePiece(currentPiece.Type, tile.Position);
             }
         }
 

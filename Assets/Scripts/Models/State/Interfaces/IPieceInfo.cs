@@ -6,6 +6,5 @@ namespace Models.State.Interfaces
     {
         string SpriteAssetPath { get; }
         PieceType PieceType { get; }
-        PieceColour PieceColour { get; }
     }
 }

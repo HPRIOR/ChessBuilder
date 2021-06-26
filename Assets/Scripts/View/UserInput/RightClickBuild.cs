@@ -17,7 +17,8 @@ namespace View.UserInput
         {
             if (eventData.button == PointerEventData.InputButton.Right)
             {
-                var nearestPos = NearestBoardPosFinder.GetNearestBoardPosition(eventData.position);
+                var nearestPos =
+                    NearestBoardPosFinder.GetNearestBoardPosition(eventData.pointerCurrentRaycast.worldPosition);
                 _commandInvoker.AddCommand(
                     _buildCommandFactory.Create(nearestPos, PieceType.BlackPawn)
                 );
@@ -28,7 +29,6 @@ namespace View.UserInput
         public void Construct(ICommandInvoker commandInvoker, BuildCommandFactory buildCommandFactory)
         {
             _commandInvoker = commandInvoker;
-            Debug.Log(_commandInvoker);
             _buildCommandFactory = buildCommandFactory;
         }
     }

@@ -1,4 +1,5 @@
-﻿using Bindings.Installers.MoveInstallers;
+﻿using Bindings.Installers.InputInstallers;
+using Bindings.Installers.MoveInstallers;
 using Bindings.Installers.PieceInstallers;
 using Bindings.Installers.ViewInstallers;
 using Zenject;
@@ -13,13 +14,15 @@ namespace Bindings.MonoInstallers
             PieceMoverInstaller.Install(Container);
             MovesGeneratorRepositoryInstaller.Install(Container);
             MovesGeneratorInstaller.Install(Container);
-
+            BuildCommandInstaller.Install(Container);
+            TileFactoryInstaller.Install(Container);
             BoardRendererInstaller.Install(Container);
             PieceRendererInstaller.Install(Container);
             BuildPointsCalculatorInstaller.Install(Container);
             BuilderInstaller.Install(Container);
             HomeBaseBuildMoveGeneratorInstaller.Install(Container);
             BuildResolverInstaller.Install(Container);
+            BuildValidatorInstaller.Install(Container);
             PossibleMovesFactoryInstaller.Install(Container);
             MoveValidatorInstaller.Install(Container);
             TileEvaluatorInstaller.Install(Container);

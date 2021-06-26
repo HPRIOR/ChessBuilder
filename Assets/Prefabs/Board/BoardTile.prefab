@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 4759692845601505508}
   - component: {fileID: 7113196850505667457}
   - component: {fileID: -7826451681850464560}
-  - component: {fileID: -9140190685033450378}
+  - component: {fileID: 7865477163825704895}
+  - component: {fileID: 2203850040147811810}
   m_Layer: 0
   m_Name: BoardTile
   m_TagString: Untagged
@@ -110,7 +111,19 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &-9140190685033450378
+--- !u!114 &7865477163825704895
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8189993872849755728}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd418ffef81d4ae38a1989955a5e983e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2203850040147811810
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

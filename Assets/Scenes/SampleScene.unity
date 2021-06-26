@@ -571,7 +571,7 @@ GameObject:
   - component: {fileID: 1877363531}
   - component: {fileID: 1877363532}
   m_Layer: 0
-  m_Name: BoardRenderer
+  m_Name: Renderer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

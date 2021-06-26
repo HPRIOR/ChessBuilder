@@ -3,7 +3,7 @@ using Models.State.Board;
 using Models.State.PieceState;
 using View.Renderers;
 
-namespace Models.Services.Piece
+namespace View.Utils
 {
     public class PieceSpawner : IPieceSpawner
     {
@@ -17,7 +17,6 @@ namespace Models.Services.Piece
         public PieceMono CreatePiece(PieceType pieceType, Position position)
         {
             var piece = _pieceFactory.Create(new PieceInfo(pieceType), position);
-            piece.Position = position;
             return piece;
         }
     }

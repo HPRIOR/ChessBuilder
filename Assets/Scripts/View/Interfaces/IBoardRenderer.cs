@@ -1,7 +1,9 @@
-﻿namespace View.Interfaces
+﻿using UnityEngine;
+
+namespace View.Interfaces
 {
     public interface IBoardRenderer
     {
-        void RenderBoard();
+        public void RenderBoard(GameObject tilePrefab);
     }
 }

@@ -1,10 +1,10 @@
 ﻿using Models.Services.Interfaces;
-using Models.Services.Piece;
 using Models.State.Board;
 using Models.State.Interfaces;
 using UnityEditor;
 using UnityEngine;
 using View.Renderers;
+using View.Utils;
 using Zenject;
 
 namespace Bindings.Installers.PieceInstallers

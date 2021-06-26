@@ -1,24 +1,25 @@
 using Controllers.Factories;
 using Controllers.Interfaces;
-using Models.State.Board;
 using UnityEngine;
-using View.Renderers;
+using View.Utils;
 using Zenject;
 
 namespace View.UserInput
 {
+    // TODO: use UnityEngine.EventSystems.Interfaces.IDragHandler etc
+    //  https://docs.unity3d.com/2019.1/Documentation/ScriptReference/EventSystems.IMoveHandler.html
     public class DragAndDrop : MonoBehaviour
     {
-        private static MoveCommandFactory _dragAndDropCommandFactory;
-        private ICommandInvoker _commandInvoker;
+        private static MoveCommandFactory _moveCommandFactory;
+        private static ICommandInvoker _commandInvoker;
         private bool _isDragging;
-        private PieceMono _piece;
+        private PieceSpawner _piece;
         private SpriteRenderer _spriteRenderer;
 
         private void Start()
         {
             _spriteRenderer = GetComponent<SpriteRenderer>();
-            _piece = gameObject.GetComponent<PieceMono>();
+            _piece = gameObject.GetComponent<PieceSpawner>();
         }
 
         private void Update()
@@ -40,10 +41,10 @@ namespace View.UserInput
         {
             _spriteRenderer.sortingOrder = 1;
             var currentMousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            var nearestBoardPosition = GetNearestBoardPosition(currentMousePosition);
+            var nearestBoardPosition = NearestBoardPosFinder.GetNearestBoardPosition(currentMousePosition);
 
             _commandInvoker.AddCommand(
-                _dragAndDropCommandFactory.Create(
+                _moveCommandFactory.Create(
                     _piece.Position,
                     nearestBoardPosition)
             );
@@ -51,21 +52,10 @@ namespace View.UserInput
         }
 
         [Inject]
-        public void Construct(ICommandInvoker commandInvoker, MoveCommandFactory dragAndDropCommandFactory)
+        public void Construct(ICommandInvoker commandInvoker, MoveCommandFactory moveCommandFactory)
         {
             _commandInvoker = commandInvoker;
-            _dragAndDropCommandFactory = dragAndDropCommandFactory;
-        }
-
-        private Position GetNearestBoardPosition(Vector2 position) =>
-            new Position(ConvertAxisToNearestBoardIndex(position.x),
-                ConvertAxisToNearestBoardIndex(position.y));
-
-        private int ConvertAxisToNearestBoardIndex(float axis)
-        {
-            if (axis > 7.5) return 7;
-            if (axis < 0.5) return 0;
-            return (int) axis;
+            _moveCommandFactory = moveCommandFactory;
         }
     }
 }

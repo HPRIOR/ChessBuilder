@@ -161,7 +161,7 @@ namespace Tests.UnitTests.PossibleMoves.BuildMoves
 
 
         [Test]
-        public void WithOnePoint_OnlyPawnCanBeBuild()
+        public void WithOnePoint_OnlyPawnCanBeBuilt()
         {
             var board = _boardGenerator.GenerateBoard();
             var boardState = new BoardState(board);
@@ -179,7 +179,7 @@ namespace Tests.UnitTests.PossibleMoves.BuildMoves
 
 
         [Test]
-        public void WithThreePoints_PawnBishopKnightCanBeBuild()
+        public void WithThreePoints_PawnBishopKnightCanBeBuilt()
         {
             var board = _boardGenerator.GenerateBoard();
             var boardState = new BoardState(board);
@@ -195,7 +195,7 @@ namespace Tests.UnitTests.PossibleMoves.BuildMoves
         }
 
         [Test]
-        public void WithFivePoints_PawnBishopKnightRookCanBeBuild()
+        public void WithFivePoints_PawnBishopKnightRookCanBeBuilt()
         {
             var board = _boardGenerator.GenerateBoard();
             var boardState = new BoardState(board);

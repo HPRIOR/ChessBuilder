@@ -33,7 +33,6 @@ namespace Game.Implementations
         }
 
         public bool Check { get; private set; }
-
         public BoardState CurrentBoardState { get; private set; }
         public PieceColour Turn { get; private set; }
         public PlayerState BlackState { get; private set; }

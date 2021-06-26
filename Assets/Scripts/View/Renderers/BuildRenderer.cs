@@ -1,5 +1,4 @@
 ﻿using Models.State.Board;
-using UnityEngine;
 using View.Interfaces;
 
 namespace View.Renderers
@@ -8,7 +7,6 @@ namespace View.Renderers
     {
         public void Render(BoardState previousState, BoardState newState)
         {
-            Debug.Log("helloWorld");
         }
     }
 }

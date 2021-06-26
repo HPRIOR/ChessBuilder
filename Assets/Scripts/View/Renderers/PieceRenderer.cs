@@ -6,7 +6,7 @@ using View.Interfaces;
 
 namespace View.Renderers
 {
-    public class PieceRenderer : IPieceRenderer
+    public class PieceRenderer : IBoardStateChangeRenderer
     {
         private readonly IPieceFactory _pieceFactory;
 
@@ -15,7 +15,7 @@ namespace View.Renderers
             _pieceFactory = pieceFactory;
         }
 
-        public void RenderPieces(BoardState previousState, BoardState newState)
+        public void Render(BoardState previousState, BoardState newState)
         {
             DestroyExistingPieces();
             var board = newState.Board;

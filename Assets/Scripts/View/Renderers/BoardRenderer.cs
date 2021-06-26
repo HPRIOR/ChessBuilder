@@ -5,7 +5,7 @@ using View.Utils;
 
 namespace View.Renderers
 {
-    public class BoardRenderer : IBoardRenderer
+    public class BoardRenderer : IPrefabRenderer
     {
         private readonly TileFactory _tileFactory;
 

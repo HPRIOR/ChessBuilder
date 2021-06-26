@@ -9,21 +9,27 @@ namespace View.Renderers
     public class GameRenderer : MonoBehaviour
     {
         public GameObject tilePrefab;
-        private IBoardRenderer _boardRenderer;
-        private IPieceRenderer _pieceRenderer;
+        private IPrefabRenderer _boardRenderer;
+        private IBoardStateChangeRenderer _buildRenderer;
+        private IBoardStateChangeRenderer _pieceRenderer;
         private ITurnEventInvoker _turnEventInvoker;
 
         private void Awake()
         {
             _boardRenderer.RenderBoard(tilePrefab);
-            _turnEventInvoker.GameStateChangeEvent += _pieceRenderer.RenderPieces;
+            _turnEventInvoker.GameStateChangeEvent += _pieceRenderer.Render;
+            _turnEventInvoker.GameStateChangeEvent += _buildRenderer.Render;
         }
 
 
         [Inject]
-        public void Construct(IPieceRenderer pieceRenderer, IBoardRenderer boardRenderer,
+        public void Construct(
+            [Inject(Id = "Piece")] IBoardStateChangeRenderer pieceRenderer,
+            [Inject(Id = "Build")] IBoardStateChangeRenderer buildRenderer,
+            IPrefabRenderer boardRenderer,
             ITurnEventInvoker turnEventInvoker)
         {
+            _buildRenderer = buildRenderer;
             _pieceRenderer = pieceRenderer;
             _turnEventInvoker = turnEventInvoker;
             _boardRenderer = boardRenderer;

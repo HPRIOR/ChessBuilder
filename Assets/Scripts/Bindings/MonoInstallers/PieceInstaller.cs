@@ -17,7 +17,7 @@ namespace Bindings.MonoInstallers
             BuildCommandInstaller.Install(Container);
             TileFactoryInstaller.Install(Container);
             BoardRendererInstaller.Install(Container);
-            PieceRendererInstaller.Install(Container);
+            BoardStateChangeRendererInstaller.Install(Container);
             BuildPointsCalculatorInstaller.Install(Container);
             BuilderInstaller.Install(Container);
             HomeBaseBuildMoveGeneratorInstaller.Install(Container);

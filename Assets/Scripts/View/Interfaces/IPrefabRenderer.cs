@@ -2,7 +2,7 @@
 
 namespace View.Interfaces
 {
-    public interface IBoardRenderer
+    public interface IPrefabRenderer
     {
         public void RenderBoard(GameObject tilePrefab);
     }

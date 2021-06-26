@@ -35,6 +35,7 @@ namespace View.Utils
             Position = position;
         }
 
+
         public override string ToString() => $"{Info}\n{Position}\n";
 
         public class Factory : PlaceholderFactory<IPieceInfo, Position, PieceSpawner>

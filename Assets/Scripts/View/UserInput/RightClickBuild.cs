@@ -1,5 +1,6 @@
 ﻿using Controllers.Factories;
 using Controllers.Interfaces;
+using Game.Interfaces;
 using Models.State.PieceState;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -12,6 +13,7 @@ namespace View.UserInput
     {
         private static ICommandInvoker _commandInvoker;
         private static BuildCommandFactory _buildCommandFactory;
+        private IGameState _gameState;
 
         public void OnPointerClick(PointerEventData eventData)
         {
@@ -26,8 +28,10 @@ namespace View.UserInput
         }
 
         [Inject]
-        public void Construct(ICommandInvoker commandInvoker, BuildCommandFactory buildCommandFactory)
+        public void Construct(ICommandInvoker commandInvoker, IGameState gameState,
+            BuildCommandFactory buildCommandFactory)
         {
+            _gameState = gameState;
             _commandInvoker = commandInvoker;
             _buildCommandFactory = buildCommandFactory;
         }

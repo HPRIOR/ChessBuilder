@@ -7,6 +7,7 @@ TagManager:
   - BoardRenderParentObject
   - InputSystem
   - Pieces
+  - BuildingPieces
   layers:
   - Default
   - TransparentFX

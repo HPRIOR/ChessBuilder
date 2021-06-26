@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Models.State.PieceState;
 
-namespace View.Renderers
+namespace View.Utils
 {
     internal static class PieceSpriteAssetManager
     {

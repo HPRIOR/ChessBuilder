@@ -11,7 +11,7 @@ using Zenject;
 
 namespace Tests.PlayModeTests
 {
-    public class PieceSpawnerTests : ZenjectIntegrationTestFixture
+    public class PieceFactoryTests : ZenjectIntegrationTestFixture
     {
         private IPieceFactory _pieceFactory;
 

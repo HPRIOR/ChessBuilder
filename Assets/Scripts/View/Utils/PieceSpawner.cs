@@ -19,8 +19,13 @@ namespace View.Utils
                 _spriteRenderer.sprite = AssetDatabase.LoadAssetAtPath<Sprite>(Info.SpriteAssetPath);
 
             // set parent object and piece position
-            gameObject.transform.parent = GameObject.FindGameObjectWithTag("Pieces")?.transform;
-            gameObject.transform.position = Position.Vector;
+            GameObject pieceGameObject;
+            (pieceGameObject = gameObject).transform.parent = GameObject.FindGameObjectWithTag("Pieces")?.transform;
+
+            // change position of game object 
+            Vector3 position = Position.Vector;
+            position += new Vector3(0, 0, -1); // move 'forward' so that there are no box collider clashes
+            pieceGameObject.transform.position = position;
         }
 
         [Inject]

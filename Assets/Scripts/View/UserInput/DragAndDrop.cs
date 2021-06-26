@@ -10,9 +10,9 @@ namespace View.UserInput
     //  https://docs.unity3d.com/2019.1/Documentation/ScriptReference/EventSystems.IMoveHandler.html
     public class DragAndDrop : MonoBehaviour
     {
-        private static MoveCommandFactory _moveCommandFactory;
-        private static ICommandInvoker _commandInvoker;
+        private ICommandInvoker _commandInvoker;
         private bool _isDragging;
+        private MoveCommandFactory _moveCommandFactory;
         private PieceSpawner _piece;
         private SpriteRenderer _spriteRenderer;
 

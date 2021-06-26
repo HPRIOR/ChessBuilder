@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-using Models.Services.Interfaces;
+﻿using Models.Services.Interfaces;
 using Models.Services.Moves.MoveHelpers;
 using Models.State.Board;
+using Models.State.MoveState;
 using Models.State.PieceState;
 
 namespace Models.Services.Moves.MoveGenerators
@@ -30,7 +30,7 @@ namespace Models.Services.Moves.MoveGenerators
         /// <param name="boardState"></param>
         /// <param name="turn"></param>
         /// <returns></returns>
-        public IDictionary<Position, HashSet<Position>> GetPossibleMoves(BoardState boardState,
+        public MoveState GetPossibleMoves(BoardState boardState,
             PieceColour turn)
         {
             _boardInfo.EvaluateBoard(boardState, turn);
@@ -47,7 +47,7 @@ namespace Models.Services.Moves.MoveGenerators
                 KingMoveFilter.RemoveNonTurnMovesFromKingMoves(turnMoves, nonTurnMoves, kingPosition);
 
             _pinnedPieceFilter.FilterMoves(_boardInfo, boardState);
-            return turnMoves;
+            return new MoveState(turnMoves, checkManager.IsCheck);
         }
     }
 }

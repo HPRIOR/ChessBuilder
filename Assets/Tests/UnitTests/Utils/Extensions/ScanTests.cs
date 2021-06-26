@@ -111,5 +111,17 @@ namespace Tests.UnitTests.Utils.Extensions
             var result = new Position(7, 7).Scan(Direction.NE);
             Assert.That(result.Count(), Is.EqualTo(0));
         }
+
+        [Test]
+        public void ScanResultsInCorrectOrder_StartToFinish()
+        {
+            var result = new Position(4, 4).Scan(Direction.SE).ToList();
+            Assert.That(result.Count(), Is.EqualTo(3));
+            Assert.That(result,
+                Is.EqualTo(new List<Position>
+                {
+                    new Position(5, 3), new Position(6, 2), new Position(7, 1)
+                }));
+        }
     }
 }

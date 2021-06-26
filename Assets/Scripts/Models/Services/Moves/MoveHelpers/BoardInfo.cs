@@ -7,11 +7,11 @@ namespace Models.Services.Moves.MoveHelpers
 {
     public class BoardInfo : IBoardInfo
     {
-        private readonly IMoveGeneratorRepository _moveGeneratorRepository;
+        private readonly IMovesGeneratorRepository _movesGeneratorRepository;
 
-        public BoardInfo(IMoveGeneratorRepository moveGeneratorRepository)
+        public BoardInfo(IMovesGeneratorRepository movesGeneratorRepository)
         {
-            _moveGeneratorRepository = moveGeneratorRepository;
+            _movesGeneratorRepository = movesGeneratorRepository;
         }
 
         public IDictionary<Position, HashSet<Position>> TurnMoves { get; private set; }
@@ -34,7 +34,7 @@ namespace Models.Services.Moves.MoveHelpers
                     if (currentPiece.Type == PieceType.BlackKing || currentPiece.Type == PieceType.WhiteKing)
                         KingPosition = tile.Position;
                     var boardPos = tile.Position;
-                    var possibleMoves = _moveGeneratorRepository.GetPossibleMoveGenerator(currentPiece, true)
+                    var possibleMoves = _movesGeneratorRepository.GetPossibleMoveGenerator(currentPiece, true)
                         .GetPossiblePieceMoves(boardPos, boardState);
 
                     turnMoves.Add(boardPos, new HashSet<Position>(possibleMoves));
@@ -43,7 +43,7 @@ namespace Models.Services.Moves.MoveHelpers
                 if (notPiecesTurn)
                 {
                     var boardPos = tile.Position;
-                    var possibleMoves = _moveGeneratorRepository.GetPossibleMoveGenerator(currentPiece, false)
+                    var possibleMoves = _movesGeneratorRepository.GetPossibleMoveGenerator(currentPiece, false)
                         .GetPossiblePieceMoves(boardPos, boardState);
                     nonTurnMoves.Add(boardPos, new HashSet<Position>(possibleMoves));
                 }

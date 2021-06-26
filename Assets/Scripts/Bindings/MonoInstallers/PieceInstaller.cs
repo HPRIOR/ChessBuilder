@@ -10,10 +10,13 @@ namespace Bindings.MonoInstallers
         {
             PieceSpawnerInstaller.Install(Container);
             PieceMoverInstaller.Install(Container);
-            MoveGeneratorRepositoryInstaller.Install(Container);
-            AllPossibleMovesGeneratorInstaller.Install(Container);
+            MovesGeneratorRepositoryInstaller.Install(Container);
+            MovesGeneratorInstaller.Install(Container);
 
-
+            BuildPointsCalculatorInstaller.Install(Container);
+            BuilderInstaller.Install(Container);
+            HomeBaseBuildMoveGeneratorInstaller.Install(Container);
+            BuildResolverInstaller.Install(Container);
             PossibleMovesFactoryInstaller.Install(Container);
             MoveValidatorInstaller.Install(Container);
             TileEvaluatorInstaller.Install(Container);

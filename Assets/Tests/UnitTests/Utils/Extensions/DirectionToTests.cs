@@ -1,5 +1,4 @@
-﻿using System;
-using Models.Services.Moves.MoveHelpers;
+﻿using Models.Services.Moves.MoveHelpers;
 using Models.State.Board;
 using Models.Utils.ExtensionMethods.BoardPos;
 using NUnit.Framework;
@@ -68,7 +67,7 @@ namespace Tests.UnitTests.Utils.Extensions
         [Test]
         public void SamePositionThrowError()
         {
-            Assert.Throws<Exception>(() => new Position(4, 4).DirectionTo(new Position(4, 4)));
+            Assert.Throws<DirectionException>(() => new Position(4, 4).DirectionTo(new Position(4, 4)));
         }
     }
 }

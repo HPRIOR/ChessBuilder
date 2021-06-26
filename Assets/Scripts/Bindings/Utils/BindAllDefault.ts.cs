@@ -11,6 +11,8 @@ namespace Bindings.Utils
     {
         public static void InstallAllTo(DiContainer container)
         {
+            BuildPointsCalculatorInstaller.Install(container);
+            HomeBaseBuildMoveGeneratorInstaller.Install(container);
             BoardGeneratorInstaller.Install(container);
             GameStateInstaller.Install(container);
             CommandInvokerInstaller.Install(container);
@@ -21,8 +23,8 @@ namespace Bindings.Utils
             MoveValidatorInstaller.Install(container);
             PieceMoverInstaller.Install(container);
             PieceSpawnerInstaller.Install(container);
-            AllPossibleMovesGeneratorInstaller.Install(container);
-            MoveGeneratorRepositoryInstaller.Install(container);
+            MovesGeneratorInstaller.Install(container);
+            MovesGeneratorRepositoryInstaller.Install(container);
             BoardInfoInstaller.Install(container);
             KingMoveFilterInstaller.Install(container);
             PossibleMovesFactoryInstaller.Install(container);

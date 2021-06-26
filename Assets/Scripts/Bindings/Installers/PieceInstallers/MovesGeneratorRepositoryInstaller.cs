@@ -4,11 +4,11 @@ using Zenject;
 
 namespace Bindings.Installers.PieceInstallers
 {
-    public class AllPossibleMovesGeneratorInstaller : Installer<AllPossibleMovesGeneratorInstaller>
+    public class MovesGeneratorRepositoryInstaller : Installer<MovesGeneratorRepositoryInstaller>
     {
         public override void InstallBindings()
         {
-            Container.Bind<IAllPossibleMovesGenerator>().To<PossibleTurnMovesGenerator>().AsSingle();
+            Container.Bind<IMovesGeneratorRepository>().To<MovesGeneratorRepository>().AsSingle();
         }
     }
 }

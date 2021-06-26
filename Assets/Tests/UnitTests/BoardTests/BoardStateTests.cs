@@ -73,12 +73,26 @@ namespace Tests.UnitTests.BoardTests
         }
 
         [Test]
-        public void BoardContainsNoPiecesOnInit(
+        public void BoardContains_NoPiecesOnInit(
             [Values(0, 1, 2, 3, 4, 5, 6, 7)] int x, [Values(0, 1, 2, 3, 4, 5, 6, 7)] int y
         )
         {
             var boardState = GetBoardState();
             Assert.AreEqual(new Piece(PieceType.NullPiece), boardState.Board[x, y].CurrentPiece);
+        }
+
+        [Test]
+        public void BoardContains_BuildStateWithNullPiece()
+        {
+            var boardState = GetBoardState();
+            Assert.AreEqual(PieceType.NullPiece, boardState.Board[1, 1].BuildState.BuildingPiece);
+        }
+
+        [Test]
+        public void BoardContains_BuildStateWithZeroTurns()
+        {
+            var boardState = GetBoardState();
+            Assert.AreEqual(0, boardState.Board[1, 1].BuildState.Turns);
         }
 
         [Test]

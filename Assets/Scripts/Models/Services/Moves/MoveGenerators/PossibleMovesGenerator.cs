@@ -1,17 +1,17 @@
-﻿using System.Collections.Generic;
-using Models.Services.Interfaces;
+﻿using Models.Services.Interfaces;
 using Models.Services.Moves.MoveHelpers;
 using Models.State.Board;
+using Models.State.MoveState;
 using Models.State.PieceState;
 
 namespace Models.Services.Moves.MoveGenerators
 {
-    public class PossibleTurnMovesGenerator : IAllPossibleMovesGenerator
+    public class MovesGenerator : IMovesGenerator
     {
         private readonly IBoardInfo _boardInfo;
         private readonly PinnedPieceFilter _pinnedPieceFilter;
 
-        public PossibleTurnMovesGenerator(IBoardInfo boardInfo, PinnedPieceFilter pinnedPieceFilter)
+        public MovesGenerator(IBoardInfo boardInfo, PinnedPieceFilter pinnedPieceFilter)
         {
             _boardInfo = boardInfo;
             _pinnedPieceFilter = pinnedPieceFilter;
@@ -30,11 +30,9 @@ namespace Models.Services.Moves.MoveGenerators
         /// <param name="boardState"></param>
         /// <param name="turn"></param>
         /// <returns></returns>
-        public IDictionary<Position, HashSet<Position>> GetPossibleMoves(BoardState boardState,
+        public MoveState GetPossibleMoves(BoardState boardState,
             PieceColour turn)
         {
-            // board info will mess with concurrent execution because it is stateful and not instantiated 
-            // for each call 
             _boardInfo.EvaluateBoard(boardState, turn);
             var turnMoves = _boardInfo.TurnMoves;
             var nonTurnMoves = _boardInfo.NonTurnMoves;
@@ -49,7 +47,7 @@ namespace Models.Services.Moves.MoveGenerators
                 KingMoveFilter.RemoveNonTurnMovesFromKingMoves(turnMoves, nonTurnMoves, kingPosition);
 
             _pinnedPieceFilter.FilterMoves(_boardInfo, boardState);
-            return turnMoves;
+            return new MoveState(turnMoves, checkManager.IsCheck);
         }
     }
 }

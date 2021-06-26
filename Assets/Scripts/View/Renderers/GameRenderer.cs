@@ -19,6 +19,7 @@ namespace View.Renderers
             _turnEventInvoker.GameStateChangeEvent += _pieceRenderer.RenderPieces;
         }
 
+
         [Inject]
         public void Construct(IPieceRenderer pieceRenderer, IBoardRenderer boardRenderer,
             ITurnEventInvoker turnEventInvoker)

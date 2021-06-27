@@ -8,8 +8,8 @@ namespace Bindings.Installers.ViewInstallers
     {
         public override void InstallBindings()
         {
-            Container.Bind<IBoardStateChangeRenderer>().WithId("Piece").To<PieceRenderer>().AsSingle();
-            Container.Bind<IBoardStateChangeRenderer>().WithId("Build").To<BuildRenderer>().AsSingle();
+            Container.Bind<IStateChangeRenderer>().WithId("Piece").To<PieceRenderer>().AsSingle();
+            Container.Bind<IStateChangeRenderer>().WithId("Build").To<BuildRenderer>().AsSingle();
         }
     }
 }

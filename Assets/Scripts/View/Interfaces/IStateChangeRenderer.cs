@@ -2,7 +2,7 @@
 
 namespace View.Interfaces
 {
-    public interface IBoardStateChangeRenderer
+    public interface IStateChangeRenderer
     {
         void Render(BoardState previousState, BoardState newState);
     }

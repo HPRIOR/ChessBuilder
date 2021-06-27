@@ -3,7 +3,8 @@ using Models.State.Board;
 using Models.State.Interfaces;
 using UnityEditor;
 using UnityEngine;
-using View.Utils;
+using View.Utils.Prefab.Factories;
+using View.Utils.Prefab.Spawners;
 using Zenject;
 
 namespace Bindings.Installers.PieceInstallers
@@ -16,7 +17,7 @@ namespace Bindings.Installers.PieceInstallers
         public override void InstallBindings()
         {
             Container.Bind<IPieceFactory>().To<PieceFactory>().AsSingle();
-            Container.BindFactory<IPieceInfo, Position, PieceSpawner, PieceSpawner.Factory>()
+            Container.BindFactory<IPieceRenderInfo, Position, PieceSpawner, PieceSpawner.Factory>()
                 .FromComponentInNewPrefab(_piecePrefab);
         }
     }

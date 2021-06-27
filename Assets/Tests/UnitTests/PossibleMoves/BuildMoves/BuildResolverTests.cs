@@ -47,7 +47,7 @@ namespace Tests.UnitTests.PossibleMoves.BuildMoves
             var board = _boardGenerator.GenerateBoard();
             board[1, 1].BuildState = new BuildState(0, PieceType.WhiteQueen);
             var boardState = new BoardState(board);
-            _buildResolver.ResolveBuild(boardState);
+            _buildResolver.ResolveBuild(boardState, PieceColour.White);
 
             Assert.That(board[1, 1].CurrentPiece.Type, Is.EqualTo(PieceType.WhiteQueen));
         }
@@ -58,7 +58,7 @@ namespace Tests.UnitTests.PossibleMoves.BuildMoves
             var board = _boardGenerator.GenerateBoard();
             board[1, 1].BuildState = new BuildState(0, PieceType.WhiteQueen);
             var boardState = new BoardState(board);
-            _buildResolver.ResolveBuild(boardState);
+            _buildResolver.ResolveBuild(boardState, PieceColour.White);
 
             Assert.That(board[1, 1].BuildState, Is.EqualTo(new BuildState()));
         }
@@ -69,7 +69,7 @@ namespace Tests.UnitTests.PossibleMoves.BuildMoves
             var board = _boardGenerator.GenerateBoard();
             board[1, 1].BuildState = new BuildState(1, PieceType.WhiteQueen);
             var boardState = new BoardState(board);
-            _buildResolver.ResolveBuild(boardState);
+            _buildResolver.ResolveBuild(boardState, PieceColour.White);
 
             Assert.That(board[1, 1].CurrentPiece.Type, Is.EqualTo(PieceType.NullPiece));
         }
@@ -81,7 +81,7 @@ namespace Tests.UnitTests.PossibleMoves.BuildMoves
             var board = _boardGenerator.GenerateBoard();
             board[1, 1].BuildState = new BuildState(0);
             var boardState = new BoardState(board);
-            _buildResolver.ResolveBuild(boardState);
+            _buildResolver.ResolveBuild(boardState, PieceColour.White);
 
             Assert.That(board[1, 1].CurrentPiece.Type, Is.EqualTo(PieceType.NullPiece));
         }
@@ -94,9 +94,21 @@ namespace Tests.UnitTests.PossibleMoves.BuildMoves
             board[1, 1].CurrentPiece = new Piece(PieceType.BlackKnight);
             board[1, 1].BuildState = new BuildState(0, PieceType.WhiteQueen);
             var boardState = new BoardState(board);
-            _buildResolver.ResolveBuild(boardState);
+            _buildResolver.ResolveBuild(boardState, PieceColour.White);
 
             Assert.That(board[1, 1].CurrentPiece.Type, Is.EqualTo(PieceType.BlackKnight));
+        }
+
+
+        [Test]
+        public void WillNotBuildPiece_WhenNotTurn()
+        {
+            var board = _boardGenerator.GenerateBoard();
+            board[1, 1].BuildState = new BuildState(0, PieceType.WhiteQueen);
+            var boardState = new BoardState(board);
+            _buildResolver.ResolveBuild(boardState, PieceColour.Black);
+
+            Assert.That(board[1, 1].CurrentPiece.Type, Is.EqualTo(PieceType.NullPiece));
         }
     }
 }

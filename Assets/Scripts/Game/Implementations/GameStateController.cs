@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using Game.Interfaces;
 using Models.Services.Build.Interfaces;
 using Models.Services.Interfaces;
@@ -7,6 +9,7 @@ using Models.State.Board;
 using Models.State.BuildState;
 using Models.State.PieceState;
 using Models.State.PlayerState;
+using UnityEngine;
 
 namespace Game.Implementations
 {
@@ -63,6 +66,7 @@ namespace Game.Implementations
 
             Turn = ChangeTurn();
             GameStateChangeEvent?.Invoke(previousState, CurrentBoardState);
+            Debug.Log(this);
         }
 
         /// <summary>
@@ -76,5 +80,29 @@ namespace Game.Implementations
         public event Action<BoardState, BoardState> GameStateChangeEvent;
 
         private PieceColour ChangeTurn() => Turn == PieceColour.White ? PieceColour.Black : PieceColour.White;
+
+        public override string ToString()
+        {
+            var stringBuilder = new StringBuilder();
+            stringBuilder.Append("Black state: \n");
+            stringBuilder.Append($"     Build Points: {BlackState.BuildPoints} \n");
+            stringBuilder.Append("White state: \n");
+            stringBuilder.Append($"     Build Points: {WhiteState.BuildPoints} \n");
+            stringBuilder.Append("Possible Moves: \n");
+            PossiblePieceMoves.Keys.ToList().ForEach(piecePosition =>
+            {
+                stringBuilder.Append(
+                    $"     {CurrentBoardState.Board[piecePosition.X, piecePosition.Y].CurrentPiece.Type}: \n       ");
+                PossiblePieceMoves[piecePosition].ToList().ForEach(move => stringBuilder.Append($"({move}), "));
+            });
+            stringBuilder.Append("\n");
+            stringBuilder.Append("Possible Build Pieces: \n     ");
+            PossibleBuildMoves.BuildPieces.ToList().ForEach(piece => stringBuilder.Append($"{piece}, "));
+            stringBuilder.Append("\n");
+            stringBuilder.Append("Possible Build Positions: \n     ");
+            PossibleBuildMoves.BuildPositions.OrderBy(p => p.Y).ToList()
+                .ForEach(position => stringBuilder.Append($"({position}), "));
+            return stringBuilder.ToString();
+        }
     }
 }

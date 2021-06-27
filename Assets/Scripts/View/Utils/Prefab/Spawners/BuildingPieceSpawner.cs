@@ -4,6 +4,7 @@ using Models.State.Interfaces;
 using Models.State.PieceState;
 using UnityEditor;
 using UnityEngine;
+using View.Utils.Prefab.Factories;
 using Zenject;
 
 namespace View.Utils.Prefab.Spawners
@@ -13,11 +14,13 @@ namespace View.Utils.Prefab.Spawners
         private BuildState _buildState;
         private Position _position;
         private IPieceRenderInfo _renderInfo;
+        private SpriteFactory _spriteFactory;
 
         public void Start()
         {
+            var thisGameObject = gameObject;
             // move piece to vector
-            gameObject.transform.position = _position.Vector;
+            thisGameObject.transform.position = _position.Vector;
 
             var spriteRenderer = GetComponent<SpriteRenderer>();
             if (_renderInfo.SpriteAssetPath != "")
@@ -31,15 +34,24 @@ namespace View.Utils.Prefab.Spawners
                 _ => 1f / _buildState.Turns
             };
             spriteRenderer.color = new Color(1f, 1f, 1f, transparencyModifier);
-            gameObject.transform.parent = GameObject.FindGameObjectWithTag("BuildingPieces")?.transform;
+            thisGameObject.transform.parent = GameObject.FindGameObjectWithTag("BuildingPieces")?.transform;
+
+            _spriteFactory.Create(
+                thisGameObject.transform.position + new Vector3(0.3f, 0.3f),
+                2.5f,
+                thisGameObject,
+                $"Assets/Sprites/Numbers/{_buildState.Turns.ToString()}.png",
+                3
+            );
         }
 
         [Inject]
-        public void Construct(Position position, BuildState buildState)
+        public void Construct(Position position, BuildState buildState, SpriteFactory spriteFactory)
         {
             _renderInfo = new PieceRenderInfo(buildState.BuildingPiece);
             _position = position;
             _buildState = buildState;
+            _spriteFactory = spriteFactory;
         }
 
         public class Factory : PlaceholderFactory<Position, BuildState, BuildingPieceSpawner>

@@ -17,18 +17,21 @@ namespace Game.Implementations
         private const int maxBuildPoints = 39;
         private readonly IBuildMoveGenerator _buildMoveGenerator;
         private readonly IBuildPointsCalculator _buildPointsCalculator;
+        private readonly IBuildResolver _buildResolver;
         private readonly IMovesGenerator _movesGenerator;
 
         // TODO Don't hard code max build points 
         public GameStateController(
             IMovesGenerator movesGenerator,
             IBuildMoveGenerator buildMoveGenerator,
-            IBuildPointsCalculator buildPointsCalculator
+            IBuildPointsCalculator buildPointsCalculator,
+            IBuildResolver buildResolver
         )
         {
             _movesGenerator = movesGenerator;
             _buildMoveGenerator = buildMoveGenerator;
             _buildPointsCalculator = buildPointsCalculator;
+            _buildResolver = buildResolver;
             BlackState = new PlayerState(maxBuildPoints);
             WhiteState = new PlayerState(maxBuildPoints);
             Turn = PieceColour.White;
@@ -46,6 +49,9 @@ namespace Game.Implementations
         {
             var previousState = CurrentBoardState;
             CurrentBoardState = newState;
+
+            _buildResolver.ResolveBuilds(CurrentBoardState,
+                Turn == PieceColour.Black ? PieceColour.White : PieceColour.Black);
 
             // TODO: this may only need to change for the current turn
             BlackState =

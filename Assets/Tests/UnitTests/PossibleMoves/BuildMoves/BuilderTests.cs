@@ -87,32 +87,6 @@ namespace Tests.UnitTests.PossibleMoves.BuildMoves
 
 
         [Test]
-        public void ResolvesBuildsOnBoard()
-        {
-            var boardState = new BoardState();
-            boardState.Board[5, 5].BuildState = new BuildState(PieceType.BlackPawn);
-
-            var newBoardState = _builder.GenerateNewBoardState(boardState, new Position(6, 6), PieceType.BlackKnight);
-
-            Assert.That(newBoardState.Board[5, 5].CurrentPiece.Type,
-                Is.EqualTo(PieceType.BlackPawn));
-        }
-
-
-        [Test]
-        public void ResolvesBuildsOnBoard_AndResetsBuild()
-        {
-            var boardState = new BoardState();
-            boardState.Board[5, 5].BuildState = new BuildState(PieceType.BlackPawn);
-
-            var newBoardState = _builder.GenerateNewBoardState(boardState, new Position(6, 6), PieceType.BlackKnight);
-
-            Assert.That(newBoardState.Board[5, 5].BuildState,
-                Is.EqualTo(new BuildState()));
-        }
-
-
-        [Test]
         public void OverwritesBuild_DueNextTurn()
         {
             var boardState = new BoardState();

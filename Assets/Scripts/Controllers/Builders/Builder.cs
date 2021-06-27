@@ -2,7 +2,6 @@
 using Models.State.Board;
 using Models.State.BuildState;
 using Models.State.PieceState;
-using Models.Utils.ExtensionMethods.PieceType;
 
 namespace Controllers.Builders
 {
@@ -22,7 +21,7 @@ namespace Controllers.Builders
             var buildTile = newBoardState.Board[buildPosition.X, buildPosition.Y];
             buildTile.BuildState = new BuildState(piece);
 
-            _buildResolver.ResolveBuild(newBoardState, piece.Colour());
+            // _buildResolver.ResolveBuild(newBoardState, piece.Colour());
 
             return newBoardState;
         }

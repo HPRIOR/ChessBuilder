@@ -4,6 +4,6 @@ namespace View.Interfaces
 {
     public interface IPrefabRenderer
     {
-        public void RenderBoard(GameObject tilePrefab);
+        public void Render(GameObject tilePrefab);
     }
 }

@@ -14,7 +14,7 @@ namespace View.Renderers
             _tileFactory = tileFactory;
         }
 
-        public void RenderBoard(GameObject tilePrefab)
+        public void Render(GameObject tilePrefab)
         {
             // TODO: refactor to use one loop 
             var board = CreateBoardPositions();

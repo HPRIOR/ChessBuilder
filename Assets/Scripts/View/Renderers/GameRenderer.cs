@@ -16,7 +16,7 @@ namespace View.Renderers
 
         private void Awake()
         {
-            _boardRenderer.RenderBoard(tilePrefab);
+            _boardRenderer.Render(tilePrefab);
             _turnEventInvoker.GameStateChangeEvent += _pieceRenderer.Render;
             _turnEventInvoker.GameStateChangeEvent += _buildRenderer.Render;
         }

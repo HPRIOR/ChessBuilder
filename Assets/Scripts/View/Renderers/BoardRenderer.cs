@@ -1,11 +1,11 @@
 ﻿using Models.State.Board;
 using UnityEngine;
 using View.Interfaces;
-using View.Utils;
+using View.Utils.Prefab.Factories;
 
 namespace View.Renderers
 {
-    public class BoardRenderer : IPrefabRenderer
+    public class BoardRenderer : IRenderer
     {
         private readonly TileFactory _tileFactory;
 
@@ -14,7 +14,7 @@ namespace View.Renderers
             _tileFactory = tileFactory;
         }
 
-        public void Render(GameObject tilePrefab)
+        public void Render()
         {
             // TODO: refactor to use one loop 
             var board = CreateBoardPositions();

@@ -2,20 +2,18 @@
 using Models.State.Interfaces;
 using UnityEditor;
 using UnityEngine;
+using View.Utils.Prefab.Interfaces;
 using Zenject;
 
-namespace View.Utils
+namespace View.Utils.Prefab.Spawners
 {
-    public class PieceSpawner : MonoBehaviour
+    public class PieceSpawner : MonoBehaviour, IPieceSpawner
     {
-        public Position Position { get; private set; }
-        public IPieceInfo Info { get; private set; }
-
         private void Start()
         {
             var spriteRenderer = GetComponent<SpriteRenderer>();
-            if (Info.SpriteAssetPath != "")
-                spriteRenderer.sprite = AssetDatabase.LoadAssetAtPath<Sprite>(Info.SpriteAssetPath);
+            if (RenderInfo.SpriteAssetPath != "")
+                spriteRenderer.sprite = AssetDatabase.LoadAssetAtPath<Sprite>(RenderInfo.SpriteAssetPath);
 
             // set parent object and piece position
             GameObject pieceGameObject;
@@ -27,17 +25,20 @@ namespace View.Utils
             pieceGameObject.transform.position = position;
         }
 
+        public Position Position { get; private set; }
+        public IPieceRenderInfo RenderInfo { get; private set; }
+
         [Inject]
-        public void Construct(IPieceInfo pieceInfo, Position position)
+        public void Construct(IPieceRenderInfo pieceRenderInfo, Position position)
         {
-            Info = pieceInfo;
+            RenderInfo = pieceRenderInfo;
             Position = position;
         }
 
 
-        public override string ToString() => $"{Info}\n{Position}\n";
+        public override string ToString() => $"{RenderInfo}\n{Position}\n";
 
-        public class Factory : PlaceholderFactory<IPieceInfo, Position, PieceSpawner>
+        public class Factory : PlaceholderFactory<IPieceRenderInfo, Position, PieceSpawner>
         {
         }
     }

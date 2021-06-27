@@ -14,10 +14,9 @@ namespace View.Utils.Prefab.Factories
             _pieceFactory = pieceFactory;
         }
 
-        public BuildingPieceSpawner CreatePiece(PieceType pieceType, Position position, BuildState buildState)
+        public void Create(PieceType pieceType, Position position, BuildState buildState)
         {
-            var piece = _pieceFactory.Create(new PieceRenderInfo(pieceType), position, buildState);
-            return piece;
+            _pieceFactory.Create(new PieceRenderInfo(pieceType), position, buildState);
         }
     }
 }

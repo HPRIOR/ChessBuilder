@@ -9,7 +9,6 @@ using Models.State.Board;
 using Models.State.BuildState;
 using Models.State.PieceState;
 using Models.State.PlayerState;
-using UnityEngine;
 
 namespace Game.Implementations
 {
@@ -66,7 +65,6 @@ namespace Game.Implementations
 
             Turn = ChangeTurn();
             GameStateChangeEvent?.Invoke(previousState, CurrentBoardState);
-            Debug.Log(this);
         }
 
         /// <summary>

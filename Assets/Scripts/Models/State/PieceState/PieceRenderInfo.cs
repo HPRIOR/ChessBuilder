@@ -3,9 +3,9 @@ using View.Utils;
 
 namespace Models.State.PieceState
 {
-    public class PieceInfo : IPieceInfo
+    public class PieceRenderInfo : IPieceRenderInfo
     {
-        public PieceInfo(PieceType pieceType)
+        public PieceRenderInfo(PieceType pieceType)
         {
             SpriteAssetPath = PieceSpriteAssetManager.GetSpriteAsset(pieceType);
             PieceType = pieceType;

@@ -11,6 +11,7 @@ namespace Bindings.MonoInstallers
         public override void InstallBindings()
         {
             PieceFactoryInstaller.Install(Container);
+            BuildPieceFactoryInstaller.Install(Container);
             PieceMoverInstaller.Install(Container);
             MovesGeneratorRepositoryInstaller.Install(Container);
             MovesGeneratorInstaller.Install(Container);

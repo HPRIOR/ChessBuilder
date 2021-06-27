@@ -25,7 +25,7 @@ namespace View.Renderers
         public void Construct(
             [Inject(Id = "Piece")] IStateChangeRenderer pieceRenderer,
             [Inject(Id = "Build")] IStateChangeRenderer buildRenderer,
-            IPrefabRenderer boardRenderer,
+            IRenderer boardRenderer,
             ITurnEventInvoker turnEventInvoker)
         {
             _buildRenderer = buildRenderer;

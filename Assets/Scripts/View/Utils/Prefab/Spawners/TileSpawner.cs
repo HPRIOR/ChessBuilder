@@ -2,7 +2,7 @@
 using UnityEngine;
 using Zenject;
 
-namespace View.Utils
+namespace View.Utils.Prefab.Spawners
 {
     public class TileSpawner : MonoBehaviour
     {

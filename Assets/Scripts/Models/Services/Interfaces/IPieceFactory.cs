@@ -1,11 +1,11 @@
 ﻿using Models.State.Board;
 using Models.State.PieceState;
-using View.Utils;
+using View.Utils.Prefab.Interfaces;
 
 namespace Models.Services.Interfaces
 {
     public interface IPieceFactory
     {
-        PieceSpawner CreatePiece(PieceType pieceType, Position position);
+        IPieceSpawner CreatePiece(PieceType pieceType, Position position);
     }
 }

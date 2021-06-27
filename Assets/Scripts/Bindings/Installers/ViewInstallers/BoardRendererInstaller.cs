@@ -8,7 +8,7 @@ namespace Bindings.Installers.ViewInstallers
     {
         public override void InstallBindings()
         {
-            Container.Bind<IPrefabRenderer>().To<BoardRenderer>().AsSingle();
+            Container.Bind<IRenderer>().To<BoardRenderer>().AsSingle();
         }
     }
 }

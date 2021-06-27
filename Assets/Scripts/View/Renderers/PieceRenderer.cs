@@ -6,7 +6,7 @@ using View.Utils;
 
 namespace View.Renderers
 {
-    public class PieceRenderer : IBoardStateChangeRenderer
+    public class PieceRenderer : IStateChangeRenderer
     {
         private readonly IPieceFactory _pieceFactory;
 

@@ -6,7 +6,7 @@ using View.Utils;
 
 namespace View.Renderers
 {
-    public class BuildRenderer : IBoardStateChangeRenderer
+    public class BuildRenderer : IStateChangeRenderer
     {
         public void Render(BoardState previousState, BoardState newState)
         {
@@ -21,6 +21,12 @@ namespace View.Renderers
 
         private void RenderBuild(BuildState buildState, Position position)
         {
+            var pieceInfo = new PieceInfo(buildState.BuildingPiece);
+
+
+            if (pieceInfo.SpriteAssetPath != "")
+            {
+            }
             // get piece info from piece type
             // use sprite from sprite path to render new sprite 
             // change sprite position tile position

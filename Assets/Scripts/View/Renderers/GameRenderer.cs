@@ -10,8 +10,8 @@ namespace View.Renderers
     {
         public GameObject tilePrefab;
         private IPrefabRenderer _boardRenderer;
-        private IBoardStateChangeRenderer _buildRenderer;
-        private IBoardStateChangeRenderer _pieceRenderer;
+        private IStateChangeRenderer _buildRenderer;
+        private IStateChangeRenderer _pieceRenderer;
         private ITurnEventInvoker _turnEventInvoker;
 
         private void Awake()
@@ -24,8 +24,8 @@ namespace View.Renderers
 
         [Inject]
         public void Construct(
-            [Inject(Id = "Piece")] IBoardStateChangeRenderer pieceRenderer,
-            [Inject(Id = "Build")] IBoardStateChangeRenderer buildRenderer,
+            [Inject(Id = "Piece")] IStateChangeRenderer pieceRenderer,
+            [Inject(Id = "Build")] IStateChangeRenderer buildRenderer,
             IPrefabRenderer boardRenderer,
             ITurnEventInvoker turnEventInvoker)
         {

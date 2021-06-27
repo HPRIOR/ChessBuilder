@@ -1,7 +1,8 @@
 ﻿using Models.State.Board;
 using UnityEngine;
+using View.Utils.Prefab.Spawners;
 
-namespace View.Utils
+namespace View.Utils.Prefab.Factories
 {
     public class TileFactory
     {

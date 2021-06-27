@@ -10,6 +10,7 @@ namespace Bindings.MonoInstallers
     {
         public override void InstallBindings()
         {
+            SpriteFactoryInstaller.Install(Container);
             PieceFactoryInstaller.Install(Container);
             BuildPieceFactoryInstaller.Install(Container);
             PieceMoverInstaller.Install(Container);

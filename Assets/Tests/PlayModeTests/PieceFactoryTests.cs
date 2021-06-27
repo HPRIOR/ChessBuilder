@@ -52,7 +52,7 @@ namespace Tests.PlayModeTests
             CommonInstall();
             var piece = _pieceFactory.CreatePiece(pieceType, new Position(0, 0));
             yield return null;
-            Assert.AreEqual(pieceType, piece.Info.PieceType);
+            Assert.AreEqual(pieceType, piece.RenderInfo.PieceType);
         }
 
         [UnityTest]

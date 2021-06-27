@@ -27,8 +27,6 @@ namespace Controllers.PieceMovers
             destinationTile.CurrentPiece = originalBoardState.Board[from.X, from.Y].CurrentPiece;
             fromTile.CurrentPiece = new Piece(PieceType.NullPiece);
 
-            //_buildResolver.ResolveBuild(newBoardState, destinationTile.CurrentPiece.Colour);
-
             return newBoardState;
         }
     }

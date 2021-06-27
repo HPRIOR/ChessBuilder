@@ -2,7 +2,7 @@
 
 namespace Models.State.Interfaces
 {
-    public interface IPieceInfo
+    public interface IPieceRenderInfo
     {
         string SpriteAssetPath { get; }
         PieceType PieceType { get; }

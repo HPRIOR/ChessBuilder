@@ -1,13 +1,20 @@
 ﻿using Models.State.Board;
-using Models.State.BuildState;
 using Models.State.PieceState;
 using View.Interfaces;
 using View.Utils;
+using View.Utils.Prefab.Factories;
 
 namespace View.Renderers
 {
     public class BuildRenderer : IStateChangeRenderer
     {
+        private readonly BuildingPieceFactory _buildingPieceFactory;
+
+        public BuildRenderer(BuildingPieceFactory buildingPieceFactory)
+        {
+            _buildingPieceFactory = buildingPieceFactory;
+        }
+
         public void Render(BoardState previousState, BoardState newState)
         {
             GameObjectDestroyer.DestroyChildrenOfObjectWith("BuildingPieces");
@@ -15,21 +22,9 @@ namespace View.Renderers
             foreach (var tile in board)
             {
                 var isBuilding = tile.BuildState.BuildingPiece != PieceType.NullPiece;
-                if (isBuilding) RenderBuild(tile.BuildState, tile.Position);
+                if (isBuilding)
+                    _buildingPieceFactory.CreatePiece(tile.BuildState.BuildingPiece, tile.Position, tile.BuildState);
             }
-        }
-
-        private void RenderBuild(BuildState buildState, Position position)
-        {
-            var pieceInfo = new PieceInfo(buildState.BuildingPiece);
-
-
-            if (pieceInfo.SpriteAssetPath != "")
-            {
-            }
-            // get piece info from piece type
-            // use sprite from sprite path to render new sprite 
-            // change sprite position tile position
         }
     }
 }

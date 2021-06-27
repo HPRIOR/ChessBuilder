@@ -23,7 +23,7 @@ namespace View.Renderers
             {
                 var isBuilding = tile.BuildState.BuildingPiece != PieceType.NullPiece;
                 if (isBuilding)
-                    _buildingPieceFactory.Create(tile.BuildState.BuildingPiece, tile.Position, tile.BuildState);
+                    _buildingPieceFactory.Create(tile.BuildState, tile.Position);
             }
         }
     }

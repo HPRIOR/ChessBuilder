@@ -1,6 +1,5 @@
 ﻿using Models.State.Board;
 using Models.State.BuildState;
-using Models.State.PieceState;
 using View.Utils.Prefab.Spawners;
 
 namespace View.Utils.Prefab.Factories
@@ -14,9 +13,9 @@ namespace View.Utils.Prefab.Factories
             _pieceFactory = pieceFactory;
         }
 
-        public void Create(PieceType pieceType, Position position, BuildState buildState)
+        public void Create(BuildState buildState, Position position)
         {
-            _pieceFactory.Create(new PieceRenderInfo(pieceType), position, buildState);
+            _pieceFactory.Create(position, buildState);
         }
     }
 }

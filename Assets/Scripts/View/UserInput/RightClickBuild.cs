@@ -22,7 +22,7 @@ namespace View.UserInput
                 var nearestPos =
                     NearestBoardPosFinder.GetNearestBoardPosition(eventData.pointerCurrentRaycast.worldPosition);
                 _commandInvoker.AddCommand(
-                    _buildCommandFactory.Create(nearestPos, PieceType.WhitePawn)
+                    _buildCommandFactory.Create(nearestPos, PieceType.WhiteQueen)
                 );
             }
         }

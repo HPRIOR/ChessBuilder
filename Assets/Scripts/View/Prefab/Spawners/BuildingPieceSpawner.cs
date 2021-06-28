@@ -4,10 +4,10 @@ using Models.State.Interfaces;
 using Models.State.PieceState;
 using UnityEditor;
 using UnityEngine;
-using View.Utils.Prefab.Factories;
+using View.Prefab.Factories;
 using Zenject;
 
-namespace View.Utils.Prefab.Spawners
+namespace View.Prefab.Spawners
 {
     public class BuildingPieceSpawner : MonoBehaviour
     {

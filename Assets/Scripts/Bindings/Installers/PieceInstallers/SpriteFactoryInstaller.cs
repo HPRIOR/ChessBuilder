@@ -1,7 +1,7 @@
 ﻿using UnityEditor;
 using UnityEngine;
-using View.Utils.Prefab.Factories;
-using View.Utils.Prefab.Spawners;
+using View.Prefab.Factories;
+using View.Prefab.Spawners;
 using Zenject;
 
 namespace Bindings.Installers.PieceInstallers

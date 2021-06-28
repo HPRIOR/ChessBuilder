@@ -1,7 +1,7 @@
 ﻿using Models.State.Board;
 using UnityEngine;
 using View.Interfaces;
-using View.Utils.Prefab.Factories;
+using View.Prefab.Factories;
 
 namespace View.Renderers
 {

@@ -1,8 +1,8 @@
 using Controllers.Factories;
 using Controllers.Interfaces;
 using UnityEngine;
+using View.Prefab.Spawners;
 using View.Utils;
-using View.Utils.Prefab.Spawners;
 using Zenject;
 
 namespace View.UserInput

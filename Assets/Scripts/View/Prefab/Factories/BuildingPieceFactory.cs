@@ -1,8 +1,8 @@
 ﻿using Models.State.Board;
 using Models.State.BuildState;
-using View.Utils.Prefab.Spawners;
+using View.Prefab.Spawners;
 
-namespace View.Utils.Prefab.Factories
+namespace View.Prefab.Factories
 {
     public class BuildingPieceFactory
     {

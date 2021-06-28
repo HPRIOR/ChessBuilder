@@ -1,7 +1,7 @@
 ﻿using Models.State.Board;
 using Models.State.Interfaces;
 
-namespace View.Utils.Prefab.Interfaces
+namespace View.Prefab.Interfaces
 {
     public interface IPieceSpawner
     {

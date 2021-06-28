@@ -1,10 +1,10 @@
 ﻿using Models.Services.Interfaces;
 using Models.State.Board;
 using Models.State.PieceState;
-using View.Utils.Prefab.Interfaces;
-using View.Utils.Prefab.Spawners;
+using View.Prefab.Interfaces;
+using View.Prefab.Spawners;
 
-namespace View.Utils.Prefab.Factories
+namespace View.Prefab.Factories
 {
     public class PieceFactory : IPieceFactory
     {

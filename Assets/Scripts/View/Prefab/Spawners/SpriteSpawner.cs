@@ -2,7 +2,7 @@
 using UnityEngine;
 using Zenject;
 
-namespace View.Utils.Prefab.Spawners
+namespace View.Prefab.Spawners
 {
     public class SpriteSpawner : MonoBehaviour
     {

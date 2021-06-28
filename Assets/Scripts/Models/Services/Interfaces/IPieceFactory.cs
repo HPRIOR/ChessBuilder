@@ -1,6 +1,6 @@
 ﻿using Models.State.Board;
 using Models.State.PieceState;
-using View.Utils.Prefab.Interfaces;
+using View.Prefab.Interfaces;
 
 namespace Models.Services.Interfaces
 {

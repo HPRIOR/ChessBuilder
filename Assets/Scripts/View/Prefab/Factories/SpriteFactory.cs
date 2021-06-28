@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
-using View.Utils.Prefab.Spawners;
+using View.Prefab.Spawners;
 
-namespace View.Utils.Prefab.Factories
+namespace View.Prefab.Factories
 {
     public class SpriteFactory
     {

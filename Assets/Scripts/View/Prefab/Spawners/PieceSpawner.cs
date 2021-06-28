@@ -2,10 +2,10 @@
 using Models.State.Interfaces;
 using UnityEditor;
 using UnityEngine;
-using View.Utils.Prefab.Interfaces;
+using View.Prefab.Interfaces;
 using Zenject;
 
-namespace View.Utils.Prefab.Spawners
+namespace View.Prefab.Spawners
 {
     public class PieceSpawner : MonoBehaviour, IPieceSpawner
     {

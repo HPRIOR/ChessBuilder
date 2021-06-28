@@ -1,8 +1,8 @@
 ﻿using Models.State.Board;
 using Models.State.PieceState;
 using View.Interfaces;
+using View.Prefab.Factories;
 using View.Utils;
-using View.Utils.Prefab.Factories;
 
 namespace View.Renderers
 {

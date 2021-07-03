@@ -9,7 +9,7 @@ namespace Bindings.Installers.ViewInstallers
     public class SpriteFactoryInstaller : Installer<SpriteFactoryInstaller>
     {
         private readonly GameObject _piecePrefab =
-            AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Utils/SpritePrefab.prefab");
+            Resources.Load<GameObject>("Prefabs/Utils/SpritePrefab");
 
         public override void InstallBindings()
         {

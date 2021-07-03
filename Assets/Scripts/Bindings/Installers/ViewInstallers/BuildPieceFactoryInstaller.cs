@@ -11,7 +11,7 @@ namespace Bindings.Installers.ViewInstallers
     public class BuildPieceFactoryInstaller : Installer<BuildPieceFactoryInstaller>
     {
         private readonly GameObject _piecePrefab =
-            AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Pieces/BuildingPiecePrefab.prefab");
+            Resources.Load<GameObject>("Prefabs/Pieces/BuildingPiecePrefab");
 
 
         public override void InstallBindings()

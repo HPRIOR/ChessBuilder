@@ -12,7 +12,7 @@ namespace Bindings.Installers.ViewInstallers
     public class PieceFactoryInstaller : Installer<PieceFactoryInstaller>
     {
         private readonly GameObject _piecePrefab =
-            AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Pieces/PiecePrefab.prefab");
+            Resources.Load<GameObject>("Prefabs/Pieces/PiecePrefab");
 
         public override void InstallBindings()
         {

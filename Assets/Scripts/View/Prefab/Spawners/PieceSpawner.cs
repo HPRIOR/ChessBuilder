@@ -13,7 +13,7 @@ namespace View.Prefab.Spawners
         {
             var spriteRenderer = GetComponent<SpriteRenderer>();
             if (RenderInfo.SpriteAssetPath != "")
-                spriteRenderer.sprite = AssetDatabase.LoadAssetAtPath<Sprite>(RenderInfo.SpriteAssetPath);
+                spriteRenderer.sprite = Resources.Load<Sprite>(RenderInfo.SpriteAssetPath);
 
             // set parent object and piece position
             GameObject pieceGameObject;

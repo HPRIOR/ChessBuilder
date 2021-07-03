@@ -24,7 +24,7 @@ namespace View.Prefab.Spawners
 
             var spriteRenderer = GetComponent<SpriteRenderer>();
             if (_renderInfo.SpriteAssetPath != "")
-                spriteRenderer.sprite = AssetDatabase.LoadAssetAtPath<Sprite>(_renderInfo.SpriteAssetPath);
+                spriteRenderer.sprite = Resources.Load<Sprite>(_renderInfo.SpriteAssetPath);
 
 
             var transparencyModifier = _buildState.Turns switch
@@ -40,7 +40,7 @@ namespace View.Prefab.Spawners
                 thisGameObject.transform.position + new Vector3(0.3f, 0.3f),
                 2.5f,
                 thisGameObject,
-                $"Assets/Sprites/Numbers/{_buildState.Turns.ToString()}.png",
+                $"Sprites/Numbers/{_buildState.Turns.ToString()}",
                 3
             );
         }

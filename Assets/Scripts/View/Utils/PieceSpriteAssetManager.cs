@@ -8,18 +8,18 @@ namespace View.Utils
         private static readonly IDictionary<PieceType, string> PieceSpriteAssetManagerDict =
             new Dictionary<PieceType, string>
             {
-                {PieceType.BlackPawn, "Assets/Sprites/ChessPieces/240x240/240px-Chess_pdt45.svg.png"},
-                {PieceType.BlackBishop, "Assets/Sprites/ChessPieces/240x240/240px-Chess_bdt45.svg.png"},
-                {PieceType.BlackKnight, "Assets/Sprites/ChessPieces/240x240/240px-Chess_ndt45.svg.png"},
-                {PieceType.BlackRook, "Assets/Sprites/ChessPieces/240x240/240px-Chess_rdt45.svg.png"},
-                {PieceType.BlackKing, "Assets/Sprites/ChessPieces/240x240/240px-Chess_kdt45.svg.png"},
-                {PieceType.BlackQueen, "Assets/Sprites/ChessPieces/240x240/240px-Chess_qdt45.svg.png"},
-                {PieceType.WhitePawn, "Assets/Sprites/ChessPieces/240x240/240px-Chess_plt45.svg.png"},
-                {PieceType.WhiteBishop, "Assets/Sprites/ChessPieces/240x240/240px-Chess_blt45.svg.png"},
-                {PieceType.WhiteKnight, "Assets/Sprites/ChessPieces/240x240/240px-Chess_nlt45.svg.png"},
-                {PieceType.WhiteRook, "Assets/Sprites/ChessPieces/240x240/240px-Chess_rlt45.svg.png"},
-                {PieceType.WhiteKing, "Assets/Sprites/ChessPieces/240x240/240px-Chess_klt45.svg.png"},
-                {PieceType.WhiteQueen, "Assets/Sprites/ChessPieces/240x240/240px-Chess_qlt45.svg.png"},
+                {PieceType.BlackPawn, "Sprites/ChessPieces/240x240/240px-Chess_pdt45.svg"},
+                {PieceType.BlackBishop, "Sprites/ChessPieces/240x240/240px-Chess_bdt45.svg"},
+                {PieceType.BlackKnight, "Sprites/ChessPieces/240x240/240px-Chess_ndt45.svg"},
+                {PieceType.BlackRook, "Sprites/ChessPieces/240x240/240px-Chess_rdt45.svg"},
+                {PieceType.BlackKing, "Sprites/ChessPieces/240x240/240px-Chess_kdt45.svg"},
+                {PieceType.BlackQueen, "Sprites/ChessPieces/240x240/240px-Chess_qdt45.svg"},
+                {PieceType.WhitePawn, "Sprites/ChessPieces/240x240/240px-Chess_plt45.svg"},
+                {PieceType.WhiteBishop, "Sprites/ChessPieces/240x240/240px-Chess_blt45.svg"},
+                {PieceType.WhiteKnight, "Sprites/ChessPieces/240x240/240px-Chess_nlt45.svg"},
+                {PieceType.WhiteRook, "Sprites/ChessPieces/240x240/240px-Chess_rlt45.svg"},
+                {PieceType.WhiteKing, "Sprites/ChessPieces/240x240/240px-Chess_klt45.svg"},
+                {PieceType.WhiteQueen, "Sprites/ChessPieces/240x240/240px-Chess_qlt45.svg"},
                 {PieceType.NullPiece, ""}
             };
 

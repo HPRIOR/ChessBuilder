@@ -10,7 +10,7 @@ namespace Bindings.Installers.ModelInstallers.Move
     public class TileFactoryInstaller : Installer<TileFactoryInstaller>
     {
         private readonly GameObject _tilePrefab =
-            AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Board/BoardTile.prefab");
+            Resources.Load<GameObject>("Prefabs/Board/BoardTile");
 
         public override void InstallBindings()
         {

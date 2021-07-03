@@ -76,6 +76,7 @@ namespace View.UI.PieceBuildSelector
             var pieceSpritePath = PieceSpriteAssetManager.GetSpriteAsset(_pieceType);
             _spriteRenderer.sprite = AssetDatabase.LoadAssetAtPath<Sprite>(pieceSpritePath);
             _spriteRenderer.transform.localScale = new Vector2(0.25f, 0.25f);
+            if (!_canBuild) _spriteRenderer.color = new Color(1f, 1f, 1f, 0.5f);
         }
 
         public class Factory : PlaceholderFactory<Vector3, PieceType, Action<PieceType>, bool, PieceBuildSelector>

@@ -1,5 +1,5 @@
 ﻿using Models.State.Board;
-using Models.State.Interfaces;
+using View.Interfaces;
 
 namespace View.Prefab.Interfaces
 {

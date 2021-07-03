@@ -1,7 +1,7 @@
 ﻿using Models.State.Board;
-using Models.State.Interfaces;
 using UnityEditor;
 using UnityEngine;
+using View.Interfaces;
 using View.Prefab.Interfaces;
 using Zenject;
 

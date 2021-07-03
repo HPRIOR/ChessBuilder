@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Bindings.Installers.MoveInstallers;
+using Bindings.Installers.ModelInstallers.Build;
 using Controllers.Interfaces;
 using Models.State.Board;
 using Models.State.PieceState;

@@ -1,8 +1,9 @@
-﻿using Bindings.Installers.BoardInstallers;
+﻿using Bindings.Installers.ControllerInstallers;
 using Bindings.Installers.GameInstallers;
-using Bindings.Installers.InputInstallers;
-using Bindings.Installers.MoveInstallers;
-using Bindings.Installers.PieceInstallers;
+using Bindings.Installers.ModelInstallers.Board;
+using Bindings.Installers.ModelInstallers.Build;
+using Bindings.Installers.ModelInstallers.Move;
+using Bindings.Installers.ViewInstallers;
 using Zenject;
 
 namespace Bindings.Utils

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
-using Bindings.Installers.BoardInstallers;
 using Bindings.Installers.GameInstallers;
+using Bindings.Installers.ModelInstallers.Board;
 using Game.Implementations;
 using Models.State.Board;
 using Models.State.PieceState;

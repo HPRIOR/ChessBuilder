@@ -37,7 +37,6 @@ namespace View.UserInput
 
         public void OnPointerDown(PointerEventData eventData)
         {
-            Debug.Log(_gameState.Turn);
             var nearestPos =
                 NearestBoardPosFinder.GetNearestBoardPosition(eventData.pointerCurrentRaycast.worldPosition);
             RenderSelections(_gameState.Turn == PieceColour.Black ? _blackSelection : _whiteSelection,

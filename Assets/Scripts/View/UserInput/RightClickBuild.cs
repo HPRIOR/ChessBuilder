@@ -1,6 +1,7 @@
 ﻿using Controllers.Factories;
 using Controllers.Interfaces;
 using Game.Interfaces;
+using Models.State.Board;
 using Models.State.PieceState;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -10,47 +11,51 @@ using Zenject;
 
 namespace View.UserInput
 {
-    /// <summary>
-    ///     Generates prefab UI instance
-    /// </summary>
     public class RightClickBuild : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     {
         private static ICommandInvoker _commandInvoker;
         private static BuildCommandFactory _buildCommandFactory;
 
-        private static readonly PieceType[] _blackSelection =
+        private static readonly PieceType[] BlackSelection =
         {
             PieceType.BlackQueen, PieceType.BlackRook, PieceType.BlackKnight, PieceType.BlackBishop,
             PieceType.BlackPawn
         };
 
-        private static readonly PieceType[] _whiteSelection =
+        private static readonly PieceType[] WhiteSelection =
         {
             PieceType.WhiteQueen, PieceType.WhiteRook, PieceType.WhiteKnight, PieceType.WhiteBishop,
             PieceType.WhitePawn
         };
 
+        private bool _buildSelectionInstigated;
         private IGameState _gameState;
+        private Position _nearestPos;
         private PieceBuildSelectorFactory _pieceBuildSelectorFactory;
-
         private PieceType _pieceToBuild;
+
 
         public void OnPointerDown(PointerEventData eventData)
         {
-            var nearestPos =
+            _nearestPos =
                 NearestBoardPosFinder.GetNearestBoardPosition(eventData.pointerCurrentRaycast.worldPosition);
-            RenderSelections(_gameState.Turn == PieceColour.Black ? _blackSelection : _whiteSelection,
-                nearestPos.Vector);
+            if (_gameState.PossibleBuildMoves.BuildPositions.Contains(_nearestPos))
+            {
+                RenderSelections(_gameState.Turn == PieceColour.Black ? BlackSelection : WhiteSelection,
+                    _nearestPos.Vector);
+                _buildSelectionInstigated = true;
+            }
         }
 
         public void OnPointerUp(PointerEventData eventData)
         {
-            // var nearestPos =
-            //     NearestBoardPosFinder.GetNearestBoardPosition(eventData.pointerCurrentRaycast.worldPosition);
-            // _commandInvoker.AddCommand(
-            //     _buildCommandFactory.Create(nearestPos, PieceType.WhiteQueen)
-            // );
-            GameObjectDestroyer.DestroyChildrenOfObjectWith("UI");
+            if (_buildSelectionInstigated)
+            {
+                _commandInvoker.AddCommand(
+                    _buildCommandFactory.Create(_nearestPos, _pieceToBuild)
+                );
+                GameObjectDestroyer.DestroyChildrenOfObjectWith("UI");
+            }
         }
 
 
@@ -71,8 +76,8 @@ namespace View.UserInput
             var vectors = CircleVectors.VectorPoints(5, 0.75f, center, Vector3.forward);
             for (var i = 0; i < vectors.Length; i++)
             {
-                var pieceBuildSelector =
-                    _pieceBuildSelectorFactory.Create(vectors[i], pieces[i], SetPieceCallBack, true);
+                var pieceBuildSelector = _pieceBuildSelectorFactory.Create(vectors[i], pieces[i], SetPieceCallBack,
+                    _gameState.PossibleBuildMoves.BuildPieces.Contains(pieces[i]));
                 pieceBuildSelector.transform.parent = GameObject.FindGameObjectWithTag("UI").transform;
             }
         }

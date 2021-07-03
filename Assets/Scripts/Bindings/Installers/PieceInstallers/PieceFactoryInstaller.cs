@@ -1,8 +1,8 @@
 ﻿using Models.Services.Interfaces;
 using Models.State.Board;
-using Models.State.Interfaces;
 using UnityEditor;
 using UnityEngine;
+using View.Interfaces;
 using View.Prefab.Factories;
 using View.Prefab.Spawners;
 using Zenject;

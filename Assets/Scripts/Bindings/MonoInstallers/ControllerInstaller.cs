@@ -3,12 +3,13 @@ using Zenject;
 
 namespace Bindings.MonoInstallers
 {
-    public class InputInstaller : MonoInstaller
+    public class ControllerInstaller : MonoInstaller
     {
         public override void InstallBindings()
         {
-            MoveCommandInstaller.Install(Container);
+            BuildCommandInstaller.Install(Container);
             CommandInvokerInstaller.Install(Container);
+            MoveCommandInstaller.Install(Container);
         }
     }
 }

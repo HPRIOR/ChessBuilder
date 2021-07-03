@@ -1,6 +1,6 @@
 ﻿using Models.State.PieceState;
 
-namespace Models.State.Interfaces
+namespace View.Interfaces
 {
     public interface IPieceRenderInfo
     {

@@ -34,7 +34,7 @@ namespace Game.Implementations
             _buildResolver = buildResolver;
             BlackState = new PlayerState(maxBuildPoints);
             WhiteState = new PlayerState(maxBuildPoints);
-            Turn = PieceColour.White;
+            Turn = PieceColour.Black;
         }
 
         public bool Check { get; private set; }
@@ -47,13 +47,12 @@ namespace Game.Implementations
 
         public void UpdateBoardState(BoardState newState)
         {
+            Turn = ChangeTurn();
             var previousState = CurrentBoardState;
             CurrentBoardState = newState;
 
-            _buildResolver.ResolveBuilds(CurrentBoardState,
-                Turn == PieceColour.Black ? PieceColour.White : PieceColour.Black);
+            _buildResolver.ResolveBuilds(CurrentBoardState, Turn);
 
-            // TODO: this may only need to change for the current turn
             BlackState =
                 _buildPointsCalculator.CalculateBuildPoints(PieceColour.Black, CurrentBoardState, maxBuildPoints);
             WhiteState =
@@ -66,15 +65,14 @@ namespace Game.Implementations
             var relevantPlayerState = Turn == PieceColour.Black ? BlackState : WhiteState;
             PossibleBuildMoves =
                 Check
-                    ? new BuildMoves(new HashSet<Position>(), new HashSet<PieceType>()) // no build move when in check
+                    ? new BuildMoves(new HashSet<Position>(), new HashSet<PieceType>()) // no build moves when in check
                     : _buildMoveGenerator.GetPossibleBuildMoves(CurrentBoardState, Turn, relevantPlayerState);
 
-            Turn = ChangeTurn();
             GameStateChangeEvent?.Invoke(previousState, CurrentBoardState);
         }
 
         /// <summary>
-        ///     Tells UI to update with previous board state
+        ///     Emits event with current board state
         /// </summary>
         public void RetainBoardState()
         {

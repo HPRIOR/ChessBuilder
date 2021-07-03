@@ -97,14 +97,11 @@ namespace Tests.UnitTests.Game
             var board = _boardGenerator.GenerateBoard();
             board[1, 1].CurrentPiece = new Piece(PieceType.WhiteKing);
             board[7, 7].CurrentPiece = new Piece(PieceType.BlackKing);
-            board[4, 4].BuildState = new BuildState(PieceType.WhitePawn);
+            board[4, 4].BuildState = new BuildState(0, PieceType.WhitePawn);
             var boardState = new BoardState(board);
 
             //generate initial game state
             _gameStateController.UpdateBoardState(boardState);
-
-            //iterate through game state
-            _gameStateController.UpdateBoardState(boardState.CloneWithDecrementBuildState());
 
             Assert.That(_gameStateController.CurrentBoardState.Board[4, 4].CurrentPiece.Type,
                 Is.EqualTo(PieceType.WhitePawn));
@@ -206,7 +203,7 @@ namespace Tests.UnitTests.Game
             var board = _boardGenerator.GenerateBoard();
             board[0, 0].CurrentPiece = new Piece(PieceType.WhiteKing);
             board[7, 7].CurrentPiece = new Piece(PieceType.BlackKing);
-            board[4, 4].BuildState = new BuildState(PieceType.WhitePawn);
+            board[4, 4].BuildState = new BuildState(0, PieceType.WhitePawn);
             var boardState = new BoardState(board);
 
             //generate initial game state
@@ -238,9 +235,6 @@ namespace Tests.UnitTests.Game
             //iterate through game state
             _gameStateController.UpdateBoardState(intermediateBoardState);
 
-            var finalBoardState = intermediateBoardState.CloneWithDecrementBuildState();
-
-            _gameStateController.UpdateBoardState(finalBoardState);
 
             Assert.That(_gameStateController.Turn == PieceColour.Black);
             Assert.That(_gameStateController.CurrentBoardState.Board[4, 4].CurrentPiece.Type,
@@ -272,10 +266,6 @@ namespace Tests.UnitTests.Game
             thirdBoardState.Board[4, 4].CurrentPiece = new Piece();
             thirdBoardState.Board[5, 5].CurrentPiece = new Piece(PieceType.WhiteKing);
             _gameStateController.UpdateBoardState(thirdBoardState);
-
-            // wait for turn 
-            var fourthBoardState = thirdBoardState.CloneWithDecrementBuildState();
-            _gameStateController.UpdateBoardState(fourthBoardState);
 
 
             Assert.That(_gameStateController.Turn == PieceColour.White);

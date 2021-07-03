@@ -21,8 +21,6 @@ namespace Controllers.Builders
             var buildTile = newBoardState.Board[buildPosition.X, buildPosition.Y];
             buildTile.BuildState = new BuildState(piece);
 
-            _buildResolver.ResolveBuild(newBoardState);
-
             return newBoardState;
         }
     }

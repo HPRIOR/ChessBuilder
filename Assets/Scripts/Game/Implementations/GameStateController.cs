@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using Game.Interfaces;
 using Models.Services.Build.Interfaces;
 using Models.Services.Interfaces;
@@ -15,21 +17,24 @@ namespace Game.Implementations
         private const int maxBuildPoints = 39;
         private readonly IBuildMoveGenerator _buildMoveGenerator;
         private readonly IBuildPointsCalculator _buildPointsCalculator;
+        private readonly IBuildResolver _buildResolver;
         private readonly IMovesGenerator _movesGenerator;
 
         // TODO Don't hard code max build points 
         public GameStateController(
             IMovesGenerator movesGenerator,
             IBuildMoveGenerator buildMoveGenerator,
-            IBuildPointsCalculator buildPointsCalculator
+            IBuildPointsCalculator buildPointsCalculator,
+            IBuildResolver buildResolver
         )
         {
             _movesGenerator = movesGenerator;
             _buildMoveGenerator = buildMoveGenerator;
             _buildPointsCalculator = buildPointsCalculator;
+            _buildResolver = buildResolver;
             BlackState = new PlayerState(maxBuildPoints);
             WhiteState = new PlayerState(maxBuildPoints);
-            Turn = PieceColour.White;
+            Turn = PieceColour.Black;
         }
 
         public bool Check { get; private set; }
@@ -42,10 +47,12 @@ namespace Game.Implementations
 
         public void UpdateBoardState(BoardState newState)
         {
+            Turn = ChangeTurn();
             var previousState = CurrentBoardState;
             CurrentBoardState = newState;
 
-            // TODO: this may only need to change for the current turn
+            _buildResolver.ResolveBuilds(CurrentBoardState, Turn);
+
             BlackState =
                 _buildPointsCalculator.CalculateBuildPoints(PieceColour.Black, CurrentBoardState, maxBuildPoints);
             WhiteState =
@@ -58,15 +65,14 @@ namespace Game.Implementations
             var relevantPlayerState = Turn == PieceColour.Black ? BlackState : WhiteState;
             PossibleBuildMoves =
                 Check
-                    ? new BuildMoves(new HashSet<Position>(), new HashSet<PieceType>()) // no build move when in check
+                    ? new BuildMoves(new HashSet<Position>(), new HashSet<PieceType>()) // no build moves when in check
                     : _buildMoveGenerator.GetPossibleBuildMoves(CurrentBoardState, Turn, relevantPlayerState);
 
-            Turn = ChangeTurn();
             GameStateChangeEvent?.Invoke(previousState, CurrentBoardState);
         }
 
         /// <summary>
-        ///     Tells UI to update with previous board state
+        ///     Emits event with current board state
         /// </summary>
         public void RetainBoardState()
         {
@@ -76,5 +82,29 @@ namespace Game.Implementations
         public event Action<BoardState, BoardState> GameStateChangeEvent;
 
         private PieceColour ChangeTurn() => Turn == PieceColour.White ? PieceColour.Black : PieceColour.White;
+
+        public override string ToString()
+        {
+            var stringBuilder = new StringBuilder();
+            stringBuilder.Append("Black state: \n");
+            stringBuilder.Append($"     Build Points: {BlackState.BuildPoints} \n");
+            stringBuilder.Append("White state: \n");
+            stringBuilder.Append($"     Build Points: {WhiteState.BuildPoints} \n");
+            stringBuilder.Append("Possible Moves: \n");
+            PossiblePieceMoves.Keys.ToList().ForEach(piecePosition =>
+            {
+                stringBuilder.Append(
+                    $"     {CurrentBoardState.Board[piecePosition.X, piecePosition.Y].CurrentPiece.Type}: \n       ");
+                PossiblePieceMoves[piecePosition].ToList().ForEach(move => stringBuilder.Append($"({move}), "));
+            });
+            stringBuilder.Append("\n");
+            stringBuilder.Append("Possible Build Pieces: \n     ");
+            PossibleBuildMoves.BuildPieces.ToList().ForEach(piece => stringBuilder.Append($"{piece}, "));
+            stringBuilder.Append("\n");
+            stringBuilder.Append("Possible Build Positions: \n     ");
+            PossibleBuildMoves.BuildPositions.OrderBy(p => p.Y).ToList()
+                .ForEach(position => stringBuilder.Append($"({position}), "));
+            return stringBuilder.ToString();
+        }
     }
 }

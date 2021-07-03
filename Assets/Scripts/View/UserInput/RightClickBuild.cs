@@ -76,8 +76,9 @@ namespace View.UserInput
             var vectors = CircleVectors.VectorPoints(5, 0.75f, center, Vector3.forward);
             for (var i = 0; i < vectors.Length; i++)
             {
-                var pieceBuildSelector = _pieceBuildSelectorFactory.Create(vectors[i], pieces[i], SetPieceCallBack,
-                    _gameState.PossibleBuildMoves.BuildPieces.Contains(pieces[i]));
+                var canBuild = _gameState.PossibleBuildMoves.BuildPieces.Contains(pieces[i]);
+                var pieceBuildSelector =
+                    _pieceBuildSelectorFactory.Create(vectors[i], pieces[i], SetPieceCallBack, canBuild);
                 pieceBuildSelector.transform.parent = GameObject.FindGameObjectWithTag("UI").transform;
             }
         }

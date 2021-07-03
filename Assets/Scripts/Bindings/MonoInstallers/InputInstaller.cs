@@ -1,4 +1,4 @@
-﻿using Bindings.Installers.InputInstallers;
+﻿using Bindings.Installers.ControllerInstallers;
 using Zenject;
 
 namespace Bindings.MonoInstallers

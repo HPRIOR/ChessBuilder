@@ -1,5 +1,5 @@
-﻿using Bindings.Installers.BoardInstallers;
-using Bindings.Installers.PieceInstallers;
+﻿using Bindings.Installers.ModelInstallers.Board;
+using Bindings.Installers.ModelInstallers.Move;
 using Models.Services.Interfaces;
 using Models.State.Board;
 using Models.State.PieceState;

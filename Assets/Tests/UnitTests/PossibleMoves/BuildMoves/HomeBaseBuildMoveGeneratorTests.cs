@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
-using Bindings.Installers.BoardInstallers;
-using Bindings.Installers.MoveInstallers;
+using Bindings.Installers.ModelInstallers.Board;
+using Bindings.Installers.ModelInstallers.Build;
 using Models.Services.Build.Interfaces;
 using Models.Services.Interfaces;
 using Models.State.Board;

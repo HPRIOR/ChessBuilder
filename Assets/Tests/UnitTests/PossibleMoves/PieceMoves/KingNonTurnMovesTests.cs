@@ -1,8 +1,7 @@
 using System.Collections.Generic;
-using Bindings.Installers.BoardInstallers;
 using Bindings.Installers.GameInstallers;
-using Bindings.Installers.MoveInstallers;
-using Bindings.Installers.PieceInstallers;
+using Bindings.Installers.ModelInstallers.Board;
+using Bindings.Installers.ModelInstallers.Move;
 using Game.Implementations;
 using Models.Services.Interfaces;
 using Models.Services.Moves.Factories;

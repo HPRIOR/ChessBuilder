@@ -1,7 +1,7 @@
-﻿using Models.State.Interfaces;
-using View.Utils;
+﻿using Models.State.PieceState;
+using View.Interfaces;
 
-namespace Models.State.PieceState
+namespace View.Utils
 {
     public class PieceRenderInfo : IPieceRenderInfo
     {
@@ -13,8 +13,5 @@ namespace Models.State.PieceState
 
         public string SpriteAssetPath { get; }
         public PieceType PieceType { get; }
-
-        public override string ToString() =>
-            $"PieceType: {PieceType} \n";
     }
 }

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Bindings.Installers.GameInstallers;
 using Bindings.Installers.ModelInstallers.Board;
-using Game.Implementations;
+using Models.Services.Game.Implementations;
 using Models.State.Board;
 using Models.State.PieceState;
 using NUnit.Framework;

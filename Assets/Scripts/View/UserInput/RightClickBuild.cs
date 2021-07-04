@@ -1,6 +1,6 @@
 ﻿using Controllers.Factories;
 using Controllers.Interfaces;
-using Game.Interfaces;
+using Models.Services.Game.Interfaces;
 using Models.State.Board;
 using Models.State.PieceState;
 using UnityEngine;

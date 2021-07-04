@@ -4,7 +4,7 @@ using Models.State.BuildState;
 using Models.State.PieceState;
 using Models.State.PlayerState;
 
-namespace Game.Interfaces
+namespace Models.Services.Game.Interfaces
 {
     public interface IGameState
     {

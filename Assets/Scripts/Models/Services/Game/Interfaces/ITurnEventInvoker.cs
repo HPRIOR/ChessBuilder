@@ -1,7 +1,7 @@
 ﻿using System;
 using Models.State.Board;
 
-namespace Game.Interfaces
+namespace Models.Services.Game.Interfaces
 {
     public interface ITurnEventInvoker
     {

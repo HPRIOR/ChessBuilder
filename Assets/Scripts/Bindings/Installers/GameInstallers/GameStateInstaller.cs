@@ -1,5 +1,5 @@
-using Game.Implementations;
-using Game.Interfaces;
+using Models.Services.Game.Implementations;
+using Models.Services.Game.Interfaces;
 using Zenject;
 
 namespace Bindings.Installers.GameInstallers

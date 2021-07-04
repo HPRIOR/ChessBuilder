@@ -1,11 +1,11 @@
-﻿using Game.Interfaces;
+﻿using Models.Services.Game.Interfaces;
 using Models.Services.Interfaces;
 using Models.State.Board;
 using Models.State.PieceState;
 using UnityEngine;
 using Zenject;
 
-namespace Game.Implementations
+namespace Models.Services.Game.Implementations
 {
     public class Game : MonoBehaviour
     {

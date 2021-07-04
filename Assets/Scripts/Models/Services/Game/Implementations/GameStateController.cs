@@ -2,15 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Game.Interfaces;
 using Models.Services.Build.Interfaces;
+using Models.Services.Game.Interfaces;
 using Models.Services.Interfaces;
 using Models.State.Board;
 using Models.State.BuildState;
 using Models.State.PieceState;
 using Models.State.PlayerState;
 
-namespace Game.Implementations
+namespace Models.Services.Game.Implementations
 {
     public class GameStateController : IGameState, ITurnEventInvoker
     {

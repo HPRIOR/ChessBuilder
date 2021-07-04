@@ -4,7 +4,7 @@ using Models.Services.Interfaces;
 using Models.State.Board;
 using Models.State.PieceState;
 
-namespace Game.Implementations
+namespace Models.Services.Game.Implementations
 {
     public class BoardSetup
     {

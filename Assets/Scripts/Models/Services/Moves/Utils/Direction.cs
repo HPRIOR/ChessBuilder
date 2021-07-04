@@ -1,4 +1,4 @@
-﻿namespace Models.Services.Moves.MoveHelpers
+﻿namespace Models.Services.Moves.Utils
 {
     public enum Direction
     {

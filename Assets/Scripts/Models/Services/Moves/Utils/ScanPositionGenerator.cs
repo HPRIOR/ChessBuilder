@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Models.State.Board;
 
-namespace Models.Services.Moves.MoveHelpers
+namespace Models.Services.Moves.Utils
 {
     public static class ScanPositionGenerator
     {

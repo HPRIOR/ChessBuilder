@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Models.Services.Moves.MoveHelpers;
+using Models.Services.Moves.Utils;
 using Models.State.Board;
 using NUnit.Framework;
 

@@ -47,11 +47,11 @@ namespace Game.Implementations
 
         public void UpdateBoardState(BoardState newState)
         {
-            Turn = ChangeTurn();
+            Turn = NextTurn();
             var previousState = CurrentBoardState;
             CurrentBoardState = newState;
 
-            _buildResolver.ResolveBuilds(CurrentBoardState, Turn);
+            _buildResolver.ResolveBuilds(CurrentBoardState, NextTurn());
 
             BlackState =
                 _buildPointsCalculator.CalculateBuildPoints(PieceColour.Black, CurrentBoardState, maxBuildPoints);
@@ -81,7 +81,7 @@ namespace Game.Implementations
 
         public event Action<BoardState, BoardState> GameStateChangeEvent;
 
-        private PieceColour ChangeTurn() => Turn == PieceColour.White ? PieceColour.Black : PieceColour.White;
+        private PieceColour NextTurn() => Turn == PieceColour.White ? PieceColour.Black : PieceColour.White;
 
         public override string ToString()
         {

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Models.State.Board;
 
-namespace Models.Services.Moves.MoveHelpers
+namespace Models.Services.Moves.Utils
 {
     public static class Move
     {

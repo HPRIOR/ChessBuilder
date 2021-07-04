@@ -1,5 +1,5 @@
 ﻿using Models.Services.Interfaces;
-using Models.Services.Moves.MoveHelpers;
+using Models.Services.Moves.Utils;
 using Zenject;
 
 namespace Bindings.Installers.ModelInstallers.Board

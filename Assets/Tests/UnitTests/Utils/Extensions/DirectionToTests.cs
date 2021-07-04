@@ -1,4 +1,4 @@
-﻿using Models.Services.Moves.MoveHelpers;
+﻿using Models.Services.Moves.Utils;
 using Models.State.Board;
 using Models.Utils.ExtensionMethods.BoardPos;
 using NUnit.Framework;

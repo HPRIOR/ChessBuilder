@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Models.Services.Moves.MoveHelpers;
+using Models.Services.Moves.Utils;
 using Models.State.Board;
 
 namespace Models.Utils.ExtensionMethods.BoardPos

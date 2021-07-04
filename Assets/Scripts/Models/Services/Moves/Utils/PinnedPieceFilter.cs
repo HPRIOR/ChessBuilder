@@ -5,7 +5,7 @@ using Models.State.Board;
 using Models.State.PieceState;
 using Models.Utils.ExtensionMethods.BoardPos;
 
-namespace Models.Services.Moves.MoveHelpers
+namespace Models.Services.Moves.Utils
 {
     public class PinnedPieceFilter
     {

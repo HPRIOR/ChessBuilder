@@ -9,6 +9,7 @@ namespace Game.Interfaces
     public interface IGameState
     {
         PieceColour Turn { get; }
+        bool Check { get; }
         BoardState CurrentBoardState { get; }
         public PlayerState BlackState { get; }
         public PlayerState WhiteState { get; }

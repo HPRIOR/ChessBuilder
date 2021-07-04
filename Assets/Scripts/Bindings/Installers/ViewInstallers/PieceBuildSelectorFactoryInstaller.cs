@@ -10,7 +10,7 @@ namespace Bindings.Installers.ViewInstallers
     public class PieceBuildSelectorFactoryInstaller : Installer<PieceBuildSelectorFactoryInstaller>
     {
         private readonly GameObject _prefab =
-            AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/UI/BuildUIPiece.prefab");
+            Resources.Load<GameObject>("Prefabs/UI/BuildUIPiece");
 
         public override void InstallBindings()
         {

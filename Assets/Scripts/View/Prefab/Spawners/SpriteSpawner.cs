@@ -23,7 +23,7 @@ namespace View.Prefab.Spawners
             var spriteRenderer = GetComponent<SpriteRenderer>();
             spriteRenderer.sortingOrder = _sortingOrder;
 
-            spriteRenderer.sprite = AssetDatabase.LoadAssetAtPath<Sprite>(_assetPath);
+            spriteRenderer.sprite = Resources.Load<Sprite>(_assetPath);
         }
 
 

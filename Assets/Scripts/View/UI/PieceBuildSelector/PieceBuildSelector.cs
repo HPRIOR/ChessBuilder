@@ -66,7 +66,7 @@ namespace View.UI.PieceBuildSelector
                 thisGameObject.transform.position + new Vector3(0.2f, 0.2f),
                 2.5f,
                 thisGameObject,
-                $"Assets/Sprites/Numbers/{buildPoints.ToString()}.png",
+                $"Sprites/Numbers/{buildPoints.ToString()}",
                 3
             );
         }
@@ -74,7 +74,7 @@ namespace View.UI.PieceBuildSelector
         private void RenderSprite()
         {
             var pieceSpritePath = PieceSpriteAssetManager.GetSpriteAsset(_pieceType);
-            _spriteRenderer.sprite = AssetDatabase.LoadAssetAtPath<Sprite>(pieceSpritePath);
+            _spriteRenderer.sprite = Resources.Load<Sprite>(pieceSpritePath);
             _spriteRenderer.transform.localScale = new Vector2(0.25f, 0.25f);
             if (!_canBuild) _spriteRenderer.color = new Color(1f, 1f, 1f, 0.5f);
         }

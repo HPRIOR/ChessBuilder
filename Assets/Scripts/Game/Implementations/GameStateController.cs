@@ -51,6 +51,8 @@ namespace Game.Implementations
             var previousState = CurrentBoardState;
             CurrentBoardState = newState;
 
+            // opposite turn from current needs to be passed to build resolver 
+            // this is due to builds being resolved at the end of a players turn - not the start of their turn
             _buildResolver.ResolveBuilds(CurrentBoardState, NextTurn());
 
             BlackState =

@@ -246,8 +246,11 @@ namespace Tests.UnitTests.Game
             whiteTurn.Board[4, 4].BuildState = new BuildState(PieceType.WhitePawn);
             _gameStateController.UpdateBoardState(whiteTurn);
 
+            var blackTurn = whiteTurn.CloneWithDecrementBuildState();
+            _gameStateController.UpdateBoardState(blackTurn);
 
-            Assert.That(_gameStateController.Turn == PieceColour.Black);
+
+            Assert.That(_gameStateController.CurrentBoardState.Board[4, 4].BuildState.Turns, Is.EqualTo(0));
             Assert.That(_gameStateController.CurrentBoardState.Board[4, 4].CurrentPiece.Type,
                 Is.EqualTo(PieceType.NullPiece));
         }

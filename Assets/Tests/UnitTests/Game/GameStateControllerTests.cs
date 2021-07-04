@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Bindings.Utils;
@@ -63,9 +62,11 @@ namespace Tests.UnitTests.Game
         {
             var turnEventInvoker = _gameStateController as ITurnEventInvoker;
             var count = 0;
-            Action<BoardState, BoardState> mockFunc = (prev, newState) => { count += 1; };
+
+            void MockFunc(BoardState prev, BoardState newState) => count += 1;
+
             Debug.Assert(turnEventInvoker != null, nameof(turnEventInvoker) + " != null");
-            turnEventInvoker.GameStateChangeEvent += mockFunc;
+            turnEventInvoker.GameStateChangeEvent += MockFunc;
 
             var boardState = new BoardState();
             _gameStateController.UpdateBoardState(boardState);
@@ -542,7 +543,7 @@ namespace Tests.UnitTests.Game
 
 
         [Test]
-        public void CheckMate_Morphy()
+        public void CheckMate_MorphyWithBuild()
         {
             // setup board
             var board = _boardGenerator.GenerateBoard();
@@ -551,8 +552,8 @@ namespace Tests.UnitTests.Game
             board[5, 6].CurrentPiece = new Piece(PieceType.BlackPawn);
 
             board[4, 6].CurrentPiece = new Piece(PieceType.WhiteBishop);
-            board[6, 0].CurrentPiece = new Piece(PieceType.WhiteRook);
             board[1, 1].CurrentPiece = new Piece(PieceType.WhiteKing);
+            board[6, 0].BuildState = new BuildState(0, PieceType.WhiteRook);
 
             // initialise game state
             var initialBoardState = new BoardState(board);

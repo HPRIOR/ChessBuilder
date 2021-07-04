@@ -35,16 +35,16 @@ namespace Models.Services.Moves.MoveGenerators
         {
             _boardInfo.EvaluateBoard(boardState, turn);
             var turnMoves = _boardInfo.TurnMoves;
-            var nonTurnMoves = _boardInfo.NonTurnMoves;
+            var enemyMoves = _boardInfo.EnemyMoves;
             var kingPosition = _boardInfo.KingPosition; // will be set to 8,8 by default if no king present (as null)
 
             var checkManager = new CheckedStateManager(boardState);
 
-            checkManager.EvaluateCheck(nonTurnMoves, kingPosition);
+            checkManager.EvaluateCheck(enemyMoves, kingPosition);
             if (checkManager.IsCheck)
                 checkManager.UpdatePossibleMovesWhenInCheck(_boardInfo);
             else
-                KingMoveFilter.RemoveNonTurnMovesFromKingMoves(turnMoves, nonTurnMoves, kingPosition);
+                KingMoveFilter.RemoveEnemyMovesFromKingMoves(turnMoves, enemyMoves, kingPosition);
 
             _pinnedPieceFilter.FilterMoves(_boardInfo, boardState);
             return new MoveState(turnMoves, checkManager.IsCheck);

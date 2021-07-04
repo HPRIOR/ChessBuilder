@@ -61,10 +61,10 @@ namespace Tests.UnitTests.PossibleMoves.Helpers
 
             Assert.That(_boardInfo.TurnMoves, Contains.Key(new Position(7, 7)));
             Assert.That(_boardInfo.TurnMoves, Contains.Key(new Position(7, 6)));
-            Assert.That(_boardInfo.NonTurnMoves, Contains.Key(new Position(1, 1)));
-            Assert.That(_boardInfo.NonTurnMoves, Contains.Key(new Position(1, 2)));
+            Assert.That(_boardInfo.EnemyMoves, Contains.Key(new Position(1, 1)));
+            Assert.That(_boardInfo.EnemyMoves, Contains.Key(new Position(1, 2)));
             Assert.That(_boardInfo.TurnMoves.Count(), Is.EqualTo(2));
-            Assert.That(_boardInfo.NonTurnMoves.Count(), Is.EqualTo(2));
+            Assert.That(_boardInfo.EnemyMoves.Count(), Is.EqualTo(2));
         }
 
         [Test]
@@ -83,10 +83,10 @@ namespace Tests.UnitTests.PossibleMoves.Helpers
 
             Assert.That(_boardInfo.TurnMoves, Contains.Key(new Position(1, 1)));
             Assert.That(_boardInfo.TurnMoves, Contains.Key(new Position(1, 2)));
-            Assert.That(_boardInfo.NonTurnMoves, Contains.Key(new Position(7, 7)));
-            Assert.That(_boardInfo.NonTurnMoves, Contains.Key(new Position(7, 6)));
+            Assert.That(_boardInfo.EnemyMoves, Contains.Key(new Position(7, 7)));
+            Assert.That(_boardInfo.EnemyMoves, Contains.Key(new Position(7, 6)));
             Assert.That(_boardInfo.TurnMoves.Count(), Is.EqualTo(2));
-            Assert.That(_boardInfo.NonTurnMoves.Count(), Is.EqualTo(2));
+            Assert.That(_boardInfo.EnemyMoves.Count(), Is.EqualTo(2));
         }
 
         [Test]

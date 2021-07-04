@@ -15,7 +15,7 @@ namespace Models.Services.Moves.MoveHelpers
         }
 
         public IDictionary<Position, HashSet<Position>> TurnMoves { get; private set; }
-        public IDictionary<Position, HashSet<Position>> NonTurnMoves { get; private set; }
+        public IDictionary<Position, HashSet<Position>> EnemyMoves { get; private set; }
         public Position KingPosition { get; private set; } = new Position(8, 8);
 
         // TODO refactor
@@ -49,7 +49,7 @@ namespace Models.Services.Moves.MoveHelpers
                 }
 
                 TurnMoves = turnMoves;
-                NonTurnMoves = nonTurnMoves;
+                EnemyMoves = nonTurnMoves;
             }
         }
     }

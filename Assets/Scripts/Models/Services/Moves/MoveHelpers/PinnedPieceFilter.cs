@@ -23,7 +23,7 @@ namespace Models.Services.Moves.MoveHelpers
         public void FilterMoves(IBoardInfo boardInfo, BoardState boardState)
         {
             var turnMoves = boardInfo.TurnMoves;
-            var enemyScanningMoves = GetScanningPiecesMoves(boardInfo.NonTurnMoves, boardState);
+            var enemyScanningMoves = GetScanningPiecesMoves(boardInfo.EnemyMoves, boardState);
             var kingPosition = boardInfo.KingPosition;
             var turnPiecePosition = new HashSet<Position>(turnMoves.Keys);
             turnPiecePosition.Remove(kingPosition);

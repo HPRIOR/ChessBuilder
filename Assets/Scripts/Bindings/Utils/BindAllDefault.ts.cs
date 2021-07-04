@@ -31,6 +31,7 @@ namespace Bindings.Utils
             KingMoveFilterInstaller.Install(container);
             PossibleMovesFactoryInstaller.Install(container);
             PinnedPieceFilterInstaller.Install(container);
+            GameOverEvalInstaller.Install(container);
         }
     }
 }

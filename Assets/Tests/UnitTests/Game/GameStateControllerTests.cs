@@ -315,6 +315,7 @@ namespace Tests.UnitTests.Game
             Assert.That(_gameStateController.PossiblePieceMoves.Count, Is.EqualTo(1));
             Assert.That(_gameStateController.PossiblePieceMoves[new Position(6, 7)].Count, Is.EqualTo(0));
             Assert.That(_gameStateController.Check, Is.True);
+            Assert.That(_gameStateController.CheckMate, Is.True);
         }
 
 
@@ -343,6 +344,8 @@ namespace Tests.UnitTests.Game
             Assert.That(_gameStateController.Turn, Is.EqualTo(PieceColour.Black));
             _gameStateController.PossiblePieceMoves.ToList()
                 .ForEach(turn => Assert.That(turn.Value.Count, Is.EqualTo(0)));
+
+            Assert.That(_gameStateController.CheckMate, Is.True);
         }
 
         [Test]
@@ -368,6 +371,7 @@ namespace Tests.UnitTests.Game
             Assert.That(_gameStateController.Turn, Is.EqualTo(PieceColour.Black));
             _gameStateController.PossiblePieceMoves.ToList()
                 .ForEach(turn => Assert.That(turn.Value.Count, Is.EqualTo(0)));
+            Assert.That(_gameStateController.CheckMate, Is.True);
         }
 
 
@@ -397,6 +401,7 @@ namespace Tests.UnitTests.Game
             Assert.That(_gameStateController.Turn, Is.EqualTo(PieceColour.Black));
             _gameStateController.PossiblePieceMoves.ToList()
                 .ForEach(turn => Assert.That(turn.Value.Count, Is.EqualTo(0)));
+            Assert.That(_gameStateController.CheckMate, Is.True);
         }
 
 
@@ -425,6 +430,7 @@ namespace Tests.UnitTests.Game
             Assert.That(_gameStateController.Turn, Is.EqualTo(PieceColour.Black));
             _gameStateController.PossiblePieceMoves.ToList()
                 .ForEach(turn => Assert.That(turn.Value.Count, Is.EqualTo(0)));
+            Assert.That(_gameStateController.CheckMate, Is.True);
         }
 
 
@@ -455,6 +461,7 @@ namespace Tests.UnitTests.Game
             Assert.That(_gameStateController.Turn, Is.EqualTo(PieceColour.Black));
             _gameStateController.PossiblePieceMoves.ToList()
                 .ForEach(turn => Assert.That(turn.Value.Count, Is.EqualTo(0)));
+            Assert.That(_gameStateController.CheckMate, Is.True);
         }
 
 
@@ -482,6 +489,7 @@ namespace Tests.UnitTests.Game
             Assert.That(_gameStateController.Turn, Is.EqualTo(PieceColour.Black));
             _gameStateController.PossiblePieceMoves.ToList()
                 .ForEach(turn => Assert.That(turn.Value.Count, Is.EqualTo(0)));
+            Assert.That(_gameStateController.CheckMate, Is.True);
         }
 
 
@@ -510,6 +518,7 @@ namespace Tests.UnitTests.Game
             Assert.That(_gameStateController.Turn, Is.EqualTo(PieceColour.Black));
             _gameStateController.PossiblePieceMoves.ToList()
                 .ForEach(turn => Assert.That(turn.Value.Count, Is.EqualTo(0)));
+            Assert.That(_gameStateController.CheckMate, Is.True);
         }
 
 
@@ -539,6 +548,7 @@ namespace Tests.UnitTests.Game
             Assert.That(_gameStateController.Turn, Is.EqualTo(PieceColour.Black));
             _gameStateController.PossiblePieceMoves.ToList()
                 .ForEach(turn => Assert.That(turn.Value.Count, Is.EqualTo(0)));
+            Assert.That(_gameStateController.CheckMate, Is.True);
         }
 
 
@@ -567,6 +577,7 @@ namespace Tests.UnitTests.Game
             Assert.That(_gameStateController.Turn, Is.EqualTo(PieceColour.Black));
             _gameStateController.PossiblePieceMoves.ToList()
                 .ForEach(turn => Assert.That(turn.Value.Count, Is.EqualTo(0)));
+            Assert.That(_gameStateController.CheckMate, Is.True);
         }
     }
 }

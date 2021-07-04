@@ -10,6 +10,7 @@ namespace Models.Services.Game.Interfaces
     {
         PieceColour Turn { get; }
         bool Check { get; }
+        bool CheckMate { get; }
         BoardState CurrentBoardState { get; }
         public PlayerState BlackState { get; }
         public PlayerState WhiteState { get; }

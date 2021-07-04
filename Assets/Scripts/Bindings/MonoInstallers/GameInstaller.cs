@@ -9,6 +9,7 @@ namespace Bindings.MonoInstallers
         {
             GameStateInstaller.Install(Container);
             BoardSetupInstaller.Install(Container);
+            GameOverEvalInstaller.Install(Container);
         }
     }
 }

@@ -18,6 +18,7 @@ namespace Models.Services.Game.Implementations
         private readonly IBuildMoveGenerator _buildMoveGenerator;
         private readonly IBuildPointsCalculator _buildPointsCalculator;
         private readonly IBuildResolver _buildResolver;
+        private readonly IGameOverEval _gameOverEval;
         private readonly IMovesGenerator _movesGenerator;
 
         // TODO Don't hard code max build points 
@@ -25,19 +26,22 @@ namespace Models.Services.Game.Implementations
             IMovesGenerator movesGenerator,
             IBuildMoveGenerator buildMoveGenerator,
             IBuildPointsCalculator buildPointsCalculator,
-            IBuildResolver buildResolver
+            IBuildResolver buildResolver,
+            IGameOverEval gameOverEval
         )
         {
             _movesGenerator = movesGenerator;
             _buildMoveGenerator = buildMoveGenerator;
             _buildPointsCalculator = buildPointsCalculator;
             _buildResolver = buildResolver;
+            _gameOverEval = gameOverEval;
             BlackState = new PlayerState(maxBuildPoints);
             WhiteState = new PlayerState(maxBuildPoints);
             Turn = PieceColour.Black;
         }
 
         public bool Check { get; private set; }
+        public bool CheckMate { get; private set; }
         public BoardState CurrentBoardState { get; private set; }
         public PieceColour Turn { get; private set; }
         public PlayerState BlackState { get; private set; }
@@ -69,6 +73,8 @@ namespace Models.Services.Game.Implementations
                 Check
                     ? new BuildMoves(new HashSet<Position>(), new HashSet<PieceType>()) // no build moves when in check
                     : _buildMoveGenerator.GetPossibleBuildMoves(CurrentBoardState, Turn, relevantPlayerState);
+
+            CheckMate = _gameOverEval.CheckMate(Check, PossiblePieceMoves);
 
             GameStateChangeEvent?.Invoke(previousState, CurrentBoardState);
         }

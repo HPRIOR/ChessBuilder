@@ -289,5 +289,29 @@ namespace Tests.UnitTests.Game
             Assert.That(_gameStateController.CurrentBoardState.Board[4, 4].CurrentPiece.Type,
                 Is.EqualTo(PieceType.WhitePawn));
         }
+
+        [Test]
+        public void BackRank_CheckMate()
+        {
+            // setup board
+            var board = _boardGenerator.GenerateBoard();
+            board[1, 1].CurrentPiece = new Piece(PieceType.WhiteKing);
+            board[1, 6].CurrentPiece = new Piece(PieceType.WhiteRook);
+            board[0, 5].CurrentPiece = new Piece(PieceType.WhiteQueen);
+            board[6, 7].CurrentPiece = new Piece(PieceType.BlackKing);
+
+            // initialise game state
+            var initialBoardState = new BoardState(board);
+            _gameStateController.UpdateBoardState(initialBoardState);
+
+            var whiteTurn = initialBoardState.CloneWithDecrementBuildState();
+            whiteTurn.Board[0, 5].CurrentPiece = new Piece(PieceType.NullPiece);
+            whiteTurn.Board[0, 7].CurrentPiece = new Piece(PieceType.WhiteQueen);
+            _gameStateController.UpdateBoardState(whiteTurn);
+
+            Assert.That(_gameStateController.Turn, Is.EqualTo(PieceColour.Black));
+            Assert.That(_gameStateController.PossiblePieceMoves.Count, Is.EqualTo(1));
+            Assert.That(_gameStateController.PossiblePieceMoves[new Position(6, 7)].Count, Is.EqualTo(0));
+        }
     }
 }

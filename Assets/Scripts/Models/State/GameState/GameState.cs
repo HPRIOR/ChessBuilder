@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Immutable;
+﻿using System.Collections.Immutable;
 using Models.State.Board;
 using Models.State.BuildState;
 using Models.State.PieceState;
 
 namespace Models.State.GameState
 {
-    public class GameState : ICloneable
+    public class GameState
     {
         public GameState(PieceColour turn, bool check, bool checkMate, PlayerState.PlayerState blackState,
             PlayerState.PlayerState whiteState,
@@ -29,8 +28,5 @@ namespace Models.State.GameState
         public PlayerState.PlayerState WhiteState { get; }
         public ImmutableDictionary<Position, ImmutableHashSet<Position>> PossiblePieceMoves { get; }
         public BuildMoves PossibleBuildMoves { get; }
-
-        public object Clone() => new GameState(Turn, Check, CheckMate, BlackState, WhiteState,
-            PossiblePieceMoves, PossibleBuildMoves);
     }
 }

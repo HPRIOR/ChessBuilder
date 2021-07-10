@@ -46,7 +46,7 @@ namespace Tests.UnitTests.PossibleMoves.BuildMoves
         public void PointsAreSubtracted_ByBuildingPiece()
         {
             var board = _boardGenerator.GenerateBoard();
-            board[1, 1].BuildState = new BuildState(PieceType.BlackQueen);
+            board[1, 1].BuildTileState = new BuildTileState(PieceType.BlackQueen);
             var boardState = new BoardState(board);
 
             const int maxPoints = 10;
@@ -76,7 +76,7 @@ namespace Tests.UnitTests.PossibleMoves.BuildMoves
         public void PointsAreSubtracted_ByBuiltPiece_AndBuildingPiece()
         {
             var board = _boardGenerator.GenerateBoard();
-            board[1, 1].BuildState = new BuildState(PieceType.BlackQueen);
+            board[1, 1].BuildTileState = new BuildTileState(PieceType.BlackQueen);
             board[2, 2].CurrentPiece = new Piece(PieceType.BlackPawn);
             var boardState = new BoardState(board);
 
@@ -95,7 +95,7 @@ namespace Tests.UnitTests.PossibleMoves.BuildMoves
             var queen = pieceColour == PieceColour.Black ? PieceType.BlackQueen : PieceType.WhiteQueen;
 
             var board = _boardGenerator.GenerateBoard();
-            board[1, 1].BuildState = new BuildState(queen);
+            board[1, 1].BuildTileState = new BuildTileState(queen);
             board[2, 2].CurrentPiece = new Piece(pawn);
             var boardState = new BoardState(board);
 

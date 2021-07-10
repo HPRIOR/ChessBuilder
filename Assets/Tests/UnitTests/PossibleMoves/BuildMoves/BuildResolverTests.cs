@@ -45,7 +45,7 @@ namespace Tests.UnitTests.PossibleMoves.BuildMoves
         public void WillBuildPiece_WhenBuildStateCountIsZero()
         {
             var board = _boardGenerator.GenerateBoard();
-            board[1, 1].BuildState = new BuildState(0, PieceType.WhiteQueen);
+            board[1, 1].BuildTileState = new BuildTileState(0, PieceType.WhiteQueen);
             var boardState = new BoardState(board);
             _buildResolver.ResolveBuilds(boardState, PieceColour.White);
 
@@ -56,18 +56,18 @@ namespace Tests.UnitTests.PossibleMoves.BuildMoves
         public void WillResetBuildState_WhenPieceIsBuilt()
         {
             var board = _boardGenerator.GenerateBoard();
-            board[1, 1].BuildState = new BuildState(0, PieceType.WhiteQueen);
+            board[1, 1].BuildTileState = new BuildTileState(0, PieceType.WhiteQueen);
             var boardState = new BoardState(board);
             _buildResolver.ResolveBuilds(boardState, PieceColour.White);
 
-            Assert.That(board[1, 1].BuildState, Is.EqualTo(new BuildState()));
+            Assert.That(board[1, 1].BuildTileState, Is.EqualTo(new BuildTileState()));
         }
 
         [Test]
         public void WillNotBuildPiece_WhenBuildStateCountGreaterThanZero()
         {
             var board = _boardGenerator.GenerateBoard();
-            board[1, 1].BuildState = new BuildState(1, PieceType.WhiteQueen);
+            board[1, 1].BuildTileState = new BuildTileState(1, PieceType.WhiteQueen);
             var boardState = new BoardState(board);
             _buildResolver.ResolveBuilds(boardState, PieceColour.White);
 
@@ -79,7 +79,7 @@ namespace Tests.UnitTests.PossibleMoves.BuildMoves
         public void WillNotBuildPiece_WhenBuildStatePieceTypeIsNull()
         {
             var board = _boardGenerator.GenerateBoard();
-            board[1, 1].BuildState = new BuildState(0);
+            board[1, 1].BuildTileState = new BuildTileState(0);
             var boardState = new BoardState(board);
             _buildResolver.ResolveBuilds(boardState, PieceColour.White);
 
@@ -92,7 +92,7 @@ namespace Tests.UnitTests.PossibleMoves.BuildMoves
         {
             var board = _boardGenerator.GenerateBoard();
             board[1, 1].CurrentPiece = new Piece(PieceType.BlackKnight);
-            board[1, 1].BuildState = new BuildState(0, PieceType.WhiteQueen);
+            board[1, 1].BuildTileState = new BuildTileState(0, PieceType.WhiteQueen);
             var boardState = new BoardState(board);
             _buildResolver.ResolveBuilds(boardState, PieceColour.White);
 
@@ -104,7 +104,7 @@ namespace Tests.UnitTests.PossibleMoves.BuildMoves
         public void WillNotBuildPiece_WhenNotTurn()
         {
             var board = _boardGenerator.GenerateBoard();
-            board[1, 1].BuildState = new BuildState(0, PieceType.WhiteQueen);
+            board[1, 1].BuildTileState = new BuildTileState(0, PieceType.WhiteQueen);
             var boardState = new BoardState(board);
             _buildResolver.ResolveBuilds(boardState, PieceColour.Black);
 

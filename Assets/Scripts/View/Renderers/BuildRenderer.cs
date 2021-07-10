@@ -21,9 +21,9 @@ namespace View.Renderers
             var board = newState.Board;
             foreach (var tile in board)
             {
-                var isBuilding = tile.BuildState.BuildingPiece != PieceType.NullPiece;
+                var isBuilding = tile.BuildTileState.BuildingPiece != PieceType.NullPiece;
                 if (isBuilding)
-                    _buildingPieceFactory.Create(tile.BuildState, tile.Position);
+                    _buildingPieceFactory.Create(tile.BuildTileState, tile.Position);
             }
         }
     }

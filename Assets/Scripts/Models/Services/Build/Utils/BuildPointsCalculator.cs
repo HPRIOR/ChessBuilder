@@ -22,10 +22,10 @@ namespace Models.Services.Build.Utils
                 if (pieceIsOfColourType)
                     result += BuildPoints.PieceCost[tile.CurrentPiece.Type];
 
-                var pieceOfColourIsBeingBuilt = tile.BuildState.BuildingPiece != PieceType.NullPiece &&
-                                                tile.BuildState.BuildingPiece.Colour() == pieceColour;
+                var pieceOfColourIsBeingBuilt = tile.BuildTileState.BuildingPiece != PieceType.NullPiece &&
+                                                tile.BuildTileState.BuildingPiece.Colour() == pieceColour;
                 if (pieceOfColourIsBeingBuilt)
-                    result += BuildPoints.PieceCost[tile.BuildState.BuildingPiece];
+                    result += BuildPoints.PieceCost[tile.BuildTileState.BuildingPiece];
             }
 
             return new PlayerState(maxPoints - result);

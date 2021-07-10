@@ -27,7 +27,7 @@ namespace Tests.UnitTests.BoardTests
         public void TileConstructed_WithCorrectBuildState()
         {
             var tile = new Tile(new Position(1, 1));
-            Assert.That(tile.BuildState, Is.EqualTo(new BuildState()));
+            Assert.That(tile.BuildTileState, Is.EqualTo(new BuildTileState()));
         }
 
         [Test]
@@ -54,7 +54,7 @@ namespace Tests.UnitTests.BoardTests
             var tile = new Tile(new Position(1, 1)) {CurrentPiece = new Piece(PieceType.BlackBishop)};
             var tileClone = tile.Clone();
 
-            Assert.That(tile.BuildState, Is.EqualTo(tileClone.BuildState));
+            Assert.That(tile.BuildTileState, Is.EqualTo(tileClone.BuildTileState));
         }
 
         [Test]
@@ -72,28 +72,28 @@ namespace Tests.UnitTests.BoardTests
             var tile = new Tile(new Position(1, 1));
             var tileClone = tile.CloneWithDecrementBuildState();
 
-            Assert.AreEqual(tile.BuildState, tileClone.BuildState);
+            Assert.AreEqual(tile.BuildTileState, tileClone.BuildTileState);
         }
 
 
         [Test]
         public void TileClonedWithDecrementBuildState_Decrements_IfPieceIsBeingBuilt()
         {
-            var tile = new Tile(new Position(1, 1), new BuildState(9, PieceType.WhiteQueen));
+            var tile = new Tile(new Position(1, 1), new BuildTileState(9, PieceType.WhiteQueen));
             var tileClone = tile.CloneWithDecrementBuildState();
 
-            Assert.AreEqual(8, tileClone.BuildState.Turns);
+            Assert.AreEqual(8, tileClone.BuildTileState.Turns);
         }
 
 
         [Test]
         public void TileClonedWithDecrementBuildState_RetainsWaitingBuild_IfPieceIsBeingBuilt_And_FullyDecremented()
         {
-            var tile = new Tile(new Position(1, 1), new BuildState(0, PieceType.WhiteQueen));
+            var tile = new Tile(new Position(1, 1), new BuildTileState(0, PieceType.WhiteQueen));
             var tileClone = tile.CloneWithDecrementBuildState();
 
-            Assert.AreEqual(tile.BuildState.Turns, tileClone.BuildState.Turns);
-            Assert.AreEqual(tile.BuildState.BuildingPiece, tileClone.BuildState.BuildingPiece);
+            Assert.AreEqual(tile.BuildTileState.Turns, tileClone.BuildTileState.Turns);
+            Assert.AreEqual(tile.BuildTileState.BuildingPiece, tileClone.BuildTileState.BuildingPiece);
         }
     }
 }

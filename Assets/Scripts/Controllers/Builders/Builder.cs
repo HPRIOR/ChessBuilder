@@ -19,7 +19,7 @@ namespace Controllers.Builders
             var newBoardState = previousBoardState.CloneWithDecrementBuildState();
 
             var buildTile = newBoardState.Board[buildPosition.X, buildPosition.Y];
-            buildTile.BuildState = new BuildState(piece);
+            buildTile.BuildTileState = new BuildTileState(piece);
 
             return newBoardState;
         }

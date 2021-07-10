@@ -13,9 +13,9 @@ namespace View.Prefab.Factories
             _pieceFactory = pieceFactory;
         }
 
-        public void Create(BuildState buildState, Position position)
+        public void Create(BuildTileState buildTileState, Position position)
         {
-            _pieceFactory.Create(position, buildState);
+            _pieceFactory.Create(position, buildTileState);
         }
     }
 }

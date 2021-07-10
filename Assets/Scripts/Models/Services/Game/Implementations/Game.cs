@@ -10,21 +10,21 @@ namespace Models.Services.Game.Implementations
     public class Game : MonoBehaviour
     {
         private IBoardGenerator _boardGenerator;
-        private IGameState GameState { get; set; }
+        private IGameStateController GameStateController { get; set; }
 
         public void Start()
         {
-            GameState.UpdateBoardState(InitBoard());
+            GameStateController.UpdateBoardState(InitBoard());
         }
 
         [Inject]
         public void Construct(
-            IGameState initState,
+            IGameStateController initStateController,
             IBoardGenerator boardGenerator
         )
         {
             _boardGenerator = boardGenerator;
-            GameState = initState;
+            GameStateController = initStateController;
         }
 
         private BoardState InitBoard()

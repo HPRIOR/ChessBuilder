@@ -16,7 +16,7 @@ namespace Bindings.Utils
             BuildPointsCalculatorInstaller.Install(container);
             HomeBaseBuildMoveGeneratorInstaller.Install(container);
             BoardGeneratorInstaller.Install(container);
-            GameStateInstaller.Install(container);
+            GameStateControllerInstaller.Install(container);
             CommandInvokerInstaller.Install(container);
             MoveCommandInstaller.Install(container);
             TileEvaluatorInstaller.Install(container);

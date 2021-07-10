@@ -28,7 +28,7 @@ namespace Tests.UnitTests.Game
             Container.UnbindAll();
         }
 
-        private IGameState _gameStateController;
+        private IGameStateController _gameStateControllerController;
         private IBoardGenerator _boardGenerator;
 
         private void InstallBindings()
@@ -38,29 +38,29 @@ namespace Tests.UnitTests.Game
 
         private void ResolveContainer()
         {
-            _gameStateController = Container.Resolve<IGameState>();
+            _gameStateControllerController = Container.Resolve<IGameStateController>();
             _boardGenerator = Container.Resolve<IBoardGenerator>();
         }
 
         [Test]
         public void HasNullBoardState_WhenInitialised()
         {
-            Assert.IsNull(_gameStateController.CurrentBoardState);
+            Assert.IsNull(_gameStateControllerController.CurrentBoardState);
         }
 
         [Test]
         public void BoardStateIsUpdated_WhenPassedBoardState()
         {
             var initialBoardState = new BoardState();
-            _gameStateController.UpdateBoardState(initialBoardState);
+            _gameStateControllerController.UpdateBoardState(initialBoardState);
 
-            Assert.AreSame(initialBoardState, _gameStateController.CurrentBoardState);
+            Assert.AreSame(initialBoardState, _gameStateControllerController.CurrentBoardState);
         }
 
         [Test]
         public void EventInvoked_WhenStateUpdated()
         {
-            var turnEventInvoker = _gameStateController as ITurnEventInvoker;
+            var turnEventInvoker = _gameStateControllerController as ITurnEventInvoker;
             var count = 0;
 
             void MockFunc(BoardState prev, BoardState newState) => count += 1;
@@ -69,7 +69,7 @@ namespace Tests.UnitTests.Game
             turnEventInvoker.GameStateChangeEvent += MockFunc;
 
             var boardState = new BoardState();
-            _gameStateController.UpdateBoardState(boardState);
+            _gameStateControllerController.UpdateBoardState(boardState);
 
             Assert.AreEqual(1, count);
         }
@@ -82,13 +82,13 @@ namespace Tests.UnitTests.Game
             board[4, 4].CurrentPiece = new Piece(PieceType.WhiteKing);
             board[6, 4].CurrentPiece = new Piece(PieceType.BlackQueen);
             var initialBoardState = new BoardState(board);
-            _gameStateController.UpdateBoardState(initialBoardState);
+            _gameStateControllerController.UpdateBoardState(initialBoardState);
 
             var expectedBuildMoves =
                 new BuildMoves(ImmutableHashSet<Position>.Empty, ImmutableHashSet<PieceType>.Empty);
-            Assert.That(_gameStateController.PossibleBuildMoves.BuildPieces,
+            Assert.That(_gameStateControllerController.PossibleBuildMoves.BuildPieces,
                 Is.EquivalentTo(expectedBuildMoves.BuildPieces));
-            Assert.That(_gameStateController.PossibleBuildMoves.BuildPositions,
+            Assert.That(_gameStateControllerController.PossibleBuildMoves.BuildPositions,
                 Is.EquivalentTo(expectedBuildMoves.BuildPositions));
         }
 
@@ -104,12 +104,12 @@ namespace Tests.UnitTests.Game
             var initialBoardState = new BoardState(board);
 
             // Initialise board state
-            _gameStateController.UpdateBoardState(initialBoardState);
+            _gameStateControllerController.UpdateBoardState(initialBoardState);
 
             //Make white turn
-            _gameStateController.UpdateBoardState(initialBoardState);
+            _gameStateControllerController.UpdateBoardState(initialBoardState);
 
-            Assert.That(_gameStateController.CurrentBoardState.Board[4, 4].CurrentPiece.Type,
+            Assert.That(_gameStateControllerController.CurrentBoardState.Board[4, 4].CurrentPiece.Type,
                 Is.EqualTo(PieceType.WhitePawn));
         }
 
@@ -125,16 +125,16 @@ namespace Tests.UnitTests.Game
             var initialBoardState = new BoardState(board);
 
             //generate initial game state
-            _gameStateController.UpdateBoardState(initialBoardState);
+            _gameStateControllerController.UpdateBoardState(initialBoardState);
 
             //iterate through game state
             var whiteTurn = initialBoardState.CloneWithDecrementBuildState();
-            _gameStateController.UpdateBoardState(whiteTurn);
+            _gameStateControllerController.UpdateBoardState(whiteTurn);
 
             // blackTurn
-            _gameStateController.UpdateBoardState(whiteTurn.CloneWithDecrementBuildState());
+            _gameStateControllerController.UpdateBoardState(whiteTurn.CloneWithDecrementBuildState());
 
-            Assert.That(_gameStateController.CurrentBoardState.Board[4, 4].CurrentPiece.Type,
+            Assert.That(_gameStateControllerController.CurrentBoardState.Board[4, 4].CurrentPiece.Type,
                 Is.EqualTo(PieceType.WhiteKing));
         }
 
@@ -150,13 +150,13 @@ namespace Tests.UnitTests.Game
             var initialBoardState = new BoardState(board);
 
             //generate initial game state
-            _gameStateController.UpdateBoardState(initialBoardState);
+            _gameStateControllerController.UpdateBoardState(initialBoardState);
 
             //iterate through game state
             var whiteTurn = initialBoardState.CloneWithDecrementBuildState();
-            _gameStateController.UpdateBoardState(whiteTurn);
+            _gameStateControllerController.UpdateBoardState(whiteTurn);
 
-            Assert.That(_gameStateController.CurrentBoardState.Board[4, 4].CurrentPiece.Type,
+            Assert.That(_gameStateControllerController.CurrentBoardState.Board[4, 4].CurrentPiece.Type,
                 Is.EqualTo(PieceType.BlackKing));
         }
 
@@ -172,15 +172,15 @@ namespace Tests.UnitTests.Game
             var intitialBoardState = new BoardState(board);
 
             //generate initial game state
-            _gameStateController.UpdateBoardState(intitialBoardState);
+            _gameStateControllerController.UpdateBoardState(intitialBoardState);
 
             //iterate through game state
             var whiteTurn = intitialBoardState.CloneWithDecrementBuildState();
-            _gameStateController.UpdateBoardState(whiteTurn);
+            _gameStateControllerController.UpdateBoardState(whiteTurn);
 
-            Assert.That(_gameStateController.CurrentBoardState.Board[4, 4].BuildTileState.Turns,
+            Assert.That(_gameStateControllerController.CurrentBoardState.Board[4, 4].BuildTileState.Turns,
                 Is.EqualTo(0));
-            Assert.That(_gameStateController.CurrentBoardState.Board[4, 4].BuildTileState.BuildingPiece,
+            Assert.That(_gameStateControllerController.CurrentBoardState.Board[4, 4].BuildTileState.BuildingPiece,
                 Is.EqualTo(PieceType.WhitePawn));
         }
 
@@ -196,15 +196,15 @@ namespace Tests.UnitTests.Game
             var initialBoardState = new BoardState(board);
 
             //generate initial game state
-            _gameStateController.UpdateBoardState(initialBoardState);
+            _gameStateControllerController.UpdateBoardState(initialBoardState);
 
             //iterate through game state
             var whiteTurn = initialBoardState.CloneWithDecrementBuildState();
-            _gameStateController.UpdateBoardState(whiteTurn);
+            _gameStateControllerController.UpdateBoardState(whiteTurn);
 
-            Assert.That(_gameStateController.CurrentBoardState.Board[4, 4].BuildTileState.Turns,
+            Assert.That(_gameStateControllerController.CurrentBoardState.Board[4, 4].BuildTileState.Turns,
                 Is.EqualTo(0));
-            Assert.That(_gameStateController.CurrentBoardState.Board[4, 4].BuildTileState.BuildingPiece,
+            Assert.That(_gameStateControllerController.CurrentBoardState.Board[4, 4].BuildTileState.BuildingPiece,
                 Is.EqualTo(PieceType.WhitePawn));
         }
 
@@ -220,15 +220,15 @@ namespace Tests.UnitTests.Game
             var initialState = new BoardState(board);
 
             //generate initial game state
-            _gameStateController.UpdateBoardState(initialState);
+            _gameStateControllerController.UpdateBoardState(initialState);
 
             //iterate through game state
             var whiteTurn = initialState.CloneWithDecrementBuildState();
-            _gameStateController.UpdateBoardState(whiteTurn);
+            _gameStateControllerController.UpdateBoardState(whiteTurn);
 
-            Assert.That(_gameStateController.CurrentBoardState.Board[4, 4].BuildTileState.Turns,
+            Assert.That(_gameStateControllerController.CurrentBoardState.Board[4, 4].BuildTileState.Turns,
                 Is.EqualTo(0));
-            Assert.That(_gameStateController.CurrentBoardState.Board[4, 4].BuildTileState.BuildingPiece,
+            Assert.That(_gameStateControllerController.CurrentBoardState.Board[4, 4].BuildTileState.BuildingPiece,
                 Is.EqualTo(PieceType.NullPiece));
         }
 
@@ -242,19 +242,20 @@ namespace Tests.UnitTests.Game
             var initialBoardState = new BoardState(board);
 
             //generate initial game state
-            _gameStateController.UpdateBoardState(initialBoardState);
+            _gameStateControllerController.UpdateBoardState(initialBoardState);
 
             //iterate through game state
             var whiteTurn = initialBoardState.CloneWithDecrementBuildState();
             whiteTurn.Board[4, 4].BuildTileState = new BuildTileState(PieceType.WhitePawn);
-            _gameStateController.UpdateBoardState(whiteTurn);
+            _gameStateControllerController.UpdateBoardState(whiteTurn);
 
             var blackTurn = whiteTurn.CloneWithDecrementBuildState();
-            _gameStateController.UpdateBoardState(blackTurn);
+            _gameStateControllerController.UpdateBoardState(blackTurn);
 
 
-            Assert.That(_gameStateController.CurrentBoardState.Board[4, 4].BuildTileState.Turns, Is.EqualTo(0));
-            Assert.That(_gameStateController.CurrentBoardState.Board[4, 4].CurrentPiece.Type,
+            Assert.That(_gameStateControllerController.CurrentBoardState.Board[4, 4].BuildTileState.Turns,
+                Is.EqualTo(0));
+            Assert.That(_gameStateControllerController.CurrentBoardState.Board[4, 4].CurrentPiece.Type,
                 Is.EqualTo(PieceType.NullPiece));
         }
 
@@ -270,26 +271,26 @@ namespace Tests.UnitTests.Game
             var initialBoardState = new BoardState(board);
 
             //generate initial game state
-            _gameStateController.UpdateBoardState(initialBoardState);
+            _gameStateControllerController.UpdateBoardState(initialBoardState);
 
             //iterate through game state
             var whiteTurn = initialBoardState.CloneWithDecrementBuildState();
-            _gameStateController.UpdateBoardState(whiteTurn);
-            Assert.That(_gameStateController.CurrentBoardState.Board[4, 4].BuildTileState.BuildingPiece ==
+            _gameStateControllerController.UpdateBoardState(whiteTurn);
+            Assert.That(_gameStateControllerController.CurrentBoardState.Board[4, 4].BuildTileState.BuildingPiece ==
                         PieceType.WhitePawn);
 
             //move blocking piece
             var blackTurn = whiteTurn.CloneWithDecrementBuildState();
             blackTurn.Board[4, 4].CurrentPiece = new Piece();
             blackTurn.Board[5, 5].CurrentPiece = new Piece(PieceType.WhiteKing);
-            _gameStateController.UpdateBoardState(blackTurn);
+            _gameStateControllerController.UpdateBoardState(blackTurn);
 
             //White makes move
             var secondWhiteTurn = blackTurn.CloneWithDecrementBuildState();
-            _gameStateController.UpdateBoardState(secondWhiteTurn);
+            _gameStateControllerController.UpdateBoardState(secondWhiteTurn);
 
 
-            Assert.That(_gameStateController.CurrentBoardState.Board[4, 4].CurrentPiece.Type,
+            Assert.That(_gameStateControllerController.CurrentBoardState.Board[4, 4].CurrentPiece.Type,
                 Is.EqualTo(PieceType.WhitePawn));
         }
 
@@ -305,18 +306,18 @@ namespace Tests.UnitTests.Game
 
             // initialise game state
             var initialBoardState = new BoardState(board);
-            _gameStateController.UpdateBoardState(initialBoardState);
+            _gameStateControllerController.UpdateBoardState(initialBoardState);
 
             var whiteTurn = initialBoardState.CloneWithDecrementBuildState();
             whiteTurn.Board[0, 5].CurrentPiece = new Piece(PieceType.NullPiece);
             whiteTurn.Board[0, 7].CurrentPiece = new Piece(PieceType.WhiteQueen);
-            _gameStateController.UpdateBoardState(whiteTurn);
+            _gameStateControllerController.UpdateBoardState(whiteTurn);
 
-            Assert.That(_gameStateController.Turn, Is.EqualTo(PieceColour.Black));
-            Assert.That(_gameStateController.PossiblePieceMoves.Count, Is.EqualTo(1));
-            Assert.That(_gameStateController.PossiblePieceMoves[new Position(6, 7)].Count, Is.EqualTo(0));
-            Assert.That(_gameStateController.Check, Is.True);
-            Assert.That(_gameStateController.CheckMate, Is.True);
+            Assert.That(_gameStateControllerController.Turn, Is.EqualTo(PieceColour.Black));
+            Assert.That(_gameStateControllerController.PossiblePieceMoves.Count, Is.EqualTo(1));
+            Assert.That(_gameStateControllerController.PossiblePieceMoves[new Position(6, 7)].Count, Is.EqualTo(0));
+            Assert.That(_gameStateControllerController.Check, Is.True);
+            Assert.That(_gameStateControllerController.CheckMate, Is.True);
         }
 
 
@@ -335,18 +336,18 @@ namespace Tests.UnitTests.Game
 
             // initialise game state
             var initialBoardState = new BoardState(board);
-            _gameStateController.UpdateBoardState(initialBoardState);
+            _gameStateControllerController.UpdateBoardState(initialBoardState);
 
             var whiteTurn = initialBoardState.CloneWithDecrementBuildState();
             whiteTurn.Board[2, 0].CurrentPiece = new Piece(PieceType.NullPiece);
             whiteTurn.Board[2, 7].CurrentPiece = new Piece(PieceType.WhiteRook);
-            _gameStateController.UpdateBoardState(whiteTurn);
+            _gameStateControllerController.UpdateBoardState(whiteTurn);
 
-            Assert.That(_gameStateController.Turn, Is.EqualTo(PieceColour.Black));
-            _gameStateController.PossiblePieceMoves.ToList()
+            Assert.That(_gameStateControllerController.Turn, Is.EqualTo(PieceColour.Black));
+            _gameStateControllerController.PossiblePieceMoves.ToList()
                 .ForEach(turn => Assert.That(turn.Value.Count, Is.EqualTo(0)));
 
-            Assert.That(_gameStateController.CheckMate, Is.True);
+            Assert.That(_gameStateControllerController.CheckMate, Is.True);
         }
 
         [Test]
@@ -362,17 +363,17 @@ namespace Tests.UnitTests.Game
 
             // initialise game state
             var initialBoardState = new BoardState(board);
-            _gameStateController.UpdateBoardState(initialBoardState);
+            _gameStateControllerController.UpdateBoardState(initialBoardState);
 
             var whiteTurn = initialBoardState.CloneWithDecrementBuildState();
             whiteTurn.Board[7, 6].CurrentPiece = new Piece(PieceType.NullPiece);
             whiteTurn.Board[4, 6].CurrentPiece = new Piece(PieceType.WhiteQueen);
-            _gameStateController.UpdateBoardState(whiteTurn);
+            _gameStateControllerController.UpdateBoardState(whiteTurn);
 
-            Assert.That(_gameStateController.Turn, Is.EqualTo(PieceColour.Black));
-            _gameStateController.PossiblePieceMoves.ToList()
+            Assert.That(_gameStateControllerController.Turn, Is.EqualTo(PieceColour.Black));
+            _gameStateControllerController.PossiblePieceMoves.ToList()
                 .ForEach(turn => Assert.That(turn.Value.Count, Is.EqualTo(0)));
-            Assert.That(_gameStateController.CheckMate, Is.True);
+            Assert.That(_gameStateControllerController.CheckMate, Is.True);
         }
 
 
@@ -392,17 +393,17 @@ namespace Tests.UnitTests.Game
 
             // initialise game state
             var initialBoardState = new BoardState(board);
-            _gameStateController.UpdateBoardState(initialBoardState);
+            _gameStateControllerController.UpdateBoardState(initialBoardState);
 
             var whiteTurn = initialBoardState.CloneWithDecrementBuildState();
             whiteTurn.Board[2, 2].CurrentPiece = new Piece(PieceType.NullPiece);
             whiteTurn.Board[6, 6].CurrentPiece = new Piece(PieceType.WhiteQueen);
-            _gameStateController.UpdateBoardState(whiteTurn);
+            _gameStateControllerController.UpdateBoardState(whiteTurn);
 
-            Assert.That(_gameStateController.Turn, Is.EqualTo(PieceColour.Black));
-            _gameStateController.PossiblePieceMoves.ToList()
+            Assert.That(_gameStateControllerController.Turn, Is.EqualTo(PieceColour.Black));
+            _gameStateControllerController.PossiblePieceMoves.ToList()
                 .ForEach(turn => Assert.That(turn.Value.Count, Is.EqualTo(0)));
-            Assert.That(_gameStateController.CheckMate, Is.True);
+            Assert.That(_gameStateControllerController.CheckMate, Is.True);
         }
 
 
@@ -421,17 +422,17 @@ namespace Tests.UnitTests.Game
 
             // initialise game state
             var initialBoardState = new BoardState(board);
-            _gameStateController.UpdateBoardState(initialBoardState);
+            _gameStateControllerController.UpdateBoardState(initialBoardState);
 
             var whiteTurn = initialBoardState.CloneWithDecrementBuildState();
             whiteTurn.Board[2, 4].CurrentPiece = new Piece(PieceType.NullPiece);
             whiteTurn.Board[3, 3].CurrentPiece = new Piece(PieceType.WhiteBishop);
-            _gameStateController.UpdateBoardState(whiteTurn);
+            _gameStateControllerController.UpdateBoardState(whiteTurn);
 
-            Assert.That(_gameStateController.Turn, Is.EqualTo(PieceColour.Black));
-            _gameStateController.PossiblePieceMoves.ToList()
+            Assert.That(_gameStateControllerController.Turn, Is.EqualTo(PieceColour.Black));
+            _gameStateControllerController.PossiblePieceMoves.ToList()
                 .ForEach(turn => Assert.That(turn.Value.Count, Is.EqualTo(0)));
-            Assert.That(_gameStateController.CheckMate, Is.True);
+            Assert.That(_gameStateControllerController.CheckMate, Is.True);
         }
 
 
@@ -452,17 +453,17 @@ namespace Tests.UnitTests.Game
 
             // initialise game state
             var initialBoardState = new BoardState(board);
-            _gameStateController.UpdateBoardState(initialBoardState);
+            _gameStateControllerController.UpdateBoardState(initialBoardState);
 
             var whiteTurn = initialBoardState.CloneWithDecrementBuildState();
             whiteTurn.Board[6, 3].CurrentPiece = new Piece(PieceType.NullPiece);
             whiteTurn.Board[7, 5].CurrentPiece = new Piece(PieceType.WhiteKnight);
-            _gameStateController.UpdateBoardState(whiteTurn);
+            _gameStateControllerController.UpdateBoardState(whiteTurn);
 
-            Assert.That(_gameStateController.Turn, Is.EqualTo(PieceColour.Black));
-            _gameStateController.PossiblePieceMoves.ToList()
+            Assert.That(_gameStateControllerController.Turn, Is.EqualTo(PieceColour.Black));
+            _gameStateControllerController.PossiblePieceMoves.ToList()
                 .ForEach(turn => Assert.That(turn.Value.Count, Is.EqualTo(0)));
-            Assert.That(_gameStateController.CheckMate, Is.True);
+            Assert.That(_gameStateControllerController.CheckMate, Is.True);
         }
 
 
@@ -480,17 +481,17 @@ namespace Tests.UnitTests.Game
 
             // initialise game state
             var initialBoardState = new BoardState(board);
-            _gameStateController.UpdateBoardState(initialBoardState);
+            _gameStateControllerController.UpdateBoardState(initialBoardState);
 
             var whiteTurn = initialBoardState.CloneWithDecrementBuildState();
             whiteTurn.Board[2, 5].CurrentPiece = new Piece(PieceType.NullPiece);
             whiteTurn.Board[2, 6].CurrentPiece = new Piece(PieceType.WhitePawn);
-            _gameStateController.UpdateBoardState(whiteTurn);
+            _gameStateControllerController.UpdateBoardState(whiteTurn);
 
-            Assert.That(_gameStateController.Turn, Is.EqualTo(PieceColour.Black));
-            _gameStateController.PossiblePieceMoves.ToList()
+            Assert.That(_gameStateControllerController.Turn, Is.EqualTo(PieceColour.Black));
+            _gameStateControllerController.PossiblePieceMoves.ToList()
                 .ForEach(turn => Assert.That(turn.Value.Count, Is.EqualTo(0)));
-            Assert.That(_gameStateController.CheckMate, Is.True);
+            Assert.That(_gameStateControllerController.CheckMate, Is.True);
         }
 
 
@@ -509,17 +510,17 @@ namespace Tests.UnitTests.Game
 
             // initialise game state
             var initialBoardState = new BoardState(board);
-            _gameStateController.UpdateBoardState(initialBoardState);
+            _gameStateControllerController.UpdateBoardState(initialBoardState);
 
             var whiteTurn = initialBoardState.CloneWithDecrementBuildState();
             whiteTurn.Board[6, 4].CurrentPiece = new Piece(PieceType.NullPiece);
             whiteTurn.Board[5, 6].CurrentPiece = new Piece(PieceType.WhiteKnight);
-            _gameStateController.UpdateBoardState(whiteTurn);
+            _gameStateControllerController.UpdateBoardState(whiteTurn);
 
-            Assert.That(_gameStateController.Turn, Is.EqualTo(PieceColour.Black));
-            _gameStateController.PossiblePieceMoves.ToList()
+            Assert.That(_gameStateControllerController.Turn, Is.EqualTo(PieceColour.Black));
+            _gameStateControllerController.PossiblePieceMoves.ToList()
                 .ForEach(turn => Assert.That(turn.Value.Count, Is.EqualTo(0)));
-            Assert.That(_gameStateController.CheckMate, Is.True);
+            Assert.That(_gameStateControllerController.CheckMate, Is.True);
         }
 
 
@@ -539,17 +540,17 @@ namespace Tests.UnitTests.Game
 
             // initialise game state
             var initialBoardState = new BoardState(board);
-            _gameStateController.UpdateBoardState(initialBoardState);
+            _gameStateControllerController.UpdateBoardState(initialBoardState);
 
             var whiteTurn = initialBoardState.CloneWithDecrementBuildState();
             whiteTurn.Board[3, 3].CurrentPiece = new Piece(PieceType.NullPiece);
             whiteTurn.Board[7, 3].CurrentPiece = new Piece(PieceType.WhiteRook);
-            _gameStateController.UpdateBoardState(whiteTurn);
+            _gameStateControllerController.UpdateBoardState(whiteTurn);
 
-            Assert.That(_gameStateController.Turn, Is.EqualTo(PieceColour.Black));
-            _gameStateController.PossiblePieceMoves.ToList()
+            Assert.That(_gameStateControllerController.Turn, Is.EqualTo(PieceColour.Black));
+            _gameStateControllerController.PossiblePieceMoves.ToList()
                 .ForEach(turn => Assert.That(turn.Value.Count, Is.EqualTo(0)));
-            Assert.That(_gameStateController.CheckMate, Is.True);
+            Assert.That(_gameStateControllerController.CheckMate, Is.True);
         }
 
 
@@ -568,17 +569,17 @@ namespace Tests.UnitTests.Game
 
             // initialise game state
             var initialBoardState = new BoardState(board);
-            _gameStateController.UpdateBoardState(initialBoardState);
+            _gameStateControllerController.UpdateBoardState(initialBoardState);
 
             var whiteTurn = initialBoardState.CloneWithDecrementBuildState();
             whiteTurn.Board[4, 6].CurrentPiece = new Piece(PieceType.NullPiece);
             whiteTurn.Board[5, 5].CurrentPiece = new Piece(PieceType.WhiteBishop);
-            _gameStateController.UpdateBoardState(whiteTurn);
+            _gameStateControllerController.UpdateBoardState(whiteTurn);
 
-            Assert.That(_gameStateController.Turn, Is.EqualTo(PieceColour.Black));
-            _gameStateController.PossiblePieceMoves.ToList()
+            Assert.That(_gameStateControllerController.Turn, Is.EqualTo(PieceColour.Black));
+            _gameStateControllerController.PossiblePieceMoves.ToList()
                 .ForEach(turn => Assert.That(turn.Value.Count, Is.EqualTo(0)));
-            Assert.That(_gameStateController.CheckMate, Is.True);
+            Assert.That(_gameStateControllerController.CheckMate, Is.True);
         }
     }
 }

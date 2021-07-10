@@ -6,7 +6,7 @@ using Models.State.PlayerState;
 
 namespace Models.Services.Game.Interfaces
 {
-    public interface IGameState
+    public interface IGameStateController
     {
         PieceColour Turn { get; }
         bool Check { get; }

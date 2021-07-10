@@ -29,7 +29,7 @@ namespace View.UserInput
         };
 
         private bool _buildSelectionInstigated;
-        private IGameState _gameState;
+        private IGameStateController _gameStateController;
         private Position _nearestPos;
         private PieceBuildSelectorFactory _pieceBuildSelectorFactory;
         private PieceType _pieceToBuild;
@@ -39,9 +39,9 @@ namespace View.UserInput
         {
             _nearestPos =
                 NearestBoardPosFinder.GetNearestBoardPosition(eventData.pointerCurrentRaycast.worldPosition);
-            if (_gameState.PossibleBuildMoves.BuildPositions.Contains(_nearestPos))
+            if (_gameStateController.PossibleBuildMoves.BuildPositions.Contains(_nearestPos))
             {
-                RenderSelections(_gameState.Turn == PieceColour.Black ? BlackSelection : WhiteSelection,
+                RenderSelections(_gameStateController.Turn == PieceColour.Black ? BlackSelection : WhiteSelection,
                     _nearestPos.Vector);
                 _buildSelectionInstigated = true;
             }
@@ -62,10 +62,10 @@ namespace View.UserInput
         private void SetPieceCallBack(PieceType pieceType) => _pieceToBuild = pieceType;
 
         [Inject]
-        public void Construct(ICommandInvoker commandInvoker, IGameState gameState,
+        public void Construct(ICommandInvoker commandInvoker, IGameStateController gameStateController,
             BuildCommandFactory buildCommandFactory, PieceBuildSelectorFactory pieceBuildSelectorFactory)
         {
-            _gameState = gameState;
+            _gameStateController = gameStateController;
             _commandInvoker = commandInvoker;
             _buildCommandFactory = buildCommandFactory;
             _pieceBuildSelectorFactory = pieceBuildSelectorFactory;
@@ -76,7 +76,7 @@ namespace View.UserInput
             var vectors = CircleVectors.VectorPoints(5, 0.75f, center, Vector3.forward);
             for (var i = 0; i < vectors.Length; i++)
             {
-                var canBuild = _gameState.PossibleBuildMoves.BuildPieces.Contains(pieces[i]);
+                var canBuild = _gameStateController.PossibleBuildMoves.BuildPieces.Contains(pieces[i]);
                 var pieceBuildSelector =
                     _pieceBuildSelectorFactory.Create(vectors[i], pieces[i], SetPieceCallBack, canBuild);
                 pieceBuildSelector.transform.parent = GameObject.FindGameObjectWithTag("UI").transform;

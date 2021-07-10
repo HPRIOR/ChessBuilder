@@ -12,7 +12,7 @@ namespace Controllers.Commands
         private static IMoveValidator _moveValidator;
         private readonly Position _destination;
         private readonly Position _from;
-        private readonly IGameState _gameState;
+        private readonly IGameStateController _gameStateController;
         private readonly BoardState _stateTransitionedFrom;
 
 
@@ -25,11 +25,11 @@ namespace Controllers.Commands
             Position destination,
             IPieceMover pieceMover,
             IMoveValidator moveValidator,
-            IGameState gameState
+            IGameStateController gameStateController
         )
         {
-            _gameState = gameState;
-            _stateTransitionedFrom = _gameState.CurrentBoardState;
+            _gameStateController = gameStateController;
+            _stateTransitionedFrom = _gameStateController.CurrentBoardState;
 
             _from = from;
             _destination = destination;
@@ -40,23 +40,24 @@ namespace Controllers.Commands
 
         public void Execute()
         {
-            var newBoardState = _pieceMover.GenerateNewBoardState(_gameState.CurrentBoardState, _from, _destination);
-            _gameState.UpdateBoardState(newBoardState);
+            var newBoardState =
+                _pieceMover.GenerateNewBoardState(_gameStateController.CurrentBoardState, _from, _destination);
+            _gameStateController.UpdateBoardState(newBoardState);
         }
 
         public bool IsValid()
         {
-            if (_moveValidator.ValidateMove(_gameState.PossiblePieceMoves, _from, _destination))
+            if (_moveValidator.ValidateMove(_gameStateController.PossiblePieceMoves, _from, _destination))
                 return true;
 
 
-            _gameState.RetainBoardState();
+            _gameStateController.RetainBoardState();
             return false;
         }
 
         public void Undo()
         {
-            _gameState.UpdateBoardState(_stateTransitionedFrom);
+            _gameStateController.UpdateBoardState(_stateTransitionedFrom);
         }
 
         public class Factory : PlaceholderFactory<Position, Position, MoveCommand>

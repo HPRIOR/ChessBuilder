@@ -12,7 +12,7 @@ using Models.State.PlayerState;
 
 namespace Models.Services.Game.Implementations
 {
-    public class GameStateController : IGameState, ITurnEventInvoker
+    public class GameStateController : IGameStateController, ITurnEventInvoker
     {
         private const int maxBuildPoints = 39;
         private readonly IBuildMoveGenerator _buildMoveGenerator;

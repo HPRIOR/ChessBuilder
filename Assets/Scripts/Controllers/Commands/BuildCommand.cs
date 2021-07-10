@@ -12,7 +12,7 @@ namespace Controllers.Commands
         private static IBuilder _builder;
         private static IBuildValidator _buildValidator;
         private readonly Position _at;
-        private readonly IGameState _gameState;
+        private readonly IGameStateController _gameStateController;
         private readonly PieceType _piece;
         private readonly BoardState _stateTransitionedFrom;
 
@@ -21,33 +21,33 @@ namespace Controllers.Commands
             PieceType piece,
             IBuilder builder,
             IBuildValidator buildValidator,
-            IGameState gameState)
+            IGameStateController gameStateController)
         {
             _at = at;
             _piece = piece;
             _builder = builder;
             _buildValidator = buildValidator;
-            _gameState = gameState;
-            _stateTransitionedFrom = _gameState.CurrentBoardState;
+            _gameStateController = gameStateController;
+            _stateTransitionedFrom = _gameStateController.CurrentBoardState;
         }
 
         public void Execute()
         {
-            var newBoardState = _builder.GenerateNewBoardState(_gameState.CurrentBoardState, _at, _piece);
-            _gameState.UpdateBoardState(newBoardState);
+            var newBoardState = _builder.GenerateNewBoardState(_gameStateController.CurrentBoardState, _at, _piece);
+            _gameStateController.UpdateBoardState(newBoardState);
         }
 
         public void Undo()
         {
-            _gameState.UpdateBoardState(_stateTransitionedFrom);
+            _gameStateController.UpdateBoardState(_stateTransitionedFrom);
         }
 
         public bool IsValid()
         {
-            if (_buildValidator.ValidateBuild(_gameState.PossibleBuildMoves, _at, _piece))
+            if (_buildValidator.ValidateBuild(_gameStateController.PossibleBuildMoves, _at, _piece))
                 return true;
 
-            _gameState.RetainBoardState();
+            _gameStateController.RetainBoardState();
             return false;
         }
 

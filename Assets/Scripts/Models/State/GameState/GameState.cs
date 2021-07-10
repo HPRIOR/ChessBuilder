@@ -1,18 +1,16 @@
 ﻿using System.Collections.Immutable;
 using Models.State.Board;
 using Models.State.BuildState;
-using Models.State.PieceState;
 
 namespace Models.State.GameState
 {
     public class GameState
     {
-        public GameState(PieceColour turn, bool check, bool checkMate, PlayerState.PlayerState blackState,
+        public GameState(bool check, bool checkMate, PlayerState.PlayerState blackState,
             PlayerState.PlayerState whiteState,
             ImmutableDictionary<Position, ImmutableHashSet<Position>> possiblePieceMoves,
             BuildMoves possibleBuildMoves)
         {
-            Turn = turn;
             Check = check;
             CheckMate = checkMate;
             BlackState = blackState;
@@ -21,7 +19,6 @@ namespace Models.State.GameState
             PossibleBuildMoves = possibleBuildMoves;
         }
 
-        public PieceColour Turn { get; }
         public bool Check { get; }
         public bool CheckMate { get; }
         public PlayerState.PlayerState BlackState { get; }

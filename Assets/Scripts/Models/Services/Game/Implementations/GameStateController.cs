@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using System.Text;
 using Models.Services.Build.Interfaces;
@@ -71,7 +72,8 @@ namespace Models.Services.Game.Implementations
             var relevantPlayerState = Turn == PieceColour.Black ? BlackState : WhiteState;
             PossibleBuildMoves =
                 Check
-                    ? new BuildMoves(new HashSet<Position>(), new HashSet<PieceType>()) // no build moves when in check
+                    ? new BuildMoves(ImmutableHashSet<Position>.Empty,
+                        ImmutableHashSet<PieceType>.Empty) // no build moves when in check
                     : _buildMoveGenerator.GetPossibleBuildMoves(CurrentBoardState, Turn, relevantPlayerState);
 
             CheckMate = _gameOverEval.CheckMate(Check, PossiblePieceMoves);

@@ -2,8 +2,8 @@
 using Models.Services.Build.Interfaces;
 using Models.Services.Game.Interfaces;
 using Models.Services.Interfaces;
-using Models.State;
 using Models.State.Board;
+using Models.State.GameState;
 
 namespace Models.Services.Game.Implementations
 {

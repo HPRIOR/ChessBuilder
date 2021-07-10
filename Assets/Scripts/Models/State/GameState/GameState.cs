@@ -4,7 +4,7 @@ using Models.State.Board;
 using Models.State.BuildState;
 using Models.State.PieceState;
 
-namespace Models.State
+namespace Models.State.GameState
 {
     public class GameState : ICloneable
     {

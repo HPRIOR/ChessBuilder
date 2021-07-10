@@ -1,5 +1,5 @@
-﻿using Models.State;
-using Models.State.Board;
+﻿using Models.State.Board;
+using Models.State.GameState;
 
 namespace Models.Services.Game.Interfaces
 {

@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections.Immutable;
 using Models.State.Board;
 using Models.State.BuildState;
 using Models.State.PieceState;
@@ -15,7 +15,7 @@ namespace Models.Services.Game.Interfaces
         public PlayerState BlackState { get; }
         public PlayerState WhiteState { get; }
         public BuildMoves PossibleBuildMoves { get; }
-        IDictionary<Position, HashSet<Position>> PossiblePieceMoves { get; }
+        ImmutableDictionary<Position, ImmutableHashSet<Position>> PossiblePieceMoves { get; }
         void UpdateBoardState(BoardState newState);
         void RetainBoardState();
     }

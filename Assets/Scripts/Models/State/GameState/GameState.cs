@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Collections.Immutable;
 using Models.State.Board;
 using Models.State.BuildState;
 using Models.State.PieceState;
@@ -9,7 +9,8 @@ namespace Models.State
     public class GameState : ICloneable
     {
         public GameState(PieceColour turn, bool check, bool checkMate, PlayerState.PlayerState blackState,
-            PlayerState.PlayerState whiteState, IDictionary<Position, HashSet<Position>> possiblePieceMoves,
+            PlayerState.PlayerState whiteState,
+            ImmutableDictionary<Position, ImmutableHashSet<Position>> possiblePieceMoves,
             BuildMoves possibleBuildMoves)
         {
             Turn = turn;
@@ -26,10 +27,10 @@ namespace Models.State
         public bool CheckMate { get; }
         public PlayerState.PlayerState BlackState { get; }
         public PlayerState.PlayerState WhiteState { get; }
-        public IDictionary<Position, HashSet<Position>> PossiblePieceMoves { get; }
+        public ImmutableDictionary<Position, ImmutableHashSet<Position>> PossiblePieceMoves { get; }
         public BuildMoves PossibleBuildMoves { get; }
 
         public object Clone() => new GameState(Turn, Check, CheckMate, BlackState, WhiteState,
-            new Dictionary<Position, HashSet<Position>>(PossiblePieceMoves), PossibleBuildMoves);
+            PossiblePieceMoves, PossibleBuildMoves);
     }
 }

@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using Models.Services.Interfaces;
+﻿using System.Collections.Immutable;
+using Controllers.Interfaces;
 using Models.State.Board;
 
 namespace Controllers.PieceMovers
@@ -10,7 +10,7 @@ namespace Controllers.PieceMovers
          * Keep move validator taking possible move argument. This will allow it to be used in other commands, and on
          * arbitrary board states
          */
-        public bool ValidateMove(IDictionary<Position, HashSet<Position>> possibleMoves,
+        public bool ValidateMove(ImmutableDictionary<Position, ImmutableHashSet<Position>> possibleMoves,
             Position from, Position destination)
         {
             if (from.Equals(destination)) return false;

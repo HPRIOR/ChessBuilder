@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using Bindings.Utils;
 using Models.Services.Game.Interfaces;
@@ -84,7 +84,8 @@ namespace Tests.UnitTests.Game
             var initialBoardState = new BoardState(board);
             _gameStateController.UpdateBoardState(initialBoardState);
 
-            var expectedBuildMoves = new BuildMoves(new HashSet<Position>(), new HashSet<PieceType>());
+            var expectedBuildMoves =
+                new BuildMoves(ImmutableHashSet<Position>.Empty, ImmutableHashSet<PieceType>.Empty);
             Assert.That(_gameStateController.PossibleBuildMoves.BuildPieces,
                 Is.EquivalentTo(expectedBuildMoves.BuildPieces));
             Assert.That(_gameStateController.PossibleBuildMoves.BuildPositions,

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 using System.Text;
@@ -48,7 +47,7 @@ namespace Models.Services.Game.Implementations
         public PlayerState BlackState { get; private set; }
         public PlayerState WhiteState { get; private set; }
         public BuildMoves PossibleBuildMoves { get; private set; }
-        public IDictionary<Position, HashSet<Position>> PossiblePieceMoves { get; private set; }
+        public ImmutableDictionary<Position, ImmutableHashSet<Position>> PossiblePieceMoves { get; private set; }
 
         public void UpdateBoardState(BoardState newState)
         {

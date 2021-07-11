@@ -1,81 +1,35 @@
 ﻿using System;
-using System.Collections.Immutable;
-using System.Linq;
-using System.Text;
-using Models.Services.Build.Interfaces;
 using Models.Services.Game.Interfaces;
-using Models.Services.Interfaces;
 using Models.State.Board;
-using Models.State.BuildState;
+using Models.State.GameState;
 using Models.State.PieceState;
-using Models.State.PlayerState;
 
 namespace Models.Services.Game.Implementations
 {
     public class GameStateController : IGameStateController, ITurnEventInvoker
     {
-        private const int maxBuildPoints = 39;
-        private readonly IBuildMoveGenerator _buildMoveGenerator;
-        private readonly IBuildPointsCalculator _buildPointsCalculator;
-        private readonly IBuildResolver _buildResolver;
-        private readonly IGameOverEval _gameOverEval;
-        private readonly IMovesGenerator _movesGenerator;
+        private readonly IGameStateUpdater _gameStateUpdater;
 
-        // TODO Don't hard code max build points 
         public GameStateController(
-            IMovesGenerator movesGenerator,
-            IBuildMoveGenerator buildMoveGenerator,
-            IBuildPointsCalculator buildPointsCalculator,
-            IBuildResolver buildResolver,
-            IGameOverEval gameOverEval
+            IGameStateUpdater gameStateUpdater
         )
         {
-            _movesGenerator = movesGenerator;
-            _buildMoveGenerator = buildMoveGenerator;
-            _buildPointsCalculator = buildPointsCalculator;
-            _buildResolver = buildResolver;
-            _gameOverEval = gameOverEval;
-            BlackState = new PlayerState(maxBuildPoints);
-            WhiteState = new PlayerState(maxBuildPoints);
+            _gameStateUpdater = gameStateUpdater;
             Turn = PieceColour.Black;
         }
 
-        public bool Check { get; private set; }
-        public bool CheckMate { get; private set; }
-        public BoardState CurrentBoardState { get; private set; }
-        public PieceColour Turn { get; private set; }
-        public PlayerState BlackState { get; private set; }
-        public PlayerState WhiteState { get; private set; }
-        public BuildMoves PossibleBuildMoves { get; private set; }
-        public ImmutableDictionary<Position, ImmutableHashSet<Position>> PossiblePieceMoves { get; private set; }
 
-        public void UpdateBoardState(BoardState newState)
+        public GameState CurrentGameState { get; private set; }
+        public PieceColour Turn { get; private set; }
+
+        public void UpdateGameState(BoardState newState)
         {
             Turn = NextTurn();
-            var previousState = CurrentBoardState;
-            CurrentBoardState = newState;
+            var previousState = CurrentGameState?.BoardState;
 
-            _buildResolver.ResolveBuilds(CurrentBoardState, NextTurn());
+            CurrentGameState = _gameStateUpdater.UpdateGameState(newState, Turn);
 
-            BlackState =
-                _buildPointsCalculator.CalculateBuildPoints(PieceColour.Black, CurrentBoardState, maxBuildPoints);
-            WhiteState =
-                _buildPointsCalculator.CalculateBuildPoints(PieceColour.White, CurrentBoardState, maxBuildPoints);
-
-            var movesState = _movesGenerator.GetPossibleMoves(CurrentBoardState, Turn);
-            PossiblePieceMoves = movesState.PossibleMoves;
-            Check = movesState.Check;
-
-            var relevantPlayerState = Turn == PieceColour.Black ? BlackState : WhiteState;
-            PossibleBuildMoves =
-                Check
-                    ? new BuildMoves(ImmutableHashSet<Position>.Empty,
-                        ImmutableHashSet<PieceType>.Empty) // no build moves when in check
-                    : _buildMoveGenerator.GetPossibleBuildMoves(CurrentBoardState, Turn, relevantPlayerState);
-
-            CheckMate = _gameOverEval.CheckMate(Check, PossiblePieceMoves);
-
-            GameStateChangeEvent?.Invoke(previousState, CurrentBoardState);
+            GameStateChangeEvent?.Invoke(previousState, CurrentGameState.BoardState);
         }
 
         /// <summary>
@@ -83,35 +37,33 @@ namespace Models.Services.Game.Implementations
         /// </summary>
         public void RetainBoardState()
         {
-            GameStateChangeEvent?.Invoke(CurrentBoardState, CurrentBoardState);
+            GameStateChangeEvent?.Invoke(CurrentGameState.BoardState, CurrentGameState.BoardState);
         }
 
         public event Action<BoardState, BoardState> GameStateChangeEvent;
 
         private PieceColour NextTurn() => Turn == PieceColour.White ? PieceColour.Black : PieceColour.White;
 
-        public override string ToString()
-        {
-            var stringBuilder = new StringBuilder();
-            stringBuilder.Append("Black state: \n");
-            stringBuilder.Append($"     Build Points: {BlackState.BuildPoints} \n");
-            stringBuilder.Append("White state: \n");
-            stringBuilder.Append($"     Build Points: {WhiteState.BuildPoints} \n");
-            stringBuilder.Append("Possible Moves: \n");
-            PossiblePieceMoves.Keys.ToList().ForEach(piecePosition =>
-            {
-                stringBuilder.Append(
-                    $"     {CurrentBoardState.Board[piecePosition.X, piecePosition.Y].CurrentPiece.Type}: \n       ");
-                PossiblePieceMoves[piecePosition].ToList().ForEach(move => stringBuilder.Append($"({move}), "));
-            });
-            stringBuilder.Append("\n");
-            stringBuilder.Append("Possible Build Pieces: \n     ");
-            PossibleBuildMoves.BuildPieces.ToList().ForEach(piece => stringBuilder.Append($"{piece}, "));
-            stringBuilder.Append("\n");
-            stringBuilder.Append("Possible Build Positions: \n     ");
-            PossibleBuildMoves.BuildPositions.OrderBy(p => p.Y).ToList()
-                .ForEach(position => stringBuilder.Append($"({position}), "));
-            return stringBuilder.ToString();
-        }
+        public override string ToString() => "";
+        // var stringBuilder = new StringBuilder();
+        // stringBuilder.Append("Black state: \n");
+        // stringBuilder.Append($"     Build Points: {BlackState.BuildPoints} \n");
+        // stringBuilder.Append("White state: \n");
+        // stringBuilder.Append($"     Build Points: {WhiteState.BuildPoints} \n");
+        // stringBuilder.Append("Possible Moves: \n");
+        // PossiblePieceMoves.Keys.ToList().ForEach(piecePosition =>
+        // {
+        //     stringBuilder.Append(
+        //         $"     {CurrentBoardState.Board[piecePosition.X, piecePosition.Y].CurrentPiece.Type}: \n       ");
+        //     PossiblePieceMoves[piecePosition].ToList().ForEach(move => stringBuilder.Append($"({move}), "));
+        // });
+        // stringBuilder.Append("\n");
+        // stringBuilder.Append("Possible Build Pieces: \n     ");
+        // PossibleBuildMoves.BuildPieces.ToList().ForEach(piece => stringBuilder.Append($"{piece}, "));
+        // stringBuilder.Append("\n");
+        // stringBuilder.Append("Possible Build Positions: \n     ");
+        // PossibleBuildMoves.BuildPositions.OrderBy(p => p.Y).ToList()
+        //     .ForEach(position => stringBuilder.Append($"({position}), "));
+        // return stringBuilder.ToString();
     }
 }

@@ -9,7 +9,7 @@ namespace Models.State.GameState
         public GameState(bool check, bool checkMate, PlayerState.PlayerState blackState,
             PlayerState.PlayerState whiteState,
             ImmutableDictionary<Position, ImmutableHashSet<Position>> possiblePieceMoves,
-            BuildMoves possibleBuildMoves)
+            BuildMoves possibleBuildMoves, BoardState boardState)
         {
             Check = check;
             CheckMate = checkMate;
@@ -17,8 +17,10 @@ namespace Models.State.GameState
             WhiteState = whiteState;
             PossiblePieceMoves = possiblePieceMoves;
             PossibleBuildMoves = possibleBuildMoves;
+            BoardState = boardState;
         }
 
+        public BoardState BoardState { get; }
         public bool Check { get; }
         public bool CheckMate { get; }
         public PlayerState.PlayerState BlackState { get; }

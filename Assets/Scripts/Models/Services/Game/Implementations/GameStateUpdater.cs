@@ -13,6 +13,7 @@ namespace Models.Services.Game.Implementations
 {
     public class GameStateUpdater : IGameStateUpdater
     {
+        //TODO inject me
         private const int maxBuildPoints = 39;
         private readonly IBuildMoveGenerator _buildMoveGenerator;
         private readonly IBuildPointsCalculator _buildPointsCalculator;
@@ -46,7 +47,7 @@ namespace Models.Services.Game.Implementations
             var checkMate = _gameOverEval.CheckMate(moveState.Check, moveState.PossibleMoves);
 
             return new GameState(moveState.Check, checkMate, blackState, whiteState, moveState.PossibleMoves,
-                possibleBuildMoves);
+                possibleBuildMoves, newBoardState);
         }
 
         private BuildMoves GetPossibleBuildMoves(BoardState newBoardState, PieceColour turn, MoveState moveState,

@@ -40,6 +40,7 @@ namespace Models.Services.Game.Implementations
             GameStateChangeEvent?.Invoke(CurrentGameState.BoardState, CurrentGameState.BoardState);
         }
 
+        // TODO pass in GameState rather than board state
         public event Action<BoardState, BoardState> GameStateChangeEvent;
 
         private PieceColour NextTurn() => Turn == PieceColour.White ? PieceColour.Black : PieceColour.White;

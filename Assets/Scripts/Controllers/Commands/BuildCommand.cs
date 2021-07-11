@@ -28,23 +28,24 @@ namespace Controllers.Commands
             _builder = builder;
             _buildValidator = buildValidator;
             _gameStateController = gameStateController;
-            _stateTransitionedFrom = _gameStateController.CurrentBoardState;
+            _stateTransitionedFrom = _gameStateController.CurrentGameState.BoardState;
         }
 
         public void Execute()
         {
-            var newBoardState = _builder.GenerateNewBoardState(_gameStateController.CurrentBoardState, _at, _piece);
-            _gameStateController.UpdateBoardState(newBoardState);
+            var newBoardState =
+                _builder.GenerateNewBoardState(_gameStateController.CurrentGameState.BoardState, _at, _piece);
+            _gameStateController.UpdateGameState(newBoardState);
         }
 
         public void Undo()
         {
-            _gameStateController.UpdateBoardState(_stateTransitionedFrom);
+            _gameStateController.UpdateGameState(_stateTransitionedFrom);
         }
 
         public bool IsValid()
         {
-            if (_buildValidator.ValidateBuild(_gameStateController.PossibleBuildMoves, _at, _piece))
+            if (_buildValidator.ValidateBuild(_gameStateController.CurrentGameState.PossibleBuildMoves, _at, _piece))
                 return true;
 
             _gameStateController.RetainBoardState();

@@ -29,7 +29,7 @@ namespace Controllers.Commands
         )
         {
             _gameStateController = gameStateController;
-            _stateTransitionedFrom = _gameStateController.CurrentBoardState;
+            _stateTransitionedFrom = _gameStateController.CurrentGameState.BoardState;
 
             _from = from;
             _destination = destination;
@@ -41,13 +41,15 @@ namespace Controllers.Commands
         public void Execute()
         {
             var newBoardState =
-                _pieceMover.GenerateNewBoardState(_gameStateController.CurrentBoardState, _from, _destination);
-            _gameStateController.UpdateBoardState(newBoardState);
+                _pieceMover.GenerateNewBoardState(_gameStateController.CurrentGameState.BoardState, _from,
+                    _destination);
+            _gameStateController.UpdateGameState(newBoardState);
         }
 
         public bool IsValid()
         {
-            if (_moveValidator.ValidateMove(_gameStateController.PossiblePieceMoves, _from, _destination))
+            if (_moveValidator.ValidateMove(_gameStateController.CurrentGameState.PossiblePieceMoves, _from,
+                _destination))
                 return true;
 
 
@@ -57,7 +59,7 @@ namespace Controllers.Commands
 
         public void Undo()
         {
-            _gameStateController.UpdateBoardState(_stateTransitionedFrom);
+            _gameStateController.UpdateGameState(_stateTransitionedFrom);
         }
 
         public class Factory : PlaceholderFactory<Position, Position, MoveCommand>

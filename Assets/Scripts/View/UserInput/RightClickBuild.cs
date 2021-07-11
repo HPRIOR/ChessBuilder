@@ -39,7 +39,7 @@ namespace View.UserInput
         {
             _nearestPos =
                 NearestBoardPosFinder.GetNearestBoardPosition(eventData.pointerCurrentRaycast.worldPosition);
-            if (_gameStateController.PossibleBuildMoves.BuildPositions.Contains(_nearestPos))
+            if (_gameStateController.CurrentGameState.PossibleBuildMoves.BuildPositions.Contains(_nearestPos))
             {
                 RenderSelections(_gameStateController.Turn == PieceColour.Black ? BlackSelection : WhiteSelection,
                     _nearestPos.Vector);
@@ -76,7 +76,7 @@ namespace View.UserInput
             var vectors = CircleVectors.VectorPoints(5, 0.75f, center, Vector3.forward);
             for (var i = 0; i < vectors.Length; i++)
             {
-                var canBuild = _gameStateController.PossibleBuildMoves.BuildPieces.Contains(pieces[i]);
+                var canBuild = _gameStateController.CurrentGameState.PossibleBuildMoves.BuildPieces.Contains(pieces[i]);
                 var pieceBuildSelector =
                     _pieceBuildSelectorFactory.Create(vectors[i], pieces[i], SetPieceCallBack, canBuild);
                 pieceBuildSelector.transform.parent = GameObject.FindGameObjectWithTag("UI").transform;

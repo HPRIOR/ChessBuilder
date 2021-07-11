@@ -14,7 +14,7 @@ namespace Models.Services.Game.Implementations
 
         public void Start()
         {
-            GameStateController.UpdateBoardState(InitBoard());
+            GameStateController.UpdateGameState(InitBoard());
         }
 
         [Inject]

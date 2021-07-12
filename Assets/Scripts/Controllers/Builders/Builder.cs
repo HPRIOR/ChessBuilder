@@ -7,12 +7,6 @@ namespace Controllers.Builders
 {
     public class Builder : IBuilder
     {
-        private readonly IBuildResolver _buildResolver;
-
-        public Builder(IBuildResolver buildResolver)
-        {
-            _buildResolver = buildResolver;
-        }
 
         public BoardState GenerateNewBoardState(BoardState previousBoardState, Position buildPosition, PieceType piece)
         {

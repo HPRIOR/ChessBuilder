@@ -7,12 +7,6 @@ namespace Controllers.PieceMovers
 {
     public class PieceMover : IPieceMover
     {
-        private readonly IBuildResolver _buildResolver;
-
-        public PieceMover(IBuildResolver buildResolver)
-        {
-            _buildResolver = buildResolver;
-        }
 
         public BoardState GenerateNewBoardState(BoardState originalBoardState, Position from,
             Position destination)

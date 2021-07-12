@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using Models.Services.Build.Interfaces;
 using Models.State.Board;
@@ -28,27 +29,33 @@ namespace Models.Services.Build.BuildMoves
             : new State.BuildState.BuildMoves(GetWhitePositions(), RemovePiecesByCost(playerState, WhitePieces));
 
 
-        private static HashSet<PieceType> RemovePiecesByCost(PlayerState playerState, IEnumerable<PieceType> pieces) =>
-            new HashSet<PieceType>(pieces.Where(piece => BuildPoints.PieceCost[piece] <= playerState.BuildPoints));
-
-
-        private static HashSet<Position> GetWhitePositions()
+        private static ImmutableHashSet<PieceType> RemovePiecesByCost(PlayerState playerState,
+            IEnumerable<PieceType> pieces)
         {
-            var result = new HashSet<Position>();
-            for (var y = 0; y < 2; y++)
-            for (var x = 0; x < 8; x++)
-                result.Add(new Position(x, y));
-            return result;
+            var result = ImmutableHashSet<PieceType>.Empty.ToBuilder();
+            var availablePieces = pieces.Where(piece => BuildPoints.PieceCost[piece] <= playerState.BuildPoints);
+            availablePieces.ToList().ForEach(piece => result.Add(piece));
+            return result.ToImmutable();
         }
 
 
-        private static HashSet<Position> GetBlackPositions()
+        private static ImmutableHashSet<Position> GetWhitePositions()
         {
-            var result = new HashSet<Position>();
+            var builder = ImmutableHashSet<Position>.Empty.ToBuilder();
+            for (var y = 0; y < 2; y++)
+            for (var x = 0; x < 8; x++)
+                builder.Add(new Position(x, y));
+            return builder.ToImmutable();
+        }
+
+
+        private static ImmutableHashSet<Position> GetBlackPositions()
+        {
+            var builder = ImmutableHashSet<Position>.Empty.ToBuilder();
             for (var x = 0; x < 8; x++)
             for (var y = 7; y > 5; y--)
-                result.Add(new Position(x, y));
-            return result;
+                builder.Add(new Position(x, y));
+            return builder.ToImmutable();
         }
     }
 }

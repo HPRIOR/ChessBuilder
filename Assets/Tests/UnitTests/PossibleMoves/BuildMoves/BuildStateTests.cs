@@ -11,7 +11,7 @@ namespace Tests.UnitTests.PossibleMoves.BuildMoves
         [Test]
         public void DefaultBuildState_HasNullPiece()
         {
-            var buildState = new BuildState();
+            var buildState = new BuildTileState();
             Assert.That(buildState.BuildingPiece, Is.EqualTo(PieceType.NullPiece));
         }
 
@@ -19,14 +19,14 @@ namespace Tests.UnitTests.PossibleMoves.BuildMoves
         [Test]
         public void DefaultBuildState_HasZeroTurns()
         {
-            var buildState = new BuildState();
+            var buildState = new BuildTileState();
             Assert.That(buildState.Turns, Is.EqualTo(0));
         }
 
         [Test]
         public void Decrement_ProducesNewState()
         {
-            var buildState = new BuildState(10);
+            var buildState = new BuildTileState(10);
             var newBuildState = buildState.Decrement();
             Assert.AreNotSame(newBuildState, newBuildState);
         }
@@ -35,7 +35,7 @@ namespace Tests.UnitTests.PossibleMoves.BuildMoves
         [Test]
         public void DecrementAtZero_ProducesSameState()
         {
-            var buildState = new BuildState();
+            var buildState = new BuildTileState();
             var newBuildState = buildState.Decrement();
             Assert.AreEqual(buildState.Turns, newBuildState.Turns);
         }
@@ -43,7 +43,7 @@ namespace Tests.UnitTests.PossibleMoves.BuildMoves
         [Test]
         public void Decrement_DecrementsTurnsByOne()
         {
-            var buildState = new BuildState(10);
+            var buildState = new BuildTileState(10);
             var newBuildState = buildState.Decrement();
             Assert.That(newBuildState.Turns, Is.EqualTo(9));
         }
@@ -51,7 +51,7 @@ namespace Tests.UnitTests.PossibleMoves.BuildMoves
         [Test]
         public void InitialBuildState_HasCorrectPieceType([Values] PieceType pieceType)
         {
-            var buildState = new BuildState(pieceType);
+            var buildState = new BuildTileState(pieceType);
             Assert.That(buildState.BuildingPiece, Is.EqualTo(pieceType));
         }
 
@@ -59,7 +59,7 @@ namespace Tests.UnitTests.PossibleMoves.BuildMoves
         [Test]
         public void InitialBlackQueenBuildState_HasCorrectTurns()
         {
-            var blackQueenBuildState = new BuildState(PieceType.BlackQueen);
+            var blackQueenBuildState = new BuildTileState(PieceType.BlackQueen);
             Assert.That(blackQueenBuildState.Turns, Is.EqualTo(9));
         }
 
@@ -67,7 +67,7 @@ namespace Tests.UnitTests.PossibleMoves.BuildMoves
         [Test]
         public void InitialWhiteQueenBuildState_HasCorrectTurns()
         {
-            var blackQueenBuildState = new BuildState(PieceType.WhiteQueen);
+            var blackQueenBuildState = new BuildTileState(PieceType.WhiteQueen);
             Assert.That(blackQueenBuildState.Turns, Is.EqualTo(9));
         }
 
@@ -76,7 +76,7 @@ namespace Tests.UnitTests.PossibleMoves.BuildMoves
         [Test]
         public void InitialBlackRookBuildState_HasCorrectTurns()
         {
-            var blackQueenBuildState = new BuildState(PieceType.BlackRook);
+            var blackQueenBuildState = new BuildTileState(PieceType.BlackRook);
             Assert.That(blackQueenBuildState.Turns, Is.EqualTo(5));
         }
 
@@ -84,7 +84,7 @@ namespace Tests.UnitTests.PossibleMoves.BuildMoves
         [Test]
         public void InitialWhiteRookBuildState_HasCorrectTurns()
         {
-            var blackQueenBuildState = new BuildState(PieceType.WhiteRook);
+            var blackQueenBuildState = new BuildTileState(PieceType.WhiteRook);
             Assert.That(blackQueenBuildState.Turns, Is.EqualTo(5));
         }
 
@@ -92,7 +92,7 @@ namespace Tests.UnitTests.PossibleMoves.BuildMoves
         [Test]
         public void InitialBlackBishopBuildState_HasCorrectTurns()
         {
-            var blackQueenBuildState = new BuildState(PieceType.BlackBishop);
+            var blackQueenBuildState = new BuildTileState(PieceType.BlackBishop);
             Assert.That(blackQueenBuildState.Turns, Is.EqualTo(3));
         }
 
@@ -100,7 +100,7 @@ namespace Tests.UnitTests.PossibleMoves.BuildMoves
         [Test]
         public void InitialWhiteBishopBuildState_HasCorrectTurns()
         {
-            var blackQueenBuildState = new BuildState(PieceType.WhiteBishop);
+            var blackQueenBuildState = new BuildTileState(PieceType.WhiteBishop);
             Assert.That(blackQueenBuildState.Turns, Is.EqualTo(3));
         }
 
@@ -109,7 +109,7 @@ namespace Tests.UnitTests.PossibleMoves.BuildMoves
         [Test]
         public void InitialBlackKnightBuildState_HasCorrectTurns()
         {
-            var blackQueenBuildState = new BuildState(PieceType.BlackKnight);
+            var blackQueenBuildState = new BuildTileState(PieceType.BlackKnight);
             Assert.That(blackQueenBuildState.Turns, Is.EqualTo(3));
         }
 
@@ -117,7 +117,7 @@ namespace Tests.UnitTests.PossibleMoves.BuildMoves
         [Test]
         public void InitialWhiteKnightBuildState_HasCorrectTurns()
         {
-            var blackQueenBuildState = new BuildState(PieceType.BlackKnight);
+            var blackQueenBuildState = new BuildTileState(PieceType.BlackKnight);
             Assert.That(blackQueenBuildState.Turns, Is.EqualTo(3));
         }
 
@@ -125,7 +125,7 @@ namespace Tests.UnitTests.PossibleMoves.BuildMoves
         [Test]
         public void InitialBlackPawnBuildState_HasCorrectTurns()
         {
-            var blackQueenBuildState = new BuildState(PieceType.BlackPawn);
+            var blackQueenBuildState = new BuildTileState(PieceType.BlackPawn);
             Assert.That(blackQueenBuildState.Turns, Is.EqualTo(1));
         }
 
@@ -133,7 +133,7 @@ namespace Tests.UnitTests.PossibleMoves.BuildMoves
         [Test]
         public void InitialWhitePawnBuildState_HasCorrectTurns()
         {
-            var blackQueenBuildState = new BuildState(PieceType.WhitePawn);
+            var blackQueenBuildState = new BuildTileState(PieceType.WhitePawn);
             Assert.That(blackQueenBuildState.Turns, Is.EqualTo(1));
         }
 

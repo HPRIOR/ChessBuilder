@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections.Immutable;
 using Bindings.Installers.ModelInstallers.Build;
 using Controllers.Interfaces;
 using Models.State.Board;
@@ -39,9 +39,12 @@ namespace Tests.UnitTests.PossibleMoves.BuildMoves
         [Test]
         public void WithBuildMovesAndPieces_CanBuild()
         {
-            var possibleBuildMoves = new HashSet<Position> {new Position(1, 1)};
-            var possibleBuildPieces = new HashSet<PieceType> {PieceType.BlackKnight};
-            var buildMoves = new Models.State.BuildState.BuildMoves(possibleBuildMoves, possibleBuildPieces);
+            var possibleBuildMoves = ImmutableHashSet<Position>.Empty.ToBuilder();
+            possibleBuildMoves.Add(new Position(1, 1));
+            var possibleBuildPieces = ImmutableHashSet<PieceType>.Empty.ToBuilder();
+            possibleBuildPieces.Add(PieceType.BlackKnight);
+            var buildMoves = new Models.State.BuildState.BuildMoves(possibleBuildMoves.ToImmutable(),
+                possibleBuildPieces.ToImmutable());
 
             var result = _buildValidator.ValidateBuild(buildMoves, new Position(1, 1), PieceType.BlackKnight);
 
@@ -51,9 +54,13 @@ namespace Tests.UnitTests.PossibleMoves.BuildMoves
         [Test]
         public void WithBuildMovesAndNotPiece_CannotBuild()
         {
-            var possibleBuildMoves = new HashSet<Position> {new Position(1, 1)};
-            var possibleBuildPieces = new HashSet<PieceType> {PieceType.WhiteKnight};
-            var buildMoves = new Models.State.BuildState.BuildMoves(possibleBuildMoves, possibleBuildPieces);
+            var possibleBuildMoves = ImmutableHashSet<Position>.Empty.ToBuilder();
+            possibleBuildMoves.Add(new Position(1, 1));
+            var possibleBuildPieces = ImmutableHashSet<PieceType>.Empty.ToBuilder();
+            possibleBuildPieces.Add(PieceType.WhiteKnight);
+
+            var buildMoves = new Models.State.BuildState.BuildMoves(possibleBuildMoves.ToImmutable(),
+                possibleBuildPieces.ToImmutable());
 
             var result = _buildValidator.ValidateBuild(buildMoves, new Position(1, 1), PieceType.BlackKnight);
 
@@ -64,9 +71,13 @@ namespace Tests.UnitTests.PossibleMoves.BuildMoves
         [Test]
         public void WithNoBuildMovesAndPiece_CannotBuild()
         {
-            var possibleBuildMoves = new HashSet<Position> {new Position(2, 2)};
-            var possibleBuildPieces = new HashSet<PieceType> {PieceType.BlackKnight};
-            var buildMoves = new Models.State.BuildState.BuildMoves(possibleBuildMoves, possibleBuildPieces);
+            var possibleBuildMoves = ImmutableHashSet<Position>.Empty.ToBuilder();
+            possibleBuildMoves.Add(new Position(2, 2));
+            var possibleBuildPieces = ImmutableHashSet<PieceType>.Empty.ToBuilder();
+            possibleBuildPieces.Add(PieceType.BlackKnight);
+
+            var buildMoves = new Models.State.BuildState.BuildMoves(possibleBuildMoves.ToImmutable(),
+                possibleBuildPieces.ToImmutable());
 
             var result = _buildValidator.ValidateBuild(buildMoves, new Position(1, 1), PieceType.BlackKnight);
 

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using Bindings.Installers.ModelInstallers.Move;
-using Models.Services.Interfaces;
+using Controllers.Interfaces;
 using Models.State.Board;
 using NUnit.Framework;
 using Zenject;
@@ -39,7 +40,7 @@ namespace Tests.UnitTests.Controllers.PieceMovers
         public void RejectsIf_FromEqualsDestination()
         {
             var possibleMoves =
-                new Dictionary<Position, HashSet<Position>>();
+                ImmutableDictionary<Position, ImmutableHashSet<Position>>.Empty;
             var a = new Position(1, 1);
             var b = new Position(1, 1);
             Assert.IsFalse(_moveValidator.ValidateMove(possibleMoves, a, b));
@@ -52,7 +53,7 @@ namespace Tests.UnitTests.Controllers.PieceMovers
                 new Dictionary<Position, HashSet<Position>>
                 {
                     {new Position(1, 1), new HashSet<Position> {new Position(7, 7)}}
-                };
+                }.ToImmutableDictionary(keyVal => keyVal.Key, keyVal => ImmutableHashSet.CreateRange(keyVal.Value));
             var a = new Position(1, 1);
             var b = new Position(2, 2);
             Assert.IsFalse(_moveValidator.ValidateMove(possibleMoves, a, b));
@@ -65,7 +66,7 @@ namespace Tests.UnitTests.Controllers.PieceMovers
                 new Dictionary<Position, HashSet<Position>>
                 {
                     {new Position(1, 1), new HashSet<Position> {new Position(2, 2)}}
-                };
+                }.ToImmutableDictionary(keyVal => keyVal.Key, keyValue => ImmutableHashSet.CreateRange(keyValue.Value));
             var a = new Position(1, 1);
             var b = new Position(2, 2);
             Assert.IsTrue(_moveValidator.ValidateMove(possibleMoves, a, b));

@@ -7,8 +7,10 @@ namespace Bindings.MonoInstallers
     {
         public override void InstallBindings()
         {
-            GameStateInstaller.Install(Container);
+            GameStateControllerInstaller.Install(Container);
+            GameStateUpdaterInstaller.Install(Container);
             BoardSetupInstaller.Install(Container);
+            GameOverEvalInstaller.Install(Container);
         }
     }
 }

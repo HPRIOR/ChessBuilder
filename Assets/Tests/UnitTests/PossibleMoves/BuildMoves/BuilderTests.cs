@@ -58,31 +58,31 @@ namespace Tests.UnitTests.PossibleMoves.BuildMoves
             var boardState = new BoardState();
             var newBoardState = _builder.GenerateNewBoardState(boardState, new Position(5, 5), PieceType.BlackKnight);
 
-            Assert.That(newBoardState.Board[5, 5].BuildState,
-                Is.EqualTo(new BuildState(3, PieceType.BlackKnight)));
+            Assert.That(newBoardState.Board[5, 5].BuildTileState,
+                Is.EqualTo(new BuildTileState(3, PieceType.BlackKnight)));
         }
 
         [Test]
         public void OverwritesPreviousBuild()
         {
             var boardState = new BoardState();
-            boardState.Board[5, 5].BuildState = new BuildState(PieceType.BlackPawn);
+            boardState.Board[5, 5].BuildTileState = new BuildTileState(PieceType.BlackPawn);
             var newBoardState = _builder.GenerateNewBoardState(boardState, new Position(5, 5), PieceType.BlackKnight);
 
-            Assert.That(newBoardState.Board[5, 5].BuildState,
-                Is.EqualTo(new BuildState(3, PieceType.BlackKnight)));
+            Assert.That(newBoardState.Board[5, 5].BuildTileState,
+                Is.EqualTo(new BuildTileState(3, PieceType.BlackKnight)));
         }
 
         [Test]
         public void DecrementsBuildsOnBoard()
         {
             var boardState = new BoardState();
-            boardState.Board[5, 5].BuildState = new BuildState(PieceType.WhiteRook);
+            boardState.Board[5, 5].BuildTileState = new BuildTileState(PieceType.WhiteRook);
 
             var newBoardState = _builder.GenerateNewBoardState(boardState, new Position(6, 6), PieceType.BlackKnight);
 
-            Assert.That(newBoardState.Board[5, 5].BuildState,
-                Is.EqualTo(new BuildState(4, PieceType.WhiteRook)));
+            Assert.That(newBoardState.Board[5, 5].BuildTileState,
+                Is.EqualTo(new BuildTileState(4, PieceType.WhiteRook)));
         }
 
 
@@ -90,12 +90,12 @@ namespace Tests.UnitTests.PossibleMoves.BuildMoves
         public void OverwritesBuild_DueNextTurn()
         {
             var boardState = new BoardState();
-            boardState.Board[5, 5].BuildState = new BuildState(PieceType.BlackPawn);
+            boardState.Board[5, 5].BuildTileState = new BuildTileState(PieceType.BlackPawn);
 
             var newBoardState = _builder.GenerateNewBoardState(boardState, new Position(5, 5), PieceType.BlackKnight);
 
-            Assert.That(newBoardState.Board[5, 5].BuildState,
-                Is.EqualTo(new BuildState(3, PieceType.BlackKnight)));
+            Assert.That(newBoardState.Board[5, 5].BuildTileState,
+                Is.EqualTo(new BuildTileState(3, PieceType.BlackKnight)));
             Assert.That(newBoardState.Board[5, 5].CurrentPiece.Type,
                 Is.EqualTo(PieceType.NullPiece));
         }

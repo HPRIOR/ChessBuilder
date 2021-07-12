@@ -1,35 +1,36 @@
-﻿using Models.State.PieceState;
+﻿using Models.State.BuildState;
+using Models.State.PieceState;
 
 namespace Models.State.Board
 {
     public class Tile
     {
-        private Tile(Position position, Piece currentPiece, BuildState.BuildState buildState = default)
+        private Tile(Position position, Piece currentPiece, BuildTileState buildTileState = default)
         {
             Position = position;
             CurrentPiece = currentPiece;
-            BuildState = buildState;
+            BuildTileState = buildTileState;
         }
 
-        public Tile(Position position, BuildState.BuildState buildState = default)
+        public Tile(Position position, BuildTileState buildTileState = default)
         {
             Position = position;
-            BuildState = buildState;
+            BuildTileState = buildTileState;
             CurrentPiece = new Piece(PieceType.NullPiece);
         }
 
         public Piece CurrentPiece { get; set; }
         public Position Position { get; }
-        public BuildState.BuildState BuildState { get; set; }
+        public BuildTileState BuildTileState { get; set; }
 
         public Tile Clone() => new Tile(Position, CurrentPiece);
 
         public Tile CloneWithDecrementBuildState()
         {
-            var noPieceBeingBuilt = BuildState.BuildingPiece == PieceType.NullPiece;
+            var noPieceBeingBuilt = BuildTileState.BuildingPiece == PieceType.NullPiece;
             if (noPieceBeingBuilt)
                 return new Tile(Position, CurrentPiece);
-            return new Tile(Position, CurrentPiece, BuildState.Decrement()); // decrement build
+            return new Tile(Position, CurrentPiece, BuildTileState.Decrement()); // decrement build
         }
 
         public override string ToString() =>

@@ -14,14 +14,14 @@ namespace Models.Services.Build.Utils
         {
             foreach (var tile in boardState.Board)
             {
-                var canBuild = tile.BuildState.Turns == 0 &&
-                               tile.BuildState.BuildingPiece != PieceType.NullPiece &&
+                var canBuild = tile.BuildTileState.Turns == 0 &&
+                               tile.BuildTileState.BuildingPiece != PieceType.NullPiece &&
                                tile.CurrentPiece.Type == PieceType.NullPiece &&
-                               tile.BuildState.BuildingPiece.Colour() == turn;
+                               tile.BuildTileState.BuildingPiece.Colour() == turn;
                 if (canBuild)
                 {
-                    tile.CurrentPiece = new Piece(tile.BuildState.BuildingPiece);
-                    tile.BuildState = new BuildState(); // reset build state
+                    tile.CurrentPiece = new Piece(tile.BuildTileState.BuildingPiece);
+                    tile.BuildTileState = new BuildTileState(); // reset build state
                 }
             }
         }

@@ -1,6 +1,5 @@
 ﻿using Models.State.Board;
 using Models.State.BuildState;
-using UnityEditor;
 using UnityEngine;
 using View.Prefab.Factories;
 using View.Prefab.Spawners;
@@ -18,7 +17,7 @@ namespace Bindings.Installers.ViewInstallers
         {
             Container.Bind<BuildingPieceFactory>().AsSingle();
             Container
-                .BindFactory<Position, BuildState, BuildingPieceSpawner,
+                .BindFactory<Position, BuildTileState, BuildingPieceSpawner,
                     BuildingPieceSpawner.Factory>()
                 .FromComponentInNewPrefab(_piecePrefab);
         }

@@ -97,7 +97,7 @@ namespace Tests.UnitTests.AI
 
 
         [Test]
-        public void GeneratesCommands_WithCorrectPieceMoveOutput()
+        public void GeneratesCommand_WithCorrectPieceMoveOutput()
         {
             var board = _boardGenerator.GenerateBoard();
             board[2, 2].CurrentPiece = new Piece(PieceType.BlackPawn);
@@ -129,7 +129,7 @@ namespace Tests.UnitTests.AI
         }
 
         [Test]
-        public void GeneratesCommands_WithCorrectBuildMoveOutput()
+        public void GeneratesCommand_WithCorrectBuildMoveOutput()
         {
             var board = _boardGenerator.GenerateBoard();
             board[2, 2].CurrentPiece = new Piece(PieceType.BlackPawn);

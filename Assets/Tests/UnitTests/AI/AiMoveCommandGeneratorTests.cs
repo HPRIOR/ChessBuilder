@@ -6,9 +6,7 @@ using Bindings.Installers.GameInstallers;
 using Bindings.Installers.ModelInstallers.Board;
 using Bindings.Installers.ModelInstallers.Build;
 using Bindings.Installers.ModelInstallers.Move;
-using Models.Services.AI;
 using Models.Services.AI.Interfaces;
-using Models.Services.Board;
 using Models.Services.Interfaces;
 using Models.State.Board;
 using Models.State.BuildState;
@@ -16,6 +14,7 @@ using Models.State.GameState;
 using Models.State.PieceState;
 using Models.State.PlayerState;
 using NUnit.Framework;
+using UnityEngine;
 using Zenject;
 
 namespace Tests.UnitTests.AI
@@ -96,6 +95,43 @@ namespace Tests.UnitTests.AI
            var commands =  _aiMoveCommandGenerator.GenerateCommands(gameState);
            Assert.That(commands.Count(), Is.EqualTo(2));
             
+        }
+        
+
+        [Test]
+        public void GeneratesCommands_WithCorrectGameStateOutput()
+        {
+
+            var board = _boardGenerator.GenerateBoard();
+            board[2, 2].CurrentPiece = new Piece(PieceType.BlackPawn);
+            var boardState = new BoardState(board);
+            
+            var moves = new Dictionary<Position, ImmutableHashSet<Position>>
+            {
+                {new Position(2, 2), new HashSet<Position> {new Position(2,1)}.ToImmutableHashSet()}
+            }.ToImmutableDictionary();
+            
+            var buildMoves = new BuildMoves(
+                new HashSet<Position>().ToImmutableHashSet(),
+                new HashSet<PieceType>().ToImmutableHashSet()
+                );
+
+            var gameState = new GameState(
+                false, 
+                false, 
+                new PlayerState(10), 
+                new PlayerState(10),
+                moves,
+                buildMoves, 
+                boardState
+            );
+           var commands =  _aiMoveCommandGenerator.GenerateCommands(gameState);
+           var updatedGameState = commands.First()(gameState.BoardState, PieceColour.Black);
+           var updatedBoard = updatedGameState.BoardState.Board;
+           Assert.That(updatedBoard[2,1].CurrentPiece.Type, Is.EqualTo(PieceType.BlackPawn));
+           
+           
+
         }
     }
 }

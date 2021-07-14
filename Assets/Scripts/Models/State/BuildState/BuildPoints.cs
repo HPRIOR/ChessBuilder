@@ -3,6 +3,7 @@ using Models.State.PieceState;
 
 namespace Models.State.BuildState
 {
+    // use extension method on PieceType instead
     public static class BuildPoints
     {
         public static readonly IDictionary<PieceType, int> PieceCost = new Dictionary<PieceType, int>

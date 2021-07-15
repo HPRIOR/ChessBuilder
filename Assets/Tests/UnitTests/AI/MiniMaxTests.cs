@@ -67,26 +67,27 @@ namespace Tests.UnitTests.AI
         }
 
         [Test]
+        [Timeout(2000)]
         public void MoveIsGenerated()
         {
             var board = _boardGenerator.GenerateBoard();
-            board[5, 3].CurrentPiece = new Piece(PieceType.BlackKing);
-            board[7, 7].CurrentPiece = new Piece(PieceType.WhiteKing);
+            board[7, 1].CurrentPiece = new Piece(PieceType.BlackKing);
+            board[0, 7].CurrentPiece = new Piece(PieceType.WhiteKing);
             board[5, 5].CurrentPiece = new Piece(PieceType.WhitePawn);
             board[6, 6].CurrentPiece = new Piece(PieceType.BlackQueen);
             var boardState = new BoardState(board);
             var possibleMoves = new Dictionary<Position, HashSet<Position>>
             {
-                {new Position(5, 5), new HashSet<Position> {new Position(6, 6), new Position(6, 5)}}
+                {new Position(5, 5), new HashSet<Position> {new Position(6, 6), new Position(6, 5)}},
+                {new Position(7, 7), new HashSet<Position> {new Position(7, 6), new Position(6, 6), new Position(6, 7)}}
             }.ToImmutableDictionary(x => x.Key, x => x.Value.ToImmutableHashSet());
 
             var gameState = new GameState(false, false, new PlayerState(0), new PlayerState(0), possibleMoves,
                 new BuildMoves(ImmutableHashSet<Position>.Empty, ImmutableHashSet<PieceType>.Empty), boardState);
 
-            var result = _miniMax.GetMaximizingTurn(gameState, 10, PieceColour.White, true);
-            Debug.Log(result.move);
-            Debug.Log(result.score);
-
+            var (move, score) = _miniMax.GetMaximizingTurn(gameState, 4, PieceColour.White, true);
+            Debug.Log(move);
+            Debug.Log(score);
         }
     }
 }

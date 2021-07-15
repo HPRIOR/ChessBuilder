@@ -8,6 +8,8 @@ namespace Bindings.MonoInstallers
         public override void InstallBindings()
         {
             AiMoveCommandGeneratorInstaller.Install(Container);
+            MiniMaxInstaller.Install(Container);
+            StaticEvaluatorInstaller.Install(Container);
         }
     }
 }

@@ -67,27 +67,31 @@ namespace Tests.UnitTests.AI
         }
 
         [Test]
-        [Timeout(2000)]
         public void MoveIsGenerated()
         {
             var board = _boardGenerator.GenerateBoard();
             board[7, 1].CurrentPiece = new Piece(PieceType.BlackKing);
             board[0, 7].CurrentPiece = new Piece(PieceType.WhiteKing);
             board[5, 5].CurrentPiece = new Piece(PieceType.WhitePawn);
-            board[6, 6].CurrentPiece = new Piece(PieceType.BlackQueen);
+            board[6, 6].CurrentPiece = new Piece(PieceType.BlackPawn);
             var boardState = new BoardState(board);
             var possibleMoves = new Dictionary<Position, HashSet<Position>>
             {
                 {new Position(5, 5), new HashSet<Position> {new Position(6, 6), new Position(6, 5)}},
-                {new Position(7, 7), new HashSet<Position> {new Position(7, 6), new Position(6, 6), new Position(6, 7)}}
+                {new Position(0, 7), new HashSet<Position> {new Position(0, 6), new Position(1, 6), new Position(1, 7)}}
             }.ToImmutableDictionary(x => x.Key, x => x.Value.ToImmutableHashSet());
 
             var gameState = new GameState(false, false, new PlayerState(0), new PlayerState(0), possibleMoves,
                 new BuildMoves(ImmutableHashSet<Position>.Empty, ImmutableHashSet<PieceType>.Empty), boardState);
 
-            var (move, score) = _miniMax.GetMaximizingTurn(gameState, 4, PieceColour.White, true);
-            Debug.Log(move);
+            var (move, score) = _miniMax.GetMaximizingTurn(gameState, 3, PieceColour.White, true);
+            var newGameState = move(gameState.BoardState, PieceColour.White);
+            foreach (var tile in newGameState.BoardState.Board)
+            {
+                Debug.Log(tile);
+            }
             Debug.Log(score);
+            Assert.That(newGameState.BoardState.Board[0,7].CurrentPiece.Type, Is.EqualTo(PieceType.NullPiece));
         }
     }
 }

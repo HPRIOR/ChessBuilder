@@ -1,13 +1,18 @@
+using Models.State.PieceState;
+
 namespace Models.Services.AI
 {
     public readonly struct BoardScore
     {
         public BoardScore(int blackPoints, int whitePoints)
         {
-            BlackPoints = blackPoints;
-            WhitePoints = whitePoints;
+            _blackPoints = blackPoints;
+            _whitePoints = whitePoints;
         }
-        private int BlackPoints { get; }
-        private int WhitePoints { get; }
+
+        private readonly int _blackPoints;
+        private readonly int _whitePoints;
+        public int GetPoints(PieceColour turn) => 
+            turn == PieceColour.Black ? _blackPoints : _whitePoints;
     }
 }

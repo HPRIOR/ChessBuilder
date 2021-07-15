@@ -8,7 +8,7 @@ namespace Models.Services.AI
 {
     public class StaticEvaluator : IStaticEvaluator
     {
-        public BoardScore EvaluateGame(GameState gameState)
+        public BoardScore Evaluate(GameState gameState)
         {
             int blackPoints = 0;
             int whitePoints = 0;

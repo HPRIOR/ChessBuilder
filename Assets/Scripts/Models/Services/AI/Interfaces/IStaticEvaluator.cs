@@ -4,6 +4,6 @@ namespace Models.Services.AI.Interfaces
 {
     public interface IStaticEvaluator
     {
-        BoardScore EvaluateGame(GameState gameState);
+        BoardScore Evaluate(GameState gameState);
     }
 }

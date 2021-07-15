@@ -35,6 +35,6 @@ namespace Models.State.Board
 
         public override string ToString() =>
             $"Tile at ({Position.X}, {Position.Y}) containing" +
-            $" {CurrentPiece}";
+            $" {CurrentPiece.Type} and building {BuildTileState.BuildingPiece}";
     }
 }

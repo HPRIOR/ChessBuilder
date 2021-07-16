@@ -19,14 +19,16 @@ namespace Models.Services.AI
             _aiCommandGenerator = aiCommandGenerator;
         }
 
-        public (Func<BoardState, PieceColour, GameState> move, int score) GetMaximizingTurn(GameState gameState,
-            int depth, PieceColour turn, bool currentPlayer)
+        public (Func<BoardState, PieceColour, GameState> move, int score) GetMaximizingTurn(
+            GameState gameState,
+            int depth, 
+            PieceColour turn)
         {
             if (depth == 0 || gameState.CheckMate) return (null, _staticEvaluator.Evaluate(gameState).GetPoints(turn));
 
             // initialise best move placeholders
             Func<BoardState, PieceColour, GameState> bestMove = null;
-            var bestScore = currentPlayer ? int.MinValue : int.MaxValue;
+            var bestScore = int.MinValue;
 
             // iterate through all moves
             var moves = _aiCommandGenerator.GenerateCommands(gameState);
@@ -36,63 +38,19 @@ namespace Models.Services.AI
                 var newGameState = move(gameState.BoardState, turn);
 
                 // 'bubble up' score 
-                var (_, currentScore) =
-                    GetMaximizingTurn(newGameState, depth - 1, turn.NextTurn(), !currentPlayer);
+                var (_, recurseScore) =
+                    GetMaximizingTurn(newGameState, depth - 1, turn);
+                var currentScore = -recurseScore;
 
-                if (currentPlayer)
+                if (currentScore > bestScore)
                 {
-                    if (currentScore > bestScore)
-                    {
-                        bestScore = currentScore;
-                        bestMove = move;
-                    }
-                }
-                else
-                {
-                    if (currentScore < bestScore)
-                    {
-                        bestScore = currentScore;
-                        bestMove = move;
-                    }
+                    bestScore = currentScore;
+                    bestMove = move;
                 }
             }
 
             return (bestMove, bestScore);
-
-
-            /*if (maxiPlayer)
-            {
-                // will need to separate out the best move and max eval otherwise the move will be changed regardless
-                (Func<BoardState, PieceColour, GameState> move, int score) maxEval = (null, int.MinValue);
-                var moves = _aiCommandGenerator.GenerateCommands(gameState);
-                foreach (var move in moves)
-                {
-                    var eval = GetMaximizingTurn(
-                        move(gameState.BoardState, turn),
-                        depth - 1,
-                        turn.NextTurn(),
-                        false).score;
-                    maxEval = (move, Math.Max(eval, maxEval.score));
-                }
-
-                return maxEval;
-            }
-            else
-            {
-                (Func<BoardState, PieceColour, GameState> move, int score) minEval = (null, int.MaxValue);
-                var moves = _aiCommandGenerator.GenerateCommands(gameState);
-                foreach (var move in moves)
-                {
-                    var eval = GetMaximizingTurn(
-                        move(gameState.BoardState, turn),
-                        depth - 1,
-                        turn.NextTurn(),
-                        true).score;
-                    minEval = (move, Math.Min(eval, minEval.score));
-                }
-
-                return minEval;
-            }*/
+            
         }
     }
 }

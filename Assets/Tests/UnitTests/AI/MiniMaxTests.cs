@@ -84,7 +84,7 @@ namespace Tests.UnitTests.AI
             var gameState = new GameState(false, false, new PlayerState(0), new PlayerState(0), possibleMoves,
                 new BuildMoves(ImmutableHashSet<Position>.Empty, ImmutableHashSet<PieceType>.Empty), boardState);
 
-            var (move, score) = _miniMax.GetMaximizingTurn(gameState, 3, PieceColour.White, true);
+            var (move, score) = _miniMax.GetMaximizingTurn(gameState, 3, PieceColour.White);
             var newGameState = move(gameState.BoardState, PieceColour.White);
             foreach (var tile in newGameState.BoardState.Board)
             {

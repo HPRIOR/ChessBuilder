@@ -84,14 +84,19 @@ namespace Tests.UnitTests.AI
             var gameState = new GameState(false, false, new PlayerState(0), new PlayerState(0), possibleMoves,
                 new BuildMoves(ImmutableHashSet<Position>.Empty, ImmutableHashSet<PieceType>.Empty), boardState);
 
-            var (move, score) = _miniMax.GetMaximizingTurn(gameState, 3, PieceColour.White);
-            var newGameState = move(gameState.BoardState, PieceColour.White);
-            foreach (var tile in newGameState.BoardState.Board)
-            {
-                Debug.Log(tile);
-            }
-            Debug.Log(score);
-            Assert.That(newGameState.BoardState.Board[0,7].CurrentPiece.Type, Is.EqualTo(PieceType.NullPiece));
+            // var watch = new  System.Diagnostics.Stopwatch();
+            // watch.Start();
+            // Debug.Log("aspirated minimax");
+            // var (move, score) = _miniMax.ExecuteMiniMax(gameState, 3, PieceColour.White, 100);
+            // watch.Stop();
+            // Debug.Log(watch.ElapsedMilliseconds);
+            
+            var watch2 = new  System.Diagnostics.Stopwatch();
+            watch2.Start();
+            var (move2, score2) = _miniMax.GetMaximizingTurn(gameState, 8, PieceColour.White, int.MinValue, int.MaxValue);
+            watch2.Stop();
+            Debug.Log("normal minimax");
+            Debug.Log(watch2.ElapsedMilliseconds);
         }
     }
 }

@@ -4,6 +4,7 @@ using Models.State.Board;
 using Models.State.GameState;
 using Models.State.PieceState;
 using Models.Utils.ExtensionMethods.PieceType;
+using UnityEngine;
 using UnityEngine.Rendering;
 
 namespace Models.Services.AI
@@ -12,17 +13,49 @@ namespace Models.Services.AI
     {
         private readonly IAiCommandGenerator _aiCommandGenerator;
         private readonly IStaticEvaluator _staticEvaluator;
+        private const int WindowSize = 3000;
 
         public MiniMax(IStaticEvaluator staticEvaluator, IAiCommandGenerator aiCommandGenerator)
         {
             _staticEvaluator = staticEvaluator;
             _aiCommandGenerator = aiCommandGenerator;
         }
+        
+        public (Func<BoardState, PieceColour, GameState> move, int score) ExecuteMiniMax(
+            GameState gameState,
+            int depth, 
+            PieceColour turn,
+            int prev)
+        {
+            var alpha = prev - WindowSize;
+            var beta = prev + WindowSize;
+
+            while (true)
+            {
+                var (move, result) = GetMaximizingTurn(gameState, depth, turn, alpha, beta);
+                if (result <= alpha)
+                {
+                    alpha = int.MinValue;
+                }
+                else if (result >= beta)
+                {
+                    beta = int.MaxValue;
+                }
+                else
+                {
+                    return (move, result);
+                }
+            }
+
+
+        }
 
         public (Func<BoardState, PieceColour, GameState> move, int score) GetMaximizingTurn(
             GameState gameState,
             int depth, 
-            PieceColour turn)
+            PieceColour turn,
+            int alpha,
+            int beta)
         {
             if (depth == 0 || gameState.CheckMate) return (null, _staticEvaluator.Evaluate(gameState).GetPoints(turn));
 
@@ -39,7 +72,12 @@ namespace Models.Services.AI
 
                 // 'bubble up' score 
                 var (_, recurseScore) =
-                    GetMaximizingTurn(newGameState, depth - 1, turn);
+                    GetMaximizingTurn(
+                        newGameState, 
+                        depth - 1, 
+                        turn, 
+                        -beta, 
+                        -Math.Max(alpha, bestScore));
                 var currentScore = -recurseScore;
 
                 if (currentScore > bestScore)
@@ -47,8 +85,10 @@ namespace Models.Services.AI
                     bestScore = currentScore;
                     bestMove = move;
                 }
-            }
 
+                if (bestScore >= beta)
+                    break;
+            }
             return (bestMove, bestScore);
             
         }

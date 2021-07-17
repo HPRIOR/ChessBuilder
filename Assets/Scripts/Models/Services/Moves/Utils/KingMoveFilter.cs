@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using Models.State.Board;
 
 namespace Models.Services.Moves.Utils
@@ -13,11 +12,7 @@ namespace Models.Services.Moves.Utils
         {
             if (!kingPosition.Equals(new Position(8, 8))) // null king check
                 foreach (var enemyMove in enemyMoves)
-                {
-                    // TODO mutate turnMoves instead of creating new hashset each time
-                    var kingMoves = turnMoves[kingPosition];
-                    turnMoves[kingPosition] = new HashSet<Position>(kingMoves.Except(enemyMove.Value));
-                }
+                    turnMoves[kingPosition].ExceptWith(enemyMove.Value);
         }
     }
 }

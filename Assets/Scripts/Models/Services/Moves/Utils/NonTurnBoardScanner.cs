@@ -57,7 +57,7 @@ namespace Models.Services.Moves.Utils
             return result;
         }
 
-        private bool PieceCannotMoveTo(Position position)
+        private static bool PieceCannotMoveTo(Position position)
         {
             var x = position.X;
             var y = position.Y;

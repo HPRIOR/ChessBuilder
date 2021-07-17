@@ -6,8 +6,8 @@ using Models.State.PieceState;
 
 namespace Models.Services.AI.Interfaces
 {
-    public interface IAiCommandGenerator
+    public interface IAiMoveGenerator
     {
-        IEnumerable<Func<BoardState, PieceColour, GameState>> GenerateCommands(GameState gameState);
+        IEnumerable<Func<BoardState, PieceColour, GameState>> GenerateMoves(GameState gameState);
     }
 }

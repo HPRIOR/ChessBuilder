@@ -11,22 +11,22 @@ using Models.State.BuildState;
 using Models.State.GameState;
 using Models.State.PieceState;
 
-namespace Models.Services.AI
+namespace Models.Services.AI.Implementations
 {
-    public class AiMoveCommandGenerator : IAiCommandGenerator
+    public class AiMoveGenerator : IAiMoveGenerator
     {
-        private readonly IPieceMover _pieceMover;
         private readonly IBuilder _builder;
         private readonly IGameStateUpdater _gameStateUpdater;
+        private readonly IPieceMover _pieceMover;
 
-        public AiMoveCommandGenerator(IPieceMover pieceMover, IGameStateUpdater gameStateUpdater, IBuilder builder)
+        public AiMoveGenerator(IPieceMover pieceMover, IGameStateUpdater gameStateUpdater, IBuilder builder)
         {
             _pieceMover = pieceMover;
             _gameStateUpdater = gameStateUpdater;
             _builder = builder;
         }
 
-        public IEnumerable<Func<BoardState, PieceColour, GameState>> GenerateCommands(GameState gameState) =>
+        public IEnumerable<Func<BoardState, PieceColour, GameState>> GenerateMoves(GameState gameState) =>
             GetBuildCommands(gameState.PossibleBuildMoves)
                 .Concat(GetMoveCommands(gameState.PossiblePieceMoves));
 

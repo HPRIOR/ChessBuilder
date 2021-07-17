@@ -3,11 +3,11 @@ using Zenject;
 
 namespace Bindings.MonoInstallers
 {
-    public class AIInstaller: MonoInstaller
+    public class AIInstaller : MonoInstaller
     {
         public override void InstallBindings()
         {
-            AiMoveCommandGeneratorInstaller.Install(Container);
+            AiMoveGeneratorInstaller.Install(Container);
             MiniMaxInstaller.Install(Container);
             StaticEvaluatorInstaller.Install(Container);
         }

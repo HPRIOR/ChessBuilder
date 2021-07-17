@@ -8,12 +8,22 @@ namespace Models.Utils.ExtensionMethods.BoardPos
 {
     public static class ScanExtension
     {
-        public static IEnumerable<Position> Scan(this Position position, Direction inDirection)
+        public static IEnumerable<Position> Scan(this Position position, Direction direction)
         {
-            var newPosition = position.Add(Move.In(inDirection));
-            return PieceCannotMoveTo(newPosition)
-                ? new List<Position>()
-                : new List<Position> {newPosition}.Concat(Scan(newPosition, inDirection));
+            var result = new List<Position>();
+            var iteratingPosition = position;
+
+            while (true)
+            {
+                var newPosition = iteratingPosition.Add(Move.In(direction));
+
+                if (PieceCannotMoveTo(newPosition)) break;
+
+                result.Add(newPosition);
+                iteratingPosition = newPosition;
+            }
+
+            return result;
         }
 
         public static IEnumerable<Position> ScanBetween(this Position start, Position destination)

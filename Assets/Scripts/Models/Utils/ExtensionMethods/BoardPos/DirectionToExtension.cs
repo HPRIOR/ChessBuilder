@@ -5,20 +5,30 @@ namespace Models.Utils.ExtensionMethods.BoardPos
 {
     public static class DirectionToExtension
     {
-        public static Direction DirectionTo(this Position origin, Position target)
-        {
-            return origin switch
+        public static Direction DirectionTo(this Position origin, Position target) =>
+            origin switch
             {
-                var pos when target.X == pos.X && target.Y > pos.Y => Direction.N,
-                var pos when target.X == pos.X && target.Y < pos.Y => Direction.S,
-                var pos when target.X > pos.X && target.Y == pos.Y => Direction.E,
-                var pos when target.X < pos.X && target.Y == pos.Y => Direction.W,
-                var pos when target.X > pos.X && target.Y > pos.Y => Direction.NE,
-                var pos when target.X < pos.X && target.Y > pos.Y => Direction.NW,
-                var pos when target.X > pos.X && target.Y < pos.Y => Direction.SE,
-                var pos when target.X < pos.X && target.Y < pos.Y => Direction.SW,
+                var xPos when target.X == xPos.X => origin switch
+                {
+                    var yPos when target.Y > yPos.Y => Direction.N,
+                    var yPos when target.Y < yPos.Y => Direction.S,
+                    _ => throw new DirectionException("No direction found")
+                },
+                var xPos when target.X > xPos.X => origin switch
+                {
+                    var yPos when target.Y == yPos.Y => Direction.E,
+                    var yPos when target.Y > yPos.Y => Direction.NE,
+                    var yPos when target.Y < yPos.Y => Direction.SE,
+                    _ => throw new DirectionException("No direction found")
+                },
+                var xPos when target.X < xPos.X => origin switch
+                {
+                    var yPos when target.Y == yPos.Y => Direction.W,
+                    var yPos when target.Y > yPos.Y => Direction.NW,
+                    var yPos when target.Y < yPos.Y => Direction.SW,
+                    _ => throw new DirectionException("No direction found")
+                },
                 _ => throw new DirectionException("No direction found")
             };
-        }
     }
 }

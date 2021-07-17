@@ -14,7 +14,6 @@ using Models.State.GameState;
 using Models.State.PieceState;
 using Models.State.PlayerState;
 using NUnit.Framework;
-using UnityEngine;
 using Zenject;
 
 namespace Tests.UnitTests.AI
@@ -35,12 +34,12 @@ namespace Tests.UnitTests.AI
             Container.UnbindAll();
         }
 
-        private IAiCommandGenerator _aiMoveCommandGenerator;
+        private IAiMoveGenerator _aiMoveMoveGenerator;
         private IBoardGenerator _boardGenerator;
 
         private void InstallBindings()
         {
-            AiMoveCommandGeneratorInstaller.Install(Container);
+            AiMoveGeneratorInstaller.Install(Container);
             PieceMoverInstaller.Install(Container);
             GameStateUpdaterInstaller.Install(Container);
             BuilderInstaller.Install(Container);
@@ -61,7 +60,7 @@ namespace Tests.UnitTests.AI
 
         private void ResolveContainer()
         {
-            _aiMoveCommandGenerator = Container.Resolve<IAiCommandGenerator>();
+            _aiMoveMoveGenerator = Container.Resolve<IAiMoveGenerator>();
             _boardGenerator = Container.Resolve<IBoardGenerator>();
         }
 
@@ -91,7 +90,7 @@ namespace Tests.UnitTests.AI
                 buildMoves,
                 boardState
             );
-            var commands = _aiMoveCommandGenerator.GenerateCommands(gameState);
+            var commands = _aiMoveMoveGenerator.GenerateMoves(gameState);
             Assert.That(commands.Count(), Is.EqualTo(2));
         }
 
@@ -122,7 +121,7 @@ namespace Tests.UnitTests.AI
                 buildMoves,
                 boardState
             );
-            var commands = _aiMoveCommandGenerator.GenerateCommands(gameState);
+            var commands = _aiMoveMoveGenerator.GenerateMoves(gameState);
             var updatedGameState = commands.First()(gameState.BoardState, PieceColour.Black);
             var updatedBoard = updatedGameState.BoardState.Board;
             Assert.That(updatedBoard[2, 1].CurrentPiece.Type, Is.EqualTo(PieceType.BlackPawn));
@@ -153,11 +152,11 @@ namespace Tests.UnitTests.AI
                 boardState
             );
 
-            var commands = _aiMoveCommandGenerator.GenerateCommands(gameState);
+            var commands = _aiMoveMoveGenerator.GenerateMoves(gameState);
             var updatedGameState = commands.First()(gameState.BoardState, PieceColour.White);
             var updatedBoard = updatedGameState.BoardState.Board;
-            Assert.That(updatedBoard[5,5].BuildTileState.BuildingPiece, Is.EqualTo(PieceType.WhitePawn));
-            Assert.That(updatedBoard[5,5].BuildTileState.Turns, Is.EqualTo(1));
+            Assert.That(updatedBoard[5, 5].BuildTileState.BuildingPiece, Is.EqualTo(PieceType.WhitePawn));
+            Assert.That(updatedBoard[5, 5].BuildTileState.Turns, Is.EqualTo(1));
         }
     }
 }

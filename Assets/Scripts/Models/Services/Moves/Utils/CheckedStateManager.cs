@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Models.Services.Interfaces;
-using Models.Services.Moves.Utils.Scanners;
 using Models.State.Board;
 using Models.State.PieceState;
 using Models.Utils.ExtensionMethods.BoardPos;
@@ -121,7 +120,7 @@ namespace Models.Services.Moves.Utils
             foreach (var boardPosition in possibleMoves)
                 if (kingPosition.Equals(boardPosition))
                 {
-                    var result = ScanPositionGenerator.GetPositionsBetween(boardPosition, checkingPiecePosition)
+                    var result = boardPosition.ScanBetween(checkingPiecePosition)
                         .Concat(new List<Position> {checkingPiecePosition});
                     return new HashSet<Position>(result);
                 }

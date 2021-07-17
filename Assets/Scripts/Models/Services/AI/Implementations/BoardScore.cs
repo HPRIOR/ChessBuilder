@@ -1,6 +1,6 @@
 using Models.State.PieceState;
 
-namespace Models.Services.AI
+namespace Models.Services.AI.Implementations
 {
     public readonly struct BoardScore
     {
@@ -12,7 +12,8 @@ namespace Models.Services.AI
 
         private readonly int _blackPoints;
         private readonly int _whitePoints;
-        public int GetPoints(PieceColour turn) => 
+
+        public int GetPoints(PieceColour turn) =>
             turn == PieceColour.Black ? _blackPoints : _whitePoints;
     }
 }

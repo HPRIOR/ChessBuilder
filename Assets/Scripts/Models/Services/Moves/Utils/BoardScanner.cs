@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using Models.Services.Interfaces;
 using Models.State.Board;
 using Models.State.PieceState;
@@ -35,13 +34,26 @@ namespace Models.Services.Moves.Utils
         public IEnumerable<Position> ScanIn(Direction direction, Position currentPosition,
             BoardState boardState)
         {
-            var newPosition = currentPosition.Add(Move.In(direction));
-            if (PieceCannotMoveTo(newPosition, boardState))
-                return new List<Position>();
-            if (TileContainsOpposingPieceAt(newPosition, boardState))
-                return new List<Position> {_positionTranslator.GetRelativePosition(newPosition)};
-            return ScanIn(direction, newPosition, boardState)
-                .Concat(new List<Position> {_positionTranslator.GetRelativePosition(newPosition)});
+            var result = new List<Position>();
+            var iteratingPosition = currentPosition;
+
+
+            while (true)
+            {
+                var newPosition = iteratingPosition.Add(Move.In(direction));
+
+                if (PieceCannotMoveTo(newPosition, boardState)) break;
+                if (TileContainsOpposingPieceAt(newPosition, boardState))
+                {
+                    result.Add(_positionTranslator.GetRelativePosition(newPosition));
+                    break;
+                }
+
+                result.Add(_positionTranslator.GetRelativePosition(newPosition));
+                iteratingPosition = newPosition;
+            }
+
+            return result;
         }
 
         private bool PieceCannotMoveTo(Position position, BoardState boardState)
@@ -51,7 +63,6 @@ namespace Models.Services.Moves.Utils
             return 0 > x || x > 7 || 0 > y || y > 7 || TileContainsFriendlyPieceAt(position, boardState);
         }
 
-        // TODO refactor so that position translator result is passed through instead of calculated each time
         private bool TileContainsOpposingPieceAt(Position position, BoardState boardState) =>
             _tileEvaluator.OpposingPieceIn(_positionTranslator.GetRelativeTileAt(position, boardState));
 

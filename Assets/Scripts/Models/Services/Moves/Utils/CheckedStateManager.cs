@@ -92,6 +92,21 @@ namespace Models.Services.Moves.Utils
             }
         }
 
+        private HashSet<Position> GetPositionsBetweenCheckedKing(Position kingPosition,
+            IDictionary<Position, HashSet<Position>> enemyMoves)
+        {
+            var checkingPiecePosition = _checkingPieces.First();
+            var possibleMoves = enemyMoves[checkingPiecePosition];
+            foreach (var boardPosition in possibleMoves)
+                if (kingPosition.Equals(boardPosition))
+                {
+                    var result = boardPosition.ScanBetween(checkingPiecePosition);
+                    (result as List<Position>)?.Add(checkingPiecePosition);
+                    return new HashSet<Position>(result);
+                }
+
+            return new HashSet<Position>();
+        }
 
         private void RemoveEnemyMovesFromKingMoves(
             IDictionary<Position, HashSet<Position>> turnMoves,
@@ -108,27 +123,10 @@ namespace Models.Services.Moves.Utils
                     // remove extended possible moves that go 'through' king
                     var movesExtendedThroughKing =
                         checkingPiecePosition.Scan(checkingPiecePosition.DirectionTo(kingPosition));
-                    var kingMoves = turnMoves[kingPosition];
-                    turnMoves[kingPosition] = new HashSet<Position>(kingMoves.Except(movesExtendedThroughKing));
+                    turnMoves[kingPosition].ExceptWith(movesExtendedThroughKing);
                 }
         }
 
-
-        private HashSet<Position> GetPositionsBetweenCheckedKing(Position kingPosition,
-            IDictionary<Position, HashSet<Position>> enemyMoves)
-        {
-            var checkingPiecePosition = _checkingPieces.First();
-            var possibleMoves = enemyMoves[checkingPiecePosition];
-            foreach (var boardPosition in possibleMoves)
-                if (kingPosition.Equals(boardPosition))
-                {
-                    var result = boardPosition.ScanBetween(checkingPiecePosition)
-                        .Concat(new List<Position> {checkingPiecePosition});
-                    return new HashSet<Position>(result);
-                }
-
-            return new HashSet<Position>();
-        }
 
         private static void RemoveAllNonKingMoves(
             IDictionary<Position, HashSet<Position>> turnMoves,

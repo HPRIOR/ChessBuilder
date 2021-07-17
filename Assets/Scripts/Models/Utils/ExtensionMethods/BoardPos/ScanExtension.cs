@@ -7,6 +7,25 @@ namespace Models.Utils.ExtensionMethods.BoardPos
 {
     public static class ScanExtension
     {
+        private static IEnumerable<Position> BaseScan(Position position, Direction direction,
+            Predicate<Position> stopScanningPredicate)
+        {
+            var result = new List<Position>();
+            var iteratingPosition = position;
+
+            while (true)
+            {
+                var newPosition = iteratingPosition.Add(Move.In(direction));
+
+                if (stopScanningPredicate(newPosition)) break;
+
+                result.Add(newPosition);
+                iteratingPosition = newPosition;
+            }
+
+            return result;
+        }
+
         public static IEnumerable<Position> Scan(this Position position, Direction direction) =>
             BaseScan(position, direction, PieceCannotMoveTo);
 
@@ -29,25 +48,6 @@ namespace Models.Utils.ExtensionMethods.BoardPos
                 PieceCannotMoveTo(position) || position.Equals(destination.Add(Move.In(direction)));
 
             return BaseScan(start, direction, StopScanningPredicate);
-        }
-
-        private static IEnumerable<Position> BaseScan(Position position, Direction direction,
-            Predicate<Position> stopScanningPredicate)
-        {
-            var result = new List<Position>();
-            var iteratingPosition = position;
-
-            while (true)
-            {
-                var newPosition = iteratingPosition.Add(Move.In(direction));
-
-                if (stopScanningPredicate(newPosition)) break;
-
-                result.Add(newPosition);
-                iteratingPosition = newPosition;
-            }
-
-            return result;
         }
 
 

@@ -3,94 +3,84 @@ using Models.Services.AI.Interfaces;
 using Models.State.Board;
 using Models.State.GameState;
 using Models.State.PieceState;
-using Models.Utils.ExtensionMethods.PieceType;
-using UnityEngine;
-using UnityEngine.Rendering;
 
-namespace Models.Services.AI
+namespace Models.Services.AI.Implementations
 {
     public class MiniMax
     {
-        private readonly IAiCommandGenerator _aiCommandGenerator;
-        private readonly IStaticEvaluator _staticEvaluator;
         private const int WindowSize = 3000;
+        private readonly IAiMoveGenerator _aiMoveGenerator;
+        private readonly IStaticEvaluator _staticEvaluator;
 
-        public MiniMax(IStaticEvaluator staticEvaluator, IAiCommandGenerator aiCommandGenerator)
+        public MiniMax(IStaticEvaluator staticEvaluator, IAiMoveGenerator aiMoveGenerator)
         {
             _staticEvaluator = staticEvaluator;
-            _aiCommandGenerator = aiCommandGenerator;
+            _aiMoveGenerator = aiMoveGenerator;
         }
-        
-        public (Func<BoardState, PieceColour, GameState> move, int score) ExecuteMiniMax(
+
+        public Func<BoardState, PieceColour, GameState> GetMove(
             GameState gameState,
-            int depth, 
-            PieceColour turn,
-            int prev)
+            int depth,
+            PieceColour turn)
         {
-            var alpha = prev - WindowSize;
-            var beta = prev + WindowSize;
+            const int alpha = int.MinValue;
+            const int beta = int.MaxValue;
 
-            while (true)
-            {
-                var (move, result) = GetMaximizingTurn(gameState, depth, turn, alpha, beta);
-                if (result <= alpha)
-                {
-                    alpha = int.MinValue;
-                }
-                else if (result >= beta)
-                {
-                    beta = int.MaxValue;
-                }
-                else
-                {
-                    return (move, result);
-                }
-            }
-
-
+            var (move, _) = NegaScout(gameState, depth, 0, turn, alpha, beta);
+            return move;
         }
 
-        public (Func<BoardState, PieceColour, GameState> move, int score) GetMaximizingTurn(
+        public (Func<BoardState, PieceColour, GameState> move, int score) NegaScout(
             GameState gameState,
-            int depth, 
+            int maxDepth,
+            int currentDepth,
             PieceColour turn,
             int alpha,
             int beta)
         {
-            if (depth == 0 || gameState.CheckMate) return (null, _staticEvaluator.Evaluate(gameState).GetPoints(turn));
+            if (currentDepth == maxDepth || gameState.CheckMate)
+                return (null, _staticEvaluator.Evaluate(gameState).GetPoints(turn));
 
             // initialise best move placeholders
             Func<BoardState, PieceColour, GameState> bestMove = null;
             var bestScore = int.MinValue;
+            var adaptiveBeta = beta;
 
             // iterate through all moves
-            var moves = _aiCommandGenerator.GenerateCommands(gameState);
+            var moves = _aiMoveGenerator.GenerateMoves(gameState);
             foreach (var move in moves)
             {
                 // get updated board state
                 var newGameState = move(gameState.BoardState, turn);
 
-                // 'bubble up' score 
-                var (_, recurseScore) =
-                    GetMaximizingTurn(
-                        newGameState, 
-                        depth - 1, 
-                        turn, 
-                        -beta, 
-                        -Math.Max(alpha, bestScore));
+                // recurse
+                var (_, recurseScore) = NegaScout(newGameState, maxDepth, currentDepth + 1, turn,
+                    -adaptiveBeta, -Math.Max(alpha, bestScore));
                 var currentScore = -recurseScore;
 
                 if (currentScore > bestScore)
                 {
-                    bestScore = currentScore;
-                    bestMove = move;
-                }
+                    if (adaptiveBeta == beta || currentDepth >= maxDepth - 2)
+                    {
+                        bestScore = currentScore;
+                        bestMove = move;
+                    }
+                    else
+                    {
+                        var (negativeBestMove, negativeBestScore) = NegaScout(
+                            newGameState, maxDepth, currentDepth, turn, -beta, -currentScore
+                        );
+                        bestScore = -negativeBestScore;
+                        bestMove = negativeBestMove;
+                    }
 
-                if (bestScore >= beta)
-                    break;
+                    if (bestScore >= beta) return (bestMove, bestScore);
+
+                    adaptiveBeta = Math.Max(alpha, bestScore) + 1;
+                }
             }
+
             return (bestMove, bestScore);
-            
         }
     }
 }

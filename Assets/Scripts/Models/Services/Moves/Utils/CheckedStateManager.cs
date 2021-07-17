@@ -63,6 +63,20 @@ namespace Models.Services.Moves.Utils
             RemoveEnemyMovesFromKingMoves(boardInfo.TurnMoves, boardInfo.EnemyMoves, boardInfo.KingPosition);
         }
 
+        private static IEnumerable<Position> GetCheckingPieces(
+            IDictionary<Position, HashSet<Position>> enemyMoves, Position kingPosition)
+        {
+            var result = new List<Position>();
+            foreach (var keyValuePair in enemyMoves)
+                if (keyValuePair.Value.Contains(kingPosition))
+                    result.Add(keyValuePair.Key);
+            return result;
+
+            // return enemyMoves
+            //     .Where(enemyMove => enemyMove.Value.Contains(kingPosition))
+            //     .Select(enemyMove => enemyMove.Key);
+        }
+
         /// <summary>
         ///     Removes positions not between king and checking piece from all non king, turn moves
         /// </summary>
@@ -103,14 +117,6 @@ namespace Models.Services.Moves.Utils
                 }
         }
 
-
-        private static IEnumerable<Position> GetCheckingPieces(
-            IDictionary<Position, HashSet<Position>> enemyMoves, Position kingPosition)
-        {
-            return enemyMoves
-                .Where(enemyMove => enemyMove.Value.Contains(kingPosition))
-                .Select(enemyMove => enemyMove.Key);
-        }
 
         private HashSet<Position> GetPositionsBetweenCheckedKing(Position kingPosition,
             IDictionary<Position, HashSet<Position>> enemyMoves)

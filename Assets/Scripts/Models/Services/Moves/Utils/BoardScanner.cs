@@ -43,8 +43,8 @@ namespace Models.Services.Moves.Utils
                 var newPosition = iteratingPosition.Add(Move.In(direction));
                 var relativePosition = _positionTranslator.GetRelativePosition(newPosition);
 
-                if (PieceCannotMoveTo(newPosition, boardState)) break;
-                if (TileContainsOpposingPieceAt(newPosition, boardState))
+                if (PieceCannotMoveTo(newPosition) || TileContainsFriendlyPieceAt(relativePosition, boardState)) break;
+                if (TileContainsOpposingPieceAt(relativePosition, boardState))
                 {
                     result.Add(relativePosition);
                     break;
@@ -57,18 +57,18 @@ namespace Models.Services.Moves.Utils
             return result;
         }
 
-        private bool PieceCannotMoveTo(Position position, BoardState boardState)
+        private static bool PieceCannotMoveTo(Position position)
         {
             var x = position.X;
             var y = position.Y;
-            return 0 > x || x > 7 || 0 > y || y > 7 || TileContainsFriendlyPieceAt(position, boardState);
+            return 0 > x || x > 7 || 0 > y || y > 7;
         }
 
-        private bool TileContainsOpposingPieceAt(Position position, BoardState boardState) =>
-            _tileEvaluator.OpposingPieceIn(_positionTranslator.GetRelativeTileAt(position, boardState));
+        private bool TileContainsOpposingPieceAt(Position relativePosition, BoardState boardState) =>
+            _tileEvaluator.OpposingPieceIn(boardState.Board[relativePosition.X, relativePosition.Y]);
 
-        private bool TileContainsFriendlyPieceAt(Position position, BoardState boardState) =>
-            _tileEvaluator.FriendlyPieceIn(_positionTranslator.GetRelativeTileAt(position, boardState));
+        private bool TileContainsFriendlyPieceAt(Position relativePosition, BoardState boardState) =>
+            _tileEvaluator.FriendlyPieceIn(boardState.Board[relativePosition.X, relativePosition.Y]);
 
         public class Factory : PlaceholderFactory<PieceColour, BoardScanner>
         {

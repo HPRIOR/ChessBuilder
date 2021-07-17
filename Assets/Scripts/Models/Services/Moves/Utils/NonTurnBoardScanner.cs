@@ -36,7 +36,7 @@ namespace Models.Services.Moves.Utils
             BoardState boardState)
         {
             var newPosition = currentPosition.Add(Move.In(direction));
-            if (PieceCannotMoveTo(newPosition, boardState))
+            if (PieceCannotMoveTo(newPosition))
                 return new List<Position>();
             if (TileContainsOpposingPieceAt(newPosition, boardState) ||
                 TileContainsFriendlyPieceAt(newPosition, boardState))
@@ -45,7 +45,7 @@ namespace Models.Services.Moves.Utils
                 .Concat(new List<Position> {_positionTranslator.GetRelativePosition(newPosition)});
         }
 
-        private bool PieceCannotMoveTo(Position position, BoardState boardState)
+        private bool PieceCannotMoveTo(Position position)
         {
             var x = position.X;
             var y = position.Y;

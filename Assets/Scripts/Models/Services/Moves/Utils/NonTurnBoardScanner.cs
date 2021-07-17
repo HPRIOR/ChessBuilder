@@ -40,15 +40,17 @@ namespace Models.Services.Moves.Utils
             while (true)
             {
                 var newPosition = iteratingPosition.Add(Move.In(direction));
+                var relativePosition = _positionTranslator.GetRelativePosition(newPosition);
+
                 if (PieceCannotMoveTo(newPosition)) break;
-                if (TileContainsOpposingPieceAt(newPosition, boardState) ||
-                    TileContainsFriendlyPieceAt(newPosition, boardState))
+                if (TileContainsOpposingPieceAt(relativePosition, boardState) ||
+                    TileContainsFriendlyPieceAt(relativePosition, boardState))
                 {
-                    result.Add(_positionTranslator.GetRelativePosition(newPosition));
+                    result.Add(relativePosition);
                     break;
                 }
 
-                result.Add(_positionTranslator.GetRelativePosition(newPosition));
+                result.Add(relativePosition);
                 iteratingPosition = newPosition;
             }
 
@@ -62,12 +64,11 @@ namespace Models.Services.Moves.Utils
             return 0 > x || x > 7 || 0 > y || y > 7;
         }
 
-        // TODO refactor so that position translator result is passed through instead of calculated each time
-        private bool TileContainsOpposingPieceAt(Position position, BoardState boardState) =>
-            _tileEvaluator.OpposingPieceIn(_positionTranslator.GetRelativeTileAt(position, boardState));
+        private bool TileContainsOpposingPieceAt(Position relativePosition, BoardState boardState) =>
+            _tileEvaluator.OpposingPieceIn(boardState.Board[relativePosition.X, relativePosition.Y]);
 
-        private bool TileContainsFriendlyPieceAt(Position position, BoardState boardState) =>
-            _tileEvaluator.FriendlyPieceIn(_positionTranslator.GetRelativeTileAt(position, boardState));
+        private bool TileContainsFriendlyPieceAt(Position relativePosition, BoardState boardState) =>
+            _tileEvaluator.FriendlyPieceIn(boardState.Board[relativePosition.X, relativePosition.Y]);
 
         public class Factory : PlaceholderFactory<PieceColour, NonTurnBoardScanner>
         {

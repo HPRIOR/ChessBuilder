@@ -71,10 +71,6 @@ namespace Models.Services.Moves.Utils
                 if (keyValuePair.Value.Contains(kingPosition))
                     result.Add(keyValuePair.Key);
             return result;
-
-            // return enemyMoves
-            //     .Where(enemyMove => enemyMove.Value.Contains(kingPosition))
-            //     .Select(enemyMove => enemyMove.Key);
         }
 
         /// <summary>

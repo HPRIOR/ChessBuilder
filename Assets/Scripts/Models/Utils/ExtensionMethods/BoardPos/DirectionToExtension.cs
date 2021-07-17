@@ -7,15 +7,18 @@ namespace Models.Utils.ExtensionMethods.BoardPos
     {
         public static Direction DirectionTo(this Position origin, Position target)
         {
-            if (target.X == origin.X && target.Y > origin.Y) return Direction.N;
-            if (target.X == origin.X && target.Y < origin.Y) return Direction.S;
-            if (target.X > origin.X && target.Y == origin.Y) return Direction.E;
-            if (target.X < origin.X && target.Y == origin.Y) return Direction.W;
-            if (target.X > origin.X && target.Y > origin.Y) return Direction.NE;
-            if (target.X < origin.X && target.Y > origin.Y) return Direction.NW;
-            if (target.X > origin.X && target.Y < origin.Y) return Direction.SE;
-            if (target.X < origin.X && target.Y < origin.Y) return Direction.SW;
-            throw new DirectionException("No direction found");
+            return origin switch
+            {
+                var pos when target.X == pos.X && target.Y > pos.Y => Direction.N,
+                var pos when target.X == pos.X && target.Y < pos.Y => Direction.S,
+                var pos when target.X > pos.X && target.Y == pos.Y => Direction.E,
+                var pos when target.X < pos.X && target.Y == pos.Y => Direction.W,
+                var pos when target.X > pos.X && target.Y > pos.Y => Direction.NE,
+                var pos when target.X < pos.X && target.Y > pos.Y => Direction.NW,
+                var pos when target.X > pos.X && target.Y < pos.Y => Direction.SE,
+                var pos when target.X < pos.X && target.Y < pos.Y => Direction.SW,
+                _ => throw new DirectionException("No direction found")
+            };
         }
     }
 }

@@ -5,7 +5,7 @@ using Bindings.Installers.GameInstallers;
 using Bindings.Installers.ModelInstallers.Board;
 using Bindings.Installers.ModelInstallers.Build;
 using Bindings.Installers.ModelInstallers.Move;
-using Models.Services.AI;
+using Models.Services.AI.Implementations;
 using Models.Services.Interfaces;
 using Models.State.Board;
 using Models.State.BuildState;
@@ -13,7 +13,6 @@ using Models.State.GameState;
 using Models.State.PieceState;
 using Models.State.PlayerState;
 using NUnit.Framework;
-using UnityEngine;
 using Zenject;
 
 namespace Tests.UnitTests.AI
@@ -39,7 +38,7 @@ namespace Tests.UnitTests.AI
 
         private void InstallBindings()
         {
-            AiMoveCommandGeneratorInstaller.Install(Container);
+            AiMoveGeneratorInstaller.Install(Container);
             PieceMoverInstaller.Install(Container);
             GameStateUpdaterInstaller.Install(Container);
             BuilderInstaller.Install(Container);
@@ -84,19 +83,19 @@ namespace Tests.UnitTests.AI
             var gameState = new GameState(false, false, new PlayerState(0), new PlayerState(0), possibleMoves,
                 new BuildMoves(ImmutableHashSet<Position>.Empty, ImmutableHashSet<PieceType>.Empty), boardState);
 
-            // var watch = new  System.Diagnostics.Stopwatch();
-            // watch.Start();
-            // Debug.Log("aspirated minimax");
-            // var (move, score) = _miniMax.ExecuteMiniMax(gameState, 3, PieceColour.White, 100);
-            // watch.Stop();
-            // Debug.Log(watch.ElapsedMilliseconds);
-            
-            var watch2 = new  System.Diagnostics.Stopwatch();
-            watch2.Start();
-            var (move2, score2) = _miniMax.GetMaximizingTurn(gameState, 8, PieceColour.White, int.MinValue, int.MaxValue);
-            watch2.Stop();
-            Debug.Log("normal minimax");
-            Debug.Log(watch2.ElapsedMilliseconds);
+
+            // var logTimer = new LogExecutionTimer();
+            // var depth = 6;
+            //
+            // //logTimer.LogExecutionTime($"NegaScout with depth of {depth.ToString()}", () => _miniMax.GetMove(gameState, depth, PieceColour.White));
+            //
+            // var move = _miniMax.GetMove(gameState, depth, PieceColour.White);
+            // var newGameState = move(gameState.BoardState, PieceColour.White);
+            //
+            // foreach (var tile in newGameState.BoardState.Board)
+            // {
+            //     Debug.Log(tile);
+            // }
         }
     }
 }

@@ -16,10 +16,6 @@ namespace Controllers.Commands
         private readonly BoardState _stateTransitionedFrom;
 
 
-        // TODO: behavior of this may need to be change -> board state is referenced and not saved per command
-        // whether or not it is valid will be determined by the current state of the board
-        // for AI move there may be many states existing concurrently 
-        // undo behaviour may change too 
         public MoveCommand(
             Position from,
             Position destination,

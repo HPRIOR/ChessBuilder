@@ -39,19 +39,20 @@ namespace Models.Services.Moves.Utils
 
             void Recurse()
             {
-                var newPosition = iteratingPosition.Add(Move.In(direction));
-                if (PieceCannotMoveTo(newPosition))
-                    return;
-                if (TileContainsOpposingPieceAt(newPosition, boardState) ||
-                    TileContainsFriendlyPieceAt(newPosition, boardState))
+                while (true)
                 {
-                    result.Add(_positionTranslator.GetRelativePosition(newPosition));
-                    return;
-                }
+                    var newPosition = iteratingPosition.Add(Move.In(direction));
+                    if (PieceCannotMoveTo(newPosition)) return;
+                    if (TileContainsOpposingPieceAt(newPosition, boardState) ||
+                        TileContainsFriendlyPieceAt(newPosition, boardState))
+                    {
+                        result.Add(_positionTranslator.GetRelativePosition(newPosition));
+                        return;
+                    }
 
-                result.Add(_positionTranslator.GetRelativePosition(newPosition));
-                iteratingPosition = newPosition;
-                Recurse();
+                    result.Add(_positionTranslator.GetRelativePosition(newPosition));
+                    iteratingPosition = newPosition;
+                }
             }
 
             Recurse();

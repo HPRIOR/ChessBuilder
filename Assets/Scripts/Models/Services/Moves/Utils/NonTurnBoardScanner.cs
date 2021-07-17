@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using Models.Services.Interfaces;
 using Models.State.Board;
 using Models.State.PieceState;
@@ -35,14 +34,28 @@ namespace Models.Services.Moves.Utils
         public IEnumerable<Position> ScanIn(Direction direction, Position currentPosition,
             BoardState boardState)
         {
-            var newPosition = currentPosition.Add(Move.In(direction));
-            if (PieceCannotMoveTo(newPosition))
-                return new List<Position>();
-            if (TileContainsOpposingPieceAt(newPosition, boardState) ||
-                TileContainsFriendlyPieceAt(newPosition, boardState))
-                return new List<Position> {_positionTranslator.GetRelativePosition(newPosition)};
-            return ScanIn(direction, newPosition, boardState)
-                .Concat(new List<Position> {_positionTranslator.GetRelativePosition(newPosition)});
+            var result = new List<Position>();
+            var iteratingPosition = currentPosition;
+
+            void Recurse()
+            {
+                var newPosition = iteratingPosition.Add(Move.In(direction));
+                if (PieceCannotMoveTo(newPosition))
+                    return;
+                if (TileContainsOpposingPieceAt(newPosition, boardState) ||
+                    TileContainsFriendlyPieceAt(newPosition, boardState))
+                {
+                    result.Add(_positionTranslator.GetRelativePosition(newPosition));
+                    return;
+                }
+
+                result.Add(_positionTranslator.GetRelativePosition(newPosition));
+                iteratingPosition = newPosition;
+                Recurse();
+            }
+
+            Recurse();
+            return result;
         }
 
         private bool PieceCannotMoveTo(Position position)

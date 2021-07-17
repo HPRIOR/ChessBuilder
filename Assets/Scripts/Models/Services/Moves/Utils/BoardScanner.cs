@@ -41,15 +41,16 @@ namespace Models.Services.Moves.Utils
             while (true)
             {
                 var newPosition = iteratingPosition.Add(Move.In(direction));
+                var relativePosition = _positionTranslator.GetRelativePosition(newPosition);
 
                 if (PieceCannotMoveTo(newPosition, boardState)) break;
                 if (TileContainsOpposingPieceAt(newPosition, boardState))
                 {
-                    result.Add(_positionTranslator.GetRelativePosition(newPosition));
+                    result.Add(relativePosition);
                     break;
                 }
 
-                result.Add(_positionTranslator.GetRelativePosition(newPosition));
+                result.Add(relativePosition);
                 iteratingPosition = newPosition;
             }
 

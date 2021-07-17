@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Models.Services.Moves.Utils;
+using Models.Services.Moves.Utils.Scanners;
 using Models.State.Board;
 using NUnit.Framework;
 

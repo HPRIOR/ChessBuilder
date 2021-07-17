@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Models.Services.Interfaces;
+using Models.Services.Moves.Utils.Scanners;
 using Models.State.Board;
 using Models.State.PieceState;
 using Models.Utils.ExtensionMethods.BoardPos;

@@ -4,14 +4,14 @@ using Models.State.Board;
 using Models.State.PieceState;
 using Zenject;
 
-namespace Models.Services.Moves.Utils
+namespace Models.Services.Moves.Utils.Scanners
 {
-    public class NonTurnBoardScanner : IBoardScanner
+    public class BoardScanner : IBoardScanner
     {
         private readonly IPositionTranslator _positionTranslator;
         private readonly ITileEvaluator _tileEvaluator;
 
-        public NonTurnBoardScanner(
+        public BoardScanner(
             PieceColour pieceColour,
             ITileEvaluatorFactory tileEvaluatorFactory,
             IPositionTranslatorFactory positionTranslatorFactory)
@@ -37,14 +37,14 @@ namespace Models.Services.Moves.Utils
             var result = new List<Position>();
             var iteratingPosition = currentPosition;
 
+
             while (true)
             {
                 var newPosition = iteratingPosition.Add(Move.In(direction));
                 var relativePosition = _positionTranslator.GetRelativePosition(newPosition);
 
-                if (PieceCannotMoveTo(newPosition)) break;
-                if (TileContainsOpposingPieceAt(relativePosition, boardState) ||
-                    TileContainsFriendlyPieceAt(relativePosition, boardState))
+                if (PieceCannotMoveTo(newPosition) || TileContainsFriendlyPieceAt(relativePosition, boardState)) break;
+                if (TileContainsOpposingPieceAt(relativePosition, boardState))
                 {
                     result.Add(relativePosition);
                     break;
@@ -70,7 +70,7 @@ namespace Models.Services.Moves.Utils
         private bool TileContainsFriendlyPieceAt(Position relativePosition, BoardState boardState) =>
             _tileEvaluator.FriendlyPieceIn(boardState.Board[relativePosition.X, relativePosition.Y]);
 
-        public class Factory : PlaceholderFactory<PieceColour, NonTurnBoardScanner>
+        public class Factory : PlaceholderFactory<PieceColour, BoardScanner>
         {
         }
     }

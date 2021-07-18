@@ -4,7 +4,6 @@ using Models.Services.Interfaces;
 using Models.Services.Utils;
 using Models.State.Board;
 using Models.State.PieceState;
-using Models.Utils.ExtensionMethods.BoardPos;
 
 namespace Models.Services.Moves.Utils
 {
@@ -56,8 +55,8 @@ namespace Models.Services.Moves.Utils
         private static bool DirectionOfPinPointsToKing(Position kingPosition, Position pinnedPosition,
             Position pinningPosition)
         {
-            var pinDirection = pinningPosition.DirectionTo(pinnedPosition);
-            var pinnedToKingDirection = pinnedPosition.DirectionTo(kingPosition);
+            var pinDirection = DirectionMap.DirectionFrom(pinningPosition, pinnedPosition);
+            var pinnedToKingDirection = DirectionMap.DirectionFrom(pinnedPosition, kingPosition);
             return pinDirection == pinnedToKingDirection;
         }
 
@@ -77,7 +76,7 @@ namespace Models.Services.Moves.Utils
             Position kingPosition, BoardState boardState)
         {
             var scannedBoardPositions =
-                turnPiecePosition.Scan(enemyPosition.DirectionTo(kingPosition));
+                ScanMap.Scan(turnPiecePosition, DirectionMap.DirectionFrom(enemyPosition, kingPosition));
             foreach (var position in scannedBoardPositions)
             {
                 if (position.Equals(kingPosition)) return true;

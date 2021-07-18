@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Models.Services.Interfaces;
+using Models.Services.Utils;
 using Models.State.Board;
 using Models.State.PieceState;
 using Models.Utils.ExtensionMethods.BoardPos;
@@ -46,7 +47,7 @@ namespace Models.Services.Moves.Utils
         private static HashSet<Position> PossibleEscapeMoves(
             Position kingPosition, Position pinnedPiecePosition, Position pinningPiecePosition)
         {
-            var positionsBetweenPinAndKing = new HashSet<Position>(kingPosition.ScanTo(pinningPiecePosition));
+            var positionsBetweenPinAndKing = new HashSet<Position>(ScanMap.ScanTo(kingPosition, pinningPiecePosition));
             positionsBetweenPinAndKing.Remove(pinnedPiecePosition);
 
             return positionsBetweenPinAndKing;

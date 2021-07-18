@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Models.Services.Moves.Utils;
+using Models.Services.Utils;
 using Models.State.Board;
 
 namespace Models.Utils.ExtensionMethods.BoardPos
@@ -31,7 +32,7 @@ namespace Models.Utils.ExtensionMethods.BoardPos
 
         public static IEnumerable<Position> ScanBetween(this Position start, Position destination)
         {
-            var direction = start.DirectionTo(destination);
+            var direction = DirectionMap.DirectionFrom(start, destination);
 
             bool StopScanningPredicate(Position position) =>
                 PieceCannotMoveTo(position) || position.Equals(destination);
@@ -42,7 +43,7 @@ namespace Models.Utils.ExtensionMethods.BoardPos
 
         public static IEnumerable<Position> ScanTo(this Position start, Position destination)
         {
-            var direction = start.DirectionTo(destination);
+            var direction = DirectionMap.DirectionFrom(start, destination);
 
             bool StopScanningPredicate(Position position) =>
                 PieceCannotMoveTo(position) || position.Equals(destination.Add(Move.In(direction)));

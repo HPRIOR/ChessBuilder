@@ -1,8 +1,9 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Models.State.Board
 {
-    public readonly struct Position
+    public readonly struct Position : IEquatable<Position>
     {
         public int X { get; }
         public int Y { get; }
@@ -17,10 +18,20 @@ namespace Models.State.Board
 
         public override string ToString() => $"{X}, {Y}";
 
-        public Position Add(Position position) =>
-            new Position(X + position.X, Y + position.Y);
+        public Position Add(Position other) =>
+            new Position(X + other.X, Y + other.Y);
 
-        public bool Equals(Position comparedPosition) =>
-            comparedPosition.X == X && comparedPosition.Y == Y;
+        public bool Equals(Position other) =>
+            other.X == X && other.Y == Y;
+
+        public override bool Equals(object obj) => obj is Position other && Equals(other);
+
+        public override int GetHashCode()
+        {
+            var hash = new Hash128();
+            hash.Append(X);
+            hash.Append(Y);
+            return hash.GetHashCode();
+        }
     }
 }

@@ -13,6 +13,7 @@ using Zenject;
 
 namespace Tests.UnitTests.PossibleMoves.PieceMoves
 {
+    //TODO make assertions with exactly the expected moves 
     [TestFixture]
     public class BishopNonTurnMovesTests : ZenjectUnitTestFixture
     {

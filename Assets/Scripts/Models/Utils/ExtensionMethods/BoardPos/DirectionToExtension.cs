@@ -5,30 +5,17 @@ namespace Models.Utils.ExtensionMethods.BoardPos
 {
     public static class DirectionToExtension
     {
-        public static Direction DirectionTo(this Position origin, Position target) =>
-            origin switch
-            {
-                var xPos when target.X == xPos.X => origin switch
-                {
-                    var yPos when target.Y > yPos.Y => Direction.N,
-                    var yPos when target.Y < yPos.Y => Direction.S,
-                    _ => throw new DirectionException("No direction found")
-                },
-                var xPos when target.X > xPos.X => origin switch
-                {
-                    var yPos when target.Y == yPos.Y => Direction.E,
-                    var yPos when target.Y > yPos.Y => Direction.NE,
-                    var yPos when target.Y < yPos.Y => Direction.SE,
-                    _ => throw new DirectionException("No direction found")
-                },
-                var xPos when target.X < xPos.X => origin switch
-                {
-                    var yPos when target.Y == yPos.Y => Direction.W,
-                    var yPos when target.Y > yPos.Y => Direction.NW,
-                    var yPos when target.Y < yPos.Y => Direction.SW,
-                    _ => throw new DirectionException("No direction found")
-                },
-                _ => throw new DirectionException("No direction found")
-            };
+        public static Direction DirectionTo(this Position origin, Position target)
+        {
+            if (target.X == origin.X)
+                return target.Y > origin.Y ? Direction.N :
+                    target.Y == origin.Y ? throw new DirectionException("No direction found") : Direction.S;
+            if (target.X > origin.X)
+                return target.Y == origin.Y ? Direction.E : target.Y > origin.Y ? Direction.NE : Direction.SE;
+            if (target.X < origin.X)
+                return target.Y == origin.Y ? Direction.W : target.Y > origin.Y ? Direction.NW : Direction.SW;
+
+            throw new DirectionException("No direction found");
+        }
     }
 }

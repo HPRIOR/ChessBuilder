@@ -21,24 +21,24 @@ namespace Models.Services.Moves.MoveGenerators
             _nonMovePieceGenerator = GetPieceMoveGenerators(false);
         }
 
-        public IPieceMoveGenerator GetPossibleMoveGenerator(State.PieceState.Piece piece, bool turnMove) =>
+        public IPieceMoveGenerator GetPossibleMoveGenerator(Piece piece, bool turnMove) =>
             turnMove ? _pieceMoveGenerators[piece.Type] : _nonMovePieceGenerator[piece.Type];
 
-        private Dictionary<PieceType, IPieceMoveGenerator> GetPieceMoveGenerators(bool turnMove) =>
+        private Dictionary<PieceType, IPieceMoveGenerator> GetPieceMoveGenerators(bool turnMoveType) =>
             new Dictionary<PieceType, IPieceMoveGenerator>
             {
-                {PieceType.BlackPawn, _movesFactory.Create(PieceType.BlackPawn, turnMove)},
-                {PieceType.WhitePawn, _movesFactory.Create(PieceType.WhitePawn, turnMove)},
-                {PieceType.BlackBishop, _movesFactory.Create(PieceType.BlackBishop, turnMove)},
-                {PieceType.WhiteBishop, _movesFactory.Create(PieceType.WhiteBishop, turnMove)},
-                {PieceType.BlackKnight, _movesFactory.Create(PieceType.BlackKnight, turnMove)},
-                {PieceType.WhiteKnight, _movesFactory.Create(PieceType.WhiteKnight, turnMove)},
-                {PieceType.BlackRook, _movesFactory.Create(PieceType.BlackRook, turnMove)},
-                {PieceType.WhiteRook, _movesFactory.Create(PieceType.WhiteRook, turnMove)},
-                {PieceType.BlackKing, _movesFactory.Create(PieceType.BlackKing, turnMove)},
-                {PieceType.WhiteKing, _movesFactory.Create(PieceType.WhiteKing, turnMove)},
-                {PieceType.BlackQueen, _movesFactory.Create(PieceType.BlackQueen, turnMove)},
-                {PieceType.WhiteQueen, _movesFactory.Create(PieceType.WhiteQueen, turnMove)},
+                {PieceType.BlackPawn, _movesFactory.Create(PieceType.BlackPawn, turnMoveType)},
+                {PieceType.WhitePawn, _movesFactory.Create(PieceType.WhitePawn, turnMoveType)},
+                {PieceType.BlackBishop, _movesFactory.Create(PieceType.BlackBishop, turnMoveType)},
+                {PieceType.WhiteBishop, _movesFactory.Create(PieceType.WhiteBishop, turnMoveType)},
+                {PieceType.BlackKnight, _movesFactory.Create(PieceType.BlackKnight, turnMoveType)},
+                {PieceType.WhiteKnight, _movesFactory.Create(PieceType.WhiteKnight, turnMoveType)},
+                {PieceType.BlackRook, _movesFactory.Create(PieceType.BlackRook, turnMoveType)},
+                {PieceType.WhiteRook, _movesFactory.Create(PieceType.WhiteRook, turnMoveType)},
+                {PieceType.BlackKing, _movesFactory.Create(PieceType.BlackKing, turnMoveType)},
+                {PieceType.WhiteKing, _movesFactory.Create(PieceType.WhiteKing, turnMoveType)},
+                {PieceType.BlackQueen, _movesFactory.Create(PieceType.BlackQueen, turnMoveType)},
+                {PieceType.WhiteQueen, _movesFactory.Create(PieceType.WhiteQueen, turnMoveType)},
                 {PieceType.NullPiece, new NullMoveGenerator()}
             };
     }

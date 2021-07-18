@@ -57,6 +57,7 @@ namespace Models.Services.Game.Implementations
                     ImmutableHashSet<PieceType>.Empty) // no build moves when in check
                 : _buildMoveGenerator.GetPossibleBuildMoves(newBoardState, turn, relevantPlayerState);
 
+        //TODO: calculate only the relevant player state
         private (PlayerState blackState, PlayerState whiteState) GetPlayerState(BoardState newBoardState)
         {
             var blackState =

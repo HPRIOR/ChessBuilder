@@ -23,11 +23,21 @@ namespace Models.Services.Moves.MoveGenerators.TurnMoves
         public IEnumerable<Position> GetPossiblePieceMoves(Position originPosition, BoardState boardState)
         {
             var relativePosition = _positionTranslator.GetRelativePosition(originPosition);
-            var possibleDirections = new List<Direction> {Direction.N, Direction.E, Direction.S, Direction.W};
 
-            return possibleDirections.SelectMany(direction =>
-                _boardScanner.ScanIn(direction, relativePosition, boardState));
+            var result = GetMovesIn(Direction.N, relativePosition, boardState).ToList();
+            var southMoves = GetMovesIn(Direction.S, relativePosition, boardState).ToList();
+            var eastMoves = GetMovesIn(Direction.E, relativePosition, boardState).ToList();
+            var westMoves = GetMovesIn(Direction.W, relativePosition, boardState).ToList();
+
+            result.AddRange(southMoves);
+            result.AddRange(eastMoves);
+            result.AddRange(westMoves);
+
+            return result;
         }
+
+        private IEnumerable<Position> GetMovesIn(Direction d, Position relativePosition, BoardState boardState) =>
+            _boardScanner.ScanIn(d, relativePosition, boardState);
 
         public class Factory : PlaceholderFactory<PieceColour, RookTurnMoves>
         {

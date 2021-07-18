@@ -4,7 +4,6 @@ using Models.Services.Interfaces;
 using Models.Services.Utils;
 using Models.State.Board;
 using Models.State.PieceState;
-using Models.Utils.ExtensionMethods.BoardPos;
 
 namespace Models.Services.Moves.Utils
 {
@@ -123,7 +122,8 @@ namespace Models.Services.Moves.Utils
                 {
                     // remove extended possible moves that go 'through' king
                     var movesExtendedThroughKing =
-                        checkingPiecePosition.Scan(checkingPiecePosition.DirectionTo(kingPosition));
+                        ScanMap.Scan(checkingPiecePosition,
+                            DirectionMap.DirectionFrom(checkingPiecePosition, kingPosition));
                     turnMoves[kingPosition].ExceptWith(movesExtendedThroughKing);
                 }
         }

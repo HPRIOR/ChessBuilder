@@ -5,7 +5,7 @@ using Models.State.Board;
 using Models.State.PieceState;
 using Zenject;
 
-namespace Models.Services.Moves.MoveGenerators.TurnMoves
+namespace Models.Services.Moves.MoveGenerators.NonTurnMoves
 {
     public class PawnNonTurnMoves : IPieceMoveGenerator
     {

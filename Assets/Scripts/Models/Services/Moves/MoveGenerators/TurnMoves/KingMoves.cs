@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Models.Services.Interfaces;
 using Models.Services.Moves.Utils;
 using Models.State.Board;
@@ -26,17 +25,19 @@ namespace Models.Services.Moves.MoveGenerators.TurnMoves
             var potentialMoves = new List<Position>();
             var relativePosition = _positionTranslator.GetRelativePosition(originPosition);
 
-            Enum.GetValues(typeof(Direction)).Cast<Direction>().ToList().ForEach(direction =>
+            foreach (var direction in (Direction[]) Enum.GetValues(typeof(Direction)))
             {
                 var newPosition = relativePosition.Add(Move.In(direction));
                 var newRelativePosition = _positionTranslator.GetRelativePosition(newPosition);
-                if (0 > newPosition.X || newPosition.X > 7
-                                      || 0 > newPosition.Y || newPosition.Y > 7) return;
-                var potentialMoveTile = _positionTranslator.GetRelativeTileAt(newPosition, boardState);
-                if (_tileEvaluator.OpposingPieceIn(potentialMoveTile) ||
-                    potentialMoveTile.CurrentPiece.Type == PieceType.NullPiece)
-                    potentialMoves.Add(newRelativePosition);
-            });
+                if (!(0 > newPosition.X || newPosition.X > 7
+                                        || 0 > newPosition.Y || newPosition.Y > 7))
+                {
+                    var potentialMoveTile = _positionTranslator.GetRelativeTileAt(newPosition, boardState);
+                    if (_tileEvaluator.OpposingPieceIn(potentialMoveTile) ||
+                        potentialMoveTile.CurrentPiece.Type == PieceType.NullPiece)
+                        potentialMoves.Add(newRelativePosition);
+                }
+            }
 
             return potentialMoves;
         }

@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Collections.Immutable;
-using System.Linq;
 using Models.Services.Build.Interfaces;
 using Models.State.Board;
 using Models.State.BuildState;
@@ -31,11 +30,15 @@ namespace Models.Services.Build.BuildMoves
 
         private static ImmutableHashSet<PieceType> RemovePiecesByCost(PlayerState playerState,
             IEnumerable<PieceType> pieces)
+            => GetAvailablePieces(pieces, playerState).ToImmutableHashSet();
+
+        private static IEnumerable<PieceType> GetAvailablePieces(IEnumerable<PieceType> pieces, PlayerState playerState)
         {
-            var result = ImmutableHashSet<PieceType>.Empty.ToBuilder();
-            var availablePieces = pieces.Where(piece => BuildPoints.PieceCost[piece] <= playerState.BuildPoints);
-            availablePieces.ToList().ForEach(piece => result.Add(piece));
-            return result.ToImmutable();
+            var result = new List<PieceType>();
+            foreach (var piece in pieces)
+                if (BuildPoints.PieceCost[piece] <= playerState.BuildPoints)
+                    result.Add(piece);
+            return result;
         }
 
 

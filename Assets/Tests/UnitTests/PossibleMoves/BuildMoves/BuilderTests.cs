@@ -1,4 +1,5 @@
-﻿using Bindings.Installers.ModelInstallers.Board;
+﻿using System.Collections.Generic;
+using Bindings.Installers.ModelInstallers.Board;
 using Bindings.Installers.ModelInstallers.Build;
 using Models.Services.Build.Interfaces;
 using Models.Services.Interfaces;
@@ -45,7 +46,8 @@ namespace Tests.UnitTests.PossibleMoves.BuildMoves
         [Test]
         public void CreatesNewBoardState()
         {
-            var boardState = new BoardState();
+            var board = _boardGenerator.GenerateBoard();
+            var boardState = new BoardState(board, new HashSet<Position>(), new HashSet<Position>());
             var newBoardState = _builder.GenerateNewBoardState(boardState, new Position(5, 5), PieceType.BlackKnight);
 
             Assert.AreNotSame(boardState, newBoardState);
@@ -53,9 +55,10 @@ namespace Tests.UnitTests.PossibleMoves.BuildMoves
 
 
         [Test]
-        public void CreatesNewBoardState_WithBuilddStateAtPosition()
+        public void CreatesNewBoardState_WithBuildStateAtPosition()
         {
-            var boardState = new BoardState();
+            var board = _boardGenerator.GenerateBoard();
+            var boardState = new BoardState(board, new HashSet<Position>(), new HashSet<Position>());
             var newBoardState = _builder.GenerateNewBoardState(boardState, new Position(5, 5), PieceType.BlackKnight);
 
             Assert.That(newBoardState.Board[5, 5].BuildTileState,
@@ -65,7 +68,9 @@ namespace Tests.UnitTests.PossibleMoves.BuildMoves
         [Test]
         public void OverwritesPreviousBuild()
         {
-            var boardState = new BoardState();
+            var board = _boardGenerator.GenerateBoard();
+            var boardState =
+                new BoardState(board, new HashSet<Position>(), new HashSet<Position> {new Position(5, 5)});
             boardState.Board[5, 5].BuildTileState = new BuildTileState(PieceType.BlackPawn);
             var newBoardState = _builder.GenerateNewBoardState(boardState, new Position(5, 5), PieceType.BlackKnight);
 
@@ -76,7 +81,9 @@ namespace Tests.UnitTests.PossibleMoves.BuildMoves
         [Test]
         public void DecrementsBuildsOnBoard()
         {
-            var boardState = new BoardState();
+            var board = _boardGenerator.GenerateBoard();
+            var boardState =
+                new BoardState(board, new HashSet<Position>(), new HashSet<Position> {new Position(5, 5)});
             boardState.Board[5, 5].BuildTileState = new BuildTileState(PieceType.WhiteRook);
 
             var newBoardState = _builder.GenerateNewBoardState(boardState, new Position(6, 6), PieceType.BlackKnight);
@@ -89,7 +96,9 @@ namespace Tests.UnitTests.PossibleMoves.BuildMoves
         [Test]
         public void OverwritesBuild_DueNextTurn()
         {
-            var boardState = new BoardState();
+            var board = _boardGenerator.GenerateBoard();
+            var boardState =
+                new BoardState(board, new HashSet<Position>(), new HashSet<Position> {new Position(5, 5)});
             boardState.Board[5, 5].BuildTileState = new BuildTileState(PieceType.BlackPawn);
 
             var newBoardState = _builder.GenerateNewBoardState(boardState, new Position(5, 5), PieceType.BlackKnight);

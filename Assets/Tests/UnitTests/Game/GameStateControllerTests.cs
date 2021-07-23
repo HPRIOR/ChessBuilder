@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 using Bindings.Utils;
@@ -101,7 +102,10 @@ namespace Tests.UnitTests.Game
             board[1, 1].CurrentPiece = new Piece(PieceType.WhiteKing);
             board[7, 7].CurrentPiece = new Piece(PieceType.BlackKing);
             board[4, 4].BuildTileState = new BuildTileState(0, PieceType.WhitePawn);
-            var initialBoardState = new BoardState(board);
+
+            var activePieces = new HashSet<Position> {new Position(1, 1), new Position(7, 7)};
+            var activeBuilds = new HashSet<Position> {new Position(4, 4)};
+            var initialBoardState = new BoardState(board, activePieces, activeBuilds);
 
             // Initialise board state
             _gameStateControllerController.UpdateGameState(initialBoardState);
@@ -122,7 +126,10 @@ namespace Tests.UnitTests.Game
             board[4, 4].CurrentPiece = new Piece(PieceType.WhiteKing);
             board[7, 7].CurrentPiece = new Piece(PieceType.BlackKing);
             board[4, 4].BuildTileState = new BuildTileState(PieceType.WhitePawn);
-            var initialBoardState = new BoardState(board);
+
+            var activePieces = new HashSet<Position> {new Position(4, 4), new Position(7, 7)};
+            var activeBuilds = new HashSet<Position> {new Position(4, 4)};
+            var initialBoardState = new BoardState(board, activePieces, activeBuilds);
 
             //generate initial game state
             _gameStateControllerController.UpdateGameState(initialBoardState);
@@ -147,7 +154,10 @@ namespace Tests.UnitTests.Game
             board[4, 4].CurrentPiece = new Piece(PieceType.BlackKing);
             board[7, 7].CurrentPiece = new Piece(PieceType.WhiteKing);
             board[4, 4].BuildTileState = new BuildTileState(PieceType.WhitePawn);
-            var initialBoardState = new BoardState(board);
+
+            var activePieces = new HashSet<Position> {new Position(4, 4), new Position(7, 7)};
+            var activeBuilds = new HashSet<Position> {new Position(4, 4)};
+            var initialBoardState = new BoardState(board, activePieces, activeBuilds);
 
             //generate initial game state
             _gameStateControllerController.UpdateGameState(initialBoardState);
@@ -169,13 +179,16 @@ namespace Tests.UnitTests.Game
             board[7, 7].CurrentPiece = new Piece(PieceType.WhiteKing);
             board[4, 4].CurrentPiece = new Piece(PieceType.BlackKing);
             board[4, 4].BuildTileState = new BuildTileState(PieceType.WhitePawn);
-            var intitialBoardState = new BoardState(board);
+
+            var activePieces = new HashSet<Position> {new Position(4, 4), new Position(7, 7)};
+            var activeBuilds = new HashSet<Position> {new Position(4, 4)};
+            var initialBoardState = new BoardState(board, activePieces, activeBuilds);
 
             //generate initial game state
-            _gameStateControllerController.UpdateGameState(intitialBoardState);
+            _gameStateControllerController.UpdateGameState(initialBoardState);
 
             //iterate through game state
-            var whiteTurn = intitialBoardState.CloneWithDecrementBuildState();
+            var whiteTurn = initialBoardState.CloneWithDecrementBuildState();
             _gameStateControllerController.UpdateGameState(whiteTurn);
 
             Assert.That(_gameStateControllerController.CurrentGameState.BoardState.Board[4, 4].BuildTileState.Turns,
@@ -194,7 +207,10 @@ namespace Tests.UnitTests.Game
             board[4, 4].CurrentPiece = new Piece(PieceType.WhiteKing);
             board[7, 7].CurrentPiece = new Piece(PieceType.BlackKing);
             board[4, 4].BuildTileState = new BuildTileState(PieceType.WhitePawn);
-            var initialBoardState = new BoardState(board);
+
+            var activePieces = new HashSet<Position> {new Position(4, 4), new Position(7, 7)};
+            var activeBuilds = new HashSet<Position> {new Position(4, 4)};
+            var initialBoardState = new BoardState(board, activePieces, activeBuilds);
 
             //generate initial game state
             _gameStateControllerController.UpdateGameState(initialBoardState);
@@ -219,7 +235,9 @@ namespace Tests.UnitTests.Game
             board[0, 0].CurrentPiece = new Piece(PieceType.WhiteKing);
             board[7, 7].CurrentPiece = new Piece(PieceType.BlackKing);
             board[4, 4].BuildTileState = new BuildTileState(0, PieceType.WhitePawn);
-            var initialState = new BoardState(board);
+            var activePieces = new HashSet<Position> {new Position(0, 0), new Position(7, 7)};
+            var activeBuilds = new HashSet<Position> {new Position(4, 4)};
+            var initialState = new BoardState(board, activePieces, activeBuilds);
 
             //generate initial game state
             _gameStateControllerController.UpdateGameState(initialState);
@@ -242,7 +260,9 @@ namespace Tests.UnitTests.Game
             var board = _boardGenerator.GenerateBoard();
             board[7, 7].CurrentPiece = new Piece(PieceType.WhiteKing);
             board[0, 0].CurrentPiece = new Piece(PieceType.BlackKing);
-            var initialBoardState = new BoardState(board);
+            var activePieces = new HashSet<Position> {new Position(0, 0), new Position(7, 7)};
+            var activeBuilds = new HashSet<Position>();
+            var initialBoardState = new BoardState(board, activePieces, activeBuilds);
 
             //generate initial game state
             _gameStateControllerController.UpdateGameState(initialBoardState);
@@ -271,7 +291,9 @@ namespace Tests.UnitTests.Game
             board[4, 4].CurrentPiece = new Piece(PieceType.WhiteKing);
             board[7, 7].CurrentPiece = new Piece(PieceType.BlackKing);
             board[4, 4].BuildTileState = new BuildTileState(PieceType.WhitePawn);
-            var initialBoardState = new BoardState(board);
+            var activePieces = new HashSet<Position> {new Position(4, 4), new Position(7, 7)};
+            var activeBuilds = new HashSet<Position> {new Position(4, 4)};
+            var initialBoardState = new BoardState(board, activePieces, activeBuilds);
 
             //generate initial game state
             _gameStateControllerController.UpdateGameState(initialBoardState);
@@ -308,8 +330,9 @@ namespace Tests.UnitTests.Game
             board[0, 5].CurrentPiece = new Piece(PieceType.WhiteQueen);
             board[6, 7].CurrentPiece = new Piece(PieceType.BlackKing);
 
-            // initialise game state
-            var initialBoardState = new BoardState(board);
+            var activePieces = new HashSet<Position>
+                {new Position(1, 6), new Position(1, 1), new Position(0, 5), new Position(6, 7)};
+            var initialBoardState = new BoardState(board, activePieces, new HashSet<Position>());
             _gameStateControllerController.UpdateGameState(initialBoardState);
 
             var whiteTurn = initialBoardState.CloneWithDecrementBuildState();
@@ -340,7 +363,12 @@ namespace Tests.UnitTests.Game
             board[6, 0].CurrentPiece = new Piece(PieceType.WhiteKing);
 
             // initialise game state
-            var initialBoardState = new BoardState(board);
+            var activePieces = new HashSet<Position>
+            {
+                new Position(6, 7), new Position(5, 6), new Position(6, 6), new Position(7, 6), new Position(2, 0),
+                new Position(6, 0)
+            };
+            var initialBoardState = new BoardState(board, activePieces, new HashSet<Position>());
             _gameStateControllerController.UpdateGameState(initialBoardState);
 
             var whiteTurn = initialBoardState.CloneWithDecrementBuildState();
@@ -367,7 +395,11 @@ namespace Tests.UnitTests.Game
             board[6, 0].CurrentPiece = new Piece(PieceType.WhiteKing);
 
             // initialise game state
-            var initialBoardState = new BoardState(board);
+            var activePieces = new HashSet<Position>
+            {
+                new Position(4, 7), new Position(5, 4), new Position(7, 6), new Position(6, 0)
+            };
+            var initialBoardState = new BoardState(board, activePieces, new HashSet<Position>());
             _gameStateControllerController.UpdateGameState(initialBoardState);
 
             var whiteTurn = initialBoardState.CloneWithDecrementBuildState();
@@ -397,7 +429,12 @@ namespace Tests.UnitTests.Game
             board[6, 0].CurrentPiece = new Piece(PieceType.WhiteKing);
 
             // initialise game state
-            var initialBoardState = new BoardState(board);
+            var activePieces = new HashSet<Position>
+            {
+                new Position(6, 7), new Position(5, 6), new Position(6, 6), new Position(7, 6), new Position(2, 2),
+                new Position(1, 1), new Position(6, 0)
+            };
+            var initialBoardState = new BoardState(board, activePieces, new HashSet<Position>());
             _gameStateControllerController.UpdateGameState(initialBoardState);
 
             var whiteTurn = initialBoardState.CloneWithDecrementBuildState();
@@ -426,7 +463,11 @@ namespace Tests.UnitTests.Game
             board[6, 0].CurrentPiece = new Piece(PieceType.WhiteKing);
 
             // initialise game state
-            var initialBoardState = new BoardState(board);
+            var activePieces = new HashSet<Position>
+            {
+                new Position(7, 7), new Position(7, 6), new Position(3, 4), new Position(2, 4), new Position(6, 0)
+            };
+            var initialBoardState = new BoardState(board, activePieces, new HashSet<Position>());
             _gameStateControllerController.UpdateGameState(initialBoardState);
 
             var whiteTurn = initialBoardState.CloneWithDecrementBuildState();
@@ -457,7 +498,12 @@ namespace Tests.UnitTests.Game
             board[6, 0].CurrentPiece = new Piece(PieceType.WhiteKing);
 
             // initialise game state
-            var initialBoardState = new BoardState(board);
+            var activePieces = new HashSet<Position>
+            {
+                new Position(6, 7), new Position(5, 6), new Position(6, 5), new Position(7, 6), new Position(5, 7),
+                new Position(5, 5), new Position(6, 3), new Position(6, 0)
+            };
+            var initialBoardState = new BoardState(board, activePieces, new HashSet<Position>());
             _gameStateControllerController.UpdateGameState(initialBoardState);
 
             var whiteTurn = initialBoardState.CloneWithDecrementBuildState();
@@ -485,7 +531,11 @@ namespace Tests.UnitTests.Game
             board[3, 5].CurrentPiece = new Piece(PieceType.WhiteKing);
 
             // initialise game state
-            var initialBoardState = new BoardState(board);
+            var activePieces = new HashSet<Position>
+            {
+                new Position(3, 7), new Position(7, 2), new Position(3, 6), new Position(2, 5), new Position(3, 5)
+            };
+            var initialBoardState = new BoardState(board, activePieces, new HashSet<Position>());
             _gameStateControllerController.UpdateGameState(initialBoardState);
 
             var whiteTurn = initialBoardState.CloneWithDecrementBuildState();
@@ -514,7 +564,12 @@ namespace Tests.UnitTests.Game
             board[3, 5].CurrentPiece = new Piece(PieceType.WhiteKing);
 
             // initialise game state
-            var initialBoardState = new BoardState(board);
+            var activePieces = new HashSet<Position>
+            {
+                new Position(7, 7), new Position(7, 6), new Position(6, 6), new Position(6, 7), new Position(6, 4),
+                new Position(3, 5)
+            };
+            var initialBoardState = new BoardState(board, activePieces, new HashSet<Position>());
             _gameStateControllerController.UpdateGameState(initialBoardState);
 
             var whiteTurn = initialBoardState.CloneWithDecrementBuildState();
@@ -544,7 +599,12 @@ namespace Tests.UnitTests.Game
             board[1, 1].CurrentPiece = new Piece(PieceType.WhiteKing);
 
             // initialise game state
-            var initialBoardState = new BoardState(board);
+            var activePieces = new HashSet<Position>
+            {
+                new Position(7, 6), new Position(6, 6), new Position(5, 6), new Position(5, 7), new Position(4, 6),
+                new Position(3, 3), new Position(1, 1)
+            };
+            var initialBoardState = new BoardState(board, activePieces, new HashSet<Position>());
             _gameStateControllerController.UpdateGameState(initialBoardState);
 
             var whiteTurn = initialBoardState.CloneWithDecrementBuildState();
@@ -572,8 +632,14 @@ namespace Tests.UnitTests.Game
             board[1, 1].CurrentPiece = new Piece(PieceType.WhiteKing);
             board[6, 0].BuildTileState = new BuildTileState(0, PieceType.WhiteRook);
 
+            var activePieces = new HashSet<Position>
+            {
+                new Position(7, 7), new Position(7, 6), new Position(5, 6), new Position(4, 6), new Position(4, 6),
+                new Position(1, 1)
+            };
+            var activeBuilds = new HashSet<Position> {new Position(6, 0)};
             // initialise game state
-            var initialBoardState = new BoardState(board);
+            var initialBoardState = new BoardState(board, activePieces, activeBuilds);
             _gameStateControllerController.UpdateGameState(initialBoardState);
 
             var whiteTurn = initialBoardState.CloneWithDecrementBuildState();

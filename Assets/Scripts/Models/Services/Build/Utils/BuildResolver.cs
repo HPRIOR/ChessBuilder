@@ -20,6 +20,10 @@ namespace Models.Services.Build.Utils
                                tile.BuildTileState.BuildingPiece.Colour() == turn;
                 if (canBuild)
                 {
+                    // Account for new active piece in active builds and pieces
+                    boardState.ActiveBuilds.Remove(tile.Position);
+                    boardState.ActivePieces.Add(tile.Position);
+
                     tile.CurrentPiece = new Piece(tile.BuildTileState.BuildingPiece);
                     tile.BuildTileState = new BuildTileState(); // reset build state
                 }

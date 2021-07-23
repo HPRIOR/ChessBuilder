@@ -1,4 +1,5 @@
-﻿using Bindings.Installers.ModelInstallers.Board;
+﻿using System.Collections.Generic;
+using Bindings.Installers.ModelInstallers.Board;
 using Bindings.Installers.ModelInstallers.Build;
 using Models.Services.Build.Interfaces;
 using Models.Services.Interfaces;
@@ -46,7 +47,9 @@ namespace Tests.UnitTests.PossibleMoves.BuildMoves
         {
             var board = _boardGenerator.GenerateBoard();
             board[1, 1].BuildTileState = new BuildTileState(0, PieceType.WhiteQueen);
-            var boardState = new BoardState(board);
+            var activePieces = new HashSet<Position> {new Position(1, 1)};
+            var activeBuilds = new HashSet<Position>();
+            var boardState = new BoardState(board, activePieces, activeBuilds);
             _buildResolver.ResolveBuilds(boardState, PieceColour.White);
 
             Assert.That(board[1, 1].CurrentPiece.Type, Is.EqualTo(PieceType.WhiteQueen));
@@ -57,7 +60,9 @@ namespace Tests.UnitTests.PossibleMoves.BuildMoves
         {
             var board = _boardGenerator.GenerateBoard();
             board[1, 1].BuildTileState = new BuildTileState(0, PieceType.WhiteQueen);
-            var boardState = new BoardState(board);
+            var activePieces = new HashSet<Position> {new Position(1, 1)};
+            var activeBuilds = new HashSet<Position>();
+            var boardState = new BoardState(board, activePieces, activeBuilds);
             _buildResolver.ResolveBuilds(boardState, PieceColour.White);
 
             Assert.That(board[1, 1].BuildTileState, Is.EqualTo(new BuildTileState()));

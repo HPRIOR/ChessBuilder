@@ -2,7 +2,7 @@
 using Models.State.PieceState;
 using View.Prefab.Interfaces;
 
-namespace Models.Services.Interfaces
+namespace Models.Services.Moves.Interfaces
 {
     public interface IPieceFactory
     {

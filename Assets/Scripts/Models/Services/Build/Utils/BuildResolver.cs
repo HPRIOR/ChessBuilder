@@ -1,4 +1,6 @@
-﻿using Models.Services.Build.Interfaces;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Models.Services.Build.Interfaces;
 using Models.State.Board;
 using Models.State.BuildState;
 using Models.State.PieceState;
@@ -8,11 +10,12 @@ namespace Models.Services.Build.Utils
 {
     public class BuildResolver : IBuildResolver
     {
-        // this could be moved to the GameController so that it's calling would not be repeated
-        // however, game logic would require the game controller to progress 
         public void ResolveBuilds(BoardState boardState, PieceColour turn)
         {
-            foreach (var tile in boardState.Board)
+            var activeBuildPositions =
+                new List<Tile>(boardState.ActiveBuilds.Select(position => boardState.Board[position.X, position.Y]));
+
+            foreach (var tile in activeBuildPositions)
             {
                 var canBuild = tile.BuildTileState.Turns == 0 &&
                                tile.BuildTileState.BuildingPiece != PieceType.NullPiece &&
@@ -20,6 +23,10 @@ namespace Models.Services.Build.Utils
                                tile.BuildTileState.BuildingPiece.Colour() == turn;
                 if (canBuild)
                 {
+                    // Account for new active piece in active builds and pieces
+                    boardState.ActiveBuilds.Remove(tile.Position);
+                    boardState.ActivePieces.Add(tile.Position);
+
                     tile.CurrentPiece = new Piece(tile.BuildTileState.BuildingPiece);
                     tile.BuildTileState = new BuildTileState(); // reset build state
                 }

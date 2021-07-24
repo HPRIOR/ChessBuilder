@@ -6,7 +6,7 @@ using Bindings.Installers.ModelInstallers.Board;
 using Bindings.Installers.ModelInstallers.Build;
 using Bindings.Installers.ModelInstallers.Move;
 using Models.Services.AI.Implementations;
-using Models.Services.Interfaces;
+using Models.Services.Board;
 using Models.State.Board;
 using Models.State.BuildState;
 using Models.State.GameState;
@@ -74,7 +74,11 @@ namespace Tests.UnitTests.AI
             board[0, 7].CurrentPiece = new Piece(PieceType.WhiteKing);
             board[5, 5].CurrentPiece = new Piece(PieceType.WhitePawn);
             board[6, 6].CurrentPiece = new Piece(PieceType.BlackPawn);
-            var boardState = new BoardState(board);
+            var activePieces = new HashSet<Position>
+            {
+                new Position(7, 1), new Position(0, 7), new Position(5, 5), new Position(6, 6)
+            };
+            var boardState = new BoardState(board, activePieces, new HashSet<Position>());
             var possibleMoves = new Dictionary<Position, HashSet<Position>>
             {
                 {new Position(5, 5), new HashSet<Position> {new Position(6, 6), new Position(6, 5)}},
@@ -88,8 +92,8 @@ namespace Tests.UnitTests.AI
             var logTimer = new LogExecutionTimer();
             var depth = 6;
 
-            logTimer.LogExecutionTime($"NegaScout with depth of {depth.ToString()} after board scanner opt",
-                () => _miniMax.GetMove(gameState, depth, PieceColour.White));
+            // logTimer.LogExecutionTime($"NegaScout with depth of {depth.ToString()} after active piece opt",
+            //     () => _miniMax.GetMove(gameState, depth, PieceColour.White));
 
             // var move = _miniMax.GetMove(gameState, depth, PieceColour.White);
             // var newGameState = move(gameState.BoardState, PieceColour.White);

@@ -1,5 +1,6 @@
-﻿using Models.Services.Game.Interfaces;
-using Models.Services.Interfaces;
+﻿using System.Collections.Generic;
+using Models.Services.Board;
+using Models.Services.Game.Interfaces;
 using Models.State.Board;
 using Models.State.PieceState;
 using UnityEngine;
@@ -65,7 +66,9 @@ namespace Models.Services.Game.Implementations
             // board[5, 7].CurrentPiece = new Piece(PieceType.BlackBishop);
             // board[6, 7].CurrentPiece = new Piece(PieceType.BlackKnight);
             // board[7, 7].CurrentPiece = new Piece(PieceType.BlackRook);
-            return new BoardState(board);
+            var activePieces = new HashSet<Position> {new Position(4, 0), new Position(3, 7)};
+            var activeBuilds = new HashSet<Position>();
+            return new BoardState(board, activePieces, activeBuilds);
         }
     }
 }

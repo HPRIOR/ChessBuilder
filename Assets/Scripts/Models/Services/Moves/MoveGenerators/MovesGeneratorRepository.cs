@@ -1,6 +1,6 @@
 using System.Collections.Generic;
-using Models.Services.Interfaces;
 using Models.Services.Moves.Factories;
+using Models.Services.Moves.Interfaces;
 using Models.Services.Moves.MoveGenerators.TurnMoves;
 using Models.State.PieceState;
 

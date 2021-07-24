@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Models.Services.Interfaces;
+using Models.Services.Moves.Interfaces;
 using Models.Services.Moves.Utils;
 using Models.State.Board;
 using Models.State.PieceState;

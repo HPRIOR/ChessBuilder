@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using Bindings.Installers.ModelInstallers.Board;
 using Bindings.Installers.ModelInstallers.Build;
+using Models.Services.Board;
 using Models.Services.Build.Interfaces;
-using Models.Services.Interfaces;
 using Models.State.Board;
 using Models.State.PieceState;
 using Models.State.PlayerState;

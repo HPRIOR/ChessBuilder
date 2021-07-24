@@ -1,5 +1,5 @@
 ﻿using System;
-using Models.Services.Interfaces;
+using Models.Services.Moves.Interfaces;
 using Models.Services.Moves.MoveGenerators.NonTurnMoves;
 using Models.Services.Moves.MoveGenerators.TurnMoves;
 using Models.State.PieceState;

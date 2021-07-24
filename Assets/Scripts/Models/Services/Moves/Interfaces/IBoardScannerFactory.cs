@@ -1,7 +1,7 @@
 ﻿using Models.Services.Moves.Utils;
 using Models.State.PieceState;
 
-namespace Models.Services.Interfaces
+namespace Models.Services.Moves.Interfaces
 {
     public interface IBoardScannerFactory
     {

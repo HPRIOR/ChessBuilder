@@ -1,7 +1,7 @@
 ﻿using System.Collections.Immutable;
 using Models.Services.Build.Interfaces;
 using Models.Services.Game.Interfaces;
-using Models.Services.Interfaces;
+using Models.Services.Moves.Interfaces;
 using Models.State.Board;
 using Models.State.BuildState;
 using Models.State.GameState;
@@ -49,6 +49,9 @@ namespace Models.Services.Game.Implementations
             return new GameState(moveState.Check, checkMate, blackState, whiteState, moveState.PossibleMoves,
                 possibleBuildMoves, newBoardState);
         }
+        // public void UpdateGameState(Position from, Position to, PieceColour turn)
+
+        // public void UpdateGameState(Position at, PieceType piece, PieceColour turn)
 
         private BuildMoves GetPossibleBuildMoves(BoardState newBoardState, PieceColour turn, MoveState moveState,
             PlayerState relevantPlayerState) =>

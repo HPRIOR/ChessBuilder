@@ -8,7 +8,7 @@ namespace Models.Services.Game.Interfaces
     {
         GameState CurrentGameState { get; }
         PieceColour Turn { get; }
-        void UpdateGameState(BoardState newState);
+        void UpdateGameState(BoardState newBoardState);
         void RetainBoardState();
     }
 }

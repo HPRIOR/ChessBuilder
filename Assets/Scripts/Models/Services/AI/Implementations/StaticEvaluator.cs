@@ -1,4 +1,5 @@
-﻿using Models.Services.AI.Interfaces;
+﻿using System.Linq;
+using Models.Services.AI.Interfaces;
 using Models.State.BuildState;
 using Models.State.GameState;
 using Models.State.PieceState;
@@ -11,8 +12,9 @@ namespace Models.Services.AI.Implementations
         {
             var blackPoints = 0;
             var whitePoints = 0;
-            var board = gameState.BoardState.Board;
-            foreach (var tile in board)
+            var activeTiles =
+                gameState.BoardState.ActivePieces.Select(pos => gameState.BoardState.Board[pos.X, pos.Y]);
+            foreach (var tile in activeTiles)
             {
                 var currentPiece = tile.CurrentPiece;
                 var multiplier = 100;

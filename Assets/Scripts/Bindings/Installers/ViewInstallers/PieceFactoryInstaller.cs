@@ -1,6 +1,5 @@
-﻿using Models.Services.Interfaces;
+﻿using Models.Services.Moves.Interfaces;
 using Models.State.Board;
-using UnityEditor;
 using UnityEngine;
 using View.Interfaces;
 using View.Prefab.Factories;

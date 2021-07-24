@@ -7,7 +7,7 @@ using Bindings.Installers.ModelInstallers.Board;
 using Bindings.Installers.ModelInstallers.Build;
 using Bindings.Installers.ModelInstallers.Move;
 using Models.Services.AI.Interfaces;
-using Models.Services.Interfaces;
+using Models.Services.Board;
 using Models.State.Board;
 using Models.State.BuildState;
 using Models.State.GameState;
@@ -100,7 +100,9 @@ namespace Tests.UnitTests.AI
         {
             var board = _boardGenerator.GenerateBoard();
             board[2, 2].CurrentPiece = new Piece(PieceType.BlackPawn);
-            var boardState = new BoardState(board);
+            var activePieces = new HashSet<Position> {new Position(2, 2)};
+            var activeBuilds = new HashSet<Position>();
+            var boardState = new BoardState(board, activePieces, activeBuilds);
 
             var moves = new Dictionary<Position, ImmutableHashSet<Position>>
             {
@@ -132,7 +134,9 @@ namespace Tests.UnitTests.AI
         {
             var board = _boardGenerator.GenerateBoard();
             board[2, 2].CurrentPiece = new Piece(PieceType.BlackPawn);
-            var boardState = new BoardState(board);
+            var activePieces = new HashSet<Position> {new Position(2, 2)};
+            var activeBuilds = new HashSet<Position>();
+            var boardState = new BoardState(board, activePieces, activeBuilds);
 
             var moves = new Dictionary<Position, ImmutableHashSet<Position>>()
                 .ToImmutableDictionary();

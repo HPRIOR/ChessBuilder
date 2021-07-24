@@ -1,6 +1,6 @@
 ﻿using Models.State.Board;
 
-namespace Models.Services.Interfaces
+namespace Controllers.Interfaces
 {
     public interface IPieceMover
     {

@@ -1,6 +1,6 @@
 ﻿using Models.State.Board;
 
-namespace Models.Services.Interfaces
+namespace Models.Services.Board
 {
     public interface IBoardGenerator
     {

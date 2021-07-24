@@ -1,5 +1,5 @@
-﻿using Models.Services.Build.Interfaces;
-using Models.Services.Interfaces;
+﻿using System.Collections.Generic;
+using Controllers.Interfaces;
 using Models.State.Board;
 using Models.State.PieceState;
 
@@ -7,11 +7,15 @@ namespace Controllers.PieceMovers
 {
     public class PieceMover : IPieceMover
     {
-
         public BoardState GenerateNewBoardState(BoardState originalBoardState, Position from,
             Position destination)
         {
-            var newBoardState = originalBoardState.CloneWithDecrementBuildState();
+            var newActivePieces = new HashSet<Position>(originalBoardState.ActivePieces);
+            newActivePieces.Remove(from);
+            newActivePieces.Add(destination);
+
+            var newActiveBuilds = new HashSet<Position>(originalBoardState.ActiveBuilds);
+            var newBoardState = originalBoardState.CloneWithDecrementBuildState(newActivePieces, newActiveBuilds);
 
             // get swapped pieces
             var destinationTile = newBoardState.Board[destination.X, destination.Y];

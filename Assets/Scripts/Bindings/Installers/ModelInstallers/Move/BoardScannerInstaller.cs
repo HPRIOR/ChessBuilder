@@ -1,5 +1,5 @@
-﻿using Models.Services.Interfaces;
-using Models.Services.Moves.Factories;
+﻿using Models.Services.Moves.Factories;
+using Models.Services.Moves.Interfaces;
 using Models.Services.Moves.Utils;
 using Models.Services.Moves.Utils.Scanners;
 using Models.State.PieceState;

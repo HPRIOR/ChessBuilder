@@ -1,4 +1,5 @@
-﻿using Bindings.Installers.ModelInstallers.Board;
+﻿using System.Collections.Generic;
+using Bindings.Installers.ModelInstallers.Board;
 using Bindings.Installers.ModelInstallers.Build;
 using Models.Services.Build.Interfaces;
 using Models.Services.Interfaces;
@@ -47,7 +48,9 @@ namespace Tests.UnitTests.PossibleMoves.BuildMoves
         {
             var board = _boardGenerator.GenerateBoard();
             board[1, 1].BuildTileState = new BuildTileState(PieceType.BlackQueen);
-            var boardState = new BoardState(board);
+            var activePieces = new HashSet<Position>();
+            var activeBuilds = new HashSet<Position> {new Position(1, 1)};
+            var boardState = new BoardState(board, activePieces, activeBuilds);
 
             const int maxPoints = 10;
             var playerState = _buildPointsCalculator.CalculateBuildPoints(PieceColour.Black, boardState, maxPoints);
@@ -62,7 +65,9 @@ namespace Tests.UnitTests.PossibleMoves.BuildMoves
         {
             var board = _boardGenerator.GenerateBoard();
             board[1, 1].CurrentPiece = new Piece(PieceType.BlackQueen);
-            var boardState = new BoardState(board);
+            var activePieces = new HashSet<Position>();
+            var activeBuilds = new HashSet<Position> {new Position(1, 1)};
+            var boardState = new BoardState(board, activePieces, activeBuilds);
 
             const int maxPoints = 10;
             var playerState = _buildPointsCalculator.CalculateBuildPoints(PieceColour.Black, boardState, maxPoints);
@@ -78,14 +83,16 @@ namespace Tests.UnitTests.PossibleMoves.BuildMoves
             var board = _boardGenerator.GenerateBoard();
             board[1, 1].BuildTileState = new BuildTileState(PieceType.BlackQueen);
             board[2, 2].CurrentPiece = new Piece(PieceType.BlackPawn);
-            var boardState = new BoardState(board);
+            var activePieces = new HashSet<Position> {new Position(1, 1)};
+            var activeBuilds = new HashSet<Position> {new Position(2, 2)};
+            var boardState = new BoardState(board, activePieces, activeBuilds);
 
             const int maxPoints = 10;
             var playerState = _buildPointsCalculator.CalculateBuildPoints(PieceColour.Black, boardState, maxPoints);
 
             var expectedPoints = maxPoints - BuildPoints.PieceCost[PieceType.BlackQueen] -
                                  BuildPoints.PieceCost[PieceType.BlackPawn];
-            Assert.That(playerState, Is.EqualTo(new PlayerState(expectedPoints)));
+            Assert.That(playerState.BuildPoints, Is.EqualTo(new PlayerState(expectedPoints).BuildPoints));
         }
 
         [Test]
@@ -97,7 +104,9 @@ namespace Tests.UnitTests.PossibleMoves.BuildMoves
             var board = _boardGenerator.GenerateBoard();
             board[1, 1].BuildTileState = new BuildTileState(queen);
             board[2, 2].CurrentPiece = new Piece(pawn);
-            var boardState = new BoardState(board);
+            var activePieces = new HashSet<Position> {new Position(1, 1)};
+            var activeBuilds = new HashSet<Position> {new Position(2, 2)};
+            var boardState = new BoardState(board, activePieces, activeBuilds);
 
             const int maxPoints = 10;
             var playerState = _buildPointsCalculator.CalculateBuildPoints(pieceColour, boardState, maxPoints);
@@ -112,7 +121,9 @@ namespace Tests.UnitTests.PossibleMoves.BuildMoves
         {
             var board = _boardGenerator.GenerateBoard();
             board[2, 2].CurrentPiece = new Piece(PieceType.BlackKing);
-            var boardState = new BoardState(board);
+            var activePieces = new HashSet<Position>();
+            var activeBuilds = new HashSet<Position> {new Position(2, 2)};
+            var boardState = new BoardState(board, activePieces, activeBuilds);
 
             const int maxPoints = 10;
             var playerState = _buildPointsCalculator.CalculateBuildPoints(PieceColour.Black, boardState, maxPoints);

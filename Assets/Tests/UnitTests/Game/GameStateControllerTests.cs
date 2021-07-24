@@ -685,9 +685,9 @@ namespace Tests.UnitTests.Game
             activePieces = new HashSet<Position>
             {
                 new Position(7, 7), new Position(7, 6), new Position(5, 6), new Position(5, 5),
-                new Position(1, 1), new Position(6, 0)
+                new Position(1, 1)
             };
-            var whiteTurn = initialBoardState.CloneWithDecrementBuildState(activePieces, new HashSet<Position>());
+            var whiteTurn = initialBoardState.CloneWithDecrementBuildState(activePieces, activeBuilds);
             whiteTurn.Board[4, 6].CurrentPiece = new Piece(PieceType.NullPiece);
             whiteTurn.Board[5, 5].CurrentPiece = new Piece(PieceType.WhiteBishop);
             _gameStateControllerController.UpdateGameState(whiteTurn);

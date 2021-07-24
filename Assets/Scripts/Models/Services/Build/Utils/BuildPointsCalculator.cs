@@ -1,4 +1,5 @@
-﻿using Models.Services.Build.Interfaces;
+﻿using System.Linq;
+using Models.Services.Build.Interfaces;
 using Models.State.Board;
 using Models.State.BuildState;
 using Models.State.PieceState;
@@ -13,9 +14,15 @@ namespace Models.Services.Build.Utils
             int maxPoints)
         {
             var result = 0;
-            var board = boardState.Board;
-
-            foreach (var tile in board)
+            var activeBuilds =
+                boardState
+                    .ActiveBuilds
+                    .Select(pos => boardState.Board[pos.X, pos.Y])
+                    .Concat(boardState
+                        .ActivePieces
+                        .Select(pos => boardState.Board[pos.X, pos.Y])
+                    );
+            foreach (var tile in activeBuilds)
             {
                 var pieceIsOfColourType = tile.CurrentPiece.Colour == pieceColour &&
                                           tile.CurrentPiece.Type != PieceType.NullPiece;

@@ -1,4 +1,6 @@
-﻿using Models.Services.Build.Interfaces;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Models.Services.Build.Interfaces;
 using Models.State.Board;
 using Models.State.BuildState;
 using Models.State.PieceState;
@@ -10,7 +12,10 @@ namespace Models.Services.Build.Utils
     {
         public void ResolveBuilds(BoardState boardState, PieceColour turn)
         {
-            foreach (var tile in boardState.Board)
+            var activeBuildPositions =
+                new List<Tile>(boardState.ActiveBuilds.Select(position => boardState.Board[position.X, position.Y]));
+
+            foreach (var tile in activeBuildPositions)
             {
                 var canBuild = tile.BuildTileState.Turns == 0 &&
                                tile.BuildTileState.BuildingPiece != PieceType.NullPiece &&

@@ -22,12 +22,12 @@ namespace Models.Services.Game.Implementations
         public GameState CurrentGameState { get; private set; }
         public PieceColour Turn { get; private set; }
 
-        public void UpdateGameState(BoardState newState)
+        public void UpdateGameState(BoardState newBoardState)
         {
             Turn = NextTurn();
             var previousState = CurrentGameState?.BoardState;
 
-            CurrentGameState = _gameStateUpdater.UpdateGameState(newState, Turn);
+            CurrentGameState = _gameStateUpdater.UpdateGameState(newBoardState, Turn);
 
             GameStateChangeEvent?.Invoke(previousState, CurrentGameState.BoardState);
         }

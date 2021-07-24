@@ -1,6 +1,7 @@
 ﻿using Bindings.Installers.ModelInstallers.Board;
 using Bindings.Installers.ModelInstallers.Move;
-using Models.Services.Interfaces;
+using Models.Services.Board;
+using Models.Services.Moves.Interfaces;
 using Models.State.Board;
 using Models.State.PieceState;
 using NUnit.Framework;

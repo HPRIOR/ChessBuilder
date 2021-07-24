@@ -2,7 +2,7 @@
 using Models.State.MoveState;
 using Models.State.PieceState;
 
-namespace Models.Services.Interfaces
+namespace Models.Services.Moves.Interfaces
 {
     public interface IMovesGenerator
     {

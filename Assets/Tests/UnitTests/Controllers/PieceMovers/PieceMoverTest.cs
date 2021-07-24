@@ -3,7 +3,7 @@ using Bindings.Installers.ModelInstallers.Board;
 using Bindings.Installers.ModelInstallers.Build;
 using Bindings.Installers.ModelInstallers.Move;
 using Controllers.Interfaces;
-using Models.Services.Interfaces;
+using Models.Services.Board;
 using Models.State.Board;
 using Models.State.PieceState;
 using NUnit.Framework;

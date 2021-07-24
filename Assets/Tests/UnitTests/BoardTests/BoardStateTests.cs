@@ -1,5 +1,5 @@
 using Bindings.Installers.ModelInstallers.Board;
-using Models.Services.Interfaces;
+using Models.Services.Board;
 using Models.State.Board;
 using Models.State.PieceState;
 using NUnit.Framework;

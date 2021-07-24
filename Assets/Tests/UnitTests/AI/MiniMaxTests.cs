@@ -6,7 +6,7 @@ using Bindings.Installers.ModelInstallers.Board;
 using Bindings.Installers.ModelInstallers.Build;
 using Bindings.Installers.ModelInstallers.Move;
 using Models.Services.AI.Implementations;
-using Models.Services.Interfaces;
+using Models.Services.Board;
 using Models.State.Board;
 using Models.State.BuildState;
 using Models.State.GameState;

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
+using Models.Services.Board;
 using Models.Services.Game.Interfaces;
-using Models.Services.Interfaces;
 using Models.State.Board;
 using Models.State.PieceState;
 using UnityEngine;

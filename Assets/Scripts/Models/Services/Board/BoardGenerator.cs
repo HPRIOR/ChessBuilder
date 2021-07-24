@@ -1,5 +1,4 @@
-﻿using Models.Services.Interfaces;
-using Models.State.Board;
+﻿using Models.State.Board;
 
 namespace Models.Services.Board
 {

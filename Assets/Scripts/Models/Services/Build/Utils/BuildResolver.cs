@@ -8,8 +8,6 @@ namespace Models.Services.Build.Utils
 {
     public class BuildResolver : IBuildResolver
     {
-        // this could be moved to the GameController so that it's calling would not be repeated
-        // however, game logic would require the game controller to progress 
         public void ResolveBuilds(BoardState boardState, PieceColour turn)
         {
             foreach (var tile in boardState.Board)

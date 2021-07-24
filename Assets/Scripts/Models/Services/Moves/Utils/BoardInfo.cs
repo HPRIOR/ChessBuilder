@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Models.Services.Interfaces;
 using Models.State.Board;
 using Models.State.PieceState;
@@ -21,10 +22,11 @@ namespace Models.Services.Moves.Utils
         // TODO store active squares in board state so that entire board does not need to be scanned
         public void EvaluateBoard(BoardState boardState, PieceColour turn)
         {
-            var board = boardState.Board;
             var turnMoves = new Dictionary<Position, HashSet<Position>>();
             var enemyMoves = new Dictionary<Position, HashSet<Position>>();
-            foreach (var tile in board)
+
+            var activeTiles = boardState.ActivePieces.Select(position => boardState.Board[position.X, position.Y]);
+            foreach (var tile in activeTiles)
             {
                 var currentPiece = tile.CurrentPiece;
                 var playerTurn = currentPiece.Type != PieceType.NullPiece && currentPiece.Colour == turn;

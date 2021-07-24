@@ -22,6 +22,7 @@ namespace Models.Services.Game.Implementations
         public GameState CurrentGameState { get; private set; }
         public PieceColour Turn { get; private set; }
 
+        // Change to initialise game state 
         public void UpdateGameState(BoardState newBoardState)
         {
             Turn = NextTurn();
@@ -31,6 +32,10 @@ namespace Models.Services.Game.Implementations
 
             GameStateChangeEvent?.Invoke(previousState, CurrentGameState.BoardState);
         }
+
+        // public void UpdateGameState(Position from, Position to)
+
+        // public void UpdateGameState(Position at, PieceType piece)
 
         /// <summary>
         ///     Emits event with current board state

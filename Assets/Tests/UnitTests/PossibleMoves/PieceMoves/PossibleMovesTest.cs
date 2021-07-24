@@ -34,14 +34,6 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
             _movesGenerator = Container.Resolve<IMovesGenerator>();
         }
 
-        [Test]
-        public void WithNoPieces_NoPossibleMoves()
-        {
-            var boardState = new BoardState();
-            var moveState =
-                _movesGenerator.GetPossibleMoves(boardState, PieceColour.White);
-            Assert.AreEqual(0, moveState.PossibleMoves.SelectMany(x => x.Value).Count());
-        }
 
         [Test]
         public void OnWhiteTurn_BlackCannotMove(
@@ -53,7 +45,9 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
             {
                 var board = _boardGenerator.GenerateBoard();
                 board[1, 1].CurrentPiece = new Piece(pieceType);
-                var boardState = new BoardState(board);
+                var activePieces = new HashSet<Position> {new Position(1, 1)};
+                var activeBuilds = new HashSet<Position>();
+                var boardState = new BoardState(board, activePieces, activeBuilds);
                 var moveState =
                     _movesGenerator.GetPossibleMoves(boardState, PieceColour.White);
                 Assert.AreEqual(0, moveState.PossibleMoves.SelectMany(x => x.Value).Count());
@@ -69,7 +63,9 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
         {
             var board = _boardGenerator.GenerateBoard();
             board[1, 1].CurrentPiece = new Piece(pieceType);
-            var boardState = new BoardState(board);
+            var activePieces = new HashSet<Position> {new Position(1, 1)};
+            var activeBuilds = new HashSet<Position>();
+            var boardState = new BoardState(board, activePieces, activeBuilds);
             var moveState =
                 _movesGenerator.GetPossibleMoves(boardState, PieceColour.Black);
             Assert.Greater(moveState.PossibleMoves.SelectMany(x => x.Value).Count(), 0);
@@ -84,7 +80,9 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
         {
             var board = _boardGenerator.GenerateBoard();
             board[1, 1].CurrentPiece = new Piece(pieceType);
-            var boardState = new BoardState(board);
+            var activePieces = new HashSet<Position> {new Position(1, 1)};
+            var activeBuilds = new HashSet<Position>();
+            var boardState = new BoardState(board, activePieces, activeBuilds);
             var moveState =
                 _movesGenerator.GetPossibleMoves(boardState, PieceColour.White);
             Assert.Greater(moveState.PossibleMoves.SelectMany(x => x.Value).Count(), 0);
@@ -99,7 +97,9 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
         {
             var board = _boardGenerator.GenerateBoard();
             board[1, 1].CurrentPiece = new Piece(pieceType);
-            var boardState = new BoardState(board);
+            var activePieces = new HashSet<Position> {new Position(1, 1)};
+            var activeBuilds = new HashSet<Position>();
+            var boardState = new BoardState(board, activePieces, activeBuilds);
             var moveState =
                 _movesGenerator.GetPossibleMoves(boardState, PieceColour.Black);
             Assert.AreEqual(0, moveState.PossibleMoves.SelectMany(x => x.Value).Count());
@@ -112,7 +112,9 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
             board[1, 6].CurrentPiece = new Piece(PieceType.BlackKing);
             board[4, 6].CurrentPiece = new Piece(PieceType.BlackPawn);
             board[1, 1].CurrentPiece = new Piece(PieceType.WhiteQueen);
-            var boardState = new BoardState(board);
+            var activePieces = new HashSet<Position> {new Position(1, 1), new Position(1, 6), new Position(4, 6)};
+            var activeBuilds = new HashSet<Position>();
+            var boardState = new BoardState(board, activePieces, activeBuilds);
 
             var moveState =
                 _movesGenerator.GetPossibleMoves(boardState, PieceColour.Black);
@@ -127,7 +129,9 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
             board[1, 6].CurrentPiece = new Piece(PieceType.BlackKing);
             board[4, 6].CurrentPiece = new Piece(PieceType.BlackQueen);
             board[1, 1].CurrentPiece = new Piece(PieceType.WhiteQueen);
-            var boardState = new BoardState(board);
+            var activePieces = new HashSet<Position> {new Position(1, 1), new Position(1, 6), new Position(4, 6)};
+            var activeBuilds = new HashSet<Position>();
+            var boardState = new BoardState(board, activePieces, activeBuilds);
 
             var moveState =
                 _movesGenerator.GetPossibleMoves(boardState, PieceColour.Black);
@@ -143,7 +147,9 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
             board[1, 6].CurrentPiece = new Piece(PieceType.BlackKing);
             board[4, 6].CurrentPiece = new Piece(PieceType.BlackPawn);
             board[1, 1].CurrentPiece = new Piece(PieceType.WhiteQueen);
-            var boardState = new BoardState(board);
+            var activePieces = new HashSet<Position> {new Position(1, 1), new Position(1, 6), new Position(4, 6)};
+            var activeBuilds = new HashSet<Position>();
+            var boardState = new BoardState(board, activePieces, activeBuilds);
 
             var moveState =
                 _movesGenerator.GetPossibleMoves(boardState, PieceColour.Black);
@@ -158,7 +164,10 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
             board[4, 6].CurrentPiece = new Piece(PieceType.BlackQueen);
             board[1, 1].CurrentPiece = new Piece(PieceType.WhiteQueen);
             board[6, 1].CurrentPiece = new Piece(PieceType.WhiteQueen);
-            var boardState = new BoardState(board);
+            var activePieces = new HashSet<Position>
+                {new Position(1, 1), new Position(1, 6), new Position(4, 6), new Position(6, 1)};
+            var activeBuilds = new HashSet<Position>();
+            var boardState = new BoardState(board, activePieces, activeBuilds);
 
             var moveState =
                 _movesGenerator.GetPossibleMoves(boardState, PieceColour.Black);
@@ -177,7 +186,10 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
             board[1, 6].CurrentPiece = new Piece(PieceType.BlackKing);
             board[1, 1].CurrentPiece = new Piece(PieceType.WhiteQueen);
             board[6, 1].CurrentPiece = new Piece(PieceType.WhiteQueen);
-            var boardState = new BoardState(board);
+            var activePieces = new HashSet<Position>
+                {new Position(1, 1), new Position(1, 6), new Position(6, 1)};
+            var activeBuilds = new HashSet<Position>();
+            var boardState = new BoardState(board, activePieces, activeBuilds);
 
             var moveState =
                 _movesGenerator.GetPossibleMoves(boardState, PieceColour.Black);
@@ -201,7 +213,10 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
             board[3, 5].CurrentPiece = new Piece(PieceType.WhiteQueen);
             board[7, 7].CurrentPiece = new Piece(PieceType.BlackQueen);
 
-            var boardState = new BoardState(board);
+            var activePieces = new HashSet<Position>
+                {new Position(0, 0), new Position(3, 5), new Position(7, 7)};
+            var activeBuilds = new HashSet<Position>();
+            var boardState = new BoardState(board, activePieces, activeBuilds);
 
             var moveState =
                 _movesGenerator.GetPossibleMoves(boardState, PieceColour.White);
@@ -223,7 +238,10 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
             board[3, 3].CurrentPiece = new Piece(PieceType.WhiteQueen);
             board[1, 1].CurrentPiece = new Piece(PieceType.BlackPawn);
 
-            var boardState = new BoardState(board);
+            var activePieces = new HashSet<Position>
+                {new Position(0, 0), new Position(3, 3), new Position(1, 1)};
+            var activeBuilds = new HashSet<Position>();
+            var boardState = new BoardState(board, activePieces, activeBuilds);
 
             var moveState =
                 _movesGenerator.GetPossibleMoves(boardState, PieceColour.White);
@@ -243,7 +261,10 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
             board[4, 2].CurrentPiece = new Piece(PieceType.WhiteQueen);
             board[1, 1].CurrentPiece = new Piece(PieceType.BlackPawn);
 
-            var boardState = new BoardState(board);
+            var activePieces = new HashSet<Position>
+                {new Position(0, 0), new Position(4, 2), new Position(1, 1)};
+            var activeBuilds = new HashSet<Position>();
+            var boardState = new BoardState(board, activePieces, activeBuilds);
 
             var moveState =
                 _movesGenerator.GetPossibleMoves(boardState, PieceColour.White);
@@ -258,7 +279,10 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
             board[0, 0].CurrentPiece = new Piece(PieceType.WhiteKing);
             board[1, 1].CurrentPiece = new Piece(PieceType.BlackKing);
 
-            var boardState = new BoardState(board);
+            var activePieces = new HashSet<Position>
+                {new Position(0, 0), new Position(1, 1)};
+            var activeBuilds = new HashSet<Position>();
+            var boardState = new BoardState(board, activePieces, activeBuilds);
 
             var moveState =
                 _movesGenerator.GetPossibleMoves(boardState, PieceColour.White);
@@ -273,7 +297,10 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
             board[4, 4].CurrentPiece = new Piece(PieceType.WhiteKing);
             board[4, 6].CurrentPiece = new Piece(PieceType.BlackPawn);
 
-            var boardState = new BoardState(board);
+            var activePieces = new HashSet<Position>
+                {new Position(4, 4), new Position(4, 6)};
+            var activeBuilds = new HashSet<Position>();
+            var boardState = new BoardState(board, activePieces, activeBuilds);
 
             var moveState =
                 _movesGenerator.GetPossibleMoves(boardState, PieceColour.White);
@@ -293,7 +320,10 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
             board[4, 6].CurrentPiece = new Piece(PieceType.BlackPawn);
             board[7, 4].CurrentPiece = new Piece(PieceType.BlackRook);
 
-            var boardState = new BoardState(board);
+            var activePieces = new HashSet<Position>
+                {new Position(4, 4), new Position(4, 6), new Position(7, 4)};
+            var activeBuilds = new HashSet<Position>();
+            var boardState = new BoardState(board, activePieces, activeBuilds);
 
             var moveState =
                 _movesGenerator.GetPossibleMoves(boardState, PieceColour.White);
@@ -314,7 +344,10 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
             board[4, 6].CurrentPiece = new Piece(PieceType.BlackPawn);
             board[7, 4].CurrentPiece = new Piece(PieceType.BlackRook);
 
-            var boardState = new BoardState(board);
+            var activePieces = new HashSet<Position>
+                {new Position(4, 4), new Position(4, 6), new Position(7, 4)};
+            var activeBuilds = new HashSet<Position>();
+            var boardState = new BoardState(board, activePieces, activeBuilds);
 
             var moveState =
                 _movesGenerator.GetPossibleMoves(boardState, PieceColour.White);
@@ -330,7 +363,10 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
             board[4, 4].CurrentPiece = new Piece(PieceType.WhiteKing);
             board[4, 6].CurrentPiece = new Piece(PieceType.BlackPawn);
 
-            var boardState = new BoardState(board);
+            var activePieces = new HashSet<Position>
+                {new Position(4, 4), new Position(4, 6)};
+            var activeBuilds = new HashSet<Position>();
+            var boardState = new BoardState(board, activePieces, activeBuilds);
 
             var moveState =
                 _movesGenerator.GetPossibleMoves(boardState, PieceColour.White);
@@ -346,7 +382,10 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
             board[4, 5].CurrentPiece = new Piece(PieceType.BlackPawn);
             board[7, 5].CurrentPiece = new Piece(PieceType.BlackRook);
 
-            var boardState = new BoardState(board);
+            var activePieces = new HashSet<Position>
+                {new Position(4, 4), new Position(4, 6), new Position(7, 5)};
+            var activeBuilds = new HashSet<Position>();
+            var boardState = new BoardState(board, activePieces, activeBuilds);
 
             var moveState =
                 _movesGenerator.GetPossibleMoves(boardState, PieceColour.White);
@@ -364,7 +403,10 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
             board[4, 4].CurrentPiece = new Piece(PieceType.WhitePawn);
             board[7, 4].CurrentPiece = new Piece(PieceType.BlackRook);
 
-            var boardState = new BoardState(board);
+            var activePieces = new HashSet<Position>
+                {new Position(4, 4), new Position(3, 4), new Position(7, 4)};
+            var activeBuilds = new HashSet<Position>();
+            var boardState = new BoardState(board, activePieces, activeBuilds);
 
             var moveState =
                 _movesGenerator.GetPossibleMoves(boardState, PieceColour.White);
@@ -382,7 +424,10 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
             board[4, 4].CurrentPiece = new Piece(PieceType.WhitePawn);
             board[7, 4].CurrentPiece = new Piece(PieceType.BlackQueen);
 
-            var boardState = new BoardState(board);
+            var activePieces = new HashSet<Position>
+                {new Position(4, 4), new Position(3, 4), new Position(7, 4)};
+            var activeBuilds = new HashSet<Position>();
+            var boardState = new BoardState(board, activePieces, activeBuilds);
 
             var moveState =
                 _movesGenerator.GetPossibleMoves(boardState, PieceColour.White);
@@ -400,7 +445,10 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
             board[4, 3].CurrentPiece = new Piece(PieceType.WhitePawn);
             board[7, 0].CurrentPiece = new Piece(PieceType.BlackBishop);
 
-            var boardState = new BoardState(board);
+            var activePieces = new HashSet<Position>
+                {new Position(4, 3), new Position(3, 4), new Position(7, 0)};
+            var activeBuilds = new HashSet<Position>();
+            var boardState = new BoardState(board, activePieces, activeBuilds);
 
             var moveState =
                 _movesGenerator.GetPossibleMoves(boardState, PieceColour.White);
@@ -417,7 +465,10 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
             board[4, 3].CurrentPiece = new Piece(PieceType.WhiteQueen);
             board[7, 0].CurrentPiece = new Piece(PieceType.BlackBishop);
 
-            var boardState = new BoardState(board);
+            var activePieces = new HashSet<Position>
+                {new Position(4, 3), new Position(3, 4), new Position(7, 0)};
+            var activeBuilds = new HashSet<Position>();
+            var boardState = new BoardState(board, activePieces, activeBuilds);
 
             var moveState =
                 _movesGenerator.GetPossibleMoves(boardState, PieceColour.White);
@@ -435,7 +486,10 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
             board[6, 1].CurrentPiece = new Piece(PieceType.BlackBishop);
             board[7, 0].CurrentPiece = new Piece(PieceType.BlackBishop);
 
-            var boardState = new BoardState(board);
+            var activePieces = new HashSet<Position>
+                {new Position(4, 3), new Position(3, 4), new Position(7, 0), new Position(6, 1)};
+            var activeBuilds = new HashSet<Position>();
+            var boardState = new BoardState(board, activePieces, activeBuilds);
 
             var moveState =
                 _movesGenerator.GetPossibleMoves(boardState, PieceColour.White);
@@ -453,7 +507,10 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
             board[6, 1].CurrentPiece = new Piece(PieceType.WhiteBishop);
             board[7, 0].CurrentPiece = new Piece(PieceType.BlackBishop);
 
-            var boardState = new BoardState(board);
+            var activePieces = new HashSet<Position>
+                {new Position(4, 3), new Position(3, 4), new Position(7, 0), new Position(6, 1)};
+            var activeBuilds = new HashSet<Position>();
+            var boardState = new BoardState(board, activePieces, activeBuilds);
 
             var moveState =
                 _movesGenerator.GetPossibleMoves(boardState, PieceColour.White);
@@ -471,7 +528,10 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
             board[4, 3].CurrentPiece = new Piece(PieceType.WhiteQueen);
             board[7, 0].CurrentPiece = new Piece(PieceType.BlackBishop);
 
-            var boardState = new BoardState(board);
+            var activePieces = new HashSet<Position>
+                {new Position(4, 3), new Position(3, 4), new Position(7, 0)};
+            var activeBuilds = new HashSet<Position>();
+            var boardState = new BoardState(board, activePieces, activeBuilds);
 
             var moveState =
                 _movesGenerator.GetPossibleMoves(boardState, PieceColour.White);
@@ -490,7 +550,10 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
             board[3, 2].CurrentPiece = new Piece(PieceType.WhiteQueen);
             board[1, 4].CurrentPiece = new Piece(PieceType.BlackQueen);
 
-            var boardState = new BoardState(board);
+            var activePieces = new HashSet<Position>
+                {new Position(4, 1), new Position(3, 2), new Position(1, 4)};
+            var activeBuilds = new HashSet<Position>();
+            var boardState = new BoardState(board, activePieces, activeBuilds);
 
             var moveState =
                 _movesGenerator.GetPossibleMoves(boardState, PieceColour.White);
@@ -511,7 +574,10 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
             board[4, 5].CurrentPiece = new Piece(PieceType.BlackBishop);
             board[6, 3].CurrentPiece = new Piece(PieceType.WhiteQueen);
 
-            var boardState = new BoardState(board);
+            var activePieces = new HashSet<Position>
+                {new Position(2, 7), new Position(4, 5), new Position(6, 3), new Position(3, 6)};
+            var activeBuilds = new HashSet<Position>();
+            var boardState = new BoardState(board, activePieces, activeBuilds);
 
             var moveState =
                 _movesGenerator.GetPossibleMoves(boardState, PieceColour.Black);

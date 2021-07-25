@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Models.Services.AI.Interfaces;
 using Models.State.Board;
 using Models.State.GameState;
 using Models.State.PieceState;
+using Models.Utils.ExtensionMethods.PieceType;
 
 namespace Models.Services.AI.Implementations
 {
@@ -18,16 +20,19 @@ namespace Models.Services.AI.Implementations
             _aiPossibleMoveGenerator = aiPossibleMoveGenerator;
         }
 
-        public Func<BoardState, PieceColour, GameState> GetMove(
+        public Task<Func<BoardState, PieceColour, GameState>> GetMove(
             GameState gameState,
             int depth,
             PieceColour turn)
         {
-            const int alpha = int.MinValue;
-            const int beta = int.MaxValue;
+            return Task.Run(() =>
+            {
+                const int alpha = int.MinValue;
+                const int beta = int.MaxValue;
 
-            var (move, _) = NegaScout(gameState, depth, 0, turn, alpha, beta);
-            return move;
+                var (move, _) = NegaScout(gameState, depth, 0, turn, alpha, beta);
+                return move;
+            });
         }
 
         private (Func<BoardState, PieceColour, GameState> move, int score) NegaScout(
@@ -54,7 +59,7 @@ namespace Models.Services.AI.Implementations
                 var newGameState = move(gameState.BoardState, turn);
 
                 // recurse
-                var (_, recurseScore) = NegaScout(newGameState, maxDepth, currentDepth + 1, turn,
+                var (_, recurseScore) = NegaScout(newGameState, maxDepth, currentDepth + 1, turn.NextTurn(),
                     -adaptiveBeta, -Math.Max(alpha, bestScore));
                 var currentScore = -recurseScore;
 
@@ -68,10 +73,10 @@ namespace Models.Services.AI.Implementations
                     else
                     {
                         var (negativeBestMove, negativeBestScore) = NegaScout(
-                            newGameState, maxDepth, currentDepth, turn, -beta, -currentScore
+                            newGameState, maxDepth, currentDepth, turn.NextTurn(), -beta, -currentScore
                         );
                         bestScore = -negativeBestScore;
-                        bestMove = negativeBestMove;
+                        bestMove = move;
                     }
 
                     if (bestScore >= beta) return (bestMove, bestScore);

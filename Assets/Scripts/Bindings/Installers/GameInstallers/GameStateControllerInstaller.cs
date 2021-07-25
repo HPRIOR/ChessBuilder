@@ -8,7 +8,7 @@ namespace Bindings.Installers.GameInstallers
     {
         public override void InstallBindings()
         {
-            Container.Bind(typeof(ITurnEventInvoker), typeof(IGameStateController)).To<AiGameStateController>()
+            Container.Bind(typeof(ITurnEventInvoker), typeof(IGameStateController)).To<GameStateController>()
                 .AsSingle();
         }
     }

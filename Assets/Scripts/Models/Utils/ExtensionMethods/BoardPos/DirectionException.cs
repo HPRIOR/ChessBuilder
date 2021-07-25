@@ -1,5 +1,4 @@
 ﻿using System;
-using UnityEngine;
 
 namespace Models.Utils.ExtensionMethods.BoardPos
 {
@@ -7,7 +6,6 @@ namespace Models.Utils.ExtensionMethods.BoardPos
     {
         public DirectionException(string message) : base(message)
         {
-            Debug.Log(message);
         }
     }
 }

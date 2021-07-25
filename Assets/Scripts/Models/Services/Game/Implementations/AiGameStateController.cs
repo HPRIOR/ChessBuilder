@@ -10,17 +10,17 @@ namespace Models.Services.Game.Implementations
 {
     public class AiGameStateController : IGameStateController, ITurnEventInvoker
     {
+        private readonly AiMoveGenerator _aiMoveGenerator;
         private readonly GameInitializer _gameInitializer;
         private readonly IGameStateUpdater _gameStateUpdater;
-        private readonly MiniMax _miniMax;
 
         public AiGameStateController(
-            IGameStateUpdater gameStateUpdater, GameInitializer gameInitializer, MiniMax miniMax
+            IGameStateUpdater gameStateUpdater, GameInitializer gameInitializer, AiMoveGenerator aiMoveGenerator
         )
         {
             _gameStateUpdater = gameStateUpdater;
             _gameInitializer = gameInitializer;
-            _miniMax = miniMax;
+            _aiMoveGenerator = aiMoveGenerator;
             Turn = PieceColour.White;
         }
 
@@ -47,7 +47,7 @@ namespace Models.Services.Game.Implementations
             GameStateChangeEvent?.Invoke(previousState, CurrentGameState.BoardState);
             // Invoke some other mechanism to call overloaded Update game state
 
-            var move = _miniMax.GetMove(CurrentGameState, 3, Turn);
+            var move = _aiMoveGenerator.GetMove(CurrentGameState, 3, Turn);
             previousState = CurrentGameState.BoardState;
             CurrentGameState = move(CurrentGameState.BoardState, Turn);
 

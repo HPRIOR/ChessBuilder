@@ -6,7 +6,7 @@ using Models.State.PieceState;
 
 namespace Models.Services.AI.Interfaces
 {
-    public interface IAiMoveGenerator
+    public interface IAiPossibleMoveGenerator
     {
         IEnumerable<Func<BoardState, PieceColour, GameState>> GenerateMoves(GameState gameState);
     }

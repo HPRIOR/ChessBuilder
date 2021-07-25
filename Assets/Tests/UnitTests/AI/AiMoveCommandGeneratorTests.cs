@@ -34,12 +34,12 @@ namespace Tests.UnitTests.AI
             Container.UnbindAll();
         }
 
-        private IAiMoveGenerator _aiMoveMoveGenerator;
+        private IAiPossibleMoveGenerator _aiPossibleMoveMoveGenerator;
         private IBoardGenerator _boardGenerator;
 
         private void InstallBindings()
         {
-            AiMoveGeneratorInstaller.Install(Container);
+            AiPossibleMoveGeneratorInstaller.Install(Container);
             PieceMoverInstaller.Install(Container);
             GameStateUpdaterInstaller.Install(Container);
             BuilderInstaller.Install(Container);
@@ -60,7 +60,7 @@ namespace Tests.UnitTests.AI
 
         private void ResolveContainer()
         {
-            _aiMoveMoveGenerator = Container.Resolve<IAiMoveGenerator>();
+            _aiPossibleMoveMoveGenerator = Container.Resolve<IAiPossibleMoveGenerator>();
             _boardGenerator = Container.Resolve<IBoardGenerator>();
         }
 
@@ -90,7 +90,7 @@ namespace Tests.UnitTests.AI
                 buildMoves,
                 boardState
             );
-            var commands = _aiMoveMoveGenerator.GenerateMoves(gameState);
+            var commands = _aiPossibleMoveMoveGenerator.GenerateMoves(gameState);
             Assert.That(commands.Count(), Is.EqualTo(2));
         }
 
@@ -123,7 +123,7 @@ namespace Tests.UnitTests.AI
                 buildMoves,
                 boardState
             );
-            var commands = _aiMoveMoveGenerator.GenerateMoves(gameState);
+            var commands = _aiPossibleMoveMoveGenerator.GenerateMoves(gameState);
             var updatedGameState = commands.First()(gameState.BoardState, PieceColour.Black);
             var updatedBoard = updatedGameState.BoardState.Board;
             Assert.That(updatedBoard[2, 1].CurrentPiece.Type, Is.EqualTo(PieceType.BlackPawn));
@@ -156,7 +156,7 @@ namespace Tests.UnitTests.AI
                 boardState
             );
 
-            var commands = _aiMoveMoveGenerator.GenerateMoves(gameState);
+            var commands = _aiPossibleMoveMoveGenerator.GenerateMoves(gameState);
             var updatedGameState = commands.First()(gameState.BoardState, PieceColour.White);
             var updatedBoard = updatedGameState.BoardState.Board;
             Assert.That(updatedBoard[5, 5].BuildTileState.BuildingPiece, Is.EqualTo(PieceType.WhitePawn));

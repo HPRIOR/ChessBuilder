@@ -35,11 +35,11 @@ namespace Tests.UnitTests.AI
         }
 
         private IBoardGenerator _boardGenerator;
-        private MiniMax _miniMax;
+        private AiMoveGenerator _aiMoveGenerator;
 
         private void InstallBindings()
         {
-            AiMoveGeneratorInstaller.Install(Container);
+            AiPossibleMoveGeneratorInstaller.Install(Container);
             PieceMoverInstaller.Install(Container);
             GameStateUpdaterInstaller.Install(Container);
             BuilderInstaller.Install(Container);
@@ -56,14 +56,14 @@ namespace Tests.UnitTests.AI
             PositionTranslatorInstaller.Install(Container);
             TileEvaluatorInstaller.Install(Container);
             BoardScannerInstaller.Install(Container);
-            MiniMaxInstaller.Install(Container);
+            AiMoveGeneratorInstaller.Install(Container);
             StaticEvaluatorInstaller.Install(Container);
         }
 
         private void ResolveContainer()
         {
             _boardGenerator = Container.Resolve<IBoardGenerator>();
-            _miniMax = Container.Resolve<MiniMax>();
+            _aiMoveGenerator = Container.Resolve<AiMoveGenerator>();
         }
 
         [Test]

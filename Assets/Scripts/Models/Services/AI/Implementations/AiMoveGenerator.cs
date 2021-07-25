@@ -1,62 +1,86 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Collections.Immutable;
-using System.Linq;
-using Controllers.Interfaces;
 using Models.Services.AI.Interfaces;
-using Models.Services.Build.Interfaces;
-using Models.Services.Game.Interfaces;
 using Models.State.Board;
-using Models.State.BuildState;
 using Models.State.GameState;
 using Models.State.PieceState;
 
 namespace Models.Services.AI.Implementations
 {
-    public class AiMoveGenerator : IAiMoveGenerator
+    public class AiMoveGenerator
     {
-        private readonly IBuilder _builder;
-        private readonly IGameStateUpdater _gameStateUpdater;
-        private readonly IPieceMover _pieceMover;
+        private const int WindowSize = 3000;
+        private readonly IAiPossibleMoveGenerator _aiPossibleMoveGenerator;
+        private readonly IStaticEvaluator _staticEvaluator;
 
-        public AiMoveGenerator(IPieceMover pieceMover, IGameStateUpdater gameStateUpdater, IBuilder builder)
+        public AiMoveGenerator(IStaticEvaluator staticEvaluator, IAiPossibleMoveGenerator aiPossibleMoveGenerator)
         {
-            _pieceMover = pieceMover;
-            _gameStateUpdater = gameStateUpdater;
-            _builder = builder;
+            _staticEvaluator = staticEvaluator;
+            _aiPossibleMoveGenerator = aiPossibleMoveGenerator;
         }
 
-        public IEnumerable<Func<BoardState, PieceColour, GameState>> GenerateMoves(GameState gameState) =>
-            GetBuildCommands(gameState.PossibleBuildMoves)
-                .Concat(GetMoveCommands(gameState.PossiblePieceMoves));
+        public Func<BoardState, PieceColour, GameState> GetMove(
+            GameState gameState,
+            int depth,
+            PieceColour turn)
+        {
+            const int alpha = int.MinValue;
+            const int beta = int.MaxValue;
 
-        private IEnumerable<Func<BoardState, PieceColour, GameState>> GetMoveCommands(
-            ImmutableDictionary<Position, ImmutableHashSet<Position>> moves
-        ) =>
-            moves.SelectMany(moveSet =>
-                moveSet.Value.Select(move =>
+            var (move, _) = NegaScout(gameState, depth, 0, turn, alpha, beta);
+            return move;
+        }
+
+        private (Func<BoardState, PieceColour, GameState> move, int score) NegaScout(
+            GameState gameState,
+            int maxDepth,
+            int currentDepth,
+            PieceColour turn,
+            int alpha,
+            int beta)
+        {
+            if (currentDepth == maxDepth || gameState.CheckMate)
+                return (null, _staticEvaluator.Evaluate(gameState).GetPoints(turn));
+
+            // initialise best move placeholders
+            Func<BoardState, PieceColour, GameState> bestMove = null;
+            var bestScore = int.MinValue;
+            var adaptiveBeta = beta;
+
+            // iterate through all moves
+            var moves = _aiPossibleMoveGenerator.GenerateMoves(gameState);
+            foreach (var move in moves)
+            {
+                // get updated board state
+                var newGameState = move(gameState.BoardState, turn);
+
+                // recurse
+                var (_, recurseScore) = NegaScout(newGameState, maxDepth, currentDepth + 1, turn,
+                    -adaptiveBeta, -Math.Max(alpha, bestScore));
+                var currentScore = -recurseScore;
+
+                if (currentScore > bestScore)
                 {
-                    Func<BoardState, PieceColour, GameState> command = (boardState, turn) =>
+                    if (adaptiveBeta == beta || currentDepth >= maxDepth - 2)
                     {
-                        var newBoardState = _pieceMover.GenerateNewBoardState(boardState, moveSet.Key, move);
-                        var nextTurn = turn == PieceColour.Black ? PieceColour.White : PieceColour.Black;
-                        return _gameStateUpdater.UpdateGameState(newBoardState, nextTurn);
-                    };
-                    return command;
-                }));
-
-
-        private IEnumerable<Func<BoardState, PieceColour, GameState>> GetBuildCommands(BuildMoves builds) =>
-            builds.BuildPositions.SelectMany(position =>
-                builds.BuildPieces.Select(piece =>
-                {
-                    Func<BoardState, PieceColour, GameState> command = (boardState, turn) =>
+                        bestScore = currentScore;
+                        bestMove = move;
+                    }
+                    else
                     {
-                        var newBoardState = _builder.GenerateNewBoardState(boardState, position, piece);
-                        var nextTurn = turn == PieceColour.Black ? PieceColour.White : PieceColour.Black;
-                        return _gameStateUpdater.UpdateGameState(newBoardState, nextTurn);
-                    };
-                    return command;
-                }));
+                        var (negativeBestMove, negativeBestScore) = NegaScout(
+                            newGameState, maxDepth, currentDepth, turn, -beta, -currentScore
+                        );
+                        bestScore = -negativeBestScore;
+                        bestMove = negativeBestMove;
+                    }
+
+                    if (bestScore >= beta) return (bestMove, bestScore);
+
+                    adaptiveBeta = Math.Max(alpha, bestScore) + 1;
+                }
+            }
+
+            return (bestMove, bestScore);
+        }
     }
 }

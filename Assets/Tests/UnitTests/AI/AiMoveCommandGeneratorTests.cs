@@ -124,7 +124,7 @@ namespace Tests.UnitTests.AI
                 boardState
             );
             var commands = _aiPossibleMoveMoveGenerator.GenerateMoves(gameState);
-            var updatedGameState = commands.First()(gameState.BoardState, PieceColour.Black);
+            var updatedGameState = commands.First()(gameState, PieceColour.Black);
             var updatedBoard = updatedGameState.BoardState.Board;
             Assert.That(updatedBoard[2, 1].CurrentPiece.Type, Is.EqualTo(PieceType.BlackPawn));
         }
@@ -157,7 +157,7 @@ namespace Tests.UnitTests.AI
             );
 
             var commands = _aiPossibleMoveMoveGenerator.GenerateMoves(gameState);
-            var updatedGameState = commands.First()(gameState.BoardState, PieceColour.White);
+            var updatedGameState = commands.First()(gameState, PieceColour.White);
             var updatedBoard = updatedGameState.BoardState.Board;
             Assert.That(updatedBoard[5, 5].BuildTileState.BuildingPiece, Is.EqualTo(PieceType.WhitePawn));
             Assert.That(updatedBoard[5, 5].BuildTileState.Turns, Is.EqualTo(1));

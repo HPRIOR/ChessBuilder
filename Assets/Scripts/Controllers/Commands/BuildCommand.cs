@@ -33,9 +33,7 @@ namespace Controllers.Commands
 
         public void Execute()
         {
-            var newBoardState =
-                _builder.GenerateNewBoardState(_gameStateController.CurrentGameState.BoardState, _at, _piece);
-            _gameStateController.UpdateGameState(newBoardState);
+            _gameStateController.UpdateGameState(_at, _piece);
         }
 
         public void Undo()

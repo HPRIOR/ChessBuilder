@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
-using Controllers.Interfaces;
+using Models.Services.Moves.Interfaces;
 using Models.State.Board;
 using Models.State.PieceState;
 
-namespace Controllers.PieceMovers
+namespace Models.Services.Moves.MoveGenerators
 {
     public class PieceMover : IPieceMover
     {

@@ -3,7 +3,7 @@ using Models.State.Board;
 using Models.State.BuildState;
 using Models.State.PieceState;
 
-namespace Controllers.Builders
+namespace Controllers.Commands
 {
     public class BuildValidator : IBuildValidator
     {

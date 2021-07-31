@@ -2,7 +2,7 @@
 using Controllers.Interfaces;
 using Models.State.Board;
 
-namespace Controllers.PieceMovers
+namespace Controllers.Commands
 {
     public class MoveValidator : IMoveValidator
     {

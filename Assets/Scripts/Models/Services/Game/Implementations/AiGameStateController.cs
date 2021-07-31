@@ -28,6 +28,11 @@ namespace Models.Services.Game.Implementations
         public PieceColour Turn { get; private set; }
 
 
+        public void UpdateGameState(Position from, Position to)
+        {
+            throw new NotImplementedException();
+        }
+
         public void InitializeGame(BoardState boardState)
         {
             CurrentGameState = _gameInitializer.InitialiseGame(boardState);
@@ -49,7 +54,7 @@ namespace Models.Services.Game.Implementations
             var move = await _aiMoveGenerator.GetMove(CurrentGameState, 3, Turn);
 
             previousState = CurrentGameState.BoardState;
-            CurrentGameState = move(CurrentGameState.BoardState, Turn);
+            CurrentGameState = move(CurrentGameState, Turn);
 
             GameStateChangeEvent?.Invoke(previousState, CurrentGameState.BoardState);
             Turn = NextTurn();
@@ -63,9 +68,11 @@ namespace Models.Services.Game.Implementations
             Turn = NextTurn();
         }
 
-        // public void UpdateGameState(Position from, Position to)
+        public void UpdateGameState(Position buildPiece, PieceType piece)
+        {
+            throw new NotImplementedException();
+        }
 
-        // public void UpdateGameState(Position at, PieceType piece)
 
         /// <summary>
         ///     Emits event with current board state

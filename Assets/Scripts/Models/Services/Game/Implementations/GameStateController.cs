@@ -51,9 +51,24 @@ namespace Models.Services.Game.Implementations
             GameStateChangeEvent?.Invoke(previousState, CurrentGameState.BoardState);
         }
 
-        // public void UpdateGameState(Position from, Position to)
+        public void UpdateGameState(Position from, Position to)
+        {
+            Turn = NextTurn();
+            var previousBoardState = CurrentGameState?.BoardState.Clone();
+            CurrentGameState = _gameStateUpdater.UpdateGameState(CurrentGameState, from, to, Turn);
 
-        // public void UpdateGameState(Position at, PieceType piece)
+            GameStateChangeEvent?.Invoke(previousBoardState, CurrentGameState.BoardState);
+        }
+
+        public void UpdateGameState(Position buildPosition, PieceType piece)
+        {
+            Turn = NextTurn();
+            var previousBoardState = CurrentGameState?.BoardState.Clone();
+            CurrentGameState = _gameStateUpdater.UpdateGameState(CurrentGameState, buildPosition, piece, Turn);
+
+            GameStateChangeEvent?.Invoke(previousBoardState, CurrentGameState.BoardState);
+        }
+
 
         /// <summary>
         ///     Emits event with current board state

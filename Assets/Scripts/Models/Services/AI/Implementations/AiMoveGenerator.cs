@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Threading.Tasks;
 using Models.Services.AI.Interfaces;
 using Models.State.GameState;
 using Models.State.PieceState;
@@ -19,19 +18,16 @@ namespace Models.Services.AI.Implementations
             _aiPossibleMoveGenerator = aiPossibleMoveGenerator;
         }
 
-        public Task<Func<GameState, PieceColour, GameState>> GetMove(
+        public Func<GameState, PieceColour, GameState> GetMove(
             GameState gameState,
             int depth,
             PieceColour turn)
         {
-            return Task.Run(() =>
-            {
-                const int alpha = int.MinValue;
-                const int beta = int.MaxValue;
+            const int alpha = int.MinValue;
+            const int beta = int.MaxValue;
 
-                var (move, _) = NegaScout(gameState, depth, 0, turn, alpha, beta);
-                return move;
-            });
+            var (move, _) = NegaScout(gameState, depth, 0, turn, alpha, beta);
+            return move;
         }
 
         private (Func<GameState, PieceColour, GameState> move, int score) NegaScout(

@@ -39,7 +39,7 @@ namespace Models.Services.Game.Implementations
             RetainBoardState();
         }
 
-        public async void UpdateGameState(BoardState newBoardState)
+        public void UpdateGameState(BoardState newBoardState)
         {
             Turn = NextTurn();
             var previousState = CurrentGameState?.BoardState.Clone();
@@ -51,19 +51,11 @@ namespace Models.Services.Game.Implementations
             GameStateChangeEvent?.Invoke(previousState, CurrentGameState.BoardState);
             // Invoke some other mechanism to call overloaded Update game state
 
-            var move = await _aiMoveGenerator.GetMove(CurrentGameState, 3, Turn);
+            var move = _aiMoveGenerator.GetMove(CurrentGameState, 3, Turn);
 
             previousState = CurrentGameState.BoardState;
             CurrentGameState = move(CurrentGameState, Turn);
 
-            GameStateChangeEvent?.Invoke(previousState, CurrentGameState.BoardState);
-            Turn = NextTurn();
-        }
-
-        public void UpdateGameState(GameState newGameState)
-        {
-            var previousState = CurrentGameState?.BoardState.Clone();
-            CurrentGameState = newGameState;
             GameStateChangeEvent?.Invoke(previousState, CurrentGameState.BoardState);
             Turn = NextTurn();
         }
@@ -84,6 +76,14 @@ namespace Models.Services.Game.Implementations
 
         // TODO pass in GameState rather than board state
         public event Action<BoardState, BoardState> GameStateChangeEvent;
+
+        public void UpdateGameState(GameState newGameState)
+        {
+            var previousState = CurrentGameState?.BoardState.Clone();
+            CurrentGameState = newGameState;
+            GameStateChangeEvent?.Invoke(previousState, CurrentGameState.BoardState);
+            Turn = NextTurn();
+        }
 
         private PieceColour NextTurn() => Turn == PieceColour.White ? PieceColour.Black : PieceColour.White;
     }

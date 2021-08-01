@@ -20,10 +20,8 @@ namespace Models.Services.Game.Implementations
             Turn = PieceColour.White;
         }
 
-
         public GameState CurrentGameState { get; private set; }
         public PieceColour Turn { get; private set; }
-
 
         public void InitializeGame(BoardState boardState)
         {

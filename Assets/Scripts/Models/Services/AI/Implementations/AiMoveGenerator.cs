@@ -2,7 +2,6 @@
 using Models.Services.AI.Interfaces;
 using Models.State.GameState;
 using Models.State.PieceState;
-using Models.Utils.ExtensionMethods.PieceType;
 
 namespace Models.Services.AI.Implementations
 {
@@ -51,10 +50,10 @@ namespace Models.Services.AI.Implementations
             foreach (var move in moves)
             {
                 // get updated board state
-                var newGameState = move(gameState, turn);
+                var newBoardState = move(gameState, turn);
 
                 // recurse
-                var (_, recurseScore) = NegaScout(newGameState, maxDepth, currentDepth + 1, turn.NextTurn(),
+                var (_, recurseScore) = NegaScout(newBoardState, maxDepth, currentDepth + 1, turn,
                     -adaptiveBeta, -Math.Max(alpha, bestScore));
                 var currentScore = -recurseScore;
 
@@ -68,7 +67,7 @@ namespace Models.Services.AI.Implementations
                     else
                     {
                         var (negativeBestMove, negativeBestScore) = NegaScout(
-                            newGameState, maxDepth, currentDepth, turn.NextTurn(), -beta, -currentScore
+                            newBoardState, maxDepth, currentDepth, turn, -beta, -currentScore
                         );
                         bestScore = -negativeBestScore;
                         bestMove = move;

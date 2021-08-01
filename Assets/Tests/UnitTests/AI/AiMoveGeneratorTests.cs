@@ -13,6 +13,7 @@ using Models.State.GameState;
 using Models.State.PieceState;
 using Models.State.PlayerState;
 using NUnit.Framework;
+using Tests.TestUtils;
 using Zenject;
 
 namespace Tests.UnitTests.AI
@@ -88,11 +89,11 @@ namespace Tests.UnitTests.AI
                 new BuildMoves(ImmutableHashSet<Position>.Empty, ImmutableHashSet<PieceType>.Empty), boardState);
             _aiMoveGenerator.GetMove(gameState, 3, PieceColour.White);
 
-            // var logTimer = new LogExecutionTimer();
-            // var depth = 6;
+            var logTimer = new LogExecutionTimer();
+            var depth = 6;
 
-            // logTimer.LogExecutionTime($"NegaScout with depth of {depth.ToString()} after active piece opt",
-            //     () => _miniMax.GetMove(gameState, depth, PieceColour.White));
+            logTimer.LogExecutionTime($"NegaScout with depth of {depth.ToString()} after active piece opt",
+                () => _aiMoveGenerator.GetMove(gameState, depth, PieceColour.White));
 
             // var move = _miniMax.GetMove(gameState, depth, PieceColour.White);
             // var newGameState = move(gameState.BoardState, PieceColour.White);

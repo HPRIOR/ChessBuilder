@@ -25,14 +25,6 @@ namespace Models.Services.Game.Implementations
         public PieceColour Turn { get; private set; }
 
 
-        public void UpdateGameState(GameState newGameState)
-        {
-            var previousState = CurrentGameState?.BoardState.Clone();
-            CurrentGameState = newGameState;
-            GameStateChangeEvent?.Invoke(previousState, CurrentGameState.BoardState);
-            Turn = NextTurn();
-        }
-
         public void InitializeGame(BoardState boardState)
         {
             CurrentGameState = _gameInitializer.InitialiseGame(boardState);

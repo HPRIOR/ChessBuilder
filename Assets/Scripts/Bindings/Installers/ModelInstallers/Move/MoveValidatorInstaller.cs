@@ -1,5 +1,5 @@
-﻿using Controllers.Interfaces;
-using Controllers.PieceMovers;
+﻿using Controllers.Commands;
+using Controllers.Interfaces;
 using Zenject;
 
 namespace Bindings.Installers.ModelInstallers.Move

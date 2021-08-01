@@ -1,5 +1,6 @@
 ﻿using Controllers.Interfaces;
 using Models.Services.Game.Interfaces;
+using Models.Services.Moves.Interfaces;
 using Models.State.Board;
 using Zenject;
 
@@ -24,7 +25,7 @@ namespace Controllers.Commands
         )
         {
             _gameStateController = gameStateController;
-            _stateTransitionedFrom = _gameStateController.CurrentGameState.BoardState;
+            _stateTransitionedFrom = _gameStateController.CurrentGameState.BoardState.Clone();
 
             _from = from;
             _destination = destination;
@@ -35,10 +36,7 @@ namespace Controllers.Commands
 
         public void Execute()
         {
-            var newBoardState =
-                _pieceMover.GenerateNewBoardState(_gameStateController.CurrentGameState.BoardState, _from,
-                    _destination);
-            _gameStateController.UpdateGameState(newBoardState);
+            _gameStateController.UpdateGameState(_from, _destination);
         }
 
         public bool IsValid()

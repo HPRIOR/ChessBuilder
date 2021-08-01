@@ -25,14 +25,6 @@ namespace Models.Services.Game.Implementations
         public PieceColour Turn { get; private set; }
 
 
-        public void UpdateGameState(GameState newGameState)
-        {
-            var previousState = CurrentGameState?.BoardState.Clone();
-            CurrentGameState = newGameState;
-            GameStateChangeEvent?.Invoke(previousState, CurrentGameState.BoardState);
-            Turn = NextTurn();
-        }
-
         public void InitializeGame(BoardState boardState)
         {
             CurrentGameState = _gameInitializer.InitialiseGame(boardState);
@@ -51,9 +43,24 @@ namespace Models.Services.Game.Implementations
             GameStateChangeEvent?.Invoke(previousState, CurrentGameState.BoardState);
         }
 
-        // public void UpdateGameState(Position from, Position to)
+        public void UpdateGameState(Position from, Position to)
+        {
+            Turn = NextTurn();
+            var previousBoardState = CurrentGameState?.BoardState.Clone();
+            CurrentGameState = _gameStateUpdater.UpdateGameState(CurrentGameState, from, to, Turn);
 
-        // public void UpdateGameState(Position at, PieceType piece)
+            GameStateChangeEvent?.Invoke(previousBoardState, CurrentGameState.BoardState);
+        }
+
+        public void UpdateGameState(Position buildPosition, PieceType piece)
+        {
+            Turn = NextTurn();
+            var previousBoardState = CurrentGameState?.BoardState.Clone();
+            CurrentGameState = _gameStateUpdater.UpdateGameState(CurrentGameState, buildPosition, piece, Turn);
+
+            GameStateChangeEvent?.Invoke(previousBoardState, CurrentGameState.BoardState);
+        }
+
 
         /// <summary>
         ///     Emits event with current board state

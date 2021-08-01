@@ -1,8 +1,9 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Models.Services.AI.Interfaces;
-using Models.State.Board;
 using Models.State.GameState;
 using Models.State.PieceState;
+using Models.Utils.ExtensionMethods.PieceType;
 
 namespace Models.Services.AI.Implementations
 {
@@ -18,19 +19,22 @@ namespace Models.Services.AI.Implementations
             _aiPossibleMoveGenerator = aiPossibleMoveGenerator;
         }
 
-        public Func<BoardState, PieceColour, GameState> GetMove(
+        public Task<Func<GameState, PieceColour, GameState>> GetMove(
             GameState gameState,
             int depth,
             PieceColour turn)
         {
-            const int alpha = int.MinValue;
-            const int beta = int.MaxValue;
+            return Task.Run(() =>
+            {
+                const int alpha = int.MinValue;
+                const int beta = int.MaxValue;
 
-            var (move, _) = NegaScout(gameState, depth, 0, turn, alpha, beta);
-            return move;
+                var (move, _) = NegaScout(gameState, depth, 0, turn, alpha, beta);
+                return move;
+            });
         }
 
-        private (Func<BoardState, PieceColour, GameState> move, int score) NegaScout(
+        private (Func<GameState, PieceColour, GameState> move, int score) NegaScout(
             GameState gameState,
             int maxDepth,
             int currentDepth,
@@ -42,7 +46,7 @@ namespace Models.Services.AI.Implementations
                 return (null, _staticEvaluator.Evaluate(gameState).GetPoints(turn));
 
             // initialise best move placeholders
-            Func<BoardState, PieceColour, GameState> bestMove = null;
+            Func<GameState, PieceColour, GameState> bestMove = null;
             var bestScore = int.MinValue;
             var adaptiveBeta = beta;
 
@@ -51,10 +55,10 @@ namespace Models.Services.AI.Implementations
             foreach (var move in moves)
             {
                 // get updated board state
-                var newGameState = move(gameState.BoardState, turn);
+                var newGameState = move(gameState, turn);
 
                 // recurse
-                var (_, recurseScore) = NegaScout(newGameState, maxDepth, currentDepth + 1, turn,
+                var (_, recurseScore) = NegaScout(newGameState, maxDepth, currentDepth + 1, turn.NextTurn(),
                     -adaptiveBeta, -Math.Max(alpha, bestScore));
                 var currentScore = -recurseScore;
 
@@ -68,10 +72,10 @@ namespace Models.Services.AI.Implementations
                     else
                     {
                         var (negativeBestMove, negativeBestScore) = NegaScout(
-                            newGameState, maxDepth, currentDepth, turn, -beta, -currentScore
+                            newGameState, maxDepth, currentDepth, turn.NextTurn(), -beta, -currentScore
                         );
                         bestScore = -negativeBestScore;
-                        bestMove = negativeBestMove;
+                        bestMove = move;
                     }
 
                     if (bestScore >= beta) return (bestMove, bestScore);

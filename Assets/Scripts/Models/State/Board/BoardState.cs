@@ -39,7 +39,7 @@ namespace Models.State.Board
             for (var i = 0; i < 8; i++)
             for (var j = 0; j < 8; j++)
                 newBoard[i, j] = Board[i, j].Clone();
-            return new BoardState(newBoard);
+            return new BoardState(newBoard, new HashSet<Position>(ActivePieces), new HashSet<Position>(ActiveBuilds));
         }
 
         public BoardState CloneWithDecrementBuildState()

@@ -15,20 +15,38 @@ namespace Models.Services.Game.Implementations
     {
         //TODO inject me
         private const int maxBuildPoints = 39;
+        private readonly IBuilder _builder;
         private readonly IBuildMoveGenerator _buildMoveGenerator;
         private readonly IBuildPointsCalculator _buildPointsCalculator;
         private readonly IBuildResolver _buildResolver;
         private readonly IGameOverEval _gameOverEval;
+        private readonly IPieceMover _mover;
         private readonly IMovesGenerator _movesGenerator;
 
         public GameStateUpdater(IMovesGenerator movesGenerator, IBuildMoveGenerator buildMoveGenerator,
-            IBuildPointsCalculator buildPointsCalculator, IBuildResolver buildResolver, IGameOverEval gameOverEval)
+            IBuildPointsCalculator buildPointsCalculator, IBuildResolver buildResolver, IGameOverEval gameOverEval,
+            IBuilder builder, IPieceMover mover)
         {
             _movesGenerator = movesGenerator;
             _buildMoveGenerator = buildMoveGenerator;
             _buildPointsCalculator = buildPointsCalculator;
             _buildResolver = buildResolver;
             _gameOverEval = gameOverEval;
+            _builder = builder;
+            _mover = mover;
+        }
+
+        public GameState UpdateGameState(GameState previousGameState, Position from, Position to, PieceColour turn)
+        {
+            var newBoardState = _mover.GenerateNewBoardState(previousGameState.BoardState, from, to);
+            return UpdateGameState(newBoardState, turn);
+        }
+
+        public GameState UpdateGameState(GameState previousGameState, Position buildPosition, PieceType piece,
+            PieceColour turn)
+        {
+            var newBoardState = _builder.GenerateNewBoardState(previousGameState.BoardState, buildPosition, piece);
+            return UpdateGameState(newBoardState, turn);
         }
 
         public GameState UpdateGameState(BoardState newBoardState, PieceColour turn)
@@ -49,9 +67,6 @@ namespace Models.Services.Game.Implementations
             return new GameState(moveState.Check, checkMate, blackState, whiteState, moveState.PossibleMoves,
                 possibleBuildMoves, newBoardState);
         }
-        // public void UpdateGameState(Position from, Position to, PieceColour turn)
-
-        // public void UpdateGameState(Position at, PieceType piece, PieceColour turn)
 
         private BuildMoves GetPossibleBuildMoves(BoardState newBoardState, PieceColour turn, MoveState moveState,
             PlayerState relevantPlayerState) =>

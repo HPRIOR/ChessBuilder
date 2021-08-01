@@ -18,7 +18,7 @@ using Zenject;
 namespace Tests.UnitTests.AI
 {
     [TestFixture]
-    public class MiniMaxTests : ZenjectUnitTestFixture
+    public class AiMoveGeneratorTests : ZenjectUnitTestFixture
     {
         [SetUp]
         public void Init()
@@ -86,7 +86,7 @@ namespace Tests.UnitTests.AI
 
             var gameState = new GameState(false, false, new PlayerState(0), new PlayerState(0), possibleMoves,
                 new BuildMoves(ImmutableHashSet<Position>.Empty, ImmutableHashSet<PieceType>.Empty), boardState);
-
+            _aiMoveGenerator.GetMove(gameState, 3, PieceColour.White);
 
             // var logTimer = new LogExecutionTimer();
             // var depth = 6;

@@ -276,16 +276,12 @@ namespace Tests.UnitTests.Game
             var initialBoardState = new BoardState(board, activePieces, activeBuilds);
 
             //generate initial game state
-            _gameStateControllerController.UpdateGameState(initialBoardState);
+            _gameStateControllerController.InitializeGame(initialBoardState);
 
             //iterate through game state
-            var whiteTurn = initialBoardState.CloneWithDecrementBuildState();
-            whiteTurn.Board[4, 4].BuildTileState = new BuildTileState(PieceType.WhitePawn);
-            _gameStateControllerController.UpdateGameState(whiteTurn);
+            _gameStateControllerController.UpdateGameState(new Position(4, 4), PieceType.WhitePawn);
 
-            var blackTurn = whiteTurn.CloneWithDecrementBuildState();
-            _gameStateControllerController.UpdateGameState(blackTurn);
-
+            _gameStateControllerController.UpdateGameState(new Position(0, 0), new Position(1, 1));
 
             Assert.That(_gameStateControllerController.CurrentGameState.BoardState.Board[4, 4].BuildTileState.Turns,
                 Is.EqualTo(0));

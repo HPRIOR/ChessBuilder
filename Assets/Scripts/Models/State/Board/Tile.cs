@@ -23,7 +23,7 @@ namespace Models.State.Board
         public Position Position { get; }
         public BuildTileState BuildTileState { get; set; }
 
-        public Tile Clone() => new Tile(Position, CurrentPiece);
+        public Tile Clone() => new Tile(Position, CurrentPiece, BuildTileState);
 
         public Tile CloneWithDecrementBuildState()
         {

@@ -28,7 +28,7 @@ namespace Controllers.Commands
             _builder = builder;
             _buildValidator = buildValidator;
             _gameStateController = gameStateController;
-            _stateTransitionedFrom = _gameStateController.CurrentGameState.BoardState;
+            _stateTransitionedFrom = _gameStateController.CurrentGameState.BoardState.Clone();
         }
 
         public void Execute()

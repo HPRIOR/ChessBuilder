@@ -25,7 +25,7 @@ namespace Controllers.Commands
         )
         {
             _gameStateController = gameStateController;
-            _stateTransitionedFrom = _gameStateController.CurrentGameState.BoardState;
+            _stateTransitionedFrom = _gameStateController.CurrentGameState.BoardState.Clone();
 
             _from = from;
             _destination = destination;

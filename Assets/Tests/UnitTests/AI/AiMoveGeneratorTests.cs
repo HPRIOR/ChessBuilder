@@ -90,9 +90,9 @@ namespace Tests.UnitTests.AI
             _aiMoveGenerator.GetMove(gameState, 3, PieceColour.White);
 
             var logTimer = new LogExecutionTimer();
-            var depth = 6;
+            var depth = 8;
 
-            logTimer.LogExecutionTime($"NegaScout with depth of {depth.ToString()} after active piece opt",
+            logTimer.LogExecutionTime($"NegaScout with depth of {depth.ToString()} after parallel",
                 () => _aiMoveGenerator.GetMove(gameState, depth, PieceColour.White));
 
             // var move = _miniMax.GetMove(gameState, depth, PieceColour.White);

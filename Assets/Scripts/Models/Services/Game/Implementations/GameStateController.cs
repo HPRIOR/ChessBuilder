@@ -50,11 +50,8 @@ namespace Models.Services.Game.Implementations
         {
             Turn = NextTurn();
             var previousBoardState = CurrentGameState?.BoardState.Clone();
-            // this will return void/statehistory - so the method will be called, 
             _gameStateUpdater.UpdateGameState(CurrentGameState, from, to, Turn);
             CurrentGameState = _gameStateUpdater.GameState;
-            // _gameStateUpdate.UpdateGameState(from, to, Turn);
-            // CurrentGameSTate = gameStateUpdater.GameState;
 
             GameStateChangeEvent?.Invoke(previousBoardState, CurrentGameState.BoardState);
         }

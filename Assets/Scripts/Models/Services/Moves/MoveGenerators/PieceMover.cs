@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using Models.Services.Board;
 using Models.Services.Moves.Interfaces;
 using Models.State.Board;
 using Models.State.PieceState;
@@ -7,28 +7,32 @@ namespace Models.Services.Moves.MoveGenerators
 {
     public class PieceMover : IPieceMover
     {
-        public BoardState GenerateNewBoardState(BoardState originalBoardState, Position from,
+        private readonly BuildStateDecrementor _buildStateDecrementor;
+
+        public PieceMover(BuildStateDecrementor buildStateDecrementor)
+        {
+            _buildStateDecrementor = buildStateDecrementor;
+        }
+
+        public void ModifyBoardState(BoardState boardState, Position from,
             Position destination)
         {
             // modify active pieces 
-            var newActivePieces = new HashSet<Position>(originalBoardState.ActivePieces);
-            newActivePieces.Remove(from);
-            newActivePieces.Add(destination);
+            boardState.ActivePieces.Remove(from);
+            boardState.ActivePieces.Add(destination);
 
-            // do nothing to active builds 
-            var newActiveBuilds = new HashSet<Position>(originalBoardState.ActiveBuilds);
-            var newBoardState = originalBoardState.CloneWithDecrementBuildState(newActivePieces, newActiveBuilds);
+            _buildStateDecrementor.DecrementBuilds(boardState);
+
 
             // modify board state
-            var destinationTile = newBoardState.Board[destination.X, destination.Y];
-            var fromTile = newBoardState.Board[from.X, from.Y];
+            var destinationTile = boardState.Board[destination.X, destination.Y];
+            var fromTile = boardState.Board[from.X, from.Y];
 
             // swap pieces
-            destinationTile.CurrentPiece = originalBoardState.Board[from.X, from.Y].CurrentPiece;
+            destinationTile.CurrentPiece = fromTile.CurrentPiece;
             fromTile.CurrentPiece = new Piece(PieceType.NullPiece);
 
             // return nothing 
-            return newBoardState;
         }
     }
 }

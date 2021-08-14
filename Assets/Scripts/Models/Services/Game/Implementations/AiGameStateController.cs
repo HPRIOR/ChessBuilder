@@ -49,8 +49,8 @@ namespace Models.Services.Game.Implementations
 
             // Game state updater sets up the possible moves for the next player 
             // hence why NextTurn() is called at the top of the method
-            CurrentGameState = _gameStateUpdater.UpdateGameState(newBoardState, Turn);
-
+            _gameStateUpdater.UpdateGameState(newBoardState, Turn);
+            CurrentGameState = _gameStateUpdater.GameState;
             GameStateChangeEvent?.Invoke(previousState, CurrentGameState.BoardState);
             // Invoke some other mechanism to call overloaded Update game state
 

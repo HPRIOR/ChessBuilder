@@ -40,7 +40,8 @@ namespace Models.Services.Game.Implementations
 
             // When white/black turn has been executed, game state needs to be set up in this method for the opposite player
             // hence why NextTurn() is called at the top of the method
-            CurrentGameState = _gameStateUpdater.UpdateGameState(newBoardState, Turn);
+            _gameStateUpdater.UpdateGameState(newBoardState, Turn);
+            CurrentGameState = _gameStateUpdater.GameState;
 
             GameStateChangeEvent?.Invoke(previousState, CurrentGameState.BoardState);
         }
@@ -50,7 +51,8 @@ namespace Models.Services.Game.Implementations
             Turn = NextTurn();
             var previousBoardState = CurrentGameState?.BoardState.Clone();
             // this will return void/statehistory - so the method will be called, 
-            CurrentGameState = _gameStateUpdater.UpdateGameState(CurrentGameState, from, to, Turn);
+            _gameStateUpdater.UpdateGameState(CurrentGameState, from, to, Turn);
+            CurrentGameState = _gameStateUpdater.GameState;
             // _gameStateUpdate.UpdateGameState(from, to, Turn);
             // CurrentGameSTate = gameStateUpdater.GameState;
 
@@ -61,7 +63,8 @@ namespace Models.Services.Game.Implementations
         {
             Turn = NextTurn();
             var previousBoardState = CurrentGameState?.BoardState.Clone();
-            CurrentGameState = _gameStateUpdater.UpdateGameState(CurrentGameState, buildPosition, piece, Turn);
+            _gameStateUpdater.UpdateGameState(CurrentGameState, buildPosition, piece, Turn);
+            CurrentGameState = _gameStateUpdater.GameState;
 
             GameStateChangeEvent?.Invoke(previousBoardState, CurrentGameState.BoardState);
         }

@@ -22,13 +22,13 @@ namespace Models.State.GameState
             BoardState = boardState;
         }
 
-        public BoardState BoardState { get; }
-        public bool Check { get; }
-        public bool CheckMate { get; }
-        public PlayerState.PlayerState BlackState { get; }
-        public PlayerState.PlayerState WhiteState { get; }
-        public ImmutableDictionary<Position, ImmutableHashSet<Position>> PossiblePieceMoves { get; }
-        public BuildMoves PossibleBuildMoves { get; }
+        public BoardState BoardState { get; set; }
+        public bool Check { get; set; }
+        public bool CheckMate { get; set; }
+        public PlayerState.PlayerState BlackState { get; set; }
+        public PlayerState.PlayerState WhiteState { get; set; }
+        public ImmutableDictionary<Position, ImmutableHashSet<Position>> PossiblePieceMoves { get; set; }
+        public BuildMoves PossibleBuildMoves { get; set; }
 
         public override string ToString()
         {

@@ -7,7 +7,7 @@ namespace Models.Services.Game.Interfaces
     public interface IGameStateUpdater
     {
         GameState GameState { get; }
-        void UpdateGameState(BoardState boardState, PieceColour turn);
+        void UpdateGameState(PieceColour turn);
         void UpdateGameState(Position from, Position to, PieceColour turn);
 
         void UpdateGameState(Position buildPosition, PieceType piece,

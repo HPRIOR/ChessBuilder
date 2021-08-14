@@ -39,7 +39,7 @@ namespace Models.Services.Game.Implementations
             _mover = mover;
         }
 
-        public GameState GameState { get; private set; }
+        public GameState GameState { get; }
 
         /*
          * GameState will be a member of this class, which will be mutated, instead of generated each turn

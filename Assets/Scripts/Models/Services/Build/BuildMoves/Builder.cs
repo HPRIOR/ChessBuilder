@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using Models.Services.Board;
 using Models.Services.Build.Interfaces;
 using Models.State.Board;
 using Models.State.BuildState;
@@ -8,23 +8,23 @@ namespace Models.Services.Build.BuildMoves
 {
     public class Builder : IBuilder
     {
-        public BoardState GenerateNewBoardState(BoardState previousBoardState, Position buildPosition, PieceType piece)
+        private readonly BuildStateDecrementor _buildStateDecrementor;
+
+        public Builder(BuildStateDecrementor buildStateDecrementor)
+        {
+            _buildStateDecrementor = buildStateDecrementor;
+        }
+
+        public void GenerateNewBoardState(BoardState boardState, Position buildPosition, PieceType piece)
         {
             // add build positions to active pieces 
-            var newActiveBuilds = new HashSet<Position>(previousBoardState.ActiveBuilds) { buildPosition };
-
-            // do nothing to active pieces
-            var newActivePieces = new HashSet<Position>(previousBoardState.ActivePieces);
+            boardState.ActiveBuilds.Add(buildPosition);
 
             // decrement builds 
-            var newBoardState = previousBoardState.CloneWithDecrementBuildState(newActivePieces, newActiveBuilds);
+            _buildStateDecrementor.DecrementBuilds(boardState);
 
             // modify board state 
-            var buildTile = newBoardState.Board[buildPosition.X, buildPosition.Y];
-            buildTile.BuildTileState = new BuildTileState(piece);
-
-            // void return
-            return newBoardState;
+            boardState.Board[buildPosition.X, buildPosition.Y].BuildTileState = new BuildTileState(piece);
         }
     }
 }

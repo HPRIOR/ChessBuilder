@@ -56,10 +56,8 @@ namespace Models.Services.Game.Implementations
         public void UpdateGameState(GameState previousGameState, Position buildPosition, PieceType piece,
             PieceColour turn)
         {
-            //GenerateNewBoardState will mutate the board passed in and return change history
-            var newBoardState = _builder.GenerateNewBoardState(GameState.BoardState, buildPosition, piece);
-            // don't pass board state, use GameState.BoardState
-            UpdateGameState(newBoardState, turn);
+            _builder.GenerateNewBoardState(GameState.BoardState, buildPosition, piece);
+            UpdateGameState(GameState.BoardState, turn);
         }
 
         public void UpdateGameState(BoardState boardState, PieceColour turn)

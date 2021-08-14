@@ -70,21 +70,6 @@ namespace Tests.UnitTests.PossibleMoves.BuildMoves
         }
 
         [Test]
-        public void DecrementsBuildsOnBoard()
-        {
-            var board = _boardGenerator.GenerateBoard();
-            var boardState =
-                new BoardState(board, new HashSet<Position>(), new HashSet<Position> { new Position(5, 5) });
-            boardState.Board[5, 5].BuildTileState = new BuildTileState(PieceType.WhiteRook);
-
-            _builder.GenerateNewBoardState(boardState, new Position(6, 6), PieceType.BlackKnight);
-
-            Assert.That(boardState.Board[5, 5].BuildTileState,
-                Is.EqualTo(new BuildTileState(4, PieceType.WhiteRook)));
-        }
-
-
-        [Test]
         public void OverwritesBuild_DueNextTurn()
         {
             var board = _boardGenerator.GenerateBoard();

@@ -45,7 +45,7 @@ namespace Tests.UnitTests.BoardTests
         {
             var board = _boardGenerator.GenerateBoard();
             var boardState = new BoardState(board);
-            _buildStateDecrementor.DecrementBuilds(boardState);
+            BuildStateDecrementor.DecrementBuilds(boardState);
             foreach (var tile in boardState.Board)
             {
                 Assert.That(tile.BuildTileState.BuildingPiece, Is.EqualTo(PieceType.NullPiece));
@@ -60,7 +60,7 @@ namespace Tests.UnitTests.BoardTests
             board[1, 1].CurrentPiece = new Piece(PieceType.WhiteKing);
             board[7, 7].CurrentPiece = new Piece(PieceType.BlackKing);
             var boardState = new BoardState(board);
-            _buildStateDecrementor.DecrementBuilds(boardState);
+            BuildStateDecrementor.DecrementBuilds(boardState);
             foreach (var tile in boardState.Board)
             {
                 Assert.That(tile.BuildTileState.BuildingPiece, Is.EqualTo(PieceType.NullPiece));
@@ -76,7 +76,7 @@ namespace Tests.UnitTests.BoardTests
             board[7, 7].CurrentPiece = new Piece(PieceType.BlackKing);
             board[6, 6].BuildTileState = new BuildTileState(PieceType.WhiteQueen);
             var boardState = new BoardState(board);
-            _buildStateDecrementor.DecrementBuilds(boardState);
+            BuildStateDecrementor.DecrementBuilds(boardState);
 
             var sut = boardState.Board[6, 6].BuildTileState;
             Assert.That(sut.Turns, Is.EqualTo(8));

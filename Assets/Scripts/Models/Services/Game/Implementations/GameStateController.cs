@@ -48,7 +48,6 @@ namespace Models.Services.Game.Implementations
             // hence why NextTurn() is called at the top of the method
             _gameStateUpdater.UpdateGameState(Turn);
             CurrentGameState = _gameStateUpdater.GameState;
-
             GameStateChangeEvent?.Invoke(previousState, CurrentGameState.BoardState);
         }
 
@@ -58,7 +57,6 @@ namespace Models.Services.Game.Implementations
             var previousBoardState = CurrentGameState?.BoardState.Clone();
             _gameStateUpdater.UpdateGameState(from, to, Turn);
             CurrentGameState = _gameStateUpdater.GameState;
-
             GameStateChangeEvent?.Invoke(previousBoardState, CurrentGameState.BoardState);
         }
 

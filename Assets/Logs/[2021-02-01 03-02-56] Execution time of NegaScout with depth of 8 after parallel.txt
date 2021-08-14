@@ -1,0 +1,3 @@
+Execution time of NegaScout with depth of 8 after parallel: 
+      1458272 ms 
+      1458 s

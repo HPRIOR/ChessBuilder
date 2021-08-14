@@ -50,7 +50,7 @@ namespace Models.Services.Game.Implementations
         {
             Turn = NextTurn();
             var previousBoardState = CurrentGameState?.BoardState.Clone();
-            _gameStateUpdater.UpdateGameState(CurrentGameState, from, to, Turn);
+            _gameStateUpdater.UpdateGameState(from, to, Turn);
             CurrentGameState = _gameStateUpdater.GameState;
 
             GameStateChangeEvent?.Invoke(previousBoardState, CurrentGameState.BoardState);
@@ -60,7 +60,7 @@ namespace Models.Services.Game.Implementations
         {
             Turn = NextTurn();
             var previousBoardState = CurrentGameState?.BoardState.Clone();
-            _gameStateUpdater.UpdateGameState(CurrentGameState, buildPosition, piece, Turn);
+            _gameStateUpdater.UpdateGameState(buildPosition, piece, Turn);
             CurrentGameState = _gameStateUpdater.GameState;
 
             GameStateChangeEvent?.Invoke(previousBoardState, CurrentGameState.BoardState);

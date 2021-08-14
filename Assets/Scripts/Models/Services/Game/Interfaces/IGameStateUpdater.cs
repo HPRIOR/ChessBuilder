@@ -8,9 +8,9 @@ namespace Models.Services.Game.Interfaces
     {
         GameState GameState { get; }
         void UpdateGameState(BoardState boardState, PieceColour turn);
-        void UpdateGameState(GameState previousGameState, Position from, Position to, PieceColour turn);
+        void UpdateGameState(Position from, Position to, PieceColour turn);
 
-        void UpdateGameState(GameState previousGameState, Position buildPosition, PieceType piece,
+        void UpdateGameState(Position buildPosition, PieceType piece,
             PieceColour turn);
     }
 }

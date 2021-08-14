@@ -45,7 +45,7 @@ namespace Models.Services.Game.Implementations
          * GameState will be a member of this class, which will be mutated, instead of generated each turn
          * instead of returning void, this method will return a 'history' of the changes which have occured
          */
-        public void UpdateGameState(GameState previousGameState, Position from, Position to, PieceColour turn)
+        public void UpdateGameState(Position from, Position to, PieceColour turn)
         {
             // GenerateNewBoardState will mutate the board passed in and return change history
             _mover.ModifyBoardState(GameState.BoardState, from, to);
@@ -53,8 +53,7 @@ namespace Models.Services.Game.Implementations
             UpdateGameState(GameState.BoardState, turn);
         }
 
-        public void UpdateGameState(GameState previousGameState, Position buildPosition, PieceType piece,
-            PieceColour turn)
+        public void UpdateGameState(Position buildPosition, PieceType piece, PieceColour turn)
         {
             _builder.GenerateNewBoardState(GameState.BoardState, buildPosition, piece);
             UpdateGameState(GameState.BoardState, turn);
@@ -64,21 +63,21 @@ namespace Models.Services.Game.Implementations
         {
             // opposite turn from current needs to be passed to build resolver 
             // this is due to builds being resolved at the end of a players turn - not the start of their turn
-            _buildResolver.ResolveBuilds(boardState, NextTurn(turn));
+            _buildResolver.ResolveBuilds(GameState.BoardState, NextTurn(turn));
 
-            var (blackState, whiteState) = GetPlayerState(boardState);
+            var (blackState, whiteState) = GetPlayerState(GameState.BoardState);
 
             // generate new build state but changeMoveState instead of producing new variable
-            var moveState = _movesGenerator.GetPossibleMoves(boardState, turn);
+            var moveState = _movesGenerator.GetPossibleMoves(GameState.BoardState, turn);
 
             var relevantPlayerState = turn == PieceColour.Black ? blackState : whiteState;
             // generate new build state but change possible build moves in GameState instead of producing a new one
-            var possibleBuildMoves = GetPossibleBuildMoves(boardState, turn, moveState, relevantPlayerState);
+            var possibleBuildMoves = GetPossibleBuildMoves(GameState.BoardState, turn, moveState, relevantPlayerState);
 
             var checkMate = _gameOverEval.CheckMate(moveState.Check, moveState.PossibleMoves);
 
             GameState = new GameState(moveState.Check, checkMate, blackState, whiteState, moveState.PossibleMoves,
-                possibleBuildMoves, boardState);
+                possibleBuildMoves, GameState.BoardState);
         }
 
         private BuildMoves GetPossibleBuildMoves(BoardState newBoardState, PieceColour turn, MoveState moveState,

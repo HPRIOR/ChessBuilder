@@ -11,13 +11,15 @@ namespace Models.Services.Game.Implementations
     {
         private readonly AiMoveGenerator _aiMoveGenerator;
         private readonly GameInitializer _gameInitializer;
-        private readonly IGameStateUpdater _gameStateUpdater;
+        private readonly GameStateUpdaterFactory _gameStateUpdaterFactory;
+        private IGameStateUpdater _gameStateUpdater;
 
         public AiGameStateController(
-            IGameStateUpdater gameStateUpdater, GameInitializer gameInitializer, AiMoveGenerator aiMoveGenerator
+            GameStateUpdaterFactory gameStateUpdaterFactory, GameInitializer gameInitializer,
+            AiMoveGenerator aiMoveGenerator
         )
         {
-            _gameStateUpdater = gameStateUpdater;
+            _gameStateUpdaterFactory = gameStateUpdaterFactory;
             _gameInitializer = gameInitializer;
             _aiMoveGenerator = aiMoveGenerator;
             Turn = PieceColour.White;
@@ -36,6 +38,7 @@ namespace Models.Services.Game.Implementations
         public void InitializeGame(BoardState boardState)
         {
             CurrentGameState = _gameInitializer.InitialiseGame(boardState);
+            _gameStateUpdater = _gameStateUpdaterFactory.Create(CurrentGameState);
             RetainBoardState();
         }
 

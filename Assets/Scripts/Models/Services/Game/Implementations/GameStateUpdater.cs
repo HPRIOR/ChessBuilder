@@ -1,4 +1,5 @@
-﻿using System.Collections.Immutable;
+﻿using System;
+using System.Collections.Immutable;
 using Models.Services.Board;
 using Models.Services.Build.Interfaces;
 using Models.Services.Game.Interfaces;
@@ -71,6 +72,11 @@ namespace Models.Services.Game.Implementations
             _builder.GenerateNewBoardState(GameState.BoardState, buildPosition, piece);
             UpdateGameState(turn);
             return _gameStateChanges;
+        }
+
+        public void RevertGameStateChanges(GameStateChanges gameStateChanges)
+        {
+            throw new NotImplementedException();
         }
 
         public void UpdateGameState(PieceColour turn)

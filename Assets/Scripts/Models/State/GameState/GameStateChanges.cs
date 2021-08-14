@@ -33,6 +33,20 @@ namespace Models.State.GameState
 
     public class GameStateChanges
     {
+        public GameStateChanges()
+        {
+        }
+
+        public GameStateChanges(GameState previousGameState)
+        {
+            BlackPlayerState = previousGameState.BlackState;
+            WhitePlayerState = previousGameState.WhiteState;
+            PossiblePieceMoves = previousGameState.PossiblePieceMoves;
+            BuildMoves = previousGameState.PossibleBuildMoves;
+            Check = previousGameState.Check;
+            CheckMate = previousGameState.CheckMate;
+        }
+
         public Move Move { get; set; }
         public Build Build { get; set; }
         public PlayerState.PlayerState WhitePlayerState { get; set; }

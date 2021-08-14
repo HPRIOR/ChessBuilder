@@ -50,7 +50,7 @@ namespace Models.Services.Game.Implementations
          */
         public GameStateChanges UpdateGameState(Position from, Position to, PieceColour turn)
         {
-            _gameStateChanges = new GameStateChanges
+            _gameStateChanges = new GameStateChanges(GameState)
             {
                 Move = new Move(to, from),
                 Turn = turn,
@@ -63,7 +63,7 @@ namespace Models.Services.Game.Implementations
 
         public GameStateChanges UpdateGameState(Position buildPosition, PieceType piece, PieceColour turn)
         {
-            _gameStateChanges = new GameStateChanges
+            _gameStateChanges = new GameStateChanges(GameState)
             {
                 Build = new State.GameState.Build(buildPosition, piece),
                 Turn = turn,
@@ -86,23 +86,18 @@ namespace Models.Services.Game.Implementations
             _gameStateChanges.ResolvedBuilds = _buildResolver.ResolveBuilds(GameState.BoardState, NextTurn(turn));
 
             var (blackState, whiteState) = GetPlayerState(GameState.BoardState);
-            _gameStateChanges.BlackPlayerState = blackState;
-            _gameStateChanges.WhitePlayerState = whiteState;
 
             var moveState = _movesGenerator.GetPossibleMoves(GameState.BoardState, turn);
             GameState.PossiblePieceMoves = moveState.PossibleMoves;
-            _gameStateChanges.PossiblePieceMoves = moveState.PossibleMoves;
+
             GameState.Check = moveState.Check;
-            _gameStateChanges.Check = moveState.Check;
 
             var relevantPlayerState = turn == PieceColour.Black ? blackState : whiteState;
             var possibleBuildMoves =
                 GetPossibleBuildMoves(GameState.BoardState, turn, moveState, relevantPlayerState);
             GameState.PossibleBuildMoves = possibleBuildMoves;
-            _gameStateChanges.BuildMoves = possibleBuildMoves;
 
             GameState.CheckMate = _gameOverEval.CheckMate(moveState.Check, moveState.PossibleMoves);
-            _gameStateChanges.CheckMate = GameState.CheckMate;
         }
 
         private BuildMoves GetPossibleBuildMoves(BoardState newBoardState, PieceColour turn, MoveState moveState,

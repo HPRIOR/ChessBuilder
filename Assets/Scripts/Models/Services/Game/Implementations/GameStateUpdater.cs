@@ -42,13 +42,14 @@ namespace Models.Services.Game.Implementations
         public GameState GameState { get; private set; }
 
         /*
-         * Gamestate will be a member of this class, which will be mutated, instead of generated each turn
+         * GameState will be a member of this class, which will be mutated, instead of generated each turn
          * instead of returning void, this method will return a 'history' of the changes which have occured
          */
         public void UpdateGameState(GameState previousGameState, Position from, Position to, PieceColour turn)
         {
             // GenerateNewBoardState will mutate the board passed in and return change history
             var newBoardState = _mover.GenerateNewBoardState(GameState.BoardState, from, to);
+            // don't pass board state, use GameState.BoardState
             UpdateGameState(newBoardState, turn);
         }
 
@@ -57,6 +58,7 @@ namespace Models.Services.Game.Implementations
         {
             //GenerateNewBoardState will mutate the board passed in and return change history
             var newBoardState = _builder.GenerateNewBoardState(GameState.BoardState, buildPosition, piece);
+            // don't pass board state, use GameState.BoardState
             UpdateGameState(newBoardState, turn);
         }
 

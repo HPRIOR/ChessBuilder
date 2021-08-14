@@ -10,14 +10,20 @@ namespace Models.Services.Build.BuildMoves
     {
         public BoardState GenerateNewBoardState(BoardState previousBoardState, Position buildPosition, PieceType piece)
         {
-            var newActiveBuilds = new HashSet<Position>(previousBoardState.ActiveBuilds) {buildPosition};
+            // add build positions to active pieces 
+            var newActiveBuilds = new HashSet<Position>(previousBoardState.ActiveBuilds) { buildPosition };
+
+            // do nothing to active pieces
             var newActivePieces = new HashSet<Position>(previousBoardState.ActivePieces);
 
+            // decrement builds 
             var newBoardState = previousBoardState.CloneWithDecrementBuildState(newActivePieces, newActiveBuilds);
 
+            // modify board state 
             var buildTile = newBoardState.Board[buildPosition.X, buildPosition.Y];
             buildTile.BuildTileState = new BuildTileState(piece);
 
+            // void return
             return newBoardState;
         }
     }

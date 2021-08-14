@@ -8,6 +8,7 @@ using Models.State.GameState;
 using Models.State.MoveState;
 using Models.State.PieceState;
 using Models.State.PlayerState;
+using Zenject;
 
 namespace Models.Services.Game.Implementations
 {
@@ -23,10 +24,14 @@ namespace Models.Services.Game.Implementations
         private readonly IPieceMover _mover;
         private readonly IMovesGenerator _movesGenerator;
 
-        public GameStateUpdater(IMovesGenerator movesGenerator, IBuildMoveGenerator buildMoveGenerator,
+        private GameState _gameState;
+
+        public GameStateUpdater(GameState gameState, IMovesGenerator movesGenerator,
+            IBuildMoveGenerator buildMoveGenerator,
             IBuildPointsCalculator buildPointsCalculator, IBuildResolver buildResolver, IGameOverEval gameOverEval,
             IBuilder builder, IPieceMover mover)
         {
+            _gameState = gameState;
             _movesGenerator = movesGenerator;
             _buildMoveGenerator = buildMoveGenerator;
             _buildPointsCalculator = buildPointsCalculator;
@@ -36,8 +41,13 @@ namespace Models.Services.Game.Implementations
             _mover = mover;
         }
 
+        /*
+         * Gamestate will be a member of this class, which will be mutated, instead of generated each turn
+         * instead of returning void, this method will return a 'history' of the changes which have occured
+         */
         public GameState UpdateGameState(GameState previousGameState, Position from, Position to, PieceColour turn)
         {
+            // GenerateNewBoardState will mutate the board passed in and return change history
             var newBoardState = _mover.GenerateNewBoardState(previousGameState.BoardState, from, to);
             return UpdateGameState(newBoardState, turn);
         }
@@ -45,6 +55,7 @@ namespace Models.Services.Game.Implementations
         public GameState UpdateGameState(GameState previousGameState, Position buildPosition, PieceType piece,
             PieceColour turn)
         {
+            //GenerateNewBoardState will mutate the board passed in and return change history
             var newBoardState = _builder.GenerateNewBoardState(previousGameState.BoardState, buildPosition, piece);
             return UpdateGameState(newBoardState, turn);
         }
@@ -57,9 +68,11 @@ namespace Models.Services.Game.Implementations
 
             var (blackState, whiteState) = GetPlayerState(newBoardState);
 
+            // generate new build state but changeMoveState instead of producing new variable
             var moveState = _movesGenerator.GetPossibleMoves(newBoardState, turn);
 
             var relevantPlayerState = turn == PieceColour.Black ? blackState : whiteState;
+            // generate new build state but change possible build moves in GameState imstead of producing a new one
             var possibleBuildMoves = GetPossibleBuildMoves(newBoardState, turn, moveState, relevantPlayerState);
 
             var checkMate = _gameOverEval.CheckMate(moveState.Check, moveState.PossibleMoves);
@@ -87,5 +100,9 @@ namespace Models.Services.Game.Implementations
 
         private static PieceColour NextTurn(PieceColour turn) =>
             turn == PieceColour.White ? PieceColour.Black : PieceColour.White;
+
+        public class Factory : PlaceholderFactory<GameState, GameStateUpdater>
+        {
+        }
     }
 }

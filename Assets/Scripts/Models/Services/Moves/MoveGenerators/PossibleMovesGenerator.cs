@@ -30,8 +30,7 @@ namespace Models.Services.Moves.MoveGenerators
         /// <param name="boardState"></param>
         /// <param name="turn"></param>
         /// <returns></returns>
-        public MoveState GetPossibleMoves(BoardState boardState,
-            PieceColour turn)
+        public MoveState GetPossibleMoves(BoardState boardState, PieceColour turn)
         {
             _boardInfo.EvaluateBoard(boardState, turn);
             var turnMoves = _boardInfo.TurnMoves;

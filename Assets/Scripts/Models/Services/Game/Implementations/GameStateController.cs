@@ -9,14 +9,16 @@ namespace Models.Services.Game.Implementations
     public class GameStateController : IGameStateController, ITurnEventInvoker
     {
         private readonly GameInitializer _gameInitializer;
-        private readonly IGameStateUpdater _gameStateUpdater;
+        private readonly GameStateUpdaterFactory _gameStateUpdaterFactory;
+        private IGameStateUpdater _gameStateUpdater;
+
 
         public GameStateController(
-            IGameStateUpdater gameStateUpdater, GameInitializer gameInitializer
+            GameStateUpdaterFactory gameStateUpdaterFactory, GameInitializer gameInitializer
         )
         {
-            _gameStateUpdater = gameStateUpdater;
             _gameInitializer = gameInitializer;
+            _gameStateUpdaterFactory = gameStateUpdaterFactory;
             Turn = PieceColour.White;
         }
 
@@ -25,7 +27,9 @@ namespace Models.Services.Game.Implementations
 
         public void InitializeGame(BoardState boardState)
         {
+            // pass this GameState to GameStateUpdater
             CurrentGameState = _gameInitializer.InitialiseGame(boardState);
+            _gameStateUpdater = _gameStateUpdaterFactory.Create(CurrentGameState);
             RetainBoardState();
         }
 
@@ -45,7 +49,10 @@ namespace Models.Services.Game.Implementations
         {
             Turn = NextTurn();
             var previousBoardState = CurrentGameState?.BoardState.Clone();
+            // this will return void/statehistory - so the method will be called, 
             CurrentGameState = _gameStateUpdater.UpdateGameState(CurrentGameState, from, to, Turn);
+            // _gameStateUpdate.UpdateGameState(from, to, Turn);
+            // CurrentGameSTate = gameStateUpdater.GameState;
 
             GameStateChangeEvent?.Invoke(previousBoardState, CurrentGameState.BoardState);
         }

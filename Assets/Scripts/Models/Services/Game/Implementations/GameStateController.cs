@@ -51,6 +51,13 @@ namespace Models.Services.Game.Implementations
             GameStateChangeEvent?.Invoke(previousState, CurrentGameState.BoardState);
         }
 
+        public void RevertGameState()
+        {
+            Turn = NextTurn();
+            _gameStateUpdater.RevertGameState();
+        }
+
+
         public void UpdateGameState(Position from, Position to)
         {
             Turn = NextTurn();

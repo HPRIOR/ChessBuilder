@@ -38,7 +38,8 @@ namespace Controllers.Commands
 
         public void Undo()
         {
-            _gameStateController.UpdateGameState(_stateTransitionedFrom);
+            _gameStateController.RevertGameState();
+            _gameStateController.RetainBoardState();
         }
 
         public bool IsValid()

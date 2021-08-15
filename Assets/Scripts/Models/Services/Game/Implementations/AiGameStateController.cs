@@ -63,6 +63,11 @@ namespace Models.Services.Game.Implementations
             Turn = NextTurn();
         }
 
+        public void RevertGameState()
+        {
+            throw new NotImplementedException();
+        }
+
         public void UpdateGameState(Position buildPiece, PieceType piece)
         {
             throw new NotImplementedException();

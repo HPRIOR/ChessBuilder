@@ -1,4 +1,6 @@
-﻿using System.Collections.Immutable;
+﻿using System.Collections.Generic;
+using System.Collections.Immutable;
+using System.Linq;
 using Models.Services.Board;
 using Models.Services.Build.Interfaces;
 using Models.Services.Game.Interfaces;
@@ -24,6 +26,7 @@ namespace Models.Services.Game.Implementations
         private readonly IGameOverEval _gameOverEval;
         private readonly IPieceMover _mover;
         private readonly IMovesGenerator _movesGenerator;
+        private readonly Stack<GameStateChanges> _stateHistory = new Stack<GameStateChanges>();
         private GameStateChanges _gameStateChanges = new GameStateChanges();
 
         public GameStateUpdater(GameState gameState, IMovesGenerator movesGenerator,
@@ -56,6 +59,7 @@ namespace Models.Services.Game.Implementations
             };
             _mover.ModifyBoardState(GameState.BoardState, from, to);
             UpdateGameState(turn);
+            _stateHistory.Push(_gameStateChanges);
             return _gameStateChanges;
         }
 
@@ -68,11 +72,20 @@ namespace Models.Services.Game.Implementations
             };
             _builder.GenerateNewBoardState(GameState.BoardState, buildPosition, piece);
             UpdateGameState(turn);
+            _stateHistory.Push(_gameStateChanges);
             return _gameStateChanges;
         }
 
+        // TODO: this does not correctly revert to the starting position  
+        public void RevertGameState()
+        {
+            if (_stateHistory.Any()) RevertGameStateChanges(_stateHistory.Pop());
+        }
+
+        // TODO: make this private and store game state changes on a stack. this method would be called with the top of stack
         public void RevertGameStateChanges(GameStateChanges gameStateChanges)
         {
+            // TODO: change active tiles!!! Add a test for this too  
             // revert resolved pieces
             foreach ((var position, var type) in gameStateChanges.ResolvedBuilds)
             {
@@ -115,6 +128,7 @@ namespace Models.Services.Game.Implementations
             GameState.BlackState = gameStateChanges.BlackPlayerState;
         }
 
+        // TODO: remove me and replace with proper mechanism for reverting changes
         public void UpdateGameState(PieceColour turn)
         {
             // opposite turn from current needs to be passed to build resolver 

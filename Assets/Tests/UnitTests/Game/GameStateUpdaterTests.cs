@@ -599,5 +599,8 @@ namespace Tests.UnitTests.Game
             Assert.That(sut[0, 7].CurrentPiece.Type, Is.EqualTo(PieceType.BlackKing));
             Assert.That(sut[1, 7].CurrentPiece.Type, Is.EqualTo(PieceType.BlackPawn));
         }
+
+        // TODO: RevertingGameState_ChangesActivePieces
+        // TODO: RevertingGameState_ChangesActiveBuilds
     }
 }

@@ -19,6 +19,7 @@ namespace Models.Services.Board
                 }
             }
 
+            // TODO: Problem! this will return tiles which were not decremented but remain at 0 
             return decrementedTiles;
         }
     }

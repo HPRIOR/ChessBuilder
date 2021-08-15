@@ -86,6 +86,8 @@ namespace Models.Services.Game.Implementations
             _gameStateChanges.ResolvedBuilds = _buildResolver.ResolveBuilds(GameState.BoardState, NextTurn(turn));
 
             var (blackState, whiteState) = GetPlayerState(GameState.BoardState);
+            GameState.BlackState = blackState;
+            GameState.WhiteState = whiteState;
 
             var moveState = _movesGenerator.GetPossibleMoves(GameState.BoardState, turn);
             GameState.PossiblePieceMoves = moveState.PossibleMoves;

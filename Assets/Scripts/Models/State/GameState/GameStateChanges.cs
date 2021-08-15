@@ -31,6 +31,11 @@ namespace Models.State.GameState
     }
 
 
+    /// <summary>
+    ///     This contains information regarding the previous state, and also the changes that occured to get to the next state
+    ///     For example, the available moves are stored from the previous state, whereas the change in BoardState is recorded
+    ///     so that it can be reverted.
+    /// </summary>
     public class GameStateChanges
     {
         public GameStateChanges()
@@ -46,15 +51,18 @@ namespace Models.State.GameState
             Check = previousGameState.Check;
         }
 
+        // BoardState Changes
         public Move Move { get; set; }
         public Build Build { get; set; }
+        public IEnumerable<(Position, PieceType)> ResolvedBuilds { get; set; }
+
+        // BoardState History
         public PlayerState.PlayerState WhitePlayerState { get; set; }
         public PlayerState.PlayerState BlackPlayerState { get; set; }
         public bool Check { get; set; }
         public BuildMoves BuildMoves { get; set; }
         public ImmutableDictionary<Position, ImmutableHashSet<Position>> PossiblePieceMoves { get; set; }
-        public PieceColour Turn { get; set; }
         public IEnumerable<Position> DecrementedTiles { get; set; }
-        public IEnumerable<(Position, PieceType)> ResolvedBuilds { get; set; }
+        public PieceColour Turn { get; set; }
     }
 }

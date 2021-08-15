@@ -56,7 +56,8 @@ namespace Tests.UnitTests.Game
             var boardState = new BoardState(board, activePieces, new HashSet<Position>());
             var gameState = _gameStateInitializer.InitialiseGame(boardState);
             var gameStateUpdater = _gameStateUpdaterFactory.Create(gameState);
-            var sut = gameStateUpdater.UpdateGameState(new Position(1, 1), new Position(2, 2), PieceColour.Black);
+            gameStateUpdater.UpdateGameState(new Position(1, 1), new Position(2, 2), PieceColour.Black);
+            var sut = gameStateUpdater.StateHistory.Peek();
 
             Assert.That(sut.Build, Is.Null);
         }
@@ -71,7 +72,8 @@ namespace Tests.UnitTests.Game
             var boardState = new BoardState(board, activePieces, new HashSet<Position>());
             var gameState = _gameStateInitializer.InitialiseGame(boardState);
             var gameStateUpdater = _gameStateUpdaterFactory.Create(gameState);
-            var sut = gameStateUpdater.UpdateGameState(new Position(1, 1), new Position(2, 2), PieceColour.Black);
+            gameStateUpdater.UpdateGameState(new Position(1, 1), new Position(2, 2), PieceColour.Black);
+            var sut = gameStateUpdater.StateHistory.Peek();
 
             Assert.That(sut.Move.To, Is.EqualTo(new Position(2, 2)));
             Assert.That(sut.Move.From, Is.EqualTo(new Position(1, 1)));
@@ -87,7 +89,8 @@ namespace Tests.UnitTests.Game
             var boardState = new BoardState(board, activePieces, new HashSet<Position>());
             var gameState = _gameStateInitializer.InitialiseGame(boardState);
             var gameStateUpdater = _gameStateUpdaterFactory.Create(gameState);
-            var sut = gameStateUpdater.UpdateGameState(new Position(1, 1), PieceType.WhiteKnight, PieceColour.Black);
+            gameStateUpdater.UpdateGameState(new Position(1, 1), PieceType.WhiteKnight, PieceColour.Black);
+            var sut = gameStateUpdater.StateHistory.Peek();
 
             Assert.That(sut.Move, Is.Null);
         }
@@ -103,7 +106,8 @@ namespace Tests.UnitTests.Game
             var boardState = new BoardState(board, activePieces, new HashSet<Position>());
             var gameState = _gameStateInitializer.InitialiseGame(boardState);
             var gameStateUpdater = _gameStateUpdaterFactory.Create(gameState);
-            var sut = gameStateUpdater.UpdateGameState(new Position(1, 1), PieceType.WhiteKnight, PieceColour.Black);
+            gameStateUpdater.UpdateGameState(new Position(1, 1), PieceType.WhiteKnight, PieceColour.Black);
+            var sut = gameStateUpdater.StateHistory.Peek();
 
             Assert.That(sut.Build.At, Is.EqualTo(new Position(1, 1)));
             Assert.That(sut.Build.Piece, Is.EqualTo(PieceType.WhiteKnight));
@@ -126,7 +130,8 @@ namespace Tests.UnitTests.Game
             gameStateUpdater.UpdateGameState(new Position(6, 4), new Position(5, 5), PieceColour.Black);
 
             // escape check
-            var sut = gameStateUpdater.UpdateGameState(new Position(1, 1), new Position(1, 2), PieceColour.Black);
+            gameStateUpdater.UpdateGameState(new Position(1, 1), new Position(1, 2), PieceColour.Black);
+            var sut = gameStateUpdater.StateHistory.Peek();
 
             Assert.That(sut.Check);
         }
@@ -145,7 +150,8 @@ namespace Tests.UnitTests.Game
             // white makes a move 
             gameStateUpdater.UpdateGameState(new Position(7, 7), new Position(6, 6), PieceColour.Black);
             // black makes a move and its possible moves are saved
-            var sut = gameStateUpdater.UpdateGameState(new Position(0, 0), new Position(1, 1), PieceColour.White);
+            gameStateUpdater.UpdateGameState(new Position(0, 0), new Position(1, 1), PieceColour.White);
+            var sut = gameStateUpdater.StateHistory.Peek();
             var expectedPossibleMoves = new Dictionary<Position, ImmutableHashSet<Position>>
             {
                 {
@@ -171,7 +177,8 @@ namespace Tests.UnitTests.Game
             // white makes a move 
             gameStateUpdater.UpdateGameState(new Position(7, 7), new Position(6, 6), PieceColour.Black);
             // black makes a move and its possible moves are saved
-            var sut = gameStateUpdater.UpdateGameState(new Position(0, 0), new Position(1, 1), PieceColour.White);
+            gameStateUpdater.UpdateGameState(new Position(0, 0), new Position(1, 1), PieceColour.White);
+            var sut = gameStateUpdater.StateHistory.Peek();
             var expectedPossibleMoves = new Dictionary<Position, ImmutableHashSet<Position>>
             {
                 {
@@ -200,7 +207,8 @@ namespace Tests.UnitTests.Game
             // white makes a move 
             gameStateUpdater.UpdateGameState(new Position(0, 0), new Position(1, 1), PieceColour.Black);
             // black makes a move and its possible moves are saved
-            var sut = gameStateUpdater.UpdateGameState(new Position(7, 7), new Position(6, 6), PieceColour.White);
+            gameStateUpdater.UpdateGameState(new Position(7, 7), new Position(6, 6), PieceColour.White);
+            var sut = gameStateUpdater.StateHistory.Peek();
             var buildPieces = new HashSet<PieceType>
             {
                 PieceType.BlackBishop,
@@ -249,7 +257,8 @@ namespace Tests.UnitTests.Game
             gameStateUpdater.UpdateGameState(new Position(6, 4), PieceType.WhitePawn, PieceColour.Black);
             gameStateUpdater.UpdateGameState(new Position(6, 5), PieceType.BlackPawn, PieceColour.White);
             gameStateUpdater.UpdateGameState(new Position(6, 7), PieceType.WhitePawn, PieceColour.Black);
-            var sut = gameStateUpdater.UpdateGameState(new Position(4, 4), PieceType.BlackPawn, PieceColour.White);
+            gameStateUpdater.UpdateGameState(new Position(4, 4), PieceType.BlackPawn, PieceColour.White);
+            var sut = gameStateUpdater.StateHistory.Peek();
 
 
             Assert.That(sut.BlackPlayerState.BuildPoints, Is.EqualTo(initialPlayerState.BuildPoints - 1));
@@ -273,7 +282,8 @@ namespace Tests.UnitTests.Game
             // black makes a move
             gameStateUpdater.UpdateGameState(new Position(7, 7), new Position(6, 6), PieceColour.White);
             // white makes a move and stores which pieces have been resolved  on that move 
-            var sut = gameStateUpdater.UpdateGameState(new Position(1, 1), new Position(2, 2), PieceColour.Black);
+            gameStateUpdater.UpdateGameState(new Position(1, 1), new Position(2, 2), PieceColour.Black);
+            var sut = gameStateUpdater.StateHistory.Peek();
             var expected = new List<(Position, PieceType)> { (new Position(6, 4), PieceType.WhitePawn) };
             Assert.That(sut.ResolvedBuilds, Is.EquivalentTo(expected));
         }
@@ -302,19 +312,19 @@ namespace Tests.UnitTests.Game
             var initialPossibleMoves =
                 new Dictionary<Position, ImmutableHashSet<Position>>(gameState.PossiblePieceMoves);
 
-            var change1 = gameStateUpdater.UpdateGameState(new Position(1, 0), new Position(1, 2), PieceColour.Black);
-            var change2 = gameStateUpdater.UpdateGameState(new Position(1, 7), new Position(2, 7), PieceColour.White);
-            var change3 = gameStateUpdater.UpdateGameState(new Position(1, 2), new Position(1, 3), PieceColour.Black);
-            var change4 = gameStateUpdater.UpdateGameState(new Position(2, 7), new Position(3, 7), PieceColour.White);
-            var change5 = gameStateUpdater.UpdateGameState(new Position(1, 3), new Position(1, 4), PieceColour.Black);
-            var change6 = gameStateUpdater.UpdateGameState(new Position(3, 7), new Position(4, 7), PieceColour.White);
+            gameStateUpdater.UpdateGameState(new Position(1, 0), new Position(1, 2), PieceColour.Black);
+            gameStateUpdater.UpdateGameState(new Position(1, 7), new Position(2, 7), PieceColour.White);
+            gameStateUpdater.UpdateGameState(new Position(1, 2), new Position(1, 3), PieceColour.Black);
+            gameStateUpdater.UpdateGameState(new Position(2, 7), new Position(3, 7), PieceColour.White);
+            gameStateUpdater.UpdateGameState(new Position(1, 3), new Position(1, 4), PieceColour.Black);
+            gameStateUpdater.UpdateGameState(new Position(3, 7), new Position(4, 7), PieceColour.White);
 
-            gameStateUpdater.RevertGameStateChanges(change6);
-            gameStateUpdater.RevertGameStateChanges(change5);
-            gameStateUpdater.RevertGameStateChanges(change4);
-            gameStateUpdater.RevertGameStateChanges(change3);
-            gameStateUpdater.RevertGameStateChanges(change2);
-            gameStateUpdater.RevertGameStateChanges(change1);
+            gameStateUpdater.RevertGameState();
+            gameStateUpdater.RevertGameState();
+            gameStateUpdater.RevertGameState();
+            gameStateUpdater.RevertGameState();
+            gameStateUpdater.RevertGameState();
+            gameStateUpdater.RevertGameState();
 
             Assert.That(gameStateUpdater.GameState.PossiblePieceMoves, Is.EquivalentTo(initialPossibleMoves));
         }
@@ -341,24 +351,24 @@ namespace Tests.UnitTests.Game
             var gameState = _gameStateInitializer.InitialiseGame(boardState);
             var gameStateUpdater = _gameStateUpdaterFactory.Create(gameState);
 
-            var change1 = gameStateUpdater.UpdateGameState(new Position(2, 3), PieceType.WhiteQueen, PieceColour.Black);
-            var change2 = gameStateUpdater.UpdateGameState(new Position(3, 3), PieceType.BlackQueen, PieceColour.White);
-            var change3 = gameStateUpdater.UpdateGameState(new Position(3, 4), PieceType.WhiteQueen, PieceColour.Black);
-            var change4 = gameStateUpdater.UpdateGameState(new Position(3, 5), PieceType.BlackQueen, PieceColour.White);
-            var change5 = gameStateUpdater.UpdateGameState(new Position(3, 6), PieceType.WhiteQueen, PieceColour.Black);
-            var change6 = gameStateUpdater.UpdateGameState(new Position(3, 7), PieceType.BlackQueen, PieceColour.White);
-            var change7 = gameStateUpdater.UpdateGameState(new Position(4, 4), PieceType.WhiteQueen, PieceColour.Black);
-            var change8 = gameStateUpdater.UpdateGameState(new Position(4, 5), PieceType.BlackQueen, PieceColour.White);
+            gameStateUpdater.UpdateGameState(new Position(2, 3), PieceType.WhiteQueen, PieceColour.Black);
+            gameStateUpdater.UpdateGameState(new Position(3, 3), PieceType.BlackQueen, PieceColour.White);
+            gameStateUpdater.UpdateGameState(new Position(3, 4), PieceType.WhiteQueen, PieceColour.Black);
+            gameStateUpdater.UpdateGameState(new Position(3, 5), PieceType.BlackQueen, PieceColour.White);
+            gameStateUpdater.UpdateGameState(new Position(3, 6), PieceType.WhiteQueen, PieceColour.Black);
+            gameStateUpdater.UpdateGameState(new Position(3, 7), PieceType.BlackQueen, PieceColour.White);
+            gameStateUpdater.UpdateGameState(new Position(4, 4), PieceType.WhiteQueen, PieceColour.Black);
+            gameStateUpdater.UpdateGameState(new Position(4, 5), PieceType.BlackQueen, PieceColour.White);
 
 
-            gameStateUpdater.RevertGameStateChanges(change8);
-            gameStateUpdater.RevertGameStateChanges(change7);
-            gameStateUpdater.RevertGameStateChanges(change6);
-            gameStateUpdater.RevertGameStateChanges(change5);
-            gameStateUpdater.RevertGameStateChanges(change4);
-            gameStateUpdater.RevertGameStateChanges(change3);
-            gameStateUpdater.RevertGameStateChanges(change2);
-            gameStateUpdater.RevertGameStateChanges(change1);
+            gameStateUpdater.RevertGameState();
+            gameStateUpdater.RevertGameState();
+            gameStateUpdater.RevertGameState();
+            gameStateUpdater.RevertGameState();
+            gameStateUpdater.RevertGameState();
+            gameStateUpdater.RevertGameState();
+            gameStateUpdater.RevertGameState();
+            gameStateUpdater.RevertGameState();
 
             var sut = gameStateUpdater.GameState;
             Assert.That(
@@ -397,19 +407,19 @@ namespace Tests.UnitTests.Game
             var gameStateUpdater = _gameStateUpdaterFactory.Create(gameState);
 
 
-            var change1 = gameStateUpdater.UpdateGameState(new Position(2, 3), PieceType.WhitePawn, PieceColour.Black);
-            var change2 = gameStateUpdater.UpdateGameState(new Position(3, 3), PieceType.BlackPawn, PieceColour.White);
-            var change3 = gameStateUpdater.UpdateGameState(new Position(3, 4), PieceType.WhitePawn, PieceColour.Black);
-            var change4 = gameStateUpdater.UpdateGameState(new Position(3, 5), PieceType.BlackPawn, PieceColour.White);
-            var change5 = gameStateUpdater.UpdateGameState(new Position(3, 6), PieceType.WhitePawn, PieceColour.Black);
-            var change6 = gameStateUpdater.UpdateGameState(new Position(3, 7), PieceType.BlackPawn, PieceColour.White);
+            gameStateUpdater.UpdateGameState(new Position(2, 3), PieceType.WhitePawn, PieceColour.Black);
+            gameStateUpdater.UpdateGameState(new Position(3, 3), PieceType.BlackPawn, PieceColour.White);
+            gameStateUpdater.UpdateGameState(new Position(3, 4), PieceType.WhitePawn, PieceColour.Black);
+            gameStateUpdater.UpdateGameState(new Position(3, 5), PieceType.BlackPawn, PieceColour.White);
+            gameStateUpdater.UpdateGameState(new Position(3, 6), PieceType.WhitePawn, PieceColour.Black);
+            gameStateUpdater.UpdateGameState(new Position(3, 7), PieceType.BlackPawn, PieceColour.White);
 
-            gameStateUpdater.RevertGameStateChanges(change6);
-            gameStateUpdater.RevertGameStateChanges(change5);
-            gameStateUpdater.RevertGameStateChanges(change4);
-            gameStateUpdater.RevertGameStateChanges(change3);
-            gameStateUpdater.RevertGameStateChanges(change2);
-            gameStateUpdater.RevertGameStateChanges(change1);
+            gameStateUpdater.RevertGameState();
+            gameStateUpdater.RevertGameState();
+            gameStateUpdater.RevertGameState();
+            gameStateUpdater.RevertGameState();
+            gameStateUpdater.RevertGameState();
+            gameStateUpdater.RevertGameState();
 
             var sut = gameStateUpdater.GameState;
             Assert.That(sut.BoardState.Board[2, 3].CurrentPiece.Type, Is.EqualTo(PieceType.NullPiece));
@@ -443,19 +453,19 @@ namespace Tests.UnitTests.Game
             var gameStateUpdater = _gameStateUpdaterFactory.Create(gameState);
 
 
-            var change1 = gameStateUpdater.UpdateGameState(new Position(2, 3), PieceType.WhitePawn, PieceColour.Black);
-            var change2 = gameStateUpdater.UpdateGameState(new Position(3, 3), PieceType.BlackPawn, PieceColour.White);
-            var change3 = gameStateUpdater.UpdateGameState(new Position(3, 4), PieceType.WhitePawn, PieceColour.Black);
-            var change4 = gameStateUpdater.UpdateGameState(new Position(3, 5), PieceType.BlackPawn, PieceColour.White);
-            var change5 = gameStateUpdater.UpdateGameState(new Position(3, 6), PieceType.WhitePawn, PieceColour.Black);
-            var change6 = gameStateUpdater.UpdateGameState(new Position(3, 7), PieceType.BlackPawn, PieceColour.White);
+            gameStateUpdater.UpdateGameState(new Position(2, 3), PieceType.WhitePawn, PieceColour.Black);
+            gameStateUpdater.UpdateGameState(new Position(3, 3), PieceType.BlackPawn, PieceColour.White);
+            gameStateUpdater.UpdateGameState(new Position(3, 4), PieceType.WhitePawn, PieceColour.Black);
+            gameStateUpdater.UpdateGameState(new Position(3, 5), PieceType.BlackPawn, PieceColour.White);
+            gameStateUpdater.UpdateGameState(new Position(3, 6), PieceType.WhitePawn, PieceColour.Black);
+            gameStateUpdater.UpdateGameState(new Position(3, 7), PieceType.BlackPawn, PieceColour.White);
 
-            gameStateUpdater.RevertGameStateChanges(change6);
-            gameStateUpdater.RevertGameStateChanges(change5);
-            gameStateUpdater.RevertGameStateChanges(change4);
-            gameStateUpdater.RevertGameStateChanges(change3);
-            gameStateUpdater.RevertGameStateChanges(change2);
-            gameStateUpdater.RevertGameStateChanges(change1);
+            gameStateUpdater.RevertGameState();
+            gameStateUpdater.RevertGameState();
+            gameStateUpdater.RevertGameState();
+            gameStateUpdater.RevertGameState();
+            gameStateUpdater.RevertGameState();
+            gameStateUpdater.RevertGameState();
 
             var sut = gameStateUpdater.GameState;
             Assert.That(sut.BoardState.Board[2, 3].BuildTileState.BuildingPiece, Is.EqualTo(PieceType.NullPiece));
@@ -499,16 +509,13 @@ namespace Tests.UnitTests.Game
             gameStateUpdater.UpdateGameState(new Position(2, 3), PieceType.WhiteQueen, PieceColour.Black); // 9
             gameStateUpdater.UpdateGameState(new Position(3, 3), PieceType.BlackPawn, PieceColour.White); // 8
             gameStateUpdater.UpdateGameState(new Position(3, 4), PieceType.WhitePawn, PieceColour.Black); // 7
-            var change4 =
-                gameStateUpdater.UpdateGameState(new Position(3, 5), PieceType.BlackPawn, PieceColour.White); // 6
-            var change5 =
-                gameStateUpdater.UpdateGameState(new Position(3, 6), PieceType.WhitePawn, PieceColour.Black); // 5
-            var change6 =
-                gameStateUpdater.UpdateGameState(new Position(3, 7), PieceType.BlackPawn, PieceColour.White); // 4
+            gameStateUpdater.UpdateGameState(new Position(3, 5), PieceType.BlackPawn, PieceColour.White); // 6
+            gameStateUpdater.UpdateGameState(new Position(3, 6), PieceType.WhitePawn, PieceColour.Black); // 5
+            gameStateUpdater.UpdateGameState(new Position(3, 7), PieceType.BlackPawn, PieceColour.White); // 4
 
-            gameStateUpdater.RevertGameStateChanges(change6);
-            gameStateUpdater.RevertGameStateChanges(change5);
-            gameStateUpdater.RevertGameStateChanges(change4);
+            gameStateUpdater.RevertGameState();
+            gameStateUpdater.RevertGameState();
+            gameStateUpdater.RevertGameState();
 
             var sut = gameStateUpdater.GameState;
             Assert.That(sut.BoardState.Board[2, 3].BuildTileState.Turns, Is.EqualTo(7));
@@ -540,16 +547,13 @@ namespace Tests.UnitTests.Game
             gameStateUpdater.UpdateGameState(new Position(0, 0), PieceType.WhitePawn, PieceColour.Black);
             gameStateUpdater.UpdateGameState(new Position(3, 3), PieceType.BlackPawn, PieceColour.White);
             gameStateUpdater.UpdateGameState(new Position(3, 4), PieceType.WhitePawn, PieceColour.Black);
-            var change4 =
-                gameStateUpdater.UpdateGameState(new Position(3, 5), PieceType.BlackPawn, PieceColour.White);
-            var change5 =
-                gameStateUpdater.UpdateGameState(new Position(3, 6), PieceType.WhitePawn, PieceColour.Black);
-            var change6 =
-                gameStateUpdater.UpdateGameState(new Position(3, 7), PieceType.BlackPawn, PieceColour.White);
+            gameStateUpdater.UpdateGameState(new Position(3, 5), PieceType.BlackPawn, PieceColour.White);
+            gameStateUpdater.UpdateGameState(new Position(3, 6), PieceType.WhitePawn, PieceColour.Black);
+            gameStateUpdater.UpdateGameState(new Position(3, 7), PieceType.BlackPawn, PieceColour.White);
 
-            gameStateUpdater.RevertGameStateChanges(change6);
-            gameStateUpdater.RevertGameStateChanges(change5);
-            gameStateUpdater.RevertGameStateChanges(change4);
+            gameStateUpdater.RevertGameState();
+            gameStateUpdater.RevertGameState();
+            gameStateUpdater.RevertGameState();
 
             var sut = gameStateUpdater.GameState;
             Assert.That(sut.BoardState.Board[0, 0].BuildTileState.Turns, Is.EqualTo(0));
@@ -578,19 +582,19 @@ namespace Tests.UnitTests.Game
             var gameStateUpdater = _gameStateUpdaterFactory.Create(gameState);
 
 
-            var change1 = gameStateUpdater.UpdateGameState(new Position(1, 0), new Position(1, 2), PieceColour.Black);
-            var change2 = gameStateUpdater.UpdateGameState(new Position(1, 7), new Position(2, 7), PieceColour.White);
-            var change3 = gameStateUpdater.UpdateGameState(new Position(1, 2), new Position(1, 3), PieceColour.Black);
-            var change4 = gameStateUpdater.UpdateGameState(new Position(2, 7), new Position(3, 7), PieceColour.White);
-            var change5 = gameStateUpdater.UpdateGameState(new Position(1, 3), new Position(1, 4), PieceColour.Black);
-            var change6 = gameStateUpdater.UpdateGameState(new Position(3, 7), new Position(4, 7), PieceColour.White);
+            gameStateUpdater.UpdateGameState(new Position(1, 0), new Position(1, 2), PieceColour.Black);
+            gameStateUpdater.UpdateGameState(new Position(1, 7), new Position(2, 7), PieceColour.White);
+            gameStateUpdater.UpdateGameState(new Position(1, 2), new Position(1, 3), PieceColour.Black);
+            gameStateUpdater.UpdateGameState(new Position(2, 7), new Position(3, 7), PieceColour.White);
+            gameStateUpdater.UpdateGameState(new Position(1, 3), new Position(1, 4), PieceColour.Black);
+            gameStateUpdater.UpdateGameState(new Position(3, 7), new Position(4, 7), PieceColour.White);
 
-            gameStateUpdater.RevertGameStateChanges(change6);
-            gameStateUpdater.RevertGameStateChanges(change5);
-            gameStateUpdater.RevertGameStateChanges(change4);
-            gameStateUpdater.RevertGameStateChanges(change3);
-            gameStateUpdater.RevertGameStateChanges(change2);
-            gameStateUpdater.RevertGameStateChanges(change1);
+            gameStateUpdater.RevertGameState();
+            gameStateUpdater.RevertGameState();
+            gameStateUpdater.RevertGameState();
+            gameStateUpdater.RevertGameState();
+            gameStateUpdater.RevertGameState();
+            gameStateUpdater.RevertGameState();
 
             var sut = gameStateUpdater.GameState.BoardState.Board;
             Assert.That(sut[0, 0].CurrentPiece.Type, Is.EqualTo(PieceType.WhiteKing));
@@ -600,7 +604,49 @@ namespace Tests.UnitTests.Game
             Assert.That(sut[1, 7].CurrentPiece.Type, Is.EqualTo(PieceType.BlackPawn));
         }
 
-        // TODO: RevertingGameState_ChangesActivePieces
-        // TODO: RevertingGameState_ChangesActiveBuilds
+
+        [Test]
+        public void RevertingGameState_CorrectlyReversesActivePieces()
+        {
+            var board = _boardGenerator.GenerateBoard();
+            board[0, 0].CurrentPiece = new Piece(PieceType.WhiteKing);
+            board[1, 0].CurrentPiece = new Piece(PieceType.WhitePawn);
+
+            board[0, 7].CurrentPiece = new Piece(PieceType.BlackKing);
+            board[1, 7].CurrentPiece = new Piece(PieceType.BlackPawn);
+
+            var activePieces = new HashSet<Position>
+            {
+                new Position(0, 0),
+                new Position(1, 0),
+                new Position(0, 7),
+                new Position(1, 7)
+            };
+            var boardState = new BoardState(board, activePieces, new HashSet<Position>());
+            var gameState = _gameStateInitializer.InitialiseGame(boardState);
+            var gameStateUpdater = _gameStateUpdaterFactory.Create(gameState);
+
+
+            gameStateUpdater.UpdateGameState(new Position(1, 0), new Position(1, 2), PieceColour.Black);
+            gameStateUpdater.UpdateGameState(new Position(1, 7), new Position(2, 7), PieceColour.White);
+            gameStateUpdater.UpdateGameState(new Position(1, 2), new Position(1, 3), PieceColour.Black);
+            gameStateUpdater.UpdateGameState(new Position(2, 7), new Position(3, 7), PieceColour.White);
+            gameStateUpdater.UpdateGameState(new Position(1, 3), new Position(1, 4), PieceColour.Black);
+            gameStateUpdater.UpdateGameState(new Position(3, 7), new Position(4, 7), PieceColour.White);
+
+            gameStateUpdater.RevertGameState();
+            gameStateUpdater.RevertGameState();
+            gameStateUpdater.RevertGameState();
+            gameStateUpdater.RevertGameState();
+
+            var sut = gameStateUpdater.GameState.BoardState.ActivePieces;
+            Assert.That(sut, Is.EquivalentTo(new HashSet<Position>
+            {
+                new Position(1, 2),
+                new Position(2, 7),
+                new Position(0, 0),
+                new Position(0, 7)
+            }));
+        }
     }
 }

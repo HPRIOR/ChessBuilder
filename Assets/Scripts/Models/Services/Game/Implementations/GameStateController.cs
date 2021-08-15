@@ -37,6 +37,7 @@ namespace Models.Services.Game.Implementations
         ///     this is redundant for now. It was used to revert state back by passing in an old board state, however the
         ///     game state updater no longer supports this functionality. Some new way of reverting changes is needed.
         ///     Should remove and fix tests and anything else which relies on this.
+        ///     TODO: remove me
         /// </summary>
         /// <param name="newBoardState"></param>
         public void UpdateGameState(BoardState newBoardState)

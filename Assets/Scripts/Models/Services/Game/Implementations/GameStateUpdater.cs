@@ -87,7 +87,7 @@ namespace Models.Services.Game.Implementations
         {
             // TODO: change active tiles!!! Add a test for this too  
             // revert resolved pieces
-            foreach ((var position, var type) in gameStateChanges.ResolvedBuilds)
+            foreach (var (position, type) in gameStateChanges.ResolvedBuilds)
             {
                 GameState.BoardState.Board[position.X, position.Y].CurrentPiece = new Piece(PieceType.NullPiece);
                 GameState.BoardState.Board[position.X, position.Y].BuildTileState = new BuildTileState(0, type);

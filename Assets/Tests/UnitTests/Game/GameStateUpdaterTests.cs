@@ -9,6 +9,10 @@ using Zenject;
 
 namespace Tests.UnitTests.Game
 {
+    /// <summary>
+    ///     Note: invoking UpdateGameState with Black's turn when it seems as though it's white's may seem counter
+    ///     intuitive. This is because it is setting up blacks turn after white's move (available moves, check state etc)
+    /// </summary>
     [TestFixture]
     public class GameStateUpdaterTests : ZenjectUnitTestFixture
     {
@@ -51,7 +55,7 @@ namespace Tests.UnitTests.Game
             var boardState = new BoardState(board, activePieces, new HashSet<Position>());
             var gameState = _gameStateInitializer.InitialiseGame(boardState);
             var gameStateUpdater = _gameStateUpdaterFactory.Create(gameState);
-            var sut = gameStateUpdater.UpdateGameState(new Position(1, 1), new Position(2, 2), PieceColour.White);
+            var sut = gameStateUpdater.UpdateGameState(new Position(1, 1), new Position(2, 2), PieceColour.Black);
 
             Assert.That(sut.Build, Is.Null);
         }
@@ -66,7 +70,7 @@ namespace Tests.UnitTests.Game
             var boardState = new BoardState(board, activePieces, new HashSet<Position>());
             var gameState = _gameStateInitializer.InitialiseGame(boardState);
             var gameStateUpdater = _gameStateUpdaterFactory.Create(gameState);
-            var sut = gameStateUpdater.UpdateGameState(new Position(1, 1), new Position(2, 2), PieceColour.White);
+            var sut = gameStateUpdater.UpdateGameState(new Position(1, 1), new Position(2, 2), PieceColour.Black);
 
             Assert.That(sut.Move.To, Is.EqualTo(new Position(2, 2)));
             Assert.That(sut.Move.From, Is.EqualTo(new Position(1, 1)));
@@ -82,7 +86,7 @@ namespace Tests.UnitTests.Game
             var boardState = new BoardState(board, activePieces, new HashSet<Position>());
             var gameState = _gameStateInitializer.InitialiseGame(boardState);
             var gameStateUpdater = _gameStateUpdaterFactory.Create(gameState);
-            var sut = gameStateUpdater.UpdateGameState(new Position(1, 1), PieceType.WhiteKnight, PieceColour.White);
+            var sut = gameStateUpdater.UpdateGameState(new Position(1, 1), PieceType.WhiteKnight, PieceColour.Black);
 
             Assert.That(sut.Move, Is.Null);
         }
@@ -98,7 +102,7 @@ namespace Tests.UnitTests.Game
             var boardState = new BoardState(board, activePieces, new HashSet<Position>());
             var gameState = _gameStateInitializer.InitialiseGame(boardState);
             var gameStateUpdater = _gameStateUpdaterFactory.Create(gameState);
-            var sut = gameStateUpdater.UpdateGameState(new Position(1, 1), PieceType.WhiteKnight, PieceColour.White);
+            var sut = gameStateUpdater.UpdateGameState(new Position(1, 1), PieceType.WhiteKnight, PieceColour.Black);
 
             Assert.That(sut.Build.At, Is.EqualTo(new Position(1, 1)));
             Assert.That(sut.Build.Piece, Is.EqualTo(PieceType.WhiteKnight));

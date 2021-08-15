@@ -44,7 +44,6 @@ namespace Models.State.GameState
             PossiblePieceMoves = previousGameState.PossiblePieceMoves;
             BuildMoves = previousGameState.PossibleBuildMoves;
             Check = previousGameState.Check;
-            CheckMate = previousGameState.CheckMate;
         }
 
         public Move Move { get; set; }
@@ -52,7 +51,6 @@ namespace Models.State.GameState
         public PlayerState.PlayerState WhitePlayerState { get; set; }
         public PlayerState.PlayerState BlackPlayerState { get; set; }
         public bool Check { get; set; }
-        public bool CheckMate { get; set; }
         public BuildMoves BuildMoves { get; set; }
         public ImmutableDictionary<Position, ImmutableHashSet<Position>> PossiblePieceMoves { get; set; }
         public PieceColour Turn { get; set; }

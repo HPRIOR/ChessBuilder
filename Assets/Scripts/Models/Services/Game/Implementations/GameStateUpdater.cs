@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Immutable;
+﻿using System.Collections.Immutable;
 using Models.Services.Board;
 using Models.Services.Build.Interfaces;
 using Models.Services.Game.Interfaces;
@@ -53,7 +52,6 @@ namespace Models.Services.Game.Implementations
             _gameStateChanges = new GameStateChanges(GameState)
             {
                 Move = new Move(to, from),
-                Turn = turn,
                 DecrementedTiles = BuildStateDecrementor.DecrementBuilds(GameState.BoardState)
             };
             _mover.ModifyBoardState(GameState.BoardState, from, to);
@@ -66,7 +64,6 @@ namespace Models.Services.Game.Implementations
             _gameStateChanges = new GameStateChanges(GameState)
             {
                 Build = new State.GameState.Build(buildPosition, piece),
-                Turn = turn,
                 DecrementedTiles = BuildStateDecrementor.DecrementBuilds(GameState.BoardState)
             };
             _builder.GenerateNewBoardState(GameState.BoardState, buildPosition, piece);
@@ -76,7 +73,46 @@ namespace Models.Services.Game.Implementations
 
         public void RevertGameStateChanges(GameStateChanges gameStateChanges)
         {
-            throw new NotImplementedException();
+            // revert resolved pieces
+            foreach ((var position, var type) in gameStateChanges.ResolvedBuilds)
+            {
+                GameState.BoardState.Board[position.X, position.Y].CurrentPiece = new Piece(PieceType.NullPiece);
+                GameState.BoardState.Board[position.X, position.Y].BuildTileState = new BuildTileState(0, type);
+            }
+
+            // revert build moves
+            var build = gameStateChanges.Build;
+            if (build != null) GameState.BoardState.Board[build.At.X, build.At.Y].BuildTileState = new BuildTileState();
+
+            // increment decremented builds
+            foreach (var decrementedTile in gameStateChanges.DecrementedTiles)
+            {
+                var buildTileState = GameState.BoardState.Board[decrementedTile.X, decrementedTile.Y].BuildTileState;
+                if (buildTileState.BuildingPiece != PieceType.NullPiece)
+                    GameState.BoardState.Board[decrementedTile.X, decrementedTile.Y].BuildTileState =
+                        new BuildTileState(buildTileState.Turns + 1, buildTileState.BuildingPiece);
+            }
+
+            // revert moved pieces
+            if (gameStateChanges.Move != null)
+            {
+                var movedToPosition = gameStateChanges.Move.To;
+                var movedFromPosition = gameStateChanges.Move.From;
+                var movedPiece = GameState.BoardState.Board[movedToPosition.X, movedToPosition.Y].CurrentPiece.Type;
+
+                GameState.BoardState.Board[movedToPosition.X, movedToPosition.Y].CurrentPiece =
+                    new Piece(PieceType.NullPiece);
+
+                GameState.BoardState.Board[movedFromPosition.X, movedFromPosition.Y].CurrentPiece =
+                    new Piece(movedPiece);
+            }
+
+            // restore previous state
+            GameState.PossiblePieceMoves = gameStateChanges.PossiblePieceMoves;
+            GameState.PossibleBuildMoves = gameStateChanges.BuildMoves;
+            GameState.Check = gameStateChanges.Check;
+            GameState.WhiteState = gameStateChanges.WhitePlayerState;
+            GameState.BlackState = gameStateChanges.BlackPlayerState;
         }
 
         public void UpdateGameState(PieceColour turn)

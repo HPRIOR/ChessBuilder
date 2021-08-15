@@ -14,12 +14,14 @@ namespace Models.Services.Board
                 var pieceBeingBuilt = tile.BuildTileState.BuildingPiece != PieceType.NullPiece;
                 if (pieceBeingBuilt)
                 {
+                    var previousState = tile.BuildTileState;
                     tile.BuildTileState = tile.BuildTileState.Decrement();
-                    decrementedTiles.Add(tile.Position);
+                    if (previousState.Turns != tile.BuildTileState.Turns)
+                        // ensure that tiles which are not decremented will not be incremented when reversed
+                        decrementedTiles.Add(tile.Position);
                 }
             }
 
-            // TODO: Problem! this will return tiles which were not decremented but remain at 0 
             return decrementedTiles;
         }
     }

@@ -55,6 +55,7 @@ namespace Models.State.GameState
         public Move Move { get; set; }
         public Build Build { get; set; }
         public IEnumerable<(Position, PieceType)> ResolvedBuilds { get; set; }
+        public IEnumerable<Position> DecrementedTiles { get; set; }
 
         // BoardState History
         public PlayerState.PlayerState WhitePlayerState { get; set; }
@@ -62,7 +63,5 @@ namespace Models.State.GameState
         public bool Check { get; set; }
         public BuildMoves BuildMoves { get; set; }
         public ImmutableDictionary<Position, ImmutableHashSet<Position>> PossiblePieceMoves { get; set; }
-        public IEnumerable<Position> DecrementedTiles { get; set; }
-        public PieceColour Turn { get; set; }
     }
 }

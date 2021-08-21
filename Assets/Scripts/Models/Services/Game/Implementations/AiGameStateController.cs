@@ -44,23 +44,23 @@ namespace Models.Services.Game.Implementations
 
         public void UpdateGameState(BoardState newBoardState)
         {
-            Turn = NextTurn();
-            var previousState = CurrentGameState?.BoardState.Clone();
-
-            // Game state updater sets up the possible moves for the next player 
-            // hence why NextTurn() is called at the top of the method
-            _gameStateUpdater.UpdateGameState(Turn);
-            CurrentGameState = _gameStateUpdater.GameState;
-            GameStateChangeEvent?.Invoke(previousState, CurrentGameState.BoardState);
-            // Invoke some other mechanism to call overloaded Update game state
-
-            var move = _aiMoveGenerator.GetMove(CurrentGameState, 3, Turn);
-
-            previousState = CurrentGameState.BoardState;
-            CurrentGameState = move(CurrentGameState, Turn);
-
-            GameStateChangeEvent?.Invoke(previousState, CurrentGameState.BoardState);
-            Turn = NextTurn();
+            // Turn = NextTurn();
+            // var previousState = CurrentGameState?.BoardState.Clone();
+            //
+            // // Game state updater sets up the possible moves for the next player 
+            // // hence why NextTurn() is called at the top of the method
+            // _gameStateUpdater.UpdateGameState(Turn);
+            // CurrentGameState = _gameStateUpdater.GameState;
+            // GameStateChangeEvent?.Invoke(previousState, CurrentGameState.BoardState);
+            // // Invoke some other mechanism to call overloaded Update game state
+            //
+            // var move = _aiMoveGenerator.GetMove(CurrentGameState, 3, Turn);
+            //
+            // previousState = CurrentGameState.BoardState;
+            // CurrentGameState = move(CurrentGameState, Turn);
+            //
+            // GameStateChangeEvent?.Invoke(previousState, CurrentGameState.BoardState);
+            // Turn = NextTurn();
         }
 
         public void RevertGameState()

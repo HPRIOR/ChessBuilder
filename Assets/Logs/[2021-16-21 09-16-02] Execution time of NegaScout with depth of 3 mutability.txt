@@ -1,0 +1,3 @@
+Execution time of NegaScout with depth of 3 after parallel: 
+      143 ms 
+      0 s

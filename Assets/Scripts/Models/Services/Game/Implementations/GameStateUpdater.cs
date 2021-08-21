@@ -46,10 +46,6 @@ namespace Models.Services.Game.Implementations
         public GameState GameState { get; }
         public Stack<GameStateChanges> StateHistory { get; } = new Stack<GameStateChanges>();
 
-        /*
-         * GameState will be a member of this class, which will be mutated, instead of generated each turn
-         * instead of returning void, this method will return a 'history' of the changes which have occured
-         */
         public void UpdateGameState(Position from, Position to, PieceColour turn)
         {
             _gameStateChanges = new GameStateChanges(GameState)
@@ -74,11 +70,6 @@ namespace Models.Services.Game.Implementations
             StateHistory.Push(_gameStateChanges);
         }
 
-        public void RevertGameState()
-        {
-            if (StateHistory.Any()) RevertGameStateChanges(StateHistory.Pop());
-        }
-
         // TODO: make private 
         public void UpdateGameState(PieceColour turn)
         {
@@ -101,6 +92,11 @@ namespace Models.Services.Game.Implementations
             GameState.PossibleBuildMoves = possibleBuildMoves;
 
             GameState.CheckMate = _gameOverEval.CheckMate(moveState.Check, moveState.PossibleMoves);
+        }
+
+        public void RevertGameState()
+        {
+            if (StateHistory.Any()) RevertGameStateChanges(StateHistory.Pop());
         }
 
         private void RevertGameStateChanges(GameStateChanges gameStateChanges)

@@ -23,21 +23,11 @@ namespace Models.Services.Moves.MoveGenerators.NonTurnMoves
         public IEnumerable<Position> GetPossiblePieceMoves(Position originPosition, BoardState boardState)
         {
             var relativePosition = _positionTranslator.GetRelativePosition(originPosition);
+            var possibleDirections = new List<Direction> {Direction.NE, Direction.NW, Direction.SE, Direction.SW};
 
-            var result = GetMovesIn(Direction.NE, relativePosition, boardState).ToList();
-            var northWestMoves = GetMovesIn(Direction.NW, relativePosition, boardState).ToList();
-            var southEastMoves = GetMovesIn(Direction.SE, relativePosition, boardState).ToList();
-            var southWestMoves = GetMovesIn(Direction.SW, relativePosition, boardState).ToList();
-
-            result.AddRange(northWestMoves);
-            result.AddRange(southEastMoves);
-            result.AddRange(southWestMoves);
-            return result;
+            return possibleDirections.SelectMany(direction =>
+                _boardScanner.ScanIn(direction, relativePosition, boardState));
         }
-
-        private IEnumerable<Position> GetMovesIn(Direction d, Position relativePosition, BoardState boardState) =>
-            _boardScanner.ScanIn(d, relativePosition, boardState);
-
 
         public class Factory : PlaceholderFactory<PieceColour, BishopNonTurnMoves>
         {

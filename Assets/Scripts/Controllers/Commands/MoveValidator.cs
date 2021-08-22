@@ -13,7 +13,7 @@ namespace Controllers.Commands
         public bool ValidateMove(ImmutableDictionary<Position, ImmutableHashSet<Position>> possibleMoves,
             Position from, Position destination)
         {
-            if (from.Equals(destination)) return false;
+            if (from == destination) return false;
             if (possibleMoves.ContainsKey(from))
                 return possibleMoves[from].Contains(destination);
             return false;

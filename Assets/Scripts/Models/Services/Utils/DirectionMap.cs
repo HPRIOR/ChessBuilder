@@ -15,7 +15,7 @@ namespace Models.Services.Utils
             var positions = GetPositions();
             foreach (var position1 in positions)
             foreach (var position2 in positions)
-                if (!position1.Equals(position2))
+                if (position1 != position2)
                     Directions[(position1, position2)] = position1.DirectionTo(position2);
         }
 

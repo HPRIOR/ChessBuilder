@@ -14,7 +14,7 @@ namespace Models.State.Board
         }
 
         public bool Equals(PositionPair other) =>
-            _position1.Equals(other._position1) && _position2.Equals(other._position2);
+            _position1 == other._position1 && _position2 == other._position2;
 
         public override bool Equals(object obj) => obj is PositionPair other && Equals(other);
 

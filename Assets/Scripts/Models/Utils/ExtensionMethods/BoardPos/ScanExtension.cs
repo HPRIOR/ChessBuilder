@@ -35,7 +35,7 @@ namespace Models.Utils.ExtensionMethods.BoardPos
             var direction = DirectionMap.DirectionFrom(start, destination);
 
             bool StopScanningPredicate(Position position) =>
-                PieceCannotMoveTo(position) || position.Equals(destination);
+                PieceCannotMoveTo(position) || position == destination;
 
             return BaseScan(start, direction, StopScanningPredicate);
         }
@@ -46,7 +46,7 @@ namespace Models.Utils.ExtensionMethods.BoardPos
             var direction = DirectionMap.DirectionFrom(start, destination);
 
             bool StopScanningPredicate(Position position) =>
-                PieceCannotMoveTo(position) || position.Equals(destination.Add(Move.In(direction)));
+                PieceCannotMoveTo(position) || position == destination.Add(Move.In(direction));
 
             return BaseScan(start, direction, StopScanningPredicate);
         }

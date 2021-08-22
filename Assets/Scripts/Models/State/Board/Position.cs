@@ -24,14 +24,13 @@ namespace Models.State.Board
         public bool Equals(Position other) =>
             other.X == X && other.Y == Y;
 
+        public static bool operator ==(Position thisPos, Position other) => thisPos.Equals(other);
+
+        public static bool operator !=(Position thisPos, Position other) => !thisPos.Equals(other);
+
         public override bool Equals(object obj) => obj is Position other && Equals(other);
 
-        public override int GetHashCode()
-        {
-            var hash = new Hash128();
-            hash.Append(X);
-            hash.Append(Y);
-            return hash.GetHashCode();
-        }
+        // todo more efficient impl
+        public override int GetHashCode() => (X, Y).GetHashCode();
     }
 }

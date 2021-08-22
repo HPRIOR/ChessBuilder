@@ -64,7 +64,7 @@ namespace Models.Services.Moves.Utils
             Position targetPosition)
         {
             var (x, y) = (targetPosition.X, targetPosition.Y);
-            return !targetPosition.Equals(kingPosition) &&
+            return targetPosition != kingPosition &&
                    boardState.Board[x, y].CurrentPiece.Type != PieceType.NullPiece;
         }
 
@@ -79,7 +79,7 @@ namespace Models.Services.Moves.Utils
                 ScanMap.Scan(turnPiecePosition, DirectionMap.DirectionFrom(enemyPosition, kingPosition));
             foreach (var position in scannedBoardPositions)
             {
-                if (position.Equals(kingPosition)) return true;
+                if (position == kingPosition) return true;
 
                 if (ContainsNonKingPiece(boardState, kingPosition,
                     position)) // escape early if piece obstructs possible king 

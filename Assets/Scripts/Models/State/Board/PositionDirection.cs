@@ -1,27 +1,29 @@
 ﻿using System;
 using Models.Services.Moves.Utils;
-using Models.State.Board;
 
-public readonly struct PositionDirection : IEquatable<PositionDirection>
+namespace Models.State.Board
 {
-    private readonly Position _position;
-    private readonly Direction _direction;
-
-    public PositionDirection(Position position, Direction direction)
+    public readonly struct PositionDirection : IEquatable<PositionDirection>
     {
-        _direction = direction;
-        _position = position;
-    }
+        private readonly Position _position;
+        private readonly Direction _direction;
 
-    public bool Equals(PositionDirection other) => _position.Equals(other._position) && _direction == other._direction;
-
-    public override bool Equals(object obj) => obj is PositionDirection other && Equals(other);
-
-    public override int GetHashCode()
-    {
-        unchecked
+        public PositionDirection(Position position, Direction direction)
         {
-            return (_position.GetHashCode() * 397) ^ (int) _direction;
+            _direction = direction;
+            _position = position;
+        }
+
+        public bool Equals(PositionDirection other) => _position == other._position && _direction == other._direction;
+
+        public override bool Equals(object obj) => obj is PositionDirection other && Equals(other);
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                return (_position.GetHashCode() * 397) ^ (int)_direction;
+            }
         }
     }
 }

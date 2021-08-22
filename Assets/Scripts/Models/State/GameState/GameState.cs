@@ -11,7 +11,7 @@ namespace Models.State.GameState
     {
         public GameState(bool check, bool checkMate, PlayerState.PlayerState blackState,
             PlayerState.PlayerState whiteState,
-            ImmutableDictionary<Position, ImmutableHashSet<Position>> possiblePieceMoves,
+            IDictionary<Position, HashSet<Position>> possiblePieceMoves,
             BuildMoves possibleBuildMoves, BoardState boardState)
         {
             Check = check;
@@ -28,13 +28,13 @@ namespace Models.State.GameState
         public bool CheckMate { get; set; }
         public PlayerState.PlayerState BlackState { get; set; }
         public PlayerState.PlayerState WhiteState { get; set; }
-        public ImmutableDictionary<Position, ImmutableHashSet<Position>> PossiblePieceMoves { get; set; }
+        public IDictionary<Position, HashSet<Position>> PossiblePieceMoves { get; set; }
         public BuildMoves PossibleBuildMoves { get; set; }
 
         public object Clone()
         {
-            var possibleMoves = new Dictionary<Position, ImmutableHashSet<Position>>(PossiblePieceMoves)
-                .ToImmutableDictionary();
+            var possibleMoves = new Dictionary<Position, HashSet<Position>>(PossiblePieceMoves);
+
             var builds = new HashSet<PieceType>(PossibleBuildMoves.BuildPieces).ToImmutableHashSet();
             var buildPosition = new HashSet<Position>(PossibleBuildMoves.BuildPositions).ToImmutableHashSet();
             var buildMoves = new BuildMoves(buildPosition, builds);

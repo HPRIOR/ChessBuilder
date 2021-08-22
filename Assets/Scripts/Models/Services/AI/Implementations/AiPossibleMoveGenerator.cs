@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.Immutable;
 using System.Linq;
 using Models.Services.AI.Interfaces;
 using Models.Services.Game.Interfaces;
@@ -19,7 +18,7 @@ namespace Models.Services.AI.Implementations
                 .Concat(GetMoveCommands(gameState.PossiblePieceMoves));
 
         private IEnumerable<Action<PieceColour, IGameStateUpdater>> GetMoveCommands(
-            ImmutableDictionary<Position, ImmutableHashSet<Position>> moves
+            IDictionary<Position, HashSet<Position>> moves
         ) =>
             moves.SelectMany(moveSet =>
                 moveSet.Value.Select(move =>

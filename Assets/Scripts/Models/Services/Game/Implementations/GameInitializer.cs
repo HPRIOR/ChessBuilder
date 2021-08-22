@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Collections.Immutable;
 using System.Linq;
 using Models.Services.Build.Interfaces;
 using Models.Services.Moves.Interfaces;
@@ -33,10 +32,10 @@ namespace Models.Services.Game.Implementations
             ).First();
 
             var moves = _whiteKingMoveGenerator.GetPossiblePieceMoves(whiteKingPosition, boardState);
-            var movesDict = new Dictionary<Position, ImmutableHashSet<Position>>
+            var movesDict = new Dictionary<Position, HashSet<Position>>
             {
-                {whiteKingPosition, new HashSet<Position>(moves).ToImmutableHashSet()}
-            }.ToImmutableDictionary();
+                { whiteKingPosition, new HashSet<Position>(moves) }
+            };
 
             var builds = _buildMoveGenerator.GetPossibleBuildMoves(boardState, PieceColour.White, new PlayerState(39));
 

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.Linq;
 using Bindings.Utils;
 using Models.Services.Board;
 using Models.Services.Game.Implementations;
@@ -152,19 +153,20 @@ namespace Tests.UnitTests.Game
             // black makes a move and its possible moves are saved
             gameStateUpdater.UpdateGameState(new Position(0, 0), new Position(1, 1), PieceColour.White);
             var sut = gameStateUpdater.StateHistory.Peek();
-            var expectedPossibleMoves = new Dictionary<Position, ImmutableHashSet<Position>>
+            var expectedPossibleMoves = new Dictionary<Position, HashSet<Position>>
             {
                 {
                     new Position(0, 0),
                     new HashSet<Position> { new Position(0, 1), new Position(1, 1), new Position(1, 0) }
-                        .ToImmutableHashSet()
                 }
-            }.ToImmutableDictionary();
-            Assert.That(sut.PossiblePieceMoves, Is.EquivalentTo(expectedPossibleMoves));
+            };
+            Assert.That(sut.PossiblePieceMoves.Keys, Is.EquivalentTo(expectedPossibleMoves.Keys));
+            Assert.That(sut.PossiblePieceMoves.Values.First(), Is.EquivalentTo(expectedPossibleMoves.Values.First()));
         }
 
         [Test]
-        public void GameStateChange_PossibleMovesAreSaved_AndAreNotChangedByReference()
+        public void
+            GameStateChange_PossibleMovesAreSaved_AndAreNotChangedByReference() // this will break when further mutability is introduced
         {
             var board = _boardGenerator.GenerateBoard();
             board[0, 0].CurrentPiece = new Piece(PieceType.BlackKing);
@@ -179,18 +181,18 @@ namespace Tests.UnitTests.Game
             // black makes a move and its possible moves are saved
             gameStateUpdater.UpdateGameState(new Position(0, 0), new Position(1, 1), PieceColour.White);
             var sut = gameStateUpdater.StateHistory.Peek();
-            var expectedPossibleMoves = new Dictionary<Position, ImmutableHashSet<Position>>
+            var expectedPossibleMoves = new Dictionary<Position, HashSet<Position>>
             {
                 {
                     new Position(0, 0),
                     new HashSet<Position> { new Position(0, 1), new Position(1, 1), new Position(1, 0) }
-                        .ToImmutableHashSet()
                 }
-            }.ToImmutableDictionary();
+            };
 
             gameStateUpdater.UpdateGameState(new Position(1, 1), new Position(2, 2), PieceColour.Black);
             gameStateUpdater.UpdateGameState(new Position(6, 6), new Position(5, 5), PieceColour.White);
-            Assert.That(sut.PossiblePieceMoves, Is.EquivalentTo(expectedPossibleMoves));
+            Assert.That(sut.PossiblePieceMoves.Keys, Is.EquivalentTo(expectedPossibleMoves.Keys));
+            Assert.That(sut.PossiblePieceMoves.Values.First(), Is.EquivalentTo(expectedPossibleMoves.Values.First()));
         }
 
         [Test]
@@ -310,7 +312,7 @@ namespace Tests.UnitTests.Game
             var gameStateUpdater = _gameStateUpdaterFactory.Create(gameState);
 
             var initialPossibleMoves =
-                new Dictionary<Position, ImmutableHashSet<Position>>(gameState.PossiblePieceMoves);
+                new Dictionary<Position, HashSet<Position>>(gameState.PossiblePieceMoves);
 
             gameStateUpdater.UpdateGameState(new Position(1, 0), new Position(1, 2), PieceColour.Black);
             gameStateUpdater.UpdateGameState(new Position(1, 7), new Position(2, 7), PieceColour.White);

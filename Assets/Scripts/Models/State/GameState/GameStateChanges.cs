@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Collections.Immutable;
 using Models.State.Board;
 using Models.State.BuildState;
 using Models.State.PieceState;
@@ -62,6 +61,6 @@ namespace Models.State.GameState
         public PlayerState.PlayerState BlackPlayerState { get; set; }
         public bool Check { get; set; }
         public BuildMoves BuildMoves { get; set; }
-        public ImmutableDictionary<Position, ImmutableHashSet<Position>> PossiblePieceMoves { get; set; }
+        public IDictionary<Position, HashSet<Position>> PossiblePieceMoves { get; set; }
     }
 }

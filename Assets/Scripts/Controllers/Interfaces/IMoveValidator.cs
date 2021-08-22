@@ -1,11 +1,11 @@
-﻿using System.Collections.Immutable;
+﻿using System.Collections.Generic;
 using Models.State.Board;
 
 namespace Controllers.Interfaces
 {
     public interface IMoveValidator
     {
-        bool ValidateMove(ImmutableDictionary<Position, ImmutableHashSet<Position>> possibleMoves, Position origin,
+        bool ValidateMove(IDictionary<Position, HashSet<Position>> possibleMoves, Position origin,
             Position destination);
     }
 }

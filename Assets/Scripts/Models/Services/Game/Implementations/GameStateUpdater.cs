@@ -77,19 +77,15 @@ namespace Models.Services.Game.Implementations
             // this is due to builds being resolved at the end of a players turn - not the start of their turn
             _gameStateChanges.ResolvedBuilds = _buildResolver.ResolveBuilds(GameState.BoardState, NextTurn(turn));
 
-            var (blackState, whiteState) = GetPlayerState(GameState.BoardState);
-            GameState.BlackState = blackState;
-            GameState.WhiteState = whiteState;
+            var playerState = GetPlayerState(GameState.BoardState, turn);
+            GameState.PlayerState = playerState;
 
             var moveState = _movesGenerator.GetPossibleMoves(GameState.BoardState, turn);
             GameState.PossiblePieceMoves = moveState.PossibleMoves;
-
             GameState.Check = moveState.Check;
 
-            var relevantPlayerState = turn == PieceColour.Black ? blackState : whiteState;
-            var possibleBuildMoves =
-                GetPossibleBuildMoves(GameState.BoardState, turn, moveState, relevantPlayerState);
-            GameState.PossibleBuildMoves = possibleBuildMoves;
+            GameState.PossibleBuildMoves = GetPossibleBuildMoves(GameState.BoardState, turn, moveState, playerState);
+            ;
 
             GameState.CheckMate = _gameOverEval.CheckMate(moveState.Check, moveState.PossibleMoves);
         }
@@ -147,8 +143,7 @@ namespace Models.Services.Game.Implementations
             GameState.PossiblePieceMoves = gameStateChanges.PossiblePieceMoves;
             GameState.PossibleBuildMoves = gameStateChanges.BuildMoves;
             GameState.Check = gameStateChanges.Check;
-            GameState.WhiteState = gameStateChanges.WhitePlayerState;
-            GameState.BlackState = gameStateChanges.BlackPlayerState;
+            GameState.PlayerState = gameStateChanges.PlayerState;
         }
 
         private BuildMoves GetPossibleBuildMoves(BoardState newBoardState, PieceColour turn, MoveState moveState,
@@ -158,15 +153,8 @@ namespace Models.Services.Game.Implementations
                     ImmutableHashSet<PieceType>.Empty) // no build moves when in check
                 : _buildMoveGenerator.GetPossibleBuildMoves(newBoardState, turn, relevantPlayerState);
 
-        //TODO: calculate only the relevant player state
-        private (PlayerState blackState, PlayerState whiteState) GetPlayerState(BoardState newBoardState)
-        {
-            var blackState =
-                _buildPointsCalculator.CalculateBuildPoints(PieceColour.Black, newBoardState, maxBuildPoints);
-            var whiteState =
-                _buildPointsCalculator.CalculateBuildPoints(PieceColour.White, newBoardState, maxBuildPoints);
-            return (blackState, whiteState);
-        }
+        private PlayerState GetPlayerState(BoardState newBoardState, PieceColour turn)
+            => _buildPointsCalculator.CalculateBuildPoints(turn, newBoardState, maxBuildPoints);
 
         private static PieceColour NextTurn(PieceColour turn) =>
             turn == PieceColour.White ? PieceColour.Black : PieceColour.White;

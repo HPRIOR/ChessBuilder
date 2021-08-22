@@ -253,7 +253,7 @@ namespace Tests.UnitTests.Game
             var activePieces = new HashSet<Position> { new Position(1, 1), new Position(7, 7) };
             var boardState = new BoardState(board, activePieces, new HashSet<Position>());
             var gameState = _gameStateInitializer.InitialiseGame(boardState);
-            var initialPlayerState = gameState.WhiteState;
+            var initialPlayerState = gameState.PlayerState;
             var gameStateUpdater = _gameStateUpdaterFactory.Create(gameState);
 
             gameStateUpdater.UpdateGameState(new Position(6, 4), PieceType.WhitePawn, PieceColour.Black);
@@ -262,9 +262,7 @@ namespace Tests.UnitTests.Game
             gameStateUpdater.UpdateGameState(new Position(4, 4), PieceType.BlackPawn, PieceColour.White);
             var sut = gameStateUpdater.StateHistory.Peek();
 
-
-            Assert.That(sut.BlackPlayerState.BuildPoints, Is.EqualTo(initialPlayerState.BuildPoints - 1));
-            Assert.That(sut.WhitePlayerState.BuildPoints, Is.EqualTo(initialPlayerState.BuildPoints - 2));
+            Assert.That(sut.PlayerState.BuildPoints, Is.EqualTo(initialPlayerState.BuildPoints - 1));
         }
 
 

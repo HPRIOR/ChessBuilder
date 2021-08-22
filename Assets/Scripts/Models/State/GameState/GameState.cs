@@ -9,15 +9,14 @@ namespace Models.State.GameState
 {
     public class GameState : ICloneable
     {
-        public GameState(bool check, bool checkMate, PlayerState.PlayerState blackState,
-            PlayerState.PlayerState whiteState,
+        public GameState(bool check, bool checkMate,
+            PlayerState.PlayerState playerState,
             IDictionary<Position, HashSet<Position>> possiblePieceMoves,
             BuildMoves possibleBuildMoves, BoardState boardState)
         {
             Check = check;
             CheckMate = checkMate;
-            BlackState = blackState;
-            WhiteState = whiteState;
+            PlayerState = playerState;
             PossiblePieceMoves = possiblePieceMoves;
             PossibleBuildMoves = possibleBuildMoves;
             BoardState = boardState;
@@ -26,8 +25,7 @@ namespace Models.State.GameState
         public BoardState BoardState { get; set; }
         public bool Check { get; set; }
         public bool CheckMate { get; set; }
-        public PlayerState.PlayerState BlackState { get; set; }
-        public PlayerState.PlayerState WhiteState { get; set; }
+        public PlayerState.PlayerState PlayerState { get; set; }
         public IDictionary<Position, HashSet<Position>> PossiblePieceMoves { get; set; }
         public BuildMoves PossibleBuildMoves { get; set; }
 

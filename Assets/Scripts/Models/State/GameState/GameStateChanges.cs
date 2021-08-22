@@ -43,10 +43,9 @@ namespace Models.State.GameState
 
         public GameStateChanges(GameState previousGameState)
         {
-            BlackPlayerState = previousGameState.BlackState;
-            WhitePlayerState = previousGameState.WhiteState;
-            PossiblePieceMoves = previousGameState.PossiblePieceMoves;
-            BuildMoves = previousGameState.PossibleBuildMoves;
+            PlayerState = previousGameState.PlayerState;
+            PossiblePieceMoves = previousGameState.PossiblePieceMoves; // may need to new this up
+            BuildMoves = previousGameState.PossibleBuildMoves; // may need to new this up 
             Check = previousGameState.Check;
         }
 
@@ -57,8 +56,7 @@ namespace Models.State.GameState
         public IEnumerable<Position> DecrementedTiles { get; set; }
 
         // BoardState History
-        public PlayerState.PlayerState WhitePlayerState { get; set; }
-        public PlayerState.PlayerState BlackPlayerState { get; set; }
+        public PlayerState.PlayerState PlayerState { get; set; }
         public bool Check { get; set; }
         public BuildMoves BuildMoves { get; set; }
         public IDictionary<Position, HashSet<Position>> PossiblePieceMoves { get; set; }

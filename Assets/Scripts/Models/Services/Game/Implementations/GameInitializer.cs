@@ -40,7 +40,7 @@ namespace Models.Services.Game.Implementations
             var builds = _buildMoveGenerator.GetPossibleBuildMoves(boardState, PieceColour.White, new PlayerState(39));
 
 
-            return new GameState(false, false, new PlayerState(39), new PlayerState(39), movesDict, builds,
+            return new GameState(false, false, new PlayerState(39), movesDict, builds,
                 boardState);
         }
     }

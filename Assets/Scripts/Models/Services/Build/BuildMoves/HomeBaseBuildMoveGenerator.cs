@@ -30,7 +30,7 @@ namespace Models.Services.Build.BuildMoves
 
         private static ImmutableHashSet<PieceType> RemovePiecesByCost(PlayerState playerState,
             IEnumerable<PieceType> pieces)
-            => GetAvailablePieces(pieces, playerState).ToImmutableHashSet();
+            => GetAvailablePieces(pieces, playerState).ToImmutableHashSet(); // expensive
 
         private static IEnumerable<PieceType> GetAvailablePieces(IEnumerable<PieceType> pieces, PlayerState playerState)
         {
@@ -42,12 +42,13 @@ namespace Models.Services.Build.BuildMoves
         }
 
 
+        // TODO remove immutable stuff here
         private static ImmutableHashSet<Position> GetWhitePositions()
         {
             var builder = ImmutableHashSet<Position>.Empty.ToBuilder();
             for (var y = 0; y < 2; y++)
             for (var x = 0; x < 8; x++)
-                builder.Add(new Position(x, y));
+                builder.Add(new Position(x, y)); // expensive
             return builder.ToImmutable();
         }
 

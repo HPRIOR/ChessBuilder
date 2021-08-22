@@ -14,6 +14,7 @@ namespace Models.Services.Build.Utils
             int maxPoints)
         {
             var result = 0;
+            // TODO remove inefficient linq
             var activeBuilds =
                 boardState
                     .ActiveBuilds

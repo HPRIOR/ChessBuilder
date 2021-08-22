@@ -19,7 +19,6 @@ namespace Models.Services.Moves.Utils
         public IDictionary<Position, HashSet<Position>> EnemyMoves { get; private set; }
         public Position KingPosition { get; private set; } = new Position(8, 8);
 
-        // TODO store active squares in board state so that entire board does not need to be scanned
         public void EvaluateBoard(BoardState boardState, PieceColour turn)
         {
             var turnMoves = new Dictionary<Position, HashSet<Position>>();

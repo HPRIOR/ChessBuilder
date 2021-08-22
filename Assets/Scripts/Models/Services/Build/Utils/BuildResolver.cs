@@ -13,7 +13,9 @@ namespace Models.Services.Build.Utils
         public IEnumerable<(Position, PieceType)> ResolveBuilds(BoardState boardState, PieceColour turn)
         {
             var activeBuildPositions =
-                new List<Tile>(boardState.ActiveBuilds.Select(position => boardState.Board[position.X, position.Y]));
+                new List<Tile>(
+                    boardState.ActiveBuilds.Select(position =>
+                        boardState.Board[position.X, position.Y])); //TODO remove linq
 
             var resolvedBuilds = new List<(Position, PieceType)>();
             foreach (var tile in activeBuildPositions)

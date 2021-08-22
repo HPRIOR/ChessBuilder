@@ -25,7 +25,8 @@ namespace Models.Services.Moves.MoveGenerators.TurnMoves
             var potentialMoves = new List<Position>();
             var relativePosition = _positionTranslator.GetRelativePosition(originPosition);
 
-            foreach (var direction in (Direction[]) Enum.GetValues(typeof(Direction)))
+            // TODO: remove inefficient GetValues call 
+            foreach (var direction in (Direction[])Enum.GetValues(typeof(Direction)))
             {
                 var newPosition = relativePosition.Add(Move.In(direction));
                 var newRelativePosition = _positionTranslator.GetRelativePosition(newPosition);

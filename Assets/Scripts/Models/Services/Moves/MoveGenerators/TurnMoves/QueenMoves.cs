@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Models.Services.Moves.Interfaces;
 using Models.Services.Moves.Utils;
@@ -11,6 +10,11 @@ namespace Models.Services.Moves.MoveGenerators.TurnMoves
 {
     public class QueenMoves : IPieceMoveGenerator
     {
+        private static readonly Direction[] _directions =
+        {
+            Direction.N, Direction.E, Direction.S, Direction.W, Direction.NE, Direction.NW, Direction.SE, Direction.SW
+        };
+
         private readonly IBoardScanner _boardScanner;
         private readonly IPositionTranslator _positionTranslator;
 
@@ -25,10 +29,7 @@ namespace Models.Services.Moves.MoveGenerators.TurnMoves
         {
             var relativePosition = _positionTranslator.GetRelativePosition(originPosition);
 
-            return Enum
-                .GetValues(typeof(Direction))
-                .Cast<Direction>()
-                .ToList()
+            return _directions
                 .SelectMany(direction => _boardScanner.ScanIn(direction, relativePosition, boardState));
         }
 

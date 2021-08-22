@@ -1,0 +1,3 @@
+Execution time of NegaScout with depth of 6 revert back linq from possible moves: 
+      5476 ms 
+      5 s

@@ -1,0 +1,3 @@
+Execution time of NegaScout with depth of 6 remove linq from possible move gen: 
+      8936 ms 
+      8 s

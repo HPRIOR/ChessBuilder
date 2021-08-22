@@ -10,7 +10,7 @@ namespace Models.Services.Game.Interfaces
         PieceColour Turn { get; }
         void UpdateGameState(BoardState newBoardState);
         void RevertGameState();
-        void UpdateGameState(Position buildPiece, PieceType piece);
+        void UpdateGameState(Position buildPosition, PieceType piece);
         void UpdateGameState(Position from, Position to);
         void InitializeGame(BoardState boardState);
         void RetainBoardState();

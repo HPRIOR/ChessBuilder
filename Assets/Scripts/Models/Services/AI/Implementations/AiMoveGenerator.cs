@@ -77,7 +77,7 @@ namespace Models.Services.AI.Implementations
                     }
                     else
                     {
-                        var (negativeBestMove, negativeBestScore) = NegaScout(
+                        var (_, negativeBestScore) = NegaScout(
                             gameStateUpdater, maxDepth, currentDepth, turn, -beta, -currentScore
                         );
                         bestScore = -negativeBestScore;

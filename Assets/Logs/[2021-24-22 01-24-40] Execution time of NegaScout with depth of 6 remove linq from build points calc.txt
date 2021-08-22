@@ -1,0 +1,3 @@
+Execution time of NegaScout with depth of 6 remove linq from build points calc: 
+      5366 ms 
+      5 s

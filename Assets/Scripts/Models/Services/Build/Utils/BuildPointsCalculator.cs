@@ -1,4 +1,4 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
 using Models.Services.Build.Interfaces;
 using Models.State.Board;
 using Models.State.BuildState;
@@ -15,15 +15,15 @@ namespace Models.Services.Build.Utils
         {
             var result = 0;
             // TODO remove inefficient linq
-            var activeBuilds =
-                boardState
-                    .ActiveBuilds
-                    .Select(pos => boardState.Board[pos.X, pos.Y])
-                    .Concat(boardState
-                        .ActivePieces
-                        .Select(pos => boardState.Board[pos.X, pos.Y])
-                    );
-            foreach (var tile in activeBuilds)
+            var activeTiles = new List<Tile>();
+            var board = boardState.Board;
+            var activeBuilds = boardState.ActiveBuilds;
+            var activePieces = boardState.ActivePieces;
+
+            foreach (var pos in activeBuilds) activeTiles.Add(board[pos.X, pos.Y]);
+
+            foreach (var pos in activePieces) activeTiles.Add(board[pos.X, pos.Y]);
+            foreach (var tile in activeTiles)
             {
                 var pieceIsOfColourType = tile.CurrentPiece.Colour == pieceColour &&
                                           tile.CurrentPiece.Type != PieceType.NullPiece;

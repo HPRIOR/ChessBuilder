@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Collections.Immutable;
 using Bindings.Installers.AIInstallers;
 using Bindings.Installers.GameInstallers;
 using Bindings.Installers.ModelInstallers.Board;
@@ -86,17 +85,17 @@ namespace Tests.UnitTests.AI
                     new Position(0, 7),
                     new HashSet<Position> { new Position(0, 6), new Position(1, 6), new Position(1, 7) }
                 }
-            }.ToImmutableDictionary(x => x.Key, x => x.Value.ToImmutableHashSet());
+            };
 
-            var gameState = new GameState(false, false, new PlayerState(0), new PlayerState(0), possibleMoves,
-                new BuildMoves(ImmutableHashSet<Position>.Empty, ImmutableHashSet<PieceType>.Empty), boardState);
+            var gameState = new GameState(false, false, new PlayerState(0), possibleMoves,
+                new BuildMoves(new HashSet<Position>(), new HashSet<PieceType>()), boardState);
             // _aiMoveGenerator.GetMove(gameState, 3, PieceColour.White);
 
             var logTimer = new LogExecutionTimer();
-            var depth = 6;
+            var depth = 8;
 
-            logTimer.LogExecutionTime($"NegaScout with depth of {depth.ToString()} after mutability",
-                () => _aiMoveGenerator.GetMove(gameState, depth, PieceColour.White));
+            // logTimer.LogExecutionTime($"NegaScout with depth of {depth.ToString()} remove immutable data types from build moves",
+            //     () => _aiMoveGenerator.GetMove(gameState, depth, PieceColour.White));
 
             // var move = _miniMax.GetMove(gameState, depth, PieceColour.White);
             // var newGameState = move(gameState.BoardState, PieceColour.White);

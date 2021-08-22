@@ -1,0 +1,3 @@
+Execution time of NegaScout with depth of 6 calculate only relevant player state: 
+      5239 ms 
+      5 s

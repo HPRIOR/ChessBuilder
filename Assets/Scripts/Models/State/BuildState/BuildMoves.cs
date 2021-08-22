@@ -1,18 +1,18 @@
-﻿using System.Collections.Immutable;
+﻿using System.Collections.Generic;
 using Models.State.Board;
 using Models.State.PieceState;
 
 namespace Models.State.BuildState
 {
-    public readonly struct BuildMoves
+    public class BuildMoves
     {
-        public BuildMoves(ImmutableHashSet<Position> buildPositions, ImmutableHashSet<PieceType> buildPieces)
+        public BuildMoves(HashSet<Position> buildPositions, HashSet<PieceType> buildPieces)
         {
             BuildPositions = buildPositions;
             BuildPieces = buildPieces;
         }
 
-        public ImmutableHashSet<PieceType> BuildPieces { get; }
-        public ImmutableHashSet<Position> BuildPositions { get; }
+        public HashSet<PieceType> BuildPieces { get; }
+        public HashSet<Position> BuildPositions { get; }
     }
 }

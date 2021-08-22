@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Collections.Immutable;
 using System.Linq;
 using Bindings.Utils;
 using Models.Services.Board;
@@ -99,7 +98,7 @@ namespace Tests.UnitTests.Game
             _gameStateController.UpdateGameState(initialBoardState);
 
             var expectedBuildMoves =
-                new BuildMoves(ImmutableHashSet<Position>.Empty, ImmutableHashSet<PieceType>.Empty);
+                new BuildMoves(new HashSet<Position>(), new HashSet<PieceType>());
             Assert.That(_gameStateController.CurrentGameState.PossibleBuildMoves.BuildPieces,
                 Is.EquivalentTo(expectedBuildMoves.BuildPieces));
             Assert.That(_gameStateController.CurrentGameState.PossibleBuildMoves.BuildPositions,

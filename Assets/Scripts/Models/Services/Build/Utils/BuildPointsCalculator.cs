@@ -10,18 +10,17 @@ namespace Models.Services.Build.Utils
 {
     public class BuildPointsCalculator : IBuildPointsCalculator
     {
+        // TODO inject max points 
         public PlayerState CalculateBuildPoints(PieceColour pieceColour, BoardState boardState,
             int maxPoints)
         {
             var result = 0;
-            // TODO remove inefficient linq
             var activeTiles = new List<Tile>();
             var board = boardState.Board;
             var activeBuilds = boardState.ActiveBuilds;
             var activePieces = boardState.ActivePieces;
 
             foreach (var pos in activeBuilds) activeTiles.Add(board[pos.X, pos.Y]);
-
             foreach (var pos in activePieces) activeTiles.Add(board[pos.X, pos.Y]);
             foreach (var tile in activeTiles)
             {

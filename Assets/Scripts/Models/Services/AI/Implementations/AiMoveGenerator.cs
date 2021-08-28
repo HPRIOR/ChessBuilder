@@ -12,14 +12,16 @@ namespace Models.Services.AI.Implementations
         private const int WindowSize = 3000;
         private readonly IAiPossibleMoveGenerator _aiPossibleMoveGenerator;
         private readonly GameStateUpdaterFactory _gameStateUpdaterFactory;
+        private readonly IMoveOrderer _moveOrderer;
         private readonly IStaticEvaluator _staticEvaluator;
 
         public AiMoveGenerator(IStaticEvaluator staticEvaluator, IAiPossibleMoveGenerator aiPossibleMoveGenerator,
-            GameStateUpdaterFactory gameStateUpdaterFactory)
+            GameStateUpdaterFactory gameStateUpdaterFactory, IMoveOrderer moveOrderer)
         {
             _staticEvaluator = staticEvaluator;
             _aiPossibleMoveGenerator = aiPossibleMoveGenerator;
             _gameStateUpdaterFactory = gameStateUpdaterFactory;
+            _moveOrderer = moveOrderer;
         }
 
         public Action<PieceColour, IGameStateUpdater> GetMove(
@@ -57,7 +59,8 @@ namespace Models.Services.AI.Implementations
             var adaptiveBeta = beta;
 
             // iterate through all moves
-            var moves = _aiPossibleMoveGenerator.GenerateMoves(gameStateUpdater.GameState);
+            var unsortedMoves = _aiPossibleMoveGenerator.GenerateMoves(gameStateUpdater.GameState);
+            var moves = _moveOrderer.OrderMoves(unsortedMoves, gameStateUpdater.GameState.BoardState);
             foreach (var move in moves)
             {
                 // get updated board state

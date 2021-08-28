@@ -25,7 +25,7 @@ namespace Models.Services.AI.Implementations
                 {
                     Action<PieceColour, IGameStateUpdater> command = (turn, gameStateUpdater) =>
                         gameStateUpdater.UpdateGameState(moveSet.Key, move, turn.NextTurn());
-                    return new AiMove(MoveType.Move, moveSet.Key, move, command);
+                    return new AiMove(MoveType.Move, moveSet.Key, move, command, PieceType.NullPiece);
                 }));
 
 
@@ -35,7 +35,7 @@ namespace Models.Services.AI.Implementations
                 {
                     Action<PieceColour, IGameStateUpdater> command = (turn, gameStateUpdater) =>
                         gameStateUpdater.UpdateGameState(position, piece, turn.NextTurn());
-                    return new AiMove(MoveType.Build, position, new Position(), command);
+                    return new AiMove(MoveType.Build, position, new Position(), command, piece);
                 }));
     }
 }

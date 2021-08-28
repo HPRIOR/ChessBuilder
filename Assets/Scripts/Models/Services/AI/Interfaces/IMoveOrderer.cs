@@ -6,6 +6,6 @@ namespace Models.Services.AI.Interfaces
 {
     public interface IMoveOrderer
     {
-        void OrderMoves(IEnumerable<AiMove> moves, BoardState boardState);
+        IEnumerable<AiMove> OrderMoves(IEnumerable<AiMove> moves, BoardState boardState);
     }
 }

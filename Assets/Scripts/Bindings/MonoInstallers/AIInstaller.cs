@@ -10,7 +10,6 @@ namespace Bindings.MonoInstallers
             AiPossibleMoveGeneratorInstaller.Install(Container);
             AiMoveGeneratorInstaller.Install(Container);
             StaticEvaluatorInstaller.Install(Container);
-            MoveOrdererInstaller.Install(Container);
         }
     }
 }

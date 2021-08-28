@@ -61,7 +61,7 @@ namespace Models.Services.AI.Implementations
             foreach (var move in moves)
             {
                 // get updated board state
-                move(turn, gameStateUpdater);
+                move.Move(turn, gameStateUpdater);
 
                 // recurse
                 var (_, recurseScore) = NegaScout(gameStateUpdater, maxDepth, currentDepth + 1, turn,
@@ -73,7 +73,7 @@ namespace Models.Services.AI.Implementations
                     if (adaptiveBeta == beta || currentDepth >= maxDepth - 2)
                     {
                         bestScore = currentScore;
-                        bestMove = move;
+                        bestMove = move.Move;
                     }
                     else
                     {
@@ -81,7 +81,7 @@ namespace Models.Services.AI.Implementations
                             gameStateUpdater, maxDepth, currentDepth, turn, -beta, -currentScore
                         );
                         bestScore = -negativeBestScore;
-                        bestMove = move;
+                        bestMove = move.Move;
                     }
 
                     if (bestScore >= beta)

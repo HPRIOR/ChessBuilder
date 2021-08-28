@@ -7,17 +7,17 @@ using Models.State.Board;
 using Models.State.BuildState;
 using Models.State.GameState;
 using Models.State.PieceState;
-using Models.Utils.ExtensionMethods.PieceType;
+using Models.Utils.ExtensionMethods.PieceTypeExt;
 
 namespace Models.Services.AI.Implementations
 {
     public class AiPossibleMoveGenerator : IAiPossibleMoveGenerator
     {
-        public IEnumerable<Action<PieceColour, IGameStateUpdater>> GenerateMoves(GameState gameState) =>
+        public IEnumerable<AiMove> GenerateMoves(GameState gameState) =>
             GetBuildCommands(gameState.PossibleBuildMoves)
                 .Concat(GetMoveCommands(gameState.PossiblePieceMoves));
 
-        private IEnumerable<Action<PieceColour, IGameStateUpdater>> GetMoveCommands(
+        private IEnumerable<AiMove> GetMoveCommands(
             IDictionary<Position, HashSet<Position>> moves
         ) =>
             moves.SelectMany(moveSet =>
@@ -25,17 +25,17 @@ namespace Models.Services.AI.Implementations
                 {
                     Action<PieceColour, IGameStateUpdater> command = (turn, gameStateUpdater) =>
                         gameStateUpdater.UpdateGameState(moveSet.Key, move, turn.NextTurn());
-                    return command;
+                    return new AiMove(MoveType.Move, moveSet.Key, move, command);
                 }));
 
 
-        private IEnumerable<Action<PieceColour, IGameStateUpdater>> GetBuildCommands(BuildMoves builds) =>
+        private IEnumerable<AiMove> GetBuildCommands(BuildMoves builds) =>
             builds.BuildPositions.SelectMany(position =>
                 builds.BuildPieces.Select(piece =>
                 {
                     Action<PieceColour, IGameStateUpdater> command = (turn, gameStateUpdater) =>
                         gameStateUpdater.UpdateGameState(position, piece, turn.NextTurn());
-                    return command;
+                    return new AiMove(MoveType.Build, position, new Position(), command);
                 }));
     }
 }

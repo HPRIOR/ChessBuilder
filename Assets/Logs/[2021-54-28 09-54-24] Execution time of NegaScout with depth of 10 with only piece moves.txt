@@ -1,0 +1,4 @@
+Execution time of NegaScout with depth of 10 with only piece moves: 
+      173 ms 
+      0 s 
+      0 min

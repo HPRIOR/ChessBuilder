@@ -30,7 +30,6 @@ namespace Models.State.Board
 
         public override bool Equals(object obj) => obj is Position other && Equals(other);
 
-        // todo more efficient impl
         public override int GetHashCode() => (X, Y).GetHashCode();
     }
 }

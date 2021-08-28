@@ -1,4 +1,5 @@
 ﻿using System;
+using Models.Services.Game.Interfaces;
 using Models.State.Board;
 using Models.State.PieceState;
 
@@ -10,9 +11,9 @@ namespace Models.Services.AI.Implementations
         Move
     }
 
-    public class AiMove
+    public readonly struct AiMove
     {
-        public AiMove(MoveType moveType, Position from, Position to, Action<PieceColour> move)
+        public AiMove(MoveType moveType, Position from, Position to, Action<PieceColour, IGameStateUpdater> move)
         {
             MoveType = moveType;
             From = from;
@@ -23,6 +24,6 @@ namespace Models.Services.AI.Implementations
         public MoveType MoveType { get; }
         public Position From { get; }
         public Position To { get; } // null if build move 
-        public Action<PieceColour> Move { get; }
+        public Action<PieceColour, IGameStateUpdater> Move { get; }
     }
 }

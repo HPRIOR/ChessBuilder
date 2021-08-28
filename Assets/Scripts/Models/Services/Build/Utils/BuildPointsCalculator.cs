@@ -1,10 +1,9 @@
 ﻿using System.Collections.Generic;
 using Models.Services.Build.Interfaces;
 using Models.State.Board;
-using Models.State.BuildState;
 using Models.State.PieceState;
 using Models.State.PlayerState;
-using Models.Utils.ExtensionMethods.PieceType;
+using Models.Utils.ExtensionMethods.PieceTypeExt;
 
 namespace Models.Services.Build.Utils
 {
@@ -27,12 +26,12 @@ namespace Models.Services.Build.Utils
                 var pieceIsOfColourType = tile.CurrentPiece.Colour == pieceColour &&
                                           tile.CurrentPiece.Type != PieceType.NullPiece;
                 if (pieceIsOfColourType)
-                    result += BuildPoints.PieceCost[tile.CurrentPiece.Type];
+                    result += tile.CurrentPiece.Type.Value();
 
                 var pieceOfColourIsBeingBuilt = tile.BuildTileState.BuildingPiece != PieceType.NullPiece &&
                                                 tile.BuildTileState.BuildingPiece.Colour() == pieceColour;
                 if (pieceOfColourIsBeingBuilt)
-                    result += BuildPoints.PieceCost[tile.BuildTileState.BuildingPiece];
+                    result += tile.BuildTileState.BuildingPiece.Value();
             }
 
             return new PlayerState(maxPoints - result);

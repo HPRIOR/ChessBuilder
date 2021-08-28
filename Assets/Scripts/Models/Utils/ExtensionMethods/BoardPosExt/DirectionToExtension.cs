@@ -1,7 +1,7 @@
 ﻿using Models.Services.Moves.Utils;
 using Models.State.Board;
 
-namespace Models.Utils.ExtensionMethods.BoardPos
+namespace Models.Utils.ExtensionMethods.BoardPosExt
 {
     public static class DirectionToExtension
     {

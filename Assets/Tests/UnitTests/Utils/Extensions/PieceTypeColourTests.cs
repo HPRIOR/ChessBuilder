@@ -1,6 +1,6 @@
 ﻿using System;
 using Models.State.PieceState;
-using Models.Utils.ExtensionMethods.PieceType;
+using Models.Utils.ExtensionMethods.PieceTypeExt;
 using NUnit.Framework;
 using Zenject;
 

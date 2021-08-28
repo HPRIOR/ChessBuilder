@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Models.Utils.ExtensionMethods.BoardPos
+namespace Models.Utils.ExtensionMethods.BoardPosExt
 {
     public class DirectionException : Exception
     {

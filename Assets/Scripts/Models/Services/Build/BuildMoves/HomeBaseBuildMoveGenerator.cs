@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using Models.Services.Build.Interfaces;
 using Models.State.Board;
-using Models.State.BuildState;
 using Models.State.PieceState;
 using Models.State.PlayerState;
+using Models.Utils.ExtensionMethods.PieceTypeExt;
 
 namespace Models.Services.Build.BuildMoves
 {
@@ -35,7 +35,7 @@ namespace Models.Services.Build.BuildMoves
         {
             var result = new HashSet<PieceType>();
             foreach (var piece in pieces)
-                if (BuildPoints.PieceCost[piece] <= playerState.BuildPoints)
+                if (piece.Value() <= playerState.BuildPoints)
                     result.Add(piece);
             return result;
         }

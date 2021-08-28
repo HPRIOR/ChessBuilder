@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Models.Services.Moves.Utils;
 using Models.State.Board;
-using Models.Utils.ExtensionMethods.BoardPos;
+using Models.Utils.ExtensionMethods.BoardPosExt;
 
 namespace Models.Services.Utils
 {

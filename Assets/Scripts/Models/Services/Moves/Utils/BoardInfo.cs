@@ -25,7 +25,9 @@ namespace Models.Services.Moves.Utils
             var turnMoves = new Dictionary<Position, HashSet<Position>>();
             var enemyMoves = new Dictionary<Position, HashSet<Position>>();
 
-            var activeTiles = boardState.ActivePieces.Select(position => boardState.Board[position.X, position.Y]);
+            var activeTiles = boardState.ActivePieces.ToArray()
+                .Select(position => boardState.Board[position.X, position.Y]);
+
             foreach (var tile in activeTiles)
             {
                 var currentPiece = tile.CurrentPiece;
@@ -39,6 +41,7 @@ namespace Models.Services.Moves.Utils
                     var possibleMoves = _movesGeneratorRepository.GetPossibleMoveGenerator(currentPiece, true)
                         .GetPossiblePieceMoves(boardPos, boardState);
 
+                    // converting to hashset here is inefficient!
                     turnMoves.Add(boardPos, new HashSet<Position>(possibleMoves));
                 }
 
@@ -47,6 +50,7 @@ namespace Models.Services.Moves.Utils
                     var boardPos = tile.Position;
                     var possibleMoves = _movesGeneratorRepository.GetPossibleMoveGenerator(currentPiece, false)
                         .GetPossiblePieceMoves(boardPos, boardState);
+                    // converting to hashset here is inefficient!
                     enemyMoves.Add(boardPos, new HashSet<Position>(possibleMoves));
                 }
 

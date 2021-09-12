@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Models.Services.AI.Interfaces;
 using Models.Services.Game.Implementations;
 using Models.Services.Game.Interfaces;
@@ -59,8 +60,18 @@ namespace Models.Services.AI.Implementations
             var adaptiveBeta = beta;
 
             // iterate through all moves
-            var unsortedMoves = _aiPossibleMoveGenerator.GenerateMoves(gameStateUpdater.GameState);
-            var moves = _moveOrderer.OrderMoves(unsortedMoves, gameStateUpdater.GameState.BoardState);
+            IEnumerable<AiMove> moves;
+            if (currentDepth == 0)
+            {
+                var unsortedMoves = _aiPossibleMoveGenerator.GenerateMoves(gameStateUpdater.GameState);
+                moves = _moveOrderer.OrderMoves(unsortedMoves, gameStateUpdater.GameState.BoardState);
+            }
+            else
+            {
+                moves = _aiPossibleMoveGenerator.GenerateMoves(gameStateUpdater.GameState);
+            }
+
+
             foreach (var move in moves)
             {
                 // get updated board state

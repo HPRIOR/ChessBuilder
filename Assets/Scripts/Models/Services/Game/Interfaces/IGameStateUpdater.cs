@@ -1,4 +1,5 @@
-﻿using Models.State.Board;
+﻿using System.Collections.Generic;
+using Models.State.Board;
 using Models.State.GameState;
 using Models.State.PieceState;
 
@@ -6,10 +7,13 @@ namespace Models.Services.Game.Interfaces
 {
     public interface IGameStateUpdater
     {
-        GameState UpdateGameState(BoardState newBoardState, PieceColour turn);
-        GameState UpdateGameState(GameState previousGameState, Position from, Position to, PieceColour turn);
+        GameState GameState { get; }
+        Stack<GameStateChanges> StateHistory { get; }
+        void RevertGameState();
+        void UpdateGameState(PieceColour turn);
+        void UpdateGameState(Position from, Position to, PieceColour turn);
 
-        GameState UpdateGameState(GameState previousGameState, Position buildPosition, PieceType piece,
+        void UpdateGameState(Position buildPosition, PieceType piece,
             PieceColour turn);
     }
 }

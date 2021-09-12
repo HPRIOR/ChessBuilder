@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Models.Services.Moves.Interfaces;
 using Models.Services.Moves.Utils;
 using Models.State.Board;
@@ -10,6 +9,11 @@ namespace Models.Services.Moves.MoveGenerators.TurnMoves
 {
     public class KingMoves : IPieceMoveGenerator
     {
+        private static readonly Direction[] _directions =
+        {
+            Direction.N, Direction.E, Direction.S, Direction.W, Direction.NE, Direction.NW, Direction.SE, Direction.SW
+        };
+
         private readonly IPositionTranslator _positionTranslator;
         private readonly ITileEvaluator _tileEvaluator;
 
@@ -25,7 +29,8 @@ namespace Models.Services.Moves.MoveGenerators.TurnMoves
             var potentialMoves = new List<Position>();
             var relativePosition = _positionTranslator.GetRelativePosition(originPosition);
 
-            foreach (var direction in (Direction[]) Enum.GetValues(typeof(Direction)))
+
+            foreach (var direction in _directions)
             {
                 var newPosition = relativePosition.Add(Move.In(direction));
                 var newRelativePosition = _positionTranslator.GetRelativePosition(newPosition);

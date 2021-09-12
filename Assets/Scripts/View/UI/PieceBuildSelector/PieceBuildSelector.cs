@@ -1,7 +1,6 @@
 ﻿using System;
-using Models.State.BuildState;
 using Models.State.PieceState;
-using UnityEditor;
+using Models.Utils.ExtensionMethods.PieceTypeExt;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using View.Prefab.Factories;
@@ -61,7 +60,7 @@ namespace View.UI.PieceBuildSelector
 
         private void RenderBuildPointsIcon(GameObject thisGameObject)
         {
-            var buildPoints = BuildPoints.PieceCost[_pieceType];
+            var buildPoints = _pieceType.Value();
             _spriteFactory.Create(
                 thisGameObject.transform.position + new Vector3(0.2f, 0.2f),
                 2.5f,

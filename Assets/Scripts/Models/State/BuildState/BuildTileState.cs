@@ -1,4 +1,5 @@
 ﻿using Models.State.PieceState;
+using Models.Utils.ExtensionMethods.PieceTypeExt;
 
 namespace Models.State.BuildState
 {
@@ -18,7 +19,7 @@ namespace Models.State.BuildState
         public BuildTileState(PieceType pieceType)
         {
             BuildingPiece = pieceType;
-            Turns = BuildPoints.PieceCost[pieceType];
+            Turns = pieceType.Value();
         }
 
         public BuildTileState Decrement() => Turns == 0 ? this : new BuildTileState(Turns - 1, BuildingPiece);

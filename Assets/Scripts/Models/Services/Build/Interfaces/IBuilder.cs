@@ -5,7 +5,7 @@ namespace Models.Services.Build.Interfaces
 {
     public interface IBuilder
     {
-        BoardState GenerateNewBoardState(BoardState previousBoardState, Position buildPosition,
+        void GenerateNewBoardState(BoardState boardState, Position buildPosition,
             PieceType piece);
     }
 }

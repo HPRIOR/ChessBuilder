@@ -2,7 +2,7 @@
 using System.Linq;
 using Models.Services.Moves.Utils;
 using Models.State.Board;
-using Models.Utils.ExtensionMethods.BoardPos;
+using Models.Utils.ExtensionMethods.BoardPosExt;
 using NUnit.Framework;
 
 namespace Tests.UnitTests.Utils.Extensions
@@ -17,7 +17,7 @@ namespace Tests.UnitTests.Utils.Extensions
             Assert.That(result.Count(), Is.EqualTo(3));
             Assert.That(result,
                 Is.EquivalentTo(new List<Position>
-                    {new Position(4, 5), new Position(4, 6), new Position(4, 7)}));
+                    { new Position(4, 5), new Position(4, 6), new Position(4, 7) }));
         }
 
         [Test]

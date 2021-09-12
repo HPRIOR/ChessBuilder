@@ -1,0 +1,4 @@
+Execution time of NegaScout with depth of 8 benchmark complex example, not builds: 
+      64855 ms 
+      64 s 
+      1 min

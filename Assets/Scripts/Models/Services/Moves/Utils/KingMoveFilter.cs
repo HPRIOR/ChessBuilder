@@ -10,7 +10,7 @@ namespace Models.Services.Moves.Utils
             IDictionary<Position, HashSet<Position>> enemyMoves,
             Position kingPosition)
         {
-            if (!kingPosition.Equals(new Position(8, 8))) // null king check
+            if (kingPosition != new Position(8, 8)) // null king check
                 foreach (var enemyMove in enemyMoves)
                     turnMoves[kingPosition].ExceptWith(enemyMove.Value);
         }

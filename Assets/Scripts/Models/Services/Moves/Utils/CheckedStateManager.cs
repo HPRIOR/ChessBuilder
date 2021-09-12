@@ -87,7 +87,7 @@ namespace Models.Services.Moves.Utils
             var positionsBetweenKingAndCheckPiece = GetPositionsBetweenCheckedKing(kingPosition, enemyMoves);
             foreach (var keyVal in turnMoves)
             {
-                var notKingPiece = !keyVal.Key.Equals(kingPosition);
+                var notKingPiece = keyVal.Key != kingPosition;
                 if (notKingPiece) keyVal.Value.IntersectWith(positionsBetweenKingAndCheckPiece);
             }
         }
@@ -98,10 +98,10 @@ namespace Models.Services.Moves.Utils
             var checkingPiecePosition = _checkingPieces.First();
             var possibleMoves = enemyMoves[checkingPiecePosition];
             foreach (var boardPosition in possibleMoves)
-                if (kingPosition.Equals(boardPosition))
+                if (kingPosition == boardPosition)
                 {
                     var positionsBetweenCheckedKing = ScanMap.ScanBetween(boardPosition, checkingPiecePosition);
-                    var result = new HashSet<Position>(positionsBetweenCheckedKing) {checkingPiecePosition};
+                    var result = new HashSet<Position>(positionsBetweenCheckedKing) { checkingPiecePosition };
                     return result;
                 }
 
@@ -134,7 +134,7 @@ namespace Models.Services.Moves.Utils
             Position kingPosition)
         {
             foreach (var turnMove in turnMoves)
-                if (!turnMove.Key.Equals(kingPosition))
+                if (turnMove.Key != kingPosition)
                     turnMove.Value.Clear();
         }
 

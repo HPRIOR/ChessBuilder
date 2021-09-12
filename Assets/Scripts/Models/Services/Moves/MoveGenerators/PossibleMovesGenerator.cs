@@ -30,15 +30,15 @@ namespace Models.Services.Moves.MoveGenerators
         /// <param name="boardState"></param>
         /// <param name="turn"></param>
         /// <returns></returns>
-        public MoveState GetPossibleMoves(BoardState boardState,
-            PieceColour turn)
+        public MoveState GetPossibleMoves(BoardState boardState, PieceColour turn)
         {
             _boardInfo.EvaluateBoard(boardState, turn);
             var turnMoves = _boardInfo.TurnMoves;
             var enemyMoves = _boardInfo.EnemyMoves;
             var kingPosition = _boardInfo.KingPosition; // will be set to 8,8 by default if no king present (as null)
 
-            var checkManager = new CheckedStateManager(boardState);
+            var checkManager =
+                new CheckedStateManager(boardState); // try not to instantiate each time and pass in the board state
 
             checkManager.EvaluateCheck(enemyMoves, kingPosition);
             if (checkManager.IsCheck)

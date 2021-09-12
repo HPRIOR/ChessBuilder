@@ -11,13 +11,15 @@ namespace Models.Services.Game.Implementations
     {
         private readonly AiMoveGenerator _aiMoveGenerator;
         private readonly GameInitializer _gameInitializer;
-        private readonly IGameStateUpdater _gameStateUpdater;
+        private readonly GameStateUpdaterFactory _gameStateUpdaterFactory;
+        private IGameStateUpdater _gameStateUpdater;
 
         public AiGameStateController(
-            IGameStateUpdater gameStateUpdater, GameInitializer gameInitializer, AiMoveGenerator aiMoveGenerator
+            GameStateUpdaterFactory gameStateUpdaterFactory, GameInitializer gameInitializer,
+            AiMoveGenerator aiMoveGenerator
         )
         {
-            _gameStateUpdater = gameStateUpdater;
+            _gameStateUpdaterFactory = gameStateUpdaterFactory;
             _gameInitializer = gameInitializer;
             _aiMoveGenerator = aiMoveGenerator;
             Turn = PieceColour.White;
@@ -30,12 +32,18 @@ namespace Models.Services.Game.Implementations
 
         public void UpdateGameState(Position from, Position to)
         {
-            throw new NotImplementedException();
+            Turn = NextTurn();
+            var previousBoardState = CurrentGameState?.BoardState.Clone();
+            _gameStateUpdater.UpdateGameState(from, to, Turn);
+            CurrentGameState = _gameStateUpdater.GameState;
+            GameStateChangeEvent?.Invoke(previousBoardState, CurrentGameState.BoardState);
+            MakeAiMove();
         }
 
         public void InitializeGame(BoardState boardState)
         {
             CurrentGameState = _gameInitializer.InitialiseGame(boardState);
+            _gameStateUpdater = _gameStateUpdaterFactory.Create(CurrentGameState);
             RetainBoardState();
         }
 
@@ -46,23 +54,36 @@ namespace Models.Services.Game.Implementations
 
             // Game state updater sets up the possible moves for the next player 
             // hence why NextTurn() is called at the top of the method
-            CurrentGameState = _gameStateUpdater.UpdateGameState(newBoardState, Turn);
+            _gameStateUpdater.UpdateGameState(Turn);
+            CurrentGameState = _gameStateUpdater.GameState;
 
             GameStateChangeEvent?.Invoke(previousState, CurrentGameState.BoardState);
             // Invoke some other mechanism to call overloaded Update game state
 
-            var move = _aiMoveGenerator.GetMove(CurrentGameState, 3, Turn);
-
-            previousState = CurrentGameState.BoardState;
-            CurrentGameState = move(CurrentGameState, Turn);
-
-            GameStateChangeEvent?.Invoke(previousState, CurrentGameState.BoardState);
-            Turn = NextTurn();
+            // var move = _aiMoveGenerator.GetMove(CurrentGameState, 3, Turn);
+            //
+            // previousState = CurrentGameState.BoardState;
+            // CurrentGameState = move(CurrentGameState, Turn);
+            //
+            // GameStateChangeEvent?.Invoke(previousState, CurrentGameState.BoardState);
+            // Turn = NextTurn();
         }
 
-        public void UpdateGameState(Position buildPiece, PieceType piece)
+        public void RevertGameState()
         {
-            throw new NotImplementedException();
+            Turn = NextTurn();
+            _gameStateUpdater.RevertGameState();
+        }
+
+        public void UpdateGameState(Position buildPosition, PieceType piece)
+        {
+            Turn = NextTurn();
+            var previousBoardState = CurrentGameState?.BoardState.Clone();
+            _gameStateUpdater.UpdateGameState(buildPosition, piece, Turn);
+            CurrentGameState = _gameStateUpdater.GameState;
+
+            GameStateChangeEvent?.Invoke(previousBoardState, CurrentGameState.BoardState);
+            MakeAiMove();
         }
 
 
@@ -77,11 +98,13 @@ namespace Models.Services.Game.Implementations
         // TODO pass in GameState rather than board state
         public event Action<BoardState, BoardState> GameStateChangeEvent;
 
-        public void UpdateGameState(GameState newGameState)
+        private void MakeAiMove()
         {
-            var previousState = CurrentGameState?.BoardState.Clone();
-            CurrentGameState = newGameState;
-            GameStateChangeEvent?.Invoke(previousState, CurrentGameState.BoardState);
+            var move = _aiMoveGenerator.GetMove(CurrentGameState, 4, Turn);
+            var previousState = _gameStateUpdater?.GameState.BoardState.Clone();
+            move(Turn, _gameStateUpdater);
+            CurrentGameState = _gameStateUpdater?.GameState;
+            GameStateChangeEvent?.Invoke(previousState, CurrentGameState?.BoardState);
             Turn = NextTurn();
         }
 

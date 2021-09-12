@@ -1,55 +1,42 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.Immutable;
 using System.Linq;
 using Models.Services.AI.Interfaces;
-using Models.Services.Build.Interfaces;
 using Models.Services.Game.Interfaces;
-using Models.Services.Moves.Interfaces;
 using Models.State.Board;
 using Models.State.BuildState;
 using Models.State.GameState;
 using Models.State.PieceState;
-using Models.Utils.ExtensionMethods.PieceType;
+using Models.Utils.ExtensionMethods.PieceTypeExt;
 
 namespace Models.Services.AI.Implementations
 {
     public class AiPossibleMoveGenerator : IAiPossibleMoveGenerator
     {
-        private readonly IBuilder _builder;
-        private readonly IGameStateUpdater _gameStateUpdater;
-        private readonly IPieceMover _pieceMover;
+        public IEnumerable<AiMove> GenerateMoves(GameState gameState) =>
+            GetMoveCommands(gameState.PossiblePieceMoves);
+        // GetBuildCommands(gameState.PossibleBuildMoves)
+        // .Concat(GetMoveCommands(gameState.PossiblePieceMoves));
 
-        public AiPossibleMoveGenerator(IPieceMover pieceMover, IGameStateUpdater gameStateUpdater, IBuilder builder)
-        {
-            _pieceMover = pieceMover;
-            _gameStateUpdater = gameStateUpdater;
-            _builder = builder;
-        }
-
-        public IEnumerable<Func<GameState, PieceColour, GameState>> GenerateMoves(GameState gameState) =>
-            GetBuildCommands(gameState.PossibleBuildMoves)
-                .Concat(GetMoveCommands(gameState.PossiblePieceMoves));
-
-        private IEnumerable<Func<GameState, PieceColour, GameState>> GetMoveCommands(
-            ImmutableDictionary<Position, ImmutableHashSet<Position>> moves
+        private IEnumerable<AiMove> GetMoveCommands(
+            IDictionary<Position, HashSet<Position>> moves
         ) =>
             moves.SelectMany(moveSet =>
                 moveSet.Value.Select(move =>
                 {
-                    Func<GameState, PieceColour, GameState> command = (previousGameState, turn) =>
-                        _gameStateUpdater.UpdateGameState(previousGameState, moveSet.Key, move, turn.NextTurn());
-                    return command;
+                    Action<PieceColour, IGameStateUpdater> command = (turn, gameStateUpdater) =>
+                        gameStateUpdater.UpdateGameState(moveSet.Key, move, turn.NextTurn());
+                    return new AiMove(MoveType.Move, moveSet.Key, move, command, PieceType.NullPiece);
                 }));
 
 
-        private IEnumerable<Func<GameState, PieceColour, GameState>> GetBuildCommands(BuildMoves builds) =>
+        private IEnumerable<AiMove> GetBuildCommands(BuildMoves builds) =>
             builds.BuildPositions.SelectMany(position =>
                 builds.BuildPieces.Select(piece =>
                 {
-                    Func<GameState, PieceColour, GameState> command = (previousGameState, turn) =>
-                        _gameStateUpdater.UpdateGameState(previousGameState, position, piece, turn.NextTurn());
-                    return command;
+                    Action<PieceColour, IGameStateUpdater> command = (turn, gameStateUpdater) =>
+                        gameStateUpdater.UpdateGameState(position, piece, turn.NextTurn());
+                    return new AiMove(MoveType.Build, position, new Position(), command, piece);
                 }));
     }
 }

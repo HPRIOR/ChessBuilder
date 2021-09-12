@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Models.Services.Moves.Utils;
 using Models.State.Board;
-using Models.Utils.ExtensionMethods.BoardPos;
+using Models.Utils.ExtensionMethods.BoardPosExt;
 
 namespace Models.Services.Utils
 {
@@ -48,7 +48,7 @@ namespace Models.Services.Utils
             var positions = GetPositions();
             foreach (var position1 in positions)
             foreach (var position2 in positions)
-                if (!position1.Equals(position2))
+                if (position1 != position2)
                 {
                     var direction = DirectionMap.DirectionFrom(position1, position2);
                     result[new PositionDirection(position1, direction)] = position1.Scan(direction);
@@ -64,7 +64,7 @@ namespace Models.Services.Utils
             var positions = GetPositions();
             foreach (var position1 in positions)
             foreach (var position2 in positions)
-                if (!position1.Equals(position2))
+                if (position1 != position2)
                     result[new PositionPair(position1, position2)] = position1.ScanTo(position2);
             return result;
         }
@@ -75,7 +75,7 @@ namespace Models.Services.Utils
             var positions = GetPositions();
             foreach (var position1 in positions)
             foreach (var position2 in positions)
-                if (!position1.Equals(position2))
+                if (position1 != position2)
                     result[new PositionPair(position1, position2)] = position1.ScanBetween(position2);
 
             return result;

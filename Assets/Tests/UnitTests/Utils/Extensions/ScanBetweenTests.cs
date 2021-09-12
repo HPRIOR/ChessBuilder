@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using Models.State.Board;
-using Models.Utils.ExtensionMethods.BoardPos;
+using Models.Utils.ExtensionMethods.BoardPosExt;
 using NUnit.Framework;
 using Zenject;
 

@@ -1,10 +1,9 @@
 ﻿using System.Collections.Generic;
-using System.Collections.Immutable;
 using Models.Services.Build.Interfaces;
 using Models.State.Board;
-using Models.State.BuildState;
 using Models.State.PieceState;
 using Models.State.PlayerState;
+using Models.Utils.ExtensionMethods.PieceTypeExt;
 
 namespace Models.Services.Build.BuildMoves
 {
@@ -28,37 +27,36 @@ namespace Models.Services.Build.BuildMoves
             : new State.BuildState.BuildMoves(GetWhitePositions(), RemovePiecesByCost(playerState, WhitePieces));
 
 
-        private static ImmutableHashSet<PieceType> RemovePiecesByCost(PlayerState playerState,
+        private static HashSet<PieceType> RemovePiecesByCost(PlayerState playerState,
             IEnumerable<PieceType> pieces)
-            => GetAvailablePieces(pieces, playerState).ToImmutableHashSet();
+            => GetAvailablePieces(pieces, playerState); // expensive
 
-        private static IEnumerable<PieceType> GetAvailablePieces(IEnumerable<PieceType> pieces, PlayerState playerState)
+        private static HashSet<PieceType> GetAvailablePieces(IEnumerable<PieceType> pieces, PlayerState playerState)
         {
-            var result = new List<PieceType>();
+            var result = new HashSet<PieceType>();
             foreach (var piece in pieces)
-                if (BuildPoints.PieceCost[piece] <= playerState.BuildPoints)
+                if (piece.Value() <= playerState.BuildPoints)
                     result.Add(piece);
             return result;
         }
 
-
-        private static ImmutableHashSet<Position> GetWhitePositions()
+        private static HashSet<Position> GetWhitePositions()
         {
-            var builder = ImmutableHashSet<Position>.Empty.ToBuilder();
+            var builder = new HashSet<Position>();
             for (var y = 0; y < 2; y++)
             for (var x = 0; x < 8; x++)
-                builder.Add(new Position(x, y));
-            return builder.ToImmutable();
+                builder.Add(new Position(x, y)); // expensive
+            return builder;
         }
 
 
-        private static ImmutableHashSet<Position> GetBlackPositions()
+        private static HashSet<Position> GetBlackPositions()
         {
-            var builder = ImmutableHashSet<Position>.Empty.ToBuilder();
+            var builder = new HashSet<Position>();
             for (var x = 0; x < 8; x++)
             for (var y = 7; y > 5; y--)
                 builder.Add(new Position(x, y));
-            return builder.ToImmutable();
+            return builder;
         }
     }
 }

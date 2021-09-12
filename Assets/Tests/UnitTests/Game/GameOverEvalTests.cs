@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Collections.Immutable;
 using Bindings.Installers.GameInstallers;
 using Models.Services.Game.Interfaces;
 using Models.State.Board;
@@ -41,8 +40,8 @@ namespace Tests.UnitTests.Game
         {
             var moves = new Dictionary<Position, HashSet<Position>>
             {
-                {new Position(4, 4), new HashSet<Position>()}
-            }.ToImmutableDictionary(keyVal => keyVal.Key, keyVal => ImmutableHashSet.CreateRange(keyVal.Value));
+                { new Position(4, 4), new HashSet<Position>() }
+            };
             const bool check = true;
 
             Assert.That(_gameOverEval.CheckMate(check, moves), Is.True);

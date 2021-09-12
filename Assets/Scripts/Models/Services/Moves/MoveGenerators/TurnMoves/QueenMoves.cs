@@ -10,6 +10,11 @@ namespace Models.Services.Moves.MoveGenerators.TurnMoves
 {
     public class QueenMoves : IPieceMoveGenerator
     {
+        private static readonly Direction[] _directions =
+        {
+            Direction.N, Direction.E, Direction.S, Direction.W, Direction.NE, Direction.NW, Direction.SE, Direction.SW
+        };
+
         private readonly IBoardScanner _boardScanner;
         private readonly IPositionTranslator _positionTranslator;
 
@@ -24,26 +29,9 @@ namespace Models.Services.Moves.MoveGenerators.TurnMoves
         {
             var relativePosition = _positionTranslator.GetRelativePosition(originPosition);
 
-            var result = GetMovesIn(Direction.N, relativePosition, boardState).ToList();
-            var southMoves = GetMovesIn(Direction.S, relativePosition, boardState).ToList();
-            var eastMoves = GetMovesIn(Direction.E, relativePosition, boardState).ToList();
-            var westMoves = GetMovesIn(Direction.W, relativePosition, boardState).ToList();
-            var northWestMoves = GetMovesIn(Direction.NW, relativePosition, boardState).ToList();
-            var northEastMoves = GetMovesIn(Direction.NE, relativePosition, boardState).ToList();
-            var southWestMoves = GetMovesIn(Direction.SW, relativePosition, boardState).ToList();
-            var southEastMoves = GetMovesIn(Direction.SE, relativePosition, boardState).ToList();
-            result.AddRange(southMoves);
-            result.AddRange(eastMoves);
-            result.AddRange(westMoves);
-            result.AddRange(northWestMoves);
-            result.AddRange(northEastMoves);
-            result.AddRange(southWestMoves);
-            result.AddRange(southEastMoves);
-            return result;
+            return _directions
+                .SelectMany(direction => _boardScanner.ScanIn(direction, relativePosition, boardState));
         }
-
-        private IEnumerable<Position> GetMovesIn(Direction d, Position relativePosition, BoardState boardState) =>
-            _boardScanner.ScanIn(d, relativePosition, boardState);
 
         public class Factory : PlaceholderFactory<PieceColour, QueenMoves>
         {

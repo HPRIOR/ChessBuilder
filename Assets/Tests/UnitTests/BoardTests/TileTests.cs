@@ -42,7 +42,7 @@ namespace Tests.UnitTests.BoardTests
         [Test]
         public void TileCloned_WithSamePiece()
         {
-            var tile = new Tile(new Position(1, 1)) {CurrentPiece = new Piece(PieceType.BlackBishop)};
+            var tile = new Tile(new Position(1, 1)) { CurrentPiece = new Piece(PieceType.BlackBishop) };
             var tileClone = tile.Clone();
 
             Assert.That(tile.CurrentPiece, Is.EqualTo(tileClone.CurrentPiece));
@@ -51,7 +51,7 @@ namespace Tests.UnitTests.BoardTests
         [Test]
         public void TileCloned_WithSameBuildState()
         {
-            var tile = new Tile(new Position(1, 1)) {CurrentPiece = new Piece(PieceType.BlackBishop)};
+            var tile = new Tile(new Position(1, 1)) { CurrentPiece = new Piece(PieceType.BlackBishop) };
             var tileClone = tile.Clone();
 
             Assert.That(tile.BuildTileState, Is.EqualTo(tileClone.BuildTileState));

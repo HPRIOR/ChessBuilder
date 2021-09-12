@@ -48,7 +48,7 @@ namespace Tests.UnitTests.PossibleMoves.BuildMoves
             var board = _boardGenerator.GenerateBoard();
             board[1, 1].BuildTileState = new BuildTileState(0, PieceType.WhiteQueen);
             var activePieces = new HashSet<Position>();
-            var activeBuilds = new HashSet<Position> {new Position(1, 1)};
+            var activeBuilds = new HashSet<Position> { new Position(1, 1) };
             var boardState = new BoardState(board, activePieces, activeBuilds);
             _buildResolver.ResolveBuilds(boardState, PieceColour.White);
 
@@ -61,7 +61,7 @@ namespace Tests.UnitTests.PossibleMoves.BuildMoves
             var board = _boardGenerator.GenerateBoard();
             board[1, 1].BuildTileState = new BuildTileState(0, PieceType.WhiteQueen);
             var activePieces = new HashSet<Position>();
-            var activeBuilds = new HashSet<Position> {new Position(1, 1)};
+            var activeBuilds = new HashSet<Position> { new Position(1, 1) };
             var boardState = new BoardState(board, activePieces, activeBuilds);
             _buildResolver.ResolveBuilds(boardState, PieceColour.White);
 
@@ -74,7 +74,7 @@ namespace Tests.UnitTests.PossibleMoves.BuildMoves
             var board = _boardGenerator.GenerateBoard();
             board[1, 1].BuildTileState = new BuildTileState(1, PieceType.WhiteQueen);
             var activePieces = new HashSet<Position>();
-            var activeBuilds = new HashSet<Position> {new Position(1, 1)};
+            var activeBuilds = new HashSet<Position> { new Position(1, 1) };
             var boardState = new BoardState(board, activePieces, activeBuilds);
             _buildResolver.ResolveBuilds(boardState, PieceColour.White);
 
@@ -88,7 +88,7 @@ namespace Tests.UnitTests.PossibleMoves.BuildMoves
             var board = _boardGenerator.GenerateBoard();
             board[1, 1].BuildTileState = new BuildTileState(0);
             var activePieces = new HashSet<Position>();
-            var activeBuilds = new HashSet<Position> {new Position(1, 1)};
+            var activeBuilds = new HashSet<Position> { new Position(1, 1) };
             var boardState = new BoardState(board, activePieces, activeBuilds);
             _buildResolver.ResolveBuilds(boardState, PieceColour.White);
 
@@ -102,8 +102,8 @@ namespace Tests.UnitTests.PossibleMoves.BuildMoves
             var board = _boardGenerator.GenerateBoard();
             board[1, 1].CurrentPiece = new Piece(PieceType.BlackKnight);
             board[1, 1].BuildTileState = new BuildTileState(0, PieceType.WhiteQueen);
-            var activePieces = new HashSet<Position> {new Position(1, 1)};
-            var activeBuilds = new HashSet<Position> {new Position(1, 1)};
+            var activePieces = new HashSet<Position> { new Position(1, 1) };
+            var activeBuilds = new HashSet<Position> { new Position(1, 1) };
             var boardState = new BoardState(board, activePieces, activeBuilds);
             _buildResolver.ResolveBuilds(boardState, PieceColour.White);
 
@@ -117,11 +117,24 @@ namespace Tests.UnitTests.PossibleMoves.BuildMoves
             var board = _boardGenerator.GenerateBoard();
             board[1, 1].BuildTileState = new BuildTileState(0, PieceType.WhiteQueen);
             var activePieces = new HashSet<Position>();
-            var activeBuilds = new HashSet<Position> {new Position(1, 1)};
+            var activeBuilds = new HashSet<Position> { new Position(1, 1) };
             var boardState = new BoardState(board, activePieces, activeBuilds);
             _buildResolver.ResolveBuilds(boardState, PieceColour.Black);
 
             Assert.That(board[1, 1].CurrentPiece.Type, Is.EqualTo(PieceType.NullPiece));
+        }
+
+        [Test]
+        public void WillReturn_ResolvedBuilds()
+        {
+            var board = _boardGenerator.GenerateBoard();
+            board[1, 1].BuildTileState = new BuildTileState(0, PieceType.WhiteQueen);
+            var activePieces = new HashSet<Position>();
+            var activeBuilds = new HashSet<Position> { new Position(1, 1) };
+            var boardState = new BoardState(board, activePieces, activeBuilds);
+            var sut = _buildResolver.ResolveBuilds(boardState, PieceColour.Black);
+
+            //Assert.That();
         }
     }
 }

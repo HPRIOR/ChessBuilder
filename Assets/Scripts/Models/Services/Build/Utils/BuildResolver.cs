@@ -4,17 +4,20 @@ using Models.Services.Build.Interfaces;
 using Models.State.Board;
 using Models.State.BuildState;
 using Models.State.PieceState;
-using Models.Utils.ExtensionMethods.PieceType;
+using Models.Utils.ExtensionMethods.PieceTypeExt;
 
 namespace Models.Services.Build.Utils
 {
     public class BuildResolver : IBuildResolver
     {
-        public void ResolveBuilds(BoardState boardState, PieceColour turn)
+        public IEnumerable<(Position, PieceType)> ResolveBuilds(BoardState boardState, PieceColour turn)
         {
             var activeBuildPositions =
-                new List<Tile>(boardState.ActiveBuilds.Select(position => boardState.Board[position.X, position.Y]));
+                new List<Tile>(
+                    boardState.ActiveBuilds.Select(position =>
+                        boardState.Board[position.X, position.Y])); //TODO remove linq
 
+            var resolvedBuilds = new List<(Position, PieceType)>();
             foreach (var tile in activeBuildPositions)
             {
                 var canBuild = tile.BuildTileState.Turns == 0 &&
@@ -29,8 +32,12 @@ namespace Models.Services.Build.Utils
 
                     tile.CurrentPiece = new Piece(tile.BuildTileState.BuildingPiece);
                     tile.BuildTileState = new BuildTileState(); // reset build state
+
+                    resolvedBuilds.Add((tile.Position, tile.CurrentPiece.Type));
                 }
             }
+
+            return resolvedBuilds;
         }
     }
 }

@@ -1,8 +1,8 @@
 ﻿using System.Linq;
 using Models.Services.AI.Interfaces;
-using Models.State.BuildState;
 using Models.State.GameState;
 using Models.State.PieceState;
+using Models.Utils.ExtensionMethods.PieceTypeExt;
 
 namespace Models.Services.AI.Implementations
 {
@@ -19,9 +19,9 @@ namespace Models.Services.AI.Implementations
                 var currentPiece = tile.CurrentPiece;
                 var multiplier = 100;
                 if (currentPiece.Colour == PieceColour.Black)
-                    blackPoints += BuildPoints.PieceCost[currentPiece.Type] * multiplier;
+                    blackPoints += currentPiece.Type.Value() * multiplier;
                 else
-                    whitePoints += BuildPoints.PieceCost[currentPiece.Type] * multiplier;
+                    whitePoints += currentPiece.Type.Value() * multiplier;
             }
 
             return new BoardScore(blackPoints, whitePoints);

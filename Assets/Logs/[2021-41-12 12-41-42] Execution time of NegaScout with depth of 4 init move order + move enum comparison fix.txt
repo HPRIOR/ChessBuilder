@@ -1,0 +1,4 @@
+Execution time of NegaScout with depth of 4 init move order + move enum comparison fix: 
+      149 ms 
+      0 s 
+      0 min

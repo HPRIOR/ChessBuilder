@@ -35,17 +35,7 @@ namespace Models.Services.AI.Implementations
 
         public override bool Equals(object obj) => obj is AiMove other && Equals(other);
 
-        public override int GetHashCode()
-        {
-            unchecked
-            {
-                var hashCode = (int)MoveType;
-                hashCode = (hashCode * 397) ^ From.GetHashCode();
-                hashCode = (hashCode * 397) ^ To.GetHashCode();
-                hashCode = (hashCode * 397) ^ (int)Type;
-                return hashCode;
-            }
-        }
+        public override int GetHashCode() => (From, To, Type).GetHashCode();
 
         public static bool operator ==(AiMove left, AiMove right) => left.Equals(right);
 

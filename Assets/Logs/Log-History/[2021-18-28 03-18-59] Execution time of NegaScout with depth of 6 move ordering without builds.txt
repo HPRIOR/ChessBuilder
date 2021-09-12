@@ -1,0 +1,4 @@
+Execution time of NegaScout with depth of 6 move ordering without builds: 
+      50 ms 
+      0 s 
+      0 min

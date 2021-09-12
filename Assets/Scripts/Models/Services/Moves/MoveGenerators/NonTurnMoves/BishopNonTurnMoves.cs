@@ -10,6 +10,9 @@ namespace Models.Services.Moves.MoveGenerators.NonTurnMoves
 {
     public class BishopNonTurnMoves : IPieceMoveGenerator
     {
+        private static readonly Direction[] PossibleDirections =
+            { Direction.NE, Direction.NW, Direction.SE, Direction.SW };
+
         private readonly IBoardScanner _boardScanner;
         private readonly IPositionTranslator _positionTranslator;
 
@@ -23,9 +26,8 @@ namespace Models.Services.Moves.MoveGenerators.NonTurnMoves
         public IEnumerable<Position> GetPossiblePieceMoves(Position originPosition, BoardState boardState)
         {
             var relativePosition = _positionTranslator.GetRelativePosition(originPosition);
-            var possibleDirections = new List<Direction> {Direction.NE, Direction.NW, Direction.SE, Direction.SW};
 
-            return possibleDirections.SelectMany(direction =>
+            return PossibleDirections.SelectMany(direction =>
                 _boardScanner.ScanIn(direction, relativePosition, boardState));
         }
 

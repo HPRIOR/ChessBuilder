@@ -10,6 +10,7 @@ namespace Models.Services.Moves.MoveGenerators.NonTurnMoves
 {
     public class RookNonTurnMoves : IPieceMoveGenerator
     {
+        private static readonly Direction[] PossibleDirections = { Direction.N, Direction.E, Direction.S, Direction.W };
         private readonly IBoardScanner _boardScanner;
         private readonly IPositionTranslator _positionTranslator;
 
@@ -23,9 +24,7 @@ namespace Models.Services.Moves.MoveGenerators.NonTurnMoves
         public IEnumerable<Position> GetPossiblePieceMoves(Position originPosition, BoardState boardState)
         {
             var relativePosition = _positionTranslator.GetRelativePosition(originPosition);
-            var possibleDirections = new List<Direction> {Direction.N, Direction.E, Direction.S, Direction.W};
-
-            return possibleDirections.SelectMany(direction =>
+            return PossibleDirections.SelectMany(direction =>
                 _boardScanner.ScanIn(direction, relativePosition, boardState));
         }
 

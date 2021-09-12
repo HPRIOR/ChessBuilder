@@ -28,6 +28,8 @@ namespace Models.Services.AI.Implementations
         {
             var takingPiece = boardState.Board[move.From.X, move.From.Y].CurrentPiece.Type;
             var takenPiece = boardState.Board[move.To.X, move.To.Y].CurrentPiece.Type;
+            if (takenPiece == PieceType.NullPiece)
+                return 0;
             return takenPiece.Value() - takingPiece.Value();
         }
 

@@ -37,7 +37,8 @@ namespace Models.Services.Moves.MoveGenerators
             var enemyMoves = _boardInfo.EnemyMoves;
             var kingPosition = _boardInfo.KingPosition; // will be set to 8,8 by default if no king present (as null)
 
-            var checkManager = new CheckedStateManager(boardState);
+            var checkManager =
+                new CheckedStateManager(boardState); // try not to instantiate each time and pass in the board state
 
             checkManager.EvaluateCheck(enemyMoves, kingPosition);
             if (checkManager.IsCheck)

@@ -14,8 +14,9 @@ namespace Models.Services.AI.Implementations
     public class AiPossibleMoveGenerator : IAiPossibleMoveGenerator
     {
         public IEnumerable<AiMove> GenerateMoves(GameState gameState) =>
-            GetBuildCommands(gameState.PossibleBuildMoves)
-                .Concat(GetMoveCommands(gameState.PossiblePieceMoves));
+            GetMoveCommands(gameState.PossiblePieceMoves);
+        // GetBuildCommands(gameState.PossibleBuildMoves)
+        // .Concat(GetMoveCommands(gameState.PossiblePieceMoves));
 
         private IEnumerable<AiMove> GetMoveCommands(
             IDictionary<Position, HashSet<Position>> moves

@@ -100,7 +100,7 @@ namespace Models.Services.Game.Implementations
 
         private void MakeAiMove()
         {
-            var move = _aiMoveGenerator.GetMove(CurrentGameState, 3, Turn);
+            var move = _aiMoveGenerator.GetMove(CurrentGameState, 4, Turn);
             var previousState = _gameStateUpdater?.GameState.BoardState.Clone();
             move(Turn, _gameStateUpdater);
             CurrentGameState = _gameStateUpdater?.GameState;

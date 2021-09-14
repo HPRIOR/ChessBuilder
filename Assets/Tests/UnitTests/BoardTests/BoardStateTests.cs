@@ -1,6 +1,8 @@
+using System.Collections.Generic;
 using Bindings.Installers.ModelInstallers.Board;
 using Models.Services.Board;
 using Models.State.Board;
+using Models.State.BuildState;
 using Models.State.PieceState;
 using NUnit.Framework;
 using UnityEngine;
@@ -103,6 +105,118 @@ namespace Tests.UnitTests.BoardTests
             var boardState = GetBoardState();
             Assert.AreEqual(boardState.Board[x, y].Position.Vector,
                 new Vector2(x + 0.5f, y + 0.5f));
+        }
+
+        [Test]
+        public void ActivePiecesAreCorrect()
+        {
+            var board = _boardGenerator.GenerateBoard();
+            board[1, 1].CurrentPiece = new Piece(PieceType.BlackBishop);
+            board[2, 2].CurrentPiece = new Piece(PieceType.BlackBishop);
+            board[3, 3].CurrentPiece = new Piece(PieceType.BlackBishop);
+            board[4, 4].CurrentPiece = new Piece(PieceType.BlackBishop);
+            var boardState = new BoardState(board);
+
+            var expected = new HashSet<Position>
+            {
+                new Position(1, 1),
+                new Position(2, 2),
+                new Position(3, 3),
+                new Position(4, 4)
+            };
+            Assert.That(boardState.ActivePieces, Is.EquivalentTo(expected));
+        }
+
+        [Test]
+        public void ActiveWhitePiecesAreCorrect()
+        {
+            var board = _boardGenerator.GenerateBoard();
+            board[1, 1].CurrentPiece = new Piece(PieceType.BlackBishop);
+            board[2, 2].CurrentPiece = new Piece(PieceType.BlackBishop);
+            board[3, 3].CurrentPiece = new Piece(PieceType.WhiteBishop);
+            board[4, 4].CurrentPiece = new Piece(PieceType.WhiteBishop);
+            var boardState = new BoardState(board);
+
+            var expected = new HashSet<Position>
+            {
+                new Position(3, 3),
+                new Position(4, 4)
+            };
+            Assert.That(boardState.ActiveWhitePieces, Is.EquivalentTo(expected));
+        }
+
+        [Test]
+        public void ActiveBlackPiecesAreCorrect()
+        {
+            var board = _boardGenerator.GenerateBoard();
+            board[1, 1].CurrentPiece = new Piece(PieceType.BlackBishop);
+            board[2, 2].CurrentPiece = new Piece(PieceType.BlackBishop);
+            board[3, 3].CurrentPiece = new Piece(PieceType.WhiteBishop);
+            board[4, 4].CurrentPiece = new Piece(PieceType.WhiteBishop);
+            var boardState = new BoardState(board);
+
+            var expected = new HashSet<Position>
+            {
+                new Position(1, 1),
+                new Position(2, 2)
+            };
+            Assert.That(boardState.ActiveBlackPieces, Is.EquivalentTo(expected));
+        }
+
+        [Test]
+        public void ActiveBuildsAreCorrect()
+        {
+            var board = _boardGenerator.GenerateBoard();
+            board[1, 1].BuildTileState = new BuildTileState(PieceType.BlackBishop);
+            board[2, 2].BuildTileState = new BuildTileState(PieceType.BlackBishop);
+            board[3, 3].BuildTileState = new BuildTileState(PieceType.WhiteBishop);
+            board[4, 4].BuildTileState = new BuildTileState(PieceType.WhiteBishop);
+            var boardState = new BoardState(board);
+
+            var expected = new HashSet<Position>
+            {
+                new Position(1, 1),
+                new Position(2, 2),
+                new Position(3, 3),
+                new Position(4, 4)
+            };
+            Assert.That(boardState.ActiveBuilds, Is.EquivalentTo(expected));
+        }
+
+        [Test]
+        public void ActiveBlackBuildsAreCorrect()
+        {
+            var board = _boardGenerator.GenerateBoard();
+            board[1, 1].BuildTileState = new BuildTileState(PieceType.BlackBishop);
+            board[2, 2].BuildTileState = new BuildTileState(PieceType.BlackBishop);
+            board[3, 3].BuildTileState = new BuildTileState(PieceType.WhiteBishop);
+            board[4, 4].BuildTileState = new BuildTileState(PieceType.WhiteBishop);
+            var boardState = new BoardState(board);
+
+            var expected = new HashSet<Position>
+            {
+                new Position(1, 1),
+                new Position(2, 2)
+            };
+            Assert.That(boardState.ActiveBlackBuilds, Is.EquivalentTo(expected));
+        }
+
+        [Test]
+        public void ActiveWhiteBuildsAreCorrect()
+        {
+            var board = _boardGenerator.GenerateBoard();
+            board[1, 1].BuildTileState = new BuildTileState(PieceType.BlackBishop);
+            board[2, 2].BuildTileState = new BuildTileState(PieceType.BlackBishop);
+            board[3, 3].BuildTileState = new BuildTileState(PieceType.WhiteBishop);
+            board[4, 4].BuildTileState = new BuildTileState(PieceType.WhiteBishop);
+            var boardState = new BoardState(board);
+
+            var expected = new HashSet<Position>
+            {
+                new Position(3, 3),
+                new Position(4, 4)
+            };
+            Assert.That(boardState.ActiveWhiteBuilds, Is.EquivalentTo(expected));
         }
     }
 }

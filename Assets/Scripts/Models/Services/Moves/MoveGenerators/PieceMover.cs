@@ -11,11 +11,27 @@ namespace Models.Services.Moves.MoveGenerators
         public void ModifyBoardState(BoardState boardState, Position from,
             Position destination)
         {
+            ModifyActivePieces(boardState, from, destination);
+
+            // modify board state
+            var destinationTile = boardState.Board[destination.X, destination.Y];
+            var fromTile = boardState.Board[from.X, from.Y];
+
+            // swap pieces
+            destinationTile.CurrentPiece = fromTile.CurrentPiece;
+            fromTile.CurrentPiece = new Piece(PieceType.NullPiece);
+
+            // return nothing 
+        }
+
+        private static void ModifyActivePieces(BoardState boardState, Position from, Position destination)
+        {
             // modify active pieces 
             boardState.ActivePieces.Remove(from);
             boardState.ActivePieces.Add(destination);
-
             var currentPiece = boardState.Board[from.X, from.Y].CurrentPiece.Type;
+            // TODO modify opposite active moves on take
+            // create test that catches mistake
             if (currentPiece != PieceType.NullPiece)
             {
                 var currentMoveColour = currentPiece.Colour();
@@ -34,16 +50,6 @@ namespace Models.Services.Moves.MoveGenerators
                         throw new ArgumentOutOfRangeException();
                 }
             }
-
-            // modify board state
-            var destinationTile = boardState.Board[destination.X, destination.Y];
-            var fromTile = boardState.Board[from.X, from.Y];
-
-            // swap pieces
-            destinationTile.CurrentPiece = fromTile.CurrentPiece;
-            fromTile.CurrentPiece = new Piece(PieceType.NullPiece);
-
-            // return nothing 
         }
     }
 }

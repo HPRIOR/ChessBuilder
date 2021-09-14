@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Models.Services.Board;
+﻿using Models.Services.Board;
 using Models.Services.Game.Interfaces;
 using Models.State.Board;
 using Models.State.PieceState;
@@ -60,72 +59,7 @@ namespace Models.Services.Game.Implementations
             board[1, 3].CurrentPiece = new Piece(PieceType.WhitePawn);
             board[5, 3].CurrentPiece = new Piece(PieceType.WhiteBishop);
 
-            var activePieces = new HashSet<Position>
-            {
-                new Position(6, 7),
-                new Position(5, 7),
-                new Position(3, 7),
-                new Position(0, 7),
-                new Position(1, 6),
-                new Position(3, 6),
-                new Position(5, 6),
-                new Position(6, 6),
-                new Position(7, 6),
-                new Position(0, 5),
-                new Position(2, 5),
-                new Position(4, 5),
-                new Position(5, 5),
-                new Position(3, 4),
-                new Position(6, 0),
-                new Position(4, 0),
-                new Position(3, 0),
-                new Position(1, 1),
-                new Position(5, 1),
-                new Position(6, 1),
-                new Position(0, 2),
-                new Position(2, 2),
-                new Position(3, 2),
-                new Position(5, 2),
-                new Position(7, 2),
-                new Position(1, 3),
-                new Position(5, 3)
-            };
-            var activeBuilds = new HashSet<Position>();
-            var activeWhitePieces = new HashSet<Position>
-            {
-                new Position(6, 0),
-                new Position(4, 0),
-                new Position(3, 0),
-                new Position(1, 1),
-                new Position(5, 1),
-                new Position(6, 1),
-                new Position(0, 2),
-                new Position(2, 2),
-                new Position(3, 2),
-                new Position(5, 2),
-                new Position(7, 2),
-                new Position(1, 3),
-                new Position(5, 3)
-            };
-            var activeBlackPieces = new HashSet<Position>
-            {
-                new Position(6, 7),
-                new Position(5, 7),
-                new Position(3, 7),
-                new Position(0, 7),
-                new Position(1, 6),
-                new Position(3, 6),
-                new Position(5, 6),
-                new Position(6, 6),
-                new Position(7, 6),
-                new Position(0, 5),
-                new Position(2, 5),
-                new Position(4, 5),
-                new Position(5, 5),
-                new Position(3, 4)
-            };
-            return new BoardState(board, activePieces, activeBuilds, activeBlackPieces, activeWhitePieces,
-                new HashSet<Position>(), new HashSet<Position>());
+            return new BoardState(board);
         }
     }
 }

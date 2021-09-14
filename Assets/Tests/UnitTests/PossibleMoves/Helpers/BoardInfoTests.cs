@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using Models.Services.Board;
 using Models.Services.Moves.Interfaces;
 using Models.State.Board;
@@ -57,9 +56,7 @@ namespace Tests.UnitTests.PossibleMoves.Helpers
             board[7, 7].CurrentPiece = new Piece(PieceType.BlackKing);
             board[7, 6].CurrentPiece = new Piece(PieceType.BlackPawn);
 
-            var boardState = new BoardState(board,
-                new HashSet<Position> {new Position(1, 1), new Position(1, 2), new Position(7, 7), new Position(7, 6)},
-                new HashSet<Position>());
+            var boardState = new BoardState(board);
 
             _boardInfo.EvaluateBoard(boardState, PieceColour.Black);
 
@@ -81,9 +78,7 @@ namespace Tests.UnitTests.PossibleMoves.Helpers
             board[7, 7].CurrentPiece = new Piece(PieceType.BlackKing);
             board[7, 6].CurrentPiece = new Piece(PieceType.BlackPawn);
 
-            var boardState = new BoardState(board,
-                new HashSet<Position> {new Position(1, 1), new Position(1, 2), new Position(7, 7), new Position(7, 6)},
-                new HashSet<Position>());
+            var boardState = new BoardState(board);
 
             _boardInfo.EvaluateBoard(boardState, PieceColour.White);
 
@@ -105,9 +100,7 @@ namespace Tests.UnitTests.PossibleMoves.Helpers
             board[7, 7].CurrentPiece = new Piece(PieceType.BlackKing);
             board[7, 6].CurrentPiece = new Piece(PieceType.BlackPawn);
 
-            var boardState = new BoardState(board,
-                new HashSet<Position> {new Position(1, 1), new Position(1, 2), new Position(7, 7), new Position(7, 6)},
-                new HashSet<Position>());
+            var boardState = new BoardState(board);
 
             _boardInfo.EvaluateBoard(boardState, PieceColour.Black);
 
@@ -125,9 +118,7 @@ namespace Tests.UnitTests.PossibleMoves.Helpers
             board[7, 7].CurrentPiece = new Piece(PieceType.BlackKing);
             board[7, 6].CurrentPiece = new Piece(PieceType.BlackPawn);
 
-            var boardState = new BoardState(board,
-                new HashSet<Position> {new Position(1, 1), new Position(1, 2), new Position(7, 7), new Position(7, 6)},
-                new HashSet<Position>());
+            var boardState = new BoardState(board);
 
             _boardInfo.EvaluateBoard(boardState, PieceColour.White);
 
@@ -142,8 +133,7 @@ namespace Tests.UnitTests.PossibleMoves.Helpers
             board[1, 2].CurrentPiece = new Piece(PieceType.WhitePawn);
             board[7, 6].CurrentPiece = new Piece(PieceType.BlackPawn);
 
-            var boardState = new BoardState(board, new HashSet<Position> {new Position(1, 2), new Position(7, 6)},
-                new HashSet<Position>());
+            var boardState = new BoardState(board);
 
             _boardInfo.EvaluateBoard(boardState, PieceColour.White);
 

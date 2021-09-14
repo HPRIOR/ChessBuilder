@@ -53,8 +53,8 @@ namespace Tests.UnitTests.Game
             var board = _boardGenerator.GenerateBoard();
             board[1, 1].CurrentPiece = new Piece(PieceType.BlackKing);
             board[7, 7].CurrentPiece = new Piece(PieceType.WhiteKing);
-            var activePieces = new HashSet<Position> { new Position(1, 1), new Position(7, 7) };
-            var boardState = new BoardState(board, activePieces, new HashSet<Position>());
+
+            var boardState = new BoardState(board);
             var gameState = _gameStateInitializer.InitialiseGame(boardState);
             var gameStateUpdater = _gameStateUpdaterFactory.Create(gameState);
             gameStateUpdater.UpdateGameState(new Position(1, 1), new Position(2, 2), PieceColour.Black);
@@ -69,8 +69,8 @@ namespace Tests.UnitTests.Game
             var board = _boardGenerator.GenerateBoard();
             board[1, 1].CurrentPiece = new Piece(PieceType.BlackKing);
             board[7, 7].CurrentPiece = new Piece(PieceType.WhiteKing);
-            var activePieces = new HashSet<Position> { new Position(1, 1), new Position(7, 7) };
-            var boardState = new BoardState(board, activePieces, new HashSet<Position>());
+
+            var boardState = new BoardState(board);
             var gameState = _gameStateInitializer.InitialiseGame(boardState);
             var gameStateUpdater = _gameStateUpdaterFactory.Create(gameState);
             gameStateUpdater.UpdateGameState(new Position(1, 1), new Position(2, 2), PieceColour.Black);
@@ -86,8 +86,8 @@ namespace Tests.UnitTests.Game
             var board = _boardGenerator.GenerateBoard();
             board[1, 1].CurrentPiece = new Piece(PieceType.BlackKing);
             board[7, 7].CurrentPiece = new Piece(PieceType.WhiteKing);
-            var activePieces = new HashSet<Position> { new Position(1, 1), new Position(7, 7) };
-            var boardState = new BoardState(board, activePieces, new HashSet<Position>());
+
+            var boardState = new BoardState(board);
             var gameState = _gameStateInitializer.InitialiseGame(boardState);
             var gameStateUpdater = _gameStateUpdaterFactory.Create(gameState);
             gameStateUpdater.UpdateGameState(new Position(1, 1), PieceType.WhiteKnight, PieceColour.Black);
@@ -103,8 +103,8 @@ namespace Tests.UnitTests.Game
             var board = _boardGenerator.GenerateBoard();
             board[1, 1].CurrentPiece = new Piece(PieceType.BlackKing);
             board[7, 7].CurrentPiece = new Piece(PieceType.WhiteKing);
-            var activePieces = new HashSet<Position> { new Position(1, 1), new Position(7, 7) };
-            var boardState = new BoardState(board, activePieces, new HashSet<Position>());
+
+            var boardState = new BoardState(board);
             var gameState = _gameStateInitializer.InitialiseGame(boardState);
             var gameStateUpdater = _gameStateUpdaterFactory.Create(gameState);
             gameStateUpdater.UpdateGameState(new Position(1, 1), PieceType.WhiteKnight, PieceColour.Black);
@@ -122,8 +122,8 @@ namespace Tests.UnitTests.Game
             board[1, 1].CurrentPiece = new Piece(PieceType.BlackKing);
             board[7, 7].CurrentPiece = new Piece(PieceType.WhiteKing);
             board[6, 4].CurrentPiece = new Piece(PieceType.WhiteQueen);
-            var activePieces = new HashSet<Position> { new Position(1, 1), new Position(7, 7), new Position(6, 4) };
-            var boardState = new BoardState(board, activePieces, new HashSet<Position>());
+
+            var boardState = new BoardState(board);
             var gameState = _gameStateInitializer.InitialiseGame(boardState);
             var gameStateUpdater = _gameStateUpdaterFactory.Create(gameState);
 
@@ -143,8 +143,8 @@ namespace Tests.UnitTests.Game
             var board = _boardGenerator.GenerateBoard();
             board[0, 0].CurrentPiece = new Piece(PieceType.BlackKing);
             board[7, 7].CurrentPiece = new Piece(PieceType.WhiteKing);
-            var activePieces = new HashSet<Position> { new Position(0, 0), new Position(7, 7) };
-            var boardState = new BoardState(board, activePieces, new HashSet<Position>());
+
+            var boardState = new BoardState(board);
             var gameState = _gameStateInitializer.InitialiseGame(boardState);
             var gameStateUpdater = _gameStateUpdaterFactory.Create(gameState);
 
@@ -171,8 +171,8 @@ namespace Tests.UnitTests.Game
             var board = _boardGenerator.GenerateBoard();
             board[0, 0].CurrentPiece = new Piece(PieceType.BlackKing);
             board[7, 7].CurrentPiece = new Piece(PieceType.WhiteKing);
-            var activePieces = new HashSet<Position> { new Position(0, 0), new Position(7, 7) };
-            var boardState = new BoardState(board, activePieces, new HashSet<Position>());
+
+            var boardState = new BoardState(board);
             var gameState = _gameStateInitializer.InitialiseGame(boardState);
             var gameStateUpdater = _gameStateUpdaterFactory.Create(gameState);
 
@@ -201,8 +201,8 @@ namespace Tests.UnitTests.Game
             var board = _boardGenerator.GenerateBoard();
             board[7, 7].CurrentPiece = new Piece(PieceType.BlackKing);
             board[0, 0].CurrentPiece = new Piece(PieceType.WhiteKing);
-            var activePieces = new HashSet<Position> { new Position(0, 0), new Position(7, 7) };
-            var boardState = new BoardState(board, activePieces, new HashSet<Position>());
+
+            var boardState = new BoardState(board);
             var gameState = _gameStateInitializer.InitialiseGame(boardState);
             var gameStateUpdater = _gameStateUpdaterFactory.Create(gameState);
 
@@ -250,8 +250,8 @@ namespace Tests.UnitTests.Game
             var board = _boardGenerator.GenerateBoard();
             board[1, 1].CurrentPiece = new Piece(PieceType.BlackKing);
             board[7, 7].CurrentPiece = new Piece(PieceType.WhiteKing);
-            var activePieces = new HashSet<Position> { new Position(1, 1), new Position(7, 7) };
-            var boardState = new BoardState(board, activePieces, new HashSet<Position>());
+
+            var boardState = new BoardState(board);
             var gameState = _gameStateInitializer.InitialiseGame(boardState);
             var initialPlayerState = gameState.PlayerState;
             var gameStateUpdater = _gameStateUpdaterFactory.Create(gameState);
@@ -272,8 +272,8 @@ namespace Tests.UnitTests.Game
             var board = _boardGenerator.GenerateBoard();
             board[1, 1].CurrentPiece = new Piece(PieceType.BlackKing);
             board[7, 7].CurrentPiece = new Piece(PieceType.WhiteKing);
-            var activePieces = new HashSet<Position> { new Position(1, 1), new Position(7, 7) };
-            var boardState = new BoardState(board, activePieces, new HashSet<Position>());
+
+            var boardState = new BoardState(board);
             var gameState = _gameStateInitializer.InitialiseGame(boardState);
             var gameStateUpdater = _gameStateUpdaterFactory.Create(gameState);
 
@@ -298,14 +298,8 @@ namespace Tests.UnitTests.Game
             board[0, 7].CurrentPiece = new Piece(PieceType.BlackKing);
             board[1, 7].CurrentPiece = new Piece(PieceType.BlackPawn);
 
-            var activePieces = new HashSet<Position>
-            {
-                new Position(0, 0),
-                new Position(1, 0),
-                new Position(0, 7),
-                new Position(1, 7)
-            };
-            var boardState = new BoardState(board, activePieces, new HashSet<Position>());
+
+            var boardState = new BoardState(board);
             var gameState = _gameStateInitializer.InitialiseGame(boardState);
             var gameStateUpdater = _gameStateUpdaterFactory.Create(gameState);
 
@@ -340,14 +334,8 @@ namespace Tests.UnitTests.Game
             board[0, 7].CurrentPiece = new Piece(PieceType.BlackKing);
             board[1, 7].CurrentPiece = new Piece(PieceType.BlackPawn);
 
-            var activePieces = new HashSet<Position>
-            {
-                new Position(0, 0),
-                new Position(1, 0),
-                new Position(0, 7),
-                new Position(1, 7)
-            };
-            var boardState = new BoardState(board, activePieces, new HashSet<Position>());
+
+            var boardState = new BoardState(board);
             var gameState = _gameStateInitializer.InitialiseGame(boardState);
             var gameStateUpdater = _gameStateUpdaterFactory.Create(gameState);
 
@@ -395,14 +383,8 @@ namespace Tests.UnitTests.Game
             board[0, 7].CurrentPiece = new Piece(PieceType.BlackKing);
             board[1, 7].CurrentPiece = new Piece(PieceType.BlackPawn);
 
-            var activePieces = new HashSet<Position>
-            {
-                new Position(0, 0),
-                new Position(1, 0),
-                new Position(0, 7),
-                new Position(1, 7)
-            };
-            var boardState = new BoardState(board, activePieces, new HashSet<Position>());
+
+            var boardState = new BoardState(board);
             var gameState = _gameStateInitializer.InitialiseGame(boardState);
             var gameStateUpdater = _gameStateUpdaterFactory.Create(gameState);
 
@@ -441,14 +423,8 @@ namespace Tests.UnitTests.Game
             board[0, 7].CurrentPiece = new Piece(PieceType.BlackKing);
             board[1, 7].CurrentPiece = new Piece(PieceType.BlackPawn);
 
-            var activePieces = new HashSet<Position>
-            {
-                new Position(0, 0),
-                new Position(1, 0),
-                new Position(0, 7),
-                new Position(1, 7)
-            };
-            var boardState = new BoardState(board, activePieces, new HashSet<Position>());
+
+            var boardState = new BoardState(board);
             var gameState = _gameStateInitializer.InitialiseGame(boardState);
             var gameStateUpdater = _gameStateUpdaterFactory.Create(gameState);
 
@@ -494,14 +470,8 @@ namespace Tests.UnitTests.Game
             board[0, 7].CurrentPiece = new Piece(PieceType.BlackKing);
             board[1, 7].CurrentPiece = new Piece(PieceType.BlackPawn);
 
-            var activePieces = new HashSet<Position>
-            {
-                new Position(0, 0),
-                new Position(1, 0),
-                new Position(0, 7),
-                new Position(1, 7)
-            };
-            var boardState = new BoardState(board, activePieces, new HashSet<Position>());
+
+            var boardState = new BoardState(board);
             var gameState = _gameStateInitializer.InitialiseGame(boardState);
             var gameStateUpdater = _gameStateUpdaterFactory.Create(gameState);
 
@@ -532,14 +502,8 @@ namespace Tests.UnitTests.Game
             board[0, 7].CurrentPiece = new Piece(PieceType.BlackKing);
             board[1, 7].CurrentPiece = new Piece(PieceType.BlackPawn);
 
-            var activePieces = new HashSet<Position>
-            {
-                new Position(0, 0),
-                new Position(1, 0),
-                new Position(0, 7),
-                new Position(1, 7)
-            };
-            var boardState = new BoardState(board, activePieces, new HashSet<Position>());
+
+            var boardState = new BoardState(board);
             var gameState = _gameStateInitializer.InitialiseGame(boardState);
             var gameStateUpdater = _gameStateUpdaterFactory.Create(gameState);
 
@@ -570,14 +534,8 @@ namespace Tests.UnitTests.Game
             board[0, 7].CurrentPiece = new Piece(PieceType.BlackKing);
             board[1, 7].CurrentPiece = new Piece(PieceType.BlackPawn);
 
-            var activePieces = new HashSet<Position>
-            {
-                new Position(0, 0),
-                new Position(1, 0),
-                new Position(0, 7),
-                new Position(1, 7)
-            };
-            var boardState = new BoardState(board, activePieces, new HashSet<Position>());
+
+            var boardState = new BoardState(board);
             var gameState = _gameStateInitializer.InitialiseGame(boardState);
             var gameStateUpdater = _gameStateUpdaterFactory.Create(gameState);
 
@@ -615,14 +573,8 @@ namespace Tests.UnitTests.Game
             board[0, 7].CurrentPiece = new Piece(PieceType.BlackKing);
             board[1, 7].CurrentPiece = new Piece(PieceType.BlackPawn);
 
-            var activePieces = new HashSet<Position>
-            {
-                new Position(0, 0),
-                new Position(1, 0),
-                new Position(0, 7),
-                new Position(1, 7)
-            };
-            var boardState = new BoardState(board, activePieces, new HashSet<Position>());
+
+            var boardState = new BoardState(board);
             var gameState = _gameStateInitializer.InitialiseGame(boardState);
             var gameStateUpdater = _gameStateUpdaterFactory.Create(gameState);
 

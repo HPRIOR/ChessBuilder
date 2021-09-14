@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Bindings.Installers.ModelInstallers.Board;
+﻿using Bindings.Installers.ModelInstallers.Board;
 using Bindings.Installers.ModelInstallers.Build;
 using Models.Services.Board;
 using Models.Services.Build.Interfaces;
@@ -49,7 +48,7 @@ namespace Tests.UnitTests.PossibleMoves.BuildMoves
         public void CreatesBoardState_WithBuildStateAtPosition()
         {
             var board = _boardGenerator.GenerateBoard();
-            var boardState = new BoardState(board, new HashSet<Position>(), new HashSet<Position>());
+            var boardState = new BoardState(board);
             _builder.GenerateNewBoardState(boardState, new Position(5, 5), PieceType.BlackKnight);
 
             Assert.That(boardState.Board[5, 5].BuildTileState,
@@ -61,7 +60,7 @@ namespace Tests.UnitTests.PossibleMoves.BuildMoves
         {
             var board = _boardGenerator.GenerateBoard();
             var boardState =
-                new BoardState(board, new HashSet<Position>(), new HashSet<Position> { new Position(5, 5) });
+                new BoardState(board);
             boardState.Board[5, 5].BuildTileState = new BuildTileState(PieceType.BlackPawn);
             _builder.GenerateNewBoardState(boardState, new Position(5, 5), PieceType.BlackKnight);
 
@@ -74,7 +73,7 @@ namespace Tests.UnitTests.PossibleMoves.BuildMoves
         {
             var board = _boardGenerator.GenerateBoard();
             var boardState =
-                new BoardState(board, new HashSet<Position>(), new HashSet<Position> { new Position(5, 5) });
+                new BoardState(board);
             boardState.Board[5, 5].BuildTileState = new BuildTileState(PieceType.BlackPawn);
 
             _builder.GenerateNewBoardState(boardState, new Position(5, 5), PieceType.BlackKnight);

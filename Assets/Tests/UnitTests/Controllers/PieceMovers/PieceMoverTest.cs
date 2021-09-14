@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Bindings.Installers.ModelInstallers.Board;
 using Bindings.Installers.ModelInstallers.Build;
 using Bindings.Installers.ModelInstallers.Move;
@@ -51,8 +50,7 @@ namespace Tests.UnitTests.Controllers.PieceMovers
             board[1, 1].CurrentPiece = new Piece(PieceType.BlackKing);
             Assert.AreNotEqual(PieceType.NullPiece, board[1, 1].CurrentPiece.Type);
 
-            var activePieces = new HashSet<Position> { new Position(1, 1) };
-            var boardState = new BoardState(board, activePieces, new HashSet<Position>());
+            var boardState = new BoardState(board);
 
             _pieceMover.ModifyBoardState(boardState, new Position(1, 1), new Position(2, 2));
             Assert.AreEqual(PieceType.NullPiece, boardState.Board[1, 1].CurrentPiece.Type);
@@ -65,8 +63,7 @@ namespace Tests.UnitTests.Controllers.PieceMovers
             board[1, 1].CurrentPiece = new Piece(PieceType.BlackKing);
             board[2, 2].CurrentPiece = new Piece(PieceType.WhiteKing);
 
-            var activePieces = new HashSet<Position> { new Position(1, 1), new Position(2, 2) };
-            var boardState = new BoardState(board, activePieces, new HashSet<Position>());
+            var boardState = new BoardState(board);
 
             _pieceMover.ModifyBoardState(boardState, new Position(1, 1), new Position(2, 2));
             Assert.AreEqual(PieceType.BlackKing, boardState.Board[2, 2].CurrentPiece.Type);
@@ -79,8 +76,7 @@ namespace Tests.UnitTests.Controllers.PieceMovers
         {
             var board = _boardGenerator.GenerateBoard();
             board[1, 1].CurrentPiece = new Piece(PieceType.BlackKing);
-            var activePieces = new HashSet<Position> { new Position(1, 1) };
-            var boardState = new BoardState(board, activePieces, new HashSet<Position>());
+            var boardState = new BoardState(board);
 
             var oldPiece = board[1, 1].CurrentPiece;
 

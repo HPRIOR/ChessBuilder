@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using Models.State.PieceState;
+using Models.Utils.ExtensionMethods.PieceTypeExt;
 
 namespace Models.State.Board
 {
@@ -7,13 +9,26 @@ namespace Models.State.Board
         public BoardState(Tile[,] board)
         {
             Board = board;
+            ActivePieces = new HashSet<Position>();
+            ActiveBuilds = new HashSet<Position>();
+            ActiveBlackBuilds = new HashSet<Position>();
+            ActiveWhiteBuilds = new HashSet<Position>();
+            ActiveBlackPieces = new HashSet<Position>();
+            ActiveWhitePieces = new HashSet<Position>();
+            GenerateActivePieces();
         }
 
-        public BoardState(Tile[,] board, HashSet<Position> activePieces, HashSet<Position> activeBuilds)
+        public BoardState(Tile[,] board, HashSet<Position> activePieces, HashSet<Position> activeBuilds,
+            HashSet<Position> activeBlackPieces, HashSet<Position> activeWhitePieces,
+            HashSet<Position> activeBlackBuilds, HashSet<Position> activeWhiteBuilds)
         {
             Board = board;
             ActivePieces = activePieces;
             ActiveBuilds = activeBuilds;
+            ActiveBlackPieces = activeBlackPieces;
+            ActiveWhitePieces = activeWhitePieces;
+            ActiveBlackBuilds = activeBlackBuilds;
+            ActiveWhiteBuilds = activeWhiteBuilds;
         }
 
         public BoardState()
@@ -32,6 +47,34 @@ namespace Models.State.Board
 
         public HashSet<Position> ActivePieces { get; }
         public HashSet<Position> ActiveBuilds { get; }
+        public HashSet<Position> ActiveBlackPieces { get; }
+        public HashSet<Position> ActiveWhitePieces { get; }
+        public HashSet<Position> ActiveBlackBuilds { get; }
+        public HashSet<Position> ActiveWhiteBuilds { get; }
+
+        private void GenerateActivePieces()
+        {
+            foreach (var tile in Board)
+            {
+                if (tile.CurrentPiece.Type != PieceType.NullPiece)
+                {
+                    ActivePieces.Add(tile.Position);
+                    if (tile.CurrentPiece.Colour == PieceColour.Black)
+                        ActiveBlackPieces.Add(tile.Position);
+                    else
+                        ActiveWhitePieces.Add(tile.Position);
+                }
+
+                if (tile.BuildTileState.BuildingPiece != PieceType.NullPiece)
+                {
+                    ActiveBuilds.Add(tile.Position);
+                    if (tile.BuildTileState.BuildingPiece.Colour() == PieceColour.Black)
+                        ActiveBlackBuilds.Add(tile.Position);
+                    else
+                        ActiveWhiteBuilds.Add(tile.Position);
+                }
+            }
+        }
 
         public BoardState Clone()
         {
@@ -39,7 +82,9 @@ namespace Models.State.Board
             for (var i = 0; i < 8; i++)
             for (var j = 0; j < 8; j++)
                 newBoard[i, j] = Board[i, j].Clone();
-            return new BoardState(newBoard, new HashSet<Position>(ActivePieces), new HashSet<Position>(ActiveBuilds));
+            return new BoardState(newBoard, new HashSet<Position>(ActivePieces), new HashSet<Position>(ActiveBuilds),
+                new HashSet<Position>(ActiveBlackPieces), new HashSet<Position>(ActiveWhitePieces),
+                new HashSet<Position>(ActiveBlackBuilds), new HashSet<Position>(ActiveWhiteBuilds));
         }
 
         public BoardState CloneWithDecrementBuildState()
@@ -48,16 +93,9 @@ namespace Models.State.Board
             for (var i = 0; i < 8; i++)
             for (var j = 0; j < 8; j++)
                 newBoard[i, j] = Board[i, j].CloneWithDecrementBuildState();
-            return new BoardState(newBoard, new HashSet<Position>(ActivePieces), new HashSet<Position>(ActiveBuilds));
-        }
-
-        public BoardState CloneWithDecrementBuildState(HashSet<Position> activePieces, HashSet<Position> activeBuilds)
-        {
-            var newBoard = new Tile[8, 8];
-            for (var i = 0; i < 8; i++)
-            for (var j = 0; j < 8; j++)
-                newBoard[i, j] = Board[i, j].CloneWithDecrementBuildState();
-            return new BoardState(newBoard, activePieces, activeBuilds);
+            return new BoardState(newBoard, new HashSet<Position>(ActivePieces), new HashSet<Position>(ActiveBuilds),
+                new HashSet<Position>(ActiveBlackPieces), new HashSet<Position>(ActiveWhitePieces),
+                new HashSet<Position>(ActiveBlackBuilds), new HashSet<Position>(ActiveWhiteBuilds));
         }
     }
 }

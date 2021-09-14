@@ -160,7 +160,6 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
             board[1, 1].CurrentPiece = new Piece(PieceType.WhiteQueen);
             board[6, 1].CurrentPiece = new Piece(PieceType.WhiteQueen);
 
-            var activeBuilds = new HashSet<Position>();
             var boardState = new BoardState(board);
 
             var moveState =

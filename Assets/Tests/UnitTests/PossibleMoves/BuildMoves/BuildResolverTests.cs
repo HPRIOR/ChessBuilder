@@ -1,4 +1,5 @@
-﻿using Bindings.Installers.ModelInstallers.Board;
+﻿using System.Collections.Generic;
+using Bindings.Installers.ModelInstallers.Board;
 using Bindings.Installers.ModelInstallers.Build;
 using Models.Services.Board;
 using Models.Services.Build.Interfaces;
@@ -128,6 +129,80 @@ namespace Tests.UnitTests.PossibleMoves.BuildMoves
         {
             var board = _boardGenerator.GenerateBoard();
             board[1, 1].BuildTileState = new BuildTileState(0, PieceType.WhiteQueen);
+        }
+
+
+        [Test]
+        public void RemoveActiveBuilds_OnResolveBuild()
+        {
+            var board = _boardGenerator.GenerateBoard();
+            board[1, 1].BuildTileState = new BuildTileState(0, PieceType.WhiteQueen);
+            var boardState = new BoardState(board);
+
+            _buildResolver.ResolveBuilds(boardState, PieceColour.White);
+
+            Assert.That(boardState.ActiveBuilds, Is.EquivalentTo(new HashSet<Position>()));
+        }
+
+
+        [Test]
+        public void AddActivePiece_OnResolveBuilds()
+        {
+            var board = _boardGenerator.GenerateBoard();
+            board[1, 1].BuildTileState = new BuildTileState(0, PieceType.WhiteQueen);
+            var boardState = new BoardState(board);
+
+            _buildResolver.ResolveBuilds(boardState, PieceColour.White);
+
+            Assert.That(boardState.ActivePieces, Is.EquivalentTo(new HashSet<Position> { new Position(1, 1) }));
+        }
+
+
+        [Test]
+        public void RemoveActiveBlackBuild_OnResolveBuild()
+        {
+            var board = _boardGenerator.GenerateBoard();
+            board[1, 1].BuildTileState = new BuildTileState(0, PieceType.BlackQueen);
+            var boardState = new BoardState(board);
+
+            _buildResolver.ResolveBuilds(boardState, PieceColour.Black);
+
+            Assert.That(boardState.ActiveBlackBuilds, Is.EquivalentTo(new HashSet<Position>()));
+        }
+
+        [Test]
+        public void AddActiveBlackPiece_OnResolveBuild()
+        {
+            var board = _boardGenerator.GenerateBoard();
+            board[1, 1].BuildTileState = new BuildTileState(0, PieceType.BlackQueen);
+            var boardState = new BoardState(board);
+
+            _buildResolver.ResolveBuilds(boardState, PieceColour.Black);
+
+            Assert.That(boardState.ActiveBlackPieces, Is.EquivalentTo(new HashSet<Position> { new Position(1, 1) }));
+        }
+
+
+        [Test]
+        public void RemoveActiveWhiteBuild_OnResolveBuild()
+        {
+            var board = _boardGenerator.GenerateBoard();
+            board[1, 1].BuildTileState = new BuildTileState(0, PieceType.WhiteQueen);
+            var boardState = new BoardState(board);
+
+            _buildResolver.ResolveBuilds(boardState, PieceColour.White);
+            Assert.That(boardState.ActiveWhiteBuilds, Is.EquivalentTo(new HashSet<Position>()));
+        }
+
+        [Test]
+        public void AddActiveWhitePiece_OnResolveBuild()
+        {
+            var board = _boardGenerator.GenerateBoard();
+            board[1, 1].BuildTileState = new BuildTileState(0, PieceType.WhiteQueen);
+            var boardState = new BoardState(board);
+
+            _buildResolver.ResolveBuilds(boardState, PieceColour.White);
+            Assert.That(boardState.ActiveWhitePieces, Is.EquivalentTo(new HashSet<Position> { new Position(1, 1) }));
         }
     }
 }

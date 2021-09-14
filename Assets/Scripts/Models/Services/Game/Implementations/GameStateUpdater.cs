@@ -84,8 +84,6 @@ namespace Models.Services.Game.Implementations
             GameState.Check = moveState.Check;
 
             GameState.PossibleBuildMoves = GetPossibleBuildMoves(GameState.BoardState, turn, moveState, playerState);
-            ;
-
             GameState.CheckMate = _gameOverEval.CheckMate(moveState.Check, moveState.PossibleMoves);
         }
 

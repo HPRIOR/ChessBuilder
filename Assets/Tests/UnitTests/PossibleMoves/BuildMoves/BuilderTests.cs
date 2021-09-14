@@ -1,4 +1,5 @@
-﻿using Bindings.Installers.ModelInstallers.Board;
+﻿using System.Collections.Generic;
+using Bindings.Installers.ModelInstallers.Board;
 using Bindings.Installers.ModelInstallers.Build;
 using Models.Services.Board;
 using Models.Services.Build.Interfaces;
@@ -45,7 +46,7 @@ namespace Tests.UnitTests.PossibleMoves.BuildMoves
 
 
         [Test]
-        public void CreatesBoardState_WithBuildStateAtPosition()
+        public void Updates_WithBuildStateAtPosition()
         {
             var board = _boardGenerator.GenerateBoard();
             var boardState = new BoardState(board);
@@ -59,8 +60,7 @@ namespace Tests.UnitTests.PossibleMoves.BuildMoves
         public void OverwritesPreviousBuild()
         {
             var board = _boardGenerator.GenerateBoard();
-            var boardState =
-                new BoardState(board);
+            var boardState = new BoardState(board);
             boardState.Board[5, 5].BuildTileState = new BuildTileState(PieceType.BlackPawn);
             _builder.GenerateNewBoardState(boardState, new Position(5, 5), PieceType.BlackKnight);
 
@@ -72,8 +72,7 @@ namespace Tests.UnitTests.PossibleMoves.BuildMoves
         public void OverwritesBuild_DueNextTurn()
         {
             var board = _boardGenerator.GenerateBoard();
-            var boardState =
-                new BoardState(board);
+            var boardState = new BoardState(board);
             boardState.Board[5, 5].BuildTileState = new BuildTileState(PieceType.BlackPawn);
 
             _builder.GenerateNewBoardState(boardState, new Position(5, 5), PieceType.BlackKnight);
@@ -82,6 +81,43 @@ namespace Tests.UnitTests.PossibleMoves.BuildMoves
                 Is.EqualTo(new BuildTileState(3, PieceType.BlackKnight)));
             Assert.That(boardState.Board[5, 5].CurrentPiece.Type,
                 Is.EqualTo(PieceType.NullPiece));
+        }
+
+        [Test]
+        public void UpdatesActiveBuilds()
+        {
+            var board = _boardGenerator.GenerateBoard();
+            var boardState = new BoardState(board);
+            boardState.Board[5, 5].BuildTileState = new BuildTileState(PieceType.BlackPawn);
+
+            _builder.GenerateNewBoardState(boardState, new Position(5, 5), PieceType.BlackKnight);
+
+            Assert.That(boardState.ActiveBuilds, Is.EquivalentTo(new HashSet<Position> { new Position(5, 5) }));
+        }
+
+        [Test]
+        public void UpdatesActiveBlackBuilds()
+        {
+            var board = _boardGenerator.GenerateBoard();
+            var boardState = new BoardState(board);
+            boardState.Board[5, 5].BuildTileState = new BuildTileState(PieceType.BlackPawn);
+
+            _builder.GenerateNewBoardState(boardState, new Position(5, 5), PieceType.BlackKnight);
+
+            Assert.That(boardState.ActiveBlackBuilds, Is.EquivalentTo(new HashSet<Position> { new Position(5, 5) }));
+        }
+
+
+        [Test]
+        public void UpdatesActiveWhiteBuilds()
+        {
+            var board = _boardGenerator.GenerateBoard();
+            var boardState = new BoardState(board);
+            boardState.Board[5, 5].BuildTileState = new BuildTileState(PieceType.BlackPawn);
+
+            _builder.GenerateNewBoardState(boardState, new Position(5, 5), PieceType.BlackKnight);
+
+            Assert.That(boardState.ActiveBlackBuilds, Is.EquivalentTo(new HashSet<Position> { new Position(5, 5) }));
         }
     }
 }

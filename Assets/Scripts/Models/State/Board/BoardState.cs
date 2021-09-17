@@ -6,6 +6,8 @@ namespace Models.State.Board
 {
     public class BoardState
     {
+        public readonly Tile[,] Board;
+
         public BoardState(Tile[,] board)
         {
             Board = board;
@@ -18,7 +20,7 @@ namespace Models.State.Board
             GenerateActivePieces();
         }
 
-        public BoardState(Tile[,] board, HashSet<Position> activePieces, HashSet<Position> activeBuilds,
+        private BoardState(Tile[,] board, HashSet<Position> activePieces, HashSet<Position> activeBuilds,
             HashSet<Position> activeBlackPieces, HashSet<Position> activeWhitePieces,
             HashSet<Position> activeBlackBuilds, HashSet<Position> activeWhiteBuilds)
         {
@@ -41,9 +43,6 @@ namespace Models.State.Board
                 );
             Board = board;
         }
-
-
-        public Tile[,] Board { get; }
 
         public HashSet<Position> ActivePieces { get; }
         public HashSet<Position> ActiveBuilds { get; }

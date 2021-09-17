@@ -12,7 +12,7 @@ namespace Tests.PlayModeTests
         [UnityTest]
         public IEnumerator Benchmark()
         {
-            yield return LoadScene("SampleScene");
+            yield return LoadScene("DevScene");
 
             var gameStateController = SceneContainer.Resolve<IGameStateController>();
 

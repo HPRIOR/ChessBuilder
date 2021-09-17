@@ -33,7 +33,8 @@ namespace Models.Services.Moves.MoveGenerators
             var currentPiece = boardState.Board[from.X, from.Y].CurrentPiece.Type;
 
             if (TileContainsPieceAt(destination, boardState))
-                RemovePosFromActivePieceOfColour(destination, currentPiece.Colour().NextTurn(), boardState);
+                if (currentPiece != PieceType.NullPiece)
+                    RemovePosFromActivePieceOfColour(destination, currentPiece.Colour().NextTurn(), boardState);
 
             if (currentPiece != PieceType.NullPiece)
             {

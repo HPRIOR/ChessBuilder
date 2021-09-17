@@ -29,9 +29,12 @@ namespace Models.Services.Moves.MoveGenerators
             // modify active pieces 
             boardState.ActivePieces.Remove(from);
             boardState.ActivePieces.Add(destination);
+
             var currentPiece = boardState.Board[from.X, from.Y].CurrentPiece.Type;
-            // TODO modify opposite active moves on take
-            // create test that catches mistake
+
+            if (TileContainsPieceAt(destination, boardState))
+                RemovePosFromActivePieceOfColour(destination, currentPiece.Colour().NextTurn(), boardState);
+
             if (currentPiece != PieceType.NullPiece)
             {
                 var currentMoveColour = currentPiece.Colour();
@@ -51,5 +54,17 @@ namespace Models.Services.Moves.MoveGenerators
                 }
             }
         }
+
+        private static void RemovePosFromActivePieceOfColour(Position position, PieceColour takenPieceColour,
+            BoardState boardState)
+        {
+            if (takenPieceColour == PieceColour.Black)
+                boardState.ActiveBlackPieces.Remove(position);
+            else
+                boardState.ActiveWhitePieces.Remove(position);
+        }
+
+        private static bool TileContainsPieceAt(Position position, BoardState boardState) =>
+            boardState.Board[position.X, position.Y].CurrentPiece.Type != PieceType.NullPiece;
     }
 }

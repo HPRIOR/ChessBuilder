@@ -115,11 +115,11 @@ namespace Tests.UnitTests.AI
             // _aiMoveGenerator.GetMove(gameState, 3, PieceColour.White);
 
             var logTimer = new LogExecutionTimer();
-            var depth = 4;
+            var depth = 8;
 
-            // logTimer.LogExecutionTime(
-            //     $"NegaScout with depth of {depth.ToString()} init move order + move enum comparison fix",
-            //     () => _aiMoveGenerator.GetMove(gameState, depth, PieceColour.White));
+            logTimer.LogExecutionTime(
+                $"NegaScout with depth of {depth.ToString()} - remove hashset conversion from BoardInfo",
+                () => _aiMoveGenerator.GetMove(gameState, depth, PieceColour.White));
 
             // var move = _miniMax.GetMove(gameState, depth, PieceColour.White);
             // var newGameState = move(gameState.BoardState, PieceColour.White);

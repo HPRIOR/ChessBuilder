@@ -9,7 +9,7 @@ namespace Models.Services.Moves.MoveGenerators.TurnMoves
 {
     public class KingMoves : IPieceMoveGenerator
     {
-        private static readonly Direction[] _directions =
+        private static readonly Direction[] Directions =
         {
             Direction.N, Direction.E, Direction.S, Direction.W, Direction.NE, Direction.NW, Direction.SE, Direction.SW
         };
@@ -24,13 +24,12 @@ namespace Models.Services.Moves.MoveGenerators.TurnMoves
             _tileEvaluator = tileEvaluatorFactory.Create(pieceColour);
         }
 
-        public IEnumerable<Position> GetPossiblePieceMoves(Position originPosition, BoardState boardState)
+        public HashSet<Position> GetPossiblePieceMoves(Position originPosition, BoardState boardState)
         {
-            var potentialMoves = new List<Position>();
+            var possibleMoves = new HashSet<Position>();
             var relativePosition = _positionTranslator.GetRelativePosition(originPosition);
 
-
-            foreach (var direction in _directions)
+            foreach (var direction in Directions)
             {
                 var newPosition = relativePosition.Add(Move.In(direction));
                 var newRelativePosition = _positionTranslator.GetRelativePosition(newPosition);
@@ -40,11 +39,11 @@ namespace Models.Services.Moves.MoveGenerators.TurnMoves
                     var potentialMoveTile = _positionTranslator.GetRelativeTileAt(newPosition, boardState);
                     if (_tileEvaluator.OpposingPieceIn(potentialMoveTile) ||
                         potentialMoveTile.CurrentPiece.Type == PieceType.NullPiece)
-                        potentialMoves.Add(newRelativePosition);
+                        possibleMoves.Add(newRelativePosition);
                 }
             }
 
-            return potentialMoves;
+            return possibleMoves;
         }
 
         public class Factory : PlaceholderFactory<PieceColour, KingMoves>

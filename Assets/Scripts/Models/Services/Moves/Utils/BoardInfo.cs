@@ -42,7 +42,7 @@ namespace Models.Services.Moves.Utils
                         .GetPossiblePieceMoves(boardPos, boardState);
 
                     // converting to hashset here is inefficient!
-                    turnMoves.Add(boardPos, new HashSet<Position>(possibleMoves));
+                    turnMoves.Add(boardPos, possibleMoves);
                 }
 
                 if (opponentTurn)
@@ -51,7 +51,7 @@ namespace Models.Services.Moves.Utils
                     var possibleMoves = _movesGeneratorRepository.GetPossibleMoveGenerator(currentPiece, false)
                         .GetPossiblePieceMoves(boardPos, boardState);
                     // converting to hashset here is inefficient!
-                    enemyMoves.Add(boardPos, new HashSet<Position>(possibleMoves));
+                    enemyMoves.Add(boardPos, possibleMoves);
                 }
 
                 TurnMoves = turnMoves;

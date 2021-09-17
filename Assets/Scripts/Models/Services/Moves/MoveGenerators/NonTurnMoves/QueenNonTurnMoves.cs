@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using Models.Services.Moves.Interfaces;
 using Models.Services.Moves.Utils;
 using Models.State.Board;
@@ -10,7 +9,7 @@ namespace Models.Services.Moves.MoveGenerators.NonTurnMoves
 {
     public class QueenNonTurnMoves : IPieceMoveGenerator
     {
-        private static readonly Direction[] _directions =
+        private static readonly Direction[] Directions =
         {
             Direction.N, Direction.E, Direction.S, Direction.W, Direction.NE, Direction.NW, Direction.SE, Direction.SW
         };
@@ -25,12 +24,16 @@ namespace Models.Services.Moves.MoveGenerators.NonTurnMoves
             _boardScanner = boardScannerFactory.Create(pieceColour, Turn.NonTurn);
         }
 
-        public IEnumerable<Position> GetPossiblePieceMoves(Position originPosition, BoardState boardState)
+        public HashSet<Position> GetPossiblePieceMoves(Position originPosition, BoardState boardState)
         {
             var relativePosition = _positionTranslator.GetRelativePosition(originPosition);
 
-            return _directions
-                .SelectMany(direction => _boardScanner.ScanIn(direction, relativePosition, boardState));
+            var possibleMoves = new HashSet<Position>();
+
+            foreach (var direction in Directions)
+                _boardScanner.ScanIn(direction, relativePosition, boardState, possibleMoves);
+
+            return possibleMoves;
         }
 
         public class Factory : PlaceholderFactory<PieceColour, QueenNonTurnMoves>

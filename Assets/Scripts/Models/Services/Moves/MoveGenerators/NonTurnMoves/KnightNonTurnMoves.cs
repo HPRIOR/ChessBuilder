@@ -15,12 +15,12 @@ namespace Models.Services.Moves.MoveGenerators.NonTurnMoves
             _positionTranslator = positionTranslatorFactory.Create(pieceColour);
         }
 
-        public IEnumerable<Position> GetPossiblePieceMoves(Position originPosition, BoardState boardState)
+        public HashSet<Position> GetPossiblePieceMoves(Position originPosition, BoardState boardState)
         {
-            bool CoordInBounds((int X, int Y) coord) => 0 <= coord.X && coord.X <= 7 && 0 <= coord.Y && coord.Y <= 7;
+            var result = new HashSet<Position>();
 
             var possibleMoveCoords = GetMoveCoords(_positionTranslator.GetRelativePosition(originPosition));
-            var result = new List<Position>();
+
             foreach (var possibleMoveCoord in possibleMoveCoords)
                 if (CoordInBounds(possibleMoveCoord))
                     result.Add(_positionTranslator.GetRelativePosition(
@@ -28,6 +28,9 @@ namespace Models.Services.Moves.MoveGenerators.NonTurnMoves
                     );
             return result;
         }
+
+        private bool CoordInBounds((int X, int Y) coord) =>
+            0 <= coord.X && coord.X <= 7 && 0 <= coord.Y && coord.Y <= 7;
 
         private static IEnumerable<(int X, int Y)> GetMoveCoords(Position position)
         {

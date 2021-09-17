@@ -30,11 +30,11 @@ namespace Models.Services.Moves.Utils.Scanners
         /// <param name="direction"></param>
         /// <param name="currentPosition"></param>
         /// <param name="boardState"></param>
+        /// <param name="possibleMoves"></param>
         /// <returns></returns>
-        public IEnumerable<Position> ScanIn(Direction direction, Position currentPosition,
-            BoardState boardState)
+        public void ScanIn(Direction direction, Position currentPosition,
+            BoardState boardState, HashSet<Position> possibleMoves)
         {
-            var result = new List<Position>();
             var iteratingPosition = currentPosition;
 
 
@@ -46,15 +46,13 @@ namespace Models.Services.Moves.Utils.Scanners
                 if (PieceCannotMoveTo(newPosition) || TileContainsFriendlyPieceAt(relativePosition, boardState)) break;
                 if (TileContainsOpposingPieceAt(relativePosition, boardState))
                 {
-                    result.Add(relativePosition);
+                    possibleMoves.Add(relativePosition);
                     break;
                 }
 
-                result.Add(relativePosition);
+                possibleMoves.Add(relativePosition);
                 iteratingPosition = newPosition;
             }
-
-            return result;
         }
 
         private static bool PieceCannotMoveTo(Position position)

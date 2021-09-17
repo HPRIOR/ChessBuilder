@@ -20,17 +20,17 @@ namespace Models.Services.Moves.MoveGenerators.TurnMoves
         }
 
         // TODO: refactor me
-        public IEnumerable<Position> GetPossiblePieceMoves(Position originPosition, BoardState boardState)
+        public HashSet<Position> GetPossiblePieceMoves(Position originPosition, BoardState boardState)
         {
-            var potentialMoves = new List<Position>();
+            var possibleMoves = new HashSet<Position>();
 
             originPosition = _positionTranslator.GetRelativePosition(originPosition);
 
-            if (originPosition.Y == 7) return potentialMoves; // allow to change piece
+            if (originPosition.Y == 7) return possibleMoves; // allow to change piece
 
             if (_positionTranslator.GetRelativeTileAt(originPosition.Add(Move.In(Direction.N)), boardState).CurrentPiece
                 .Type == PieceType.NullPiece)
-                potentialMoves.Add(
+                possibleMoves.Add(
                     _positionTranslator.GetRelativePosition(originPosition.Add(Move.In(Direction.N)))
                 );
 
@@ -39,7 +39,7 @@ namespace Models.Services.Moves.MoveGenerators.TurnMoves
                 var topLeftTile =
                     _positionTranslator.GetRelativeTileAt(originPosition.Add(Move.In(Direction.NW)), boardState);
                 if (_tileEvaluator.OpposingPieceIn(topLeftTile))
-                    potentialMoves.Add(
+                    possibleMoves.Add(
                         _positionTranslator.GetRelativePosition(originPosition.Add(Move.In(Direction.NW)))
                     );
             }
@@ -49,12 +49,12 @@ namespace Models.Services.Moves.MoveGenerators.TurnMoves
                 var topRightTile =
                     _positionTranslator.GetRelativeTileAt(originPosition.Add(Move.In(Direction.NE)), boardState);
                 if (_tileEvaluator.OpposingPieceIn(topRightTile))
-                    potentialMoves.Add(
+                    possibleMoves.Add(
                         _positionTranslator.GetRelativePosition(originPosition.Add(Move.In(Direction.NE)))
                     );
             }
 
-            return potentialMoves;
+            return possibleMoves;
         }
 
         public class Factory : PlaceholderFactory<PieceColour, PawnMoves>

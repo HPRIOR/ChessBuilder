@@ -5,6 +5,6 @@ namespace Models.Services.Moves.Interfaces
 {
     public interface IPieceMoveGenerator
     {
-        IEnumerable<Position> GetPossiblePieceMoves(Position originPosition, BoardState boardState);
+        HashSet<Position> GetPossiblePieceMoves(Position originPosition, BoardState boardState);
     }
 }

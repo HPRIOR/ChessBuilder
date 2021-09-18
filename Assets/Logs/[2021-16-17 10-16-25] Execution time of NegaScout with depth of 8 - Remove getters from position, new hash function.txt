@@ -1,0 +1,4 @@
+Execution time of NegaScout with depth of 8 - Remove getters from position, new hash function: 
+      29447 ms 
+      29 s 
+      0 min

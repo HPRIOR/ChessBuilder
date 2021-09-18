@@ -5,8 +5,8 @@ namespace Models.State.Board
 {
     public readonly struct Position : IEquatable<Position>
     {
-        public int X { get; }
-        public int Y { get; }
+        public readonly int X;
+        public readonly int Y;
         public Vector2 Vector { get; }
 
         public Position(int x, int y)
@@ -30,6 +30,6 @@ namespace Models.State.Board
 
         public override bool Equals(object obj) => obj is Position other && Equals(other);
 
-        public override int GetHashCode() => (X, Y).GetHashCode();
+        public override int GetHashCode() => X * (31 + Y) + Y;
     }
 }

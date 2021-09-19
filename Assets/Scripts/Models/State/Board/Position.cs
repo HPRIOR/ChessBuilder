@@ -1,5 +1,4 @@
 ﻿using System;
-using UnityEngine;
 
 namespace Models.State.Board
 {
@@ -7,13 +6,11 @@ namespace Models.State.Board
     {
         public readonly int X;
         public readonly int Y;
-        public Vector2 Vector { get; }
 
         public Position(int x, int y)
         {
             X = x;
             Y = y;
-            Vector = new Vector2(x + 0.5f, y + 0.5f);
         }
 
         public override string ToString() => $"{X}, {Y}";

@@ -1,5 +1,6 @@
 ﻿using Models.State.Board;
 using UnityEngine;
+using View.Utils;
 using Zenject;
 
 namespace View.Prefab.Spawners
@@ -12,7 +13,7 @@ namespace View.Prefab.Spawners
 
         public void Start()
         {
-            gameObject.transform.position = _position.Vector;
+            gameObject.transform.position = _position.GetVector();
             gameObject.transform.parent = _parent.transform;
             var spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
             spriteRenderer.color = _colour;

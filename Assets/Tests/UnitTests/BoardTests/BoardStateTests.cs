@@ -6,6 +6,7 @@ using Models.State.BuildState;
 using Models.State.PieceState;
 using NUnit.Framework;
 using UnityEngine;
+using View.Utils;
 using Zenject;
 
 namespace Tests.UnitTests.BoardTests
@@ -103,7 +104,7 @@ namespace Tests.UnitTests.BoardTests
         )
         {
             var boardState = GetBoardState();
-            Assert.AreEqual(boardState.Board[x, y].Position.Vector,
+            Assert.AreEqual(boardState.Board[x, y].Position.GetVector(),
                 new Vector2(x + 0.5f, y + 0.5f));
         }
 

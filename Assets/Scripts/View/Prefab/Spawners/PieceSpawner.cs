@@ -1,8 +1,8 @@
 ﻿using Models.State.Board;
-using UnityEditor;
 using UnityEngine;
 using View.Interfaces;
 using View.Prefab.Interfaces;
+using View.Utils;
 using Zenject;
 
 namespace View.Prefab.Spawners
@@ -20,7 +20,7 @@ namespace View.Prefab.Spawners
             (pieceGameObject = gameObject).transform.parent = GameObject.FindGameObjectWithTag("Pieces")?.transform;
 
             // change position of game object 
-            Vector3 position = Position.Vector;
+            Vector3 position = Position.GetVector();
             position += new Vector3(0, 0, -1); // move 'forward' so that there are no box collider clashes
             pieceGameObject.transform.position = position;
         }

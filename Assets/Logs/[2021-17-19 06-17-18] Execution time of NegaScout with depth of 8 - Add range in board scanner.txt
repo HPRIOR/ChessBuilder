@@ -1,0 +1,4 @@
+Execution time of NegaScout with depth of 8 - Add range in board scanner: 
+      21531 ms 
+      21 s 
+      0 min

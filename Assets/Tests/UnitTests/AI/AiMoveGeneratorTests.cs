@@ -118,7 +118,7 @@ namespace Tests.UnitTests.AI
             var depth = 8;
 
             logTimer.LogExecutionTime(
-                $"NegaScout with depth of {depth.ToString()} - convert to jagged array",
+                $"NegaScout with depth of {depth.ToString()} - Piece comparer in dict",
                 () => _aiMoveGenerator.GetMove(gameState, depth, PieceColour.White));
 
             // var move = _miniMax.GetMove(gameState, depth, PieceColour.White);

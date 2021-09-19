@@ -15,7 +15,7 @@ namespace Models.Services.Moves.Utils
             Direction.SW => new Position(-1, -1),
             Direction.W => new Position(-1, 0),
             Direction.NW => new Position(-1, 1),
-            _ => throw new ArgumentOutOfRangeException(nameof(direction), direction, null)
+            _ => throw new ArgumentOutOfRangeException(nameof(direction), direction, "You what? North Where?")
         };
     }
 }

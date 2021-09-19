@@ -1,0 +1,4 @@
+Execution time of NegaScout with depth of 8 - Lists!: 
+      26951 ms 
+      26 s 
+      0 min

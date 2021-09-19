@@ -2,8 +2,8 @@
 {
     public readonly struct Piece
     {
-        public PieceColour Colour { get; }
-        public PieceType Type { get; }
+        public readonly PieceColour Colour;
+        public readonly PieceType Type;
 
         public Piece(PieceType pieceType)
         {

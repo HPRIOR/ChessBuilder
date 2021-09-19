@@ -5,6 +5,11 @@ namespace Models.State.Board
 {
     public class Tile
     {
+        public BuildTileState BuildTileState;
+
+        public Piece CurrentPiece;
+        public Position Position;
+
         private Tile(Position position, Piece currentPiece, BuildTileState buildTileState = default)
         {
             Position = position;
@@ -18,10 +23,6 @@ namespace Models.State.Board
             BuildTileState = buildTileState;
             CurrentPiece = new Piece(PieceType.NullPiece);
         }
-
-        public Piece CurrentPiece { get; set; }
-        public Position Position { get; }
-        public BuildTileState BuildTileState { get; set; }
 
         public Tile Clone() => new Tile(Position, CurrentPiece, BuildTileState);
 

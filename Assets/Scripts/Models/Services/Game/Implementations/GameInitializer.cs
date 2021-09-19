@@ -32,9 +32,9 @@ namespace Models.Services.Game.Implementations
             ).First();
 
             var moves = _whiteKingMoveGenerator.GetPossiblePieceMoves(whiteKingPosition, boardState);
-            var movesDict = new Dictionary<Position, HashSet<Position>>
+            var movesDict = new Dictionary<Position, List<Position>>
             {
-                { whiteKingPosition, new HashSet<Position>(moves) }
+                { whiteKingPosition, new List<Position>(moves) }
             };
 
             var builds = _buildMoveGenerator.GetPossibleBuildMoves(boardState, PieceColour.White, new PlayerState(39));

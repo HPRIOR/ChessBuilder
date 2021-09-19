@@ -18,9 +18,9 @@ namespace Models.Services.Moves.MoveGenerators.TurnMoves
             _tileEvaluator = tileEvaluatorFactory.Create(pieceColour);
         }
 
-        public HashSet<Position> GetPossiblePieceMoves(Position originPosition, BoardState boardState)
+        public List<Position> GetPossiblePieceMoves(Position originPosition, BoardState boardState)
         {
-            var result = new HashSet<Position>();
+            var result = new List<Position>();
 
             var possibleMoveCoords = GetMoveCoords(_positionTranslator.GetRelativePosition(originPosition));
             foreach (var possibleMoveCoord in possibleMoveCoords)

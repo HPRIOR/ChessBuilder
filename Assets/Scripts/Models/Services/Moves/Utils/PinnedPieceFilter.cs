@@ -36,8 +36,12 @@ namespace Models.Services.Moves.Utils
                     if (DirectionOfPinPointsToKing(kingPosition, turnPiece, enemyMoves.Key))
                     {
                         if (TheNextPieceIsKing(enemyMoves.Key, turnPiece, kingPosition, boardState))
-                            turnMoves[turnPiece]
-                                .IntersectWith(PossibleEscapeMoves(kingPosition, turnPiece, enemyMoves.Key));
+                        {
+                            turnMoves[turnPiece] = turnMoves[turnPiece]
+                                .Intersect(PossibleEscapeMoves(kingPosition, turnPiece, enemyMoves.Key))
+                                .ToList();
+                        }
+
                         return;
                     }
             }
@@ -89,15 +93,15 @@ namespace Models.Services.Moves.Utils
             return false;
         }
 
-        private bool PieceIsScanner(KeyValuePair<Position, HashSet<Position>> pieceMoves,
+        private bool PieceIsScanner(KeyValuePair<Position, List<Position>> pieceMoves,
             BoardState boardState)
         {
             var pieceAtBoardPosition = boardState.Board[pieceMoves.Key.X, pieceMoves.Key.Y].CurrentPiece.Type;
             return _scanningPieces.Contains(pieceAtBoardPosition);
         }
 
-        private IDictionary<Position, HashSet<Position>> GetScanningPiecesMoves(
-            IDictionary<Position, HashSet<Position>> moves, BoardState boardState) =>
+        private IDictionary<Position, List<Position>> GetScanningPiecesMoves(
+            IDictionary<Position, List<Position>> moves, BoardState boardState) =>
             moves
                 .Where(keyVal => PieceIsScanner(keyVal, boardState))
                 .ToDictionary(keyVal => keyVal.Key, keyVal => keyVal.Value);

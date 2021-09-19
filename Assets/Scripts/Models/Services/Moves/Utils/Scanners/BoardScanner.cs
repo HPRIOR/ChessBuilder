@@ -33,7 +33,7 @@ namespace Models.Services.Moves.Utils.Scanners
         /// <param name="possibleMoves"></param>
         /// <returns></returns>
         public void ScanIn(Direction direction, Position currentPosition,
-            BoardState boardState, HashSet<Position> possibleMoves)
+            BoardState boardState, List<Position> possibleMoves)
         {
             var iteratingPosition = currentPosition;
 

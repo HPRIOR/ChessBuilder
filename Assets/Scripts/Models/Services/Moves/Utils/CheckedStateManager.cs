@@ -37,7 +37,7 @@ namespace Models.Services.Moves.Utils
         /// </summary>
         /// <param name="nonTurnMoves"></param>
         /// <param name="kingPosition"></param>
-        public void EvaluateCheck(IDictionary<Position, HashSet<Position>> nonTurnMoves,
+        public void EvaluateCheck(IDictionary<Position, List<Position>> nonTurnMoves,
             Position kingPosition)
         {
             var checkingPieces = GetCheckingPieces(nonTurnMoves, kingPosition).ToList();
@@ -63,8 +63,8 @@ namespace Models.Services.Moves.Utils
             RemoveEnemyMovesFromKingMoves(boardInfo.TurnMoves, boardInfo.EnemyMoves, boardInfo.KingPosition);
         }
 
-        private static IEnumerable<Position> GetCheckingPieces(
-            IDictionary<Position, HashSet<Position>> enemyMoves, Position kingPosition)
+        private static IEnumerable<Position> GetCheckingPieces(IDictionary<Position, List<Position>> enemyMoves,
+            Position kingPosition)
         {
             var result = new List<Position>();
             foreach (var keyValuePair in enemyMoves)
@@ -79,21 +79,25 @@ namespace Models.Services.Moves.Utils
         /// <param name="turnMoves"></param>
         /// <param name="enemyMoves"></param>
         /// <param name="kingPosition"></param>
-        private void UpdateWithInterceptingMoves(
-            IDictionary<Position, HashSet<Position>> turnMoves,
-            IDictionary<Position, HashSet<Position>> enemyMoves,
+        private void UpdateWithInterceptingMoves(IDictionary<Position, List<Position>> turnMoves,
+            IDictionary<Position, List<Position>> enemyMoves,
             Position kingPosition)
         {
             var positionsBetweenKingAndCheckPiece = GetPositionsBetweenCheckedKing(kingPosition, enemyMoves);
-            foreach (var keyVal in turnMoves)
+            var turnMovePositions = turnMoves.Keys.ToList();
+            foreach (var position in turnMovePositions)
             {
-                var notKingPiece = keyVal.Key != kingPosition;
-                if (notKingPiece) keyVal.Value.IntersectWith(positionsBetweenKingAndCheckPiece);
+                var notKingPiece = position != kingPosition;
+                if (notKingPiece)
+                {
+                    // keyVal.Value.IntersectWith(positionsBetweenKingAndCheckPiece);
+                    turnMoves[position] = turnMoves[position].Intersect(positionsBetweenKingAndCheckPiece).ToList();
+                }
             }
         }
 
         private HashSet<Position> GetPositionsBetweenCheckedKing(Position kingPosition,
-            IDictionary<Position, HashSet<Position>> enemyMoves)
+            IDictionary<Position, List<Position>> enemyMoves)
         {
             var checkingPiecePosition = _checkingPieces.First();
             var possibleMoves = enemyMoves[checkingPiecePosition];
@@ -108,9 +112,8 @@ namespace Models.Services.Moves.Utils
             return new HashSet<Position>();
         }
 
-        private void RemoveEnemyMovesFromKingMoves(
-            IDictionary<Position, HashSet<Position>> turnMoves,
-            IDictionary<Position, HashSet<Position>> enemyMoves,
+        private void RemoveEnemyMovesFromKingMoves(IDictionary<Position, List<Position>> turnMoves,
+            IDictionary<Position, List<Position>> enemyMoves,
             Position kingPosition)
         {
             // this won't remove the moves of scanning pieces past king 
@@ -124,13 +127,12 @@ namespace Models.Services.Moves.Utils
                     var movesExtendedThroughKing =
                         ScanMap.Scan(checkingPiecePosition,
                             DirectionMap.DirectionFrom(checkingPiecePosition, kingPosition));
-                    turnMoves[kingPosition].ExceptWith(movesExtendedThroughKing);
+                    turnMoves[kingPosition] = turnMoves[kingPosition].Except(movesExtendedThroughKing).ToList();
                 }
         }
 
 
-        private static void RemoveAllNonKingMoves(
-            IDictionary<Position, HashSet<Position>> turnMoves,
+        private static void RemoveAllNonKingMoves(IDictionary<Position, List<Position>> turnMoves,
             Position kingPosition)
         {
             foreach (var turnMove in turnMoves)

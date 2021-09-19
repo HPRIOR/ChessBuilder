@@ -15,9 +15,9 @@ namespace Models.Services.Moves.MoveGenerators.NonTurnMoves
             _positionTranslator = positionTranslatorFactory.Create(pieceColour);
         }
 
-        public HashSet<Position> GetPossiblePieceMoves(Position originPosition, BoardState boardState)
+        public List<Position> GetPossiblePieceMoves(Position originPosition, BoardState boardState)
         {
-            var result = new HashSet<Position>();
+            var result = new List<Position>();
 
             var possibleMoveCoords = GetMoveCoords(_positionTranslator.GetRelativePosition(originPosition));
 

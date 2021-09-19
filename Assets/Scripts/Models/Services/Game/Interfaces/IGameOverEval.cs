@@ -5,6 +5,6 @@ namespace Models.Services.Game.Interfaces
 {
     public interface IGameOverEval
     {
-        bool CheckMate(bool check, IDictionary<Position, HashSet<Position>> possiblePieceMoves);
+        bool CheckMate(bool check, IDictionary<Position, List<Position>> possiblePieceMoves);
     }
 }

@@ -101,12 +101,12 @@ namespace Tests.UnitTests.AI
 
 
             var boardState = new BoardState(board);
-            var possibleMoves = new Dictionary<Position, HashSet<Position>>
+            var possibleMoves = new Dictionary<Position, List<Position>>
             {
-                { new Position(5, 5), new HashSet<Position> { new Position(6, 6), new Position(6, 5) } },
+                { new Position(5, 5), new List<Position> { new Position(6, 6), new Position(6, 5) } },
                 {
                     new Position(0, 7),
-                    new HashSet<Position> { new Position(0, 6), new Position(1, 6), new Position(1, 7) }
+                    new List<Position> { new Position(0, 6), new Position(1, 6), new Position(1, 7) }
                 }
             };
 
@@ -115,11 +115,11 @@ namespace Tests.UnitTests.AI
             // _aiMoveGenerator.GetMove(gameState, 3, PieceColour.White);
 
             var logTimer = new LogExecutionTimer();
-            var depth = 8;
+            // var depth = 8;
 
-            logTimer.LogExecutionTime(
-                $"NegaScout with depth of {depth.ToString()} - new hash function",
-                () => _aiMoveGenerator.GetMove(gameState, depth, PieceColour.White));
+            // logTimer.LogExecutionTime(
+            //     $"NegaScout with depth of {depth.ToString()} - new hash function",
+            //     () => _aiMoveGenerator.GetMove(gameState, depth, PieceColour.White));
 
             // var move = _miniMax.GetMove(gameState, depth, PieceColour.White);
             // var newGameState = move(gameState.BoardState, PieceColour.White);

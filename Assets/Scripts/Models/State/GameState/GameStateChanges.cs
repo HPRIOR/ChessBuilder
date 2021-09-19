@@ -59,6 +59,6 @@ namespace Models.State.GameState
         public PlayerState.PlayerState PlayerState { get; set; }
         public bool Check { get; set; }
         public BuildMoves BuildMoves { get; set; }
-        public IDictionary<Position, HashSet<Position>> PossiblePieceMoves { get; set; }
+        public IDictionary<Position, List<Position>> PossiblePieceMoves { get; set; }
     }
 }

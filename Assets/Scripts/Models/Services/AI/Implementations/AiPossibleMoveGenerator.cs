@@ -18,9 +18,7 @@ namespace Models.Services.AI.Implementations
         // GetBuildCommands(gameState.PossibleBuildMoves)
         // .Concat(GetMoveCommands(gameState.PossiblePieceMoves));
 
-        private IEnumerable<AiMove> GetMoveCommands(
-            IDictionary<Position, HashSet<Position>> moves
-        ) =>
+        private IEnumerable<AiMove> GetMoveCommands(IDictionary<Position, List<Position>> moves) =>
             moves.SelectMany(moveSet =>
                 moveSet.Value.Select(move =>
                 {

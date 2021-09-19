@@ -304,7 +304,7 @@ namespace Tests.UnitTests.Game
             var gameStateUpdater = _gameStateUpdaterFactory.Create(gameState);
 
             var initialPossibleMoves =
-                new Dictionary<Position, HashSet<Position>>(gameState.PossiblePieceMoves);
+                new Dictionary<Position, List<Position>>(gameState.PossiblePieceMoves);
 
             gameStateUpdater.UpdateGameState(new Position(1, 0), new Position(1, 2), PieceColour.Black);
             gameStateUpdater.UpdateGameState(new Position(1, 7), new Position(2, 7), PieceColour.White);

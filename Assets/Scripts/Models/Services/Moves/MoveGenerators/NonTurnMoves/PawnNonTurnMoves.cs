@@ -19,9 +19,9 @@ namespace Models.Services.Moves.MoveGenerators.NonTurnMoves
             _tileEvaluator = tileEvaluatorFactory.Create(pieceColour);
         }
 
-        public HashSet<Position> GetPossiblePieceMoves(Position originPosition, BoardState boardState)
+        public List<Position> GetPossiblePieceMoves(Position originPosition, BoardState boardState)
         {
-            var possibleMoves = new HashSet<Position>();
+            var possibleMoves = new List<Position>();
             originPosition = _positionTranslator.GetRelativePosition(originPosition);
 
             if (originPosition.Y == 7) return possibleMoves;

@@ -20,9 +20,9 @@ namespace Models.Services.Moves.MoveGenerators.TurnMoves
         }
 
         // TODO: refactor me
-        public HashSet<Position> GetPossiblePieceMoves(Position originPosition, BoardState boardState)
+        public List<Position> GetPossiblePieceMoves(Position originPosition, BoardState boardState)
         {
-            var possibleMoves = new HashSet<Position>();
+            var possibleMoves = new List<Position>();
 
             originPosition = _positionTranslator.GetRelativePosition(originPosition);
 

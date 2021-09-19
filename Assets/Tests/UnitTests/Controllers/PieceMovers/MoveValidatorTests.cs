@@ -39,7 +39,7 @@ namespace Tests.UnitTests.Controllers.PieceMovers
         public void RejectsIf_FromEqualsDestination()
         {
             var possibleMoves =
-                new Dictionary<Position, HashSet<Position>>();
+                new Dictionary<Position, List<Position>>();
             var a = new Position(1, 1);
             var b = new Position(1, 1);
             Assert.IsFalse(_moveValidator.ValidateMove(possibleMoves, a, b));
@@ -49,9 +49,9 @@ namespace Tests.UnitTests.Controllers.PieceMovers
         public void RejectsIf_NoMovesFound()
         {
             var possibleMoves =
-                new Dictionary<Position, HashSet<Position>>
+                new Dictionary<Position, List<Position>>
                 {
-                    { new Position(1, 1), new HashSet<Position> { new Position(7, 7) } }
+                    { new Position(1, 1), new List<Position> { new Position(7, 7) } }
                 };
             var a = new Position(1, 1);
             var b = new Position(2, 2);
@@ -62,9 +62,9 @@ namespace Tests.UnitTests.Controllers.PieceMovers
         public void AcceptsIf_MovesFound()
         {
             var possibleMoves =
-                new Dictionary<Position, HashSet<Position>>
+                new Dictionary<Position, List<Position>>
                 {
-                    { new Position(1, 1), new HashSet<Position> { new Position(2, 2) } }
+                    { new Position(1, 1), new List<Position> { new Position(2, 2) } }
                 };
             var a = new Position(1, 1);
             var b = new Position(2, 2);

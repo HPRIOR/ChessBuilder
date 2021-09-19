@@ -24,11 +24,11 @@ namespace Models.Services.Moves.MoveGenerators.TurnMoves
             _boardScanner = boardScannerFactory.Create(pieceColour, Turn.Turn);
         }
 
-        public HashSet<Position> GetPossiblePieceMoves(Position originPosition, BoardState boardState)
+        public List<Position> GetPossiblePieceMoves(Position originPosition, BoardState boardState)
         {
             var relativePosition = _positionTranslator.GetRelativePosition(originPosition);
 
-            var possibleMoves = new HashSet<Position>();
+            var possibleMoves = new List<Position>();
 
             foreach (var direction in Directions)
                 _boardScanner.ScanIn(direction, relativePosition, boardState, possibleMoves);

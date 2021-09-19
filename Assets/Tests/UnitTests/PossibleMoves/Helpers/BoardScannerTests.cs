@@ -50,9 +50,9 @@ namespace Tests.UnitTests.PossibleMoves.Helpers
         {
             var boardScanner = _boardScannerFactory.Create(PieceColour.White, Turn.Turn);
             var board = new BoardState();
-            var result = new HashSet<Position>();
+            var result = new List<Position>();
             boardScanner.ScanIn(Direction.NE, new Position(0, 0), board, result);
-            var expected = new HashSet<Position>
+            var expected = new List<Position>
             {
                 new Position(1, 1),
                 new Position(2, 2),
@@ -71,9 +71,9 @@ namespace Tests.UnitTests.PossibleMoves.Helpers
         {
             var boardScanner = _boardScannerFactory.Create(PieceColour.Black, Turn.Turn);
             var board = new BoardState();
-            var result = new HashSet<Position>();
+            var result = new List<Position>();
             boardScanner.ScanIn(Direction.NE, new Position(0, 0), board, result);
-            var expected = new HashSet<Position>
+            var expected = new List<Position>
             {
                 new Position(0, 0),
                 new Position(1, 1),
@@ -93,9 +93,9 @@ namespace Tests.UnitTests.PossibleMoves.Helpers
             var boardScanner = _boardScannerFactory.Create(PieceColour.Black, Turn.Turn);
             var board = new BoardState();
             board.Board[0, 0].CurrentPiece = new Piece(PieceType.WhiteKnight);
-            var result = new HashSet<Position>();
+            var result = new List<Position>();
             boardScanner.ScanIn(Direction.NE, new Position(0, 0), board, result);
-            var expected = new HashSet<Position>
+            var expected = new List<Position>
             {
                 new Position(0, 0),
                 new Position(1, 1),
@@ -116,9 +116,9 @@ namespace Tests.UnitTests.PossibleMoves.Helpers
             var boardScanner = _boardScannerFactory.Create(PieceColour.White, Turn.Turn);
             var board = new BoardState();
             board.Board[7, 7].CurrentPiece = new Piece(PieceType.BlackBishop);
-            var result = new HashSet<Position>();
+            var result = new List<Position>();
             boardScanner.ScanIn(Direction.NE, new Position(0, 0), board, result);
-            var expected = new HashSet<Position>
+            var expected = new List<Position>
             {
                 new Position(1, 1),
                 new Position(2, 2),
@@ -139,9 +139,9 @@ namespace Tests.UnitTests.PossibleMoves.Helpers
             var boardScanner = _boardScannerFactory.Create(PieceColour.White, Turn.Turn);
             var board = new BoardState();
             board.Board[7, 7].CurrentPiece = new Piece(PieceType.WhiteBishop);
-            var result = new HashSet<Position>();
+            var result = new List<Position>();
             boardScanner.ScanIn(Direction.NE, new Position(0, 0), board, result);
-            var expected = new HashSet<Position>
+            var expected = new List<Position>
             {
                 new Position(1, 1),
                 new Position(2, 2),
@@ -161,9 +161,9 @@ namespace Tests.UnitTests.PossibleMoves.Helpers
             var boardScanner = _boardScannerFactory.Create(PieceColour.Black, Turn.Turn);
             var board = new BoardState();
             board.Board[0, 0].CurrentPiece = new Piece(PieceType.BlackKnight);
-            var result = new HashSet<Position>();
+            var result = new List<Position>();
             boardScanner.ScanIn(Direction.NE, new Position(0, 0), board, result);
-            var expected = new HashSet<Position>
+            var expected = new List<Position>
             {
                 new Position(1, 1),
                 new Position(2, 2),
@@ -182,9 +182,9 @@ namespace Tests.UnitTests.PossibleMoves.Helpers
             var boardScanner = _boardScannerFactory.Create(PieceColour.White, Turn.Turn);
             var board = new BoardState();
             board.Board[4, 4].CurrentPiece = new Piece(PieceType.WhiteBishop);
-            var result = new HashSet<Position>();
+            var result = new List<Position>();
             boardScanner.ScanIn(Direction.NE, new Position(0, 0), board, result);
-            var expected = new HashSet<Position>
+            var expected = new List<Position>
             {
                 new Position(1, 1),
                 new Position(2, 2),
@@ -200,9 +200,9 @@ namespace Tests.UnitTests.PossibleMoves.Helpers
             var boardScanner = _boardScannerFactory.Create(PieceColour.Black, Turn.Turn);
             var board = new BoardState();
             board.Board[4, 4].CurrentPiece = new Piece(PieceType.BlackKnight);
-            var result = new HashSet<Position>();
+            var result = new List<Position>();
             boardScanner.ScanIn(Direction.NE, new Position(0, 0), board, result);
-            var expected = new HashSet<Position>
+            var expected = new List<Position>
             {
                 new Position(5, 5),
                 new Position(6, 6)
@@ -217,9 +217,9 @@ namespace Tests.UnitTests.PossibleMoves.Helpers
             var boardScanner = _boardScannerFactory.Create(PieceColour.White, Turn.Turn);
             var board = new BoardState();
             board.Board[4, 4].CurrentPiece = new Piece(PieceType.BlackBishop);
-            var result = new HashSet<Position>();
+            var result = new List<Position>();
             boardScanner.ScanIn(Direction.NE, new Position(0, 0), board, result);
-            var expected = new HashSet<Position>
+            var expected = new List<Position>
             {
                 new Position(1, 1),
                 new Position(2, 2),
@@ -237,9 +237,9 @@ namespace Tests.UnitTests.PossibleMoves.Helpers
             var boardScanner = _boardScannerFactory.Create(PieceColour.Black, Turn.Turn);
             var board = new BoardState();
             board.Board[4, 4].CurrentPiece = new Piece(PieceType.WhiteKnight);
-            var result = new HashSet<Position>();
+            var result = new List<Position>();
             boardScanner.ScanIn(Direction.NE, new Position(0, 0), board, result);
-            var expected = new HashSet<Position>
+            var expected = new List<Position>
             {
                 new Position(4, 4),
                 new Position(5, 5),
@@ -256,10 +256,10 @@ namespace Tests.UnitTests.PossibleMoves.Helpers
         {
             var boardScanner = _boardScannerFactory.Create(PieceColour.White, Turn.Turn);
             var board = new BoardState();
-            var result = new HashSet<Position>();
+            var result = new List<Position>();
             boardScanner.ScanIn(Direction.N, new Position(x, 0), board, result);
 
-            var expected = new HashSet<Position>
+            var expected = new List<Position>
             {
                 new Position(x, 1),
                 new Position(x, 2),

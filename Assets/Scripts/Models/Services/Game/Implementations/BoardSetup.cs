@@ -20,7 +20,7 @@ namespace Models.Services.Game.Implementations
             var boardState = new BoardState();
             var board = boardState.Board;
             pieces.ToList().ForEach(tup =>
-                board[tup.boardPosition.X, tup.boardPosition.Y].CurrentPiece = new Piece(tup.piece));
+                board[tup.boardPosition.X][tup.boardPosition.Y].CurrentPiece = new Piece(tup.piece));
             return boardState;
         }
     }

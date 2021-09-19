@@ -6,9 +6,9 @@ namespace Models.State.Board
 {
     public class BoardState
     {
-        public readonly Tile[,] Board;
+        public readonly Tile[][] Board;
 
-        public BoardState(Tile[,] board)
+        public BoardState(Tile[][] board)
         {
             Board = board;
             ActivePieces = new HashSet<Position>();
@@ -20,7 +20,7 @@ namespace Models.State.Board
             GenerateActivePieces();
         }
 
-        private BoardState(Tile[,] board, HashSet<Position> activePieces, HashSet<Position> activeBuilds,
+        private BoardState(Tile[][] board, HashSet<Position> activePieces, HashSet<Position> activeBuilds,
             HashSet<Position> activeBlackPieces, HashSet<Position> activeWhitePieces,
             HashSet<Position> activeBlackBuilds, HashSet<Position> activeWhiteBuilds)
         {
@@ -35,12 +35,16 @@ namespace Models.State.Board
 
         public BoardState()
         {
-            var board = new Tile[8, 8];
+            var board = new Tile[8][];
             for (var i = 0; i < 8; i++)
-            for (var j = 0; j < 8; j++)
-                board[i, j] = new Tile(
-                    new Position(i, j)
-                );
+            {
+                board[i] = new Tile[8];
+                for (var j = 0; j < 8; j++)
+                    board[i][j] = new Tile(
+                        new Position(i, j)
+                    );
+            }
+
             Board = board;
         }
 
@@ -53,8 +57,10 @@ namespace Models.State.Board
 
         private void GenerateActivePieces()
         {
-            foreach (var tile in Board)
+            for (var i = 0; i < 8; i++)
+            for (var j = 0; j < 8; j++)
             {
+                var tile = Board[i][j];
                 if (tile.CurrentPiece.Type != PieceType.NullPiece)
                 {
                     ActivePieces.Add(tile.Position);
@@ -77,10 +83,14 @@ namespace Models.State.Board
 
         public BoardState Clone()
         {
-            var newBoard = new Tile[8, 8];
+            var newBoard = new Tile[8][];
             for (var i = 0; i < 8; i++)
-            for (var j = 0; j < 8; j++)
-                newBoard[i, j] = Board[i, j].Clone();
+            {
+                newBoard[i] = new Tile[8];
+                for (var j = 0; j < 8; j++)
+                    newBoard[i][j] = Board[i][j].Clone();
+            }
+
             return new BoardState(newBoard, new HashSet<Position>(ActivePieces), new HashSet<Position>(ActiveBuilds),
                 new HashSet<Position>(ActiveBlackPieces), new HashSet<Position>(ActiveWhitePieces),
                 new HashSet<Position>(ActiveBlackBuilds), new HashSet<Position>(ActiveWhiteBuilds));
@@ -88,10 +98,14 @@ namespace Models.State.Board
 
         public BoardState CloneWithDecrementBuildState()
         {
-            var newBoard = new Tile[8, 8];
+            var newBoard = new Tile[8][];
             for (var i = 0; i < 8; i++)
-            for (var j = 0; j < 8; j++)
-                newBoard[i, j] = Board[i, j].CloneWithDecrementBuildState();
+            {
+                newBoard[i] = new Tile[8];
+                for (var j = 0; j < 8; j++)
+                    newBoard[i][j] = Board[i][j].CloneWithDecrementBuildState();
+            }
+
             return new BoardState(newBoard, new HashSet<Position>(ActivePieces), new HashSet<Position>(ActiveBuilds),
                 new HashSet<Position>(ActiveBlackPieces), new HashSet<Position>(ActiveWhitePieces),
                 new HashSet<Position>(ActiveBlackBuilds), new HashSet<Position>(ActiveWhiteBuilds));

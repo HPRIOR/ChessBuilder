@@ -19,8 +19,8 @@ namespace Models.Services.Build.Utils
             var activeBuilds = boardState.ActiveBuilds;
             var activePieces = boardState.ActivePieces;
 
-            foreach (var pos in activeBuilds) activeTiles.Add(board[pos.X, pos.Y]);
-            foreach (var pos in activePieces) activeTiles.Add(board[pos.X, pos.Y]);
+            foreach (var pos in activeBuilds) activeTiles.Add(board[pos.X][pos.Y]);
+            foreach (var pos in activePieces) activeTiles.Add(board[pos.X][pos.Y]);
             foreach (var tile in activeTiles)
             {
                 var pieceIsOfColourType = tile.CurrentPiece.Colour == pieceColour &&

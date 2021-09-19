@@ -52,7 +52,7 @@ namespace Tests.UnitTests.PossibleMoves.BuildMoves
             var boardState = new BoardState(board);
             _builder.GenerateNewBoardState(boardState, new Position(5, 5), PieceType.BlackKnight);
 
-            Assert.That(boardState.Board[5, 5].BuildTileState,
+            Assert.That(boardState.Board[5][5].BuildTileState,
                 Is.EqualTo(new BuildTileState(3, PieceType.BlackKnight)));
         }
 
@@ -61,10 +61,10 @@ namespace Tests.UnitTests.PossibleMoves.BuildMoves
         {
             var board = _boardGenerator.GenerateBoard();
             var boardState = new BoardState(board);
-            boardState.Board[5, 5].BuildTileState = new BuildTileState(PieceType.BlackPawn);
+            boardState.Board[5][5].BuildTileState = new BuildTileState(PieceType.BlackPawn);
             _builder.GenerateNewBoardState(boardState, new Position(5, 5), PieceType.BlackKnight);
 
-            Assert.That(boardState.Board[5, 5].BuildTileState,
+            Assert.That(boardState.Board[5][5].BuildTileState,
                 Is.EqualTo(new BuildTileState(3, PieceType.BlackKnight)));
         }
 
@@ -73,13 +73,13 @@ namespace Tests.UnitTests.PossibleMoves.BuildMoves
         {
             var board = _boardGenerator.GenerateBoard();
             var boardState = new BoardState(board);
-            boardState.Board[5, 5].BuildTileState = new BuildTileState(PieceType.BlackPawn);
+            boardState.Board[5][5].BuildTileState = new BuildTileState(PieceType.BlackPawn);
 
             _builder.GenerateNewBoardState(boardState, new Position(5, 5), PieceType.BlackKnight);
 
-            Assert.That(boardState.Board[5, 5].BuildTileState,
+            Assert.That(boardState.Board[5][5].BuildTileState,
                 Is.EqualTo(new BuildTileState(3, PieceType.BlackKnight)));
-            Assert.That(boardState.Board[5, 5].CurrentPiece.Type,
+            Assert.That(boardState.Board[5][5].CurrentPiece.Type,
                 Is.EqualTo(PieceType.NullPiece));
         }
 
@@ -88,7 +88,7 @@ namespace Tests.UnitTests.PossibleMoves.BuildMoves
         {
             var board = _boardGenerator.GenerateBoard();
             var boardState = new BoardState(board);
-            boardState.Board[5, 5].BuildTileState = new BuildTileState(PieceType.BlackPawn);
+            boardState.Board[5][5].BuildTileState = new BuildTileState(PieceType.BlackPawn);
 
             _builder.GenerateNewBoardState(boardState, new Position(5, 5), PieceType.BlackKnight);
 
@@ -100,7 +100,7 @@ namespace Tests.UnitTests.PossibleMoves.BuildMoves
         {
             var board = _boardGenerator.GenerateBoard();
             var boardState = new BoardState(board);
-            boardState.Board[5, 5].BuildTileState = new BuildTileState(PieceType.BlackPawn);
+            boardState.Board[5][5].BuildTileState = new BuildTileState(PieceType.BlackPawn);
 
             _builder.GenerateNewBoardState(boardState, new Position(5, 5), PieceType.BlackKnight);
 
@@ -113,7 +113,7 @@ namespace Tests.UnitTests.PossibleMoves.BuildMoves
         {
             var board = _boardGenerator.GenerateBoard();
             var boardState = new BoardState(board);
-            boardState.Board[5, 5].BuildTileState = new BuildTileState(PieceType.BlackPawn);
+            boardState.Board[5][5].BuildTileState = new BuildTileState(PieceType.BlackPawn);
 
             _builder.GenerateNewBoardState(boardState, new Position(5, 5), PieceType.BlackKnight);
 

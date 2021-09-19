@@ -69,7 +69,7 @@ namespace Models.Services.Moves.Utils
         {
             var (x, y) = (targetPosition.X, targetPosition.Y);
             return targetPosition != kingPosition &&
-                   boardState.Board[x, y].CurrentPiece.Type != PieceType.NullPiece;
+                   boardState.Board[x][y].CurrentPiece.Type != PieceType.NullPiece;
         }
 
 
@@ -96,7 +96,7 @@ namespace Models.Services.Moves.Utils
         private bool PieceIsScanner(KeyValuePair<Position, List<Position>> pieceMoves,
             BoardState boardState)
         {
-            var pieceAtBoardPosition = boardState.Board[pieceMoves.Key.X, pieceMoves.Key.Y].CurrentPiece.Type;
+            var pieceAtBoardPosition = boardState.Board[pieceMoves.Key.X][pieceMoves.Key.Y].CurrentPiece.Type;
             return _scanningPieces.Contains(pieceAtBoardPosition);
         }
 

@@ -19,7 +19,7 @@ namespace Models.Services.Build.BuildMoves
                 boardState.ActiveWhiteBuilds.Add(buildPosition);
 
             // modify board state 
-            boardState.Board[buildPosition.X, buildPosition.Y].BuildTileState = new BuildTileState(piece);
+            boardState.Board[buildPosition.X][buildPosition.Y].BuildTileState = new BuildTileState(piece);
         }
     }
 }

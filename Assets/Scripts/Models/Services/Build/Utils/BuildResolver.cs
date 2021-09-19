@@ -15,7 +15,7 @@ namespace Models.Services.Build.Utils
             var activeBuildPositions =
                 new List<Tile>(
                     boardState.ActiveBuilds.Select(position =>
-                        boardState.Board[position.X, position.Y])); //TODO remove linq
+                        boardState.Board[position.X][position.Y])); //TODO remove linq
 
             var resolvedBuilds = new List<(Position, PieceType)>();
             foreach (var tile in activeBuildPositions)

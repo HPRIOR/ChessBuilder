@@ -141,6 +141,6 @@ namespace Models.Services.Moves.Utils
         }
 
         private Piece PieceAt(Position position) =>
-            _boardState.Board[position.X, position.Y].CurrentPiece;
+            _boardState.Board[position.X][position.Y].CurrentPiece;
     }
 }

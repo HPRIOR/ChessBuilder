@@ -13,7 +13,7 @@ namespace Models.Services.AI.Implementations
             var blackPoints = 0;
             var whitePoints = 0;
             var activeTiles =
-                gameState.BoardState.ActivePieces.Select(pos => gameState.BoardState.Board[pos.X, pos.Y]);
+                gameState.BoardState.ActivePieces.Select(pos => gameState.BoardState.Board[pos.X][pos.Y]);
             foreach (var tile in activeTiles)
             {
                 var currentPiece = tile.CurrentPiece;

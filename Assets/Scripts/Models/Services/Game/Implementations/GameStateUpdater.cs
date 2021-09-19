@@ -99,8 +99,8 @@ namespace Models.Services.Game.Implementations
             // revert resolved pieces
             foreach (var (position, type) in gameStateChanges.ResolvedBuilds)
             {
-                GameState.BoardState.Board[position.X, position.Y].CurrentPiece = new Piece(PieceType.NullPiece);
-                GameState.BoardState.Board[position.X, position.Y].BuildTileState = new BuildTileState(0, type);
+                GameState.BoardState.Board[position.X][position.Y].CurrentPiece = new Piece(PieceType.NullPiece);
+                GameState.BoardState.Board[position.X][position.Y].BuildTileState = new BuildTileState(0, type);
                 GameState.BoardState.ActiveBuilds.Add(position);
                 GameState.BoardState.ActivePieces.Remove(position);
             }
@@ -109,16 +109,16 @@ namespace Models.Services.Game.Implementations
             var build = gameStateChanges.Build;
             if (build != null)
             {
-                GameState.BoardState.Board[build.At.X, build.At.Y].BuildTileState = new BuildTileState();
+                GameState.BoardState.Board[build.At.X][build.At.Y].BuildTileState = new BuildTileState();
                 GameState.BoardState.ActiveBuilds.Remove(build.At);
             }
 
             // increment decremented builds
             foreach (var decrementedTile in gameStateChanges.DecrementedTiles)
             {
-                var buildTileState = GameState.BoardState.Board[decrementedTile.X, decrementedTile.Y].BuildTileState;
+                var buildTileState = GameState.BoardState.Board[decrementedTile.X][decrementedTile.Y].BuildTileState;
                 if (buildTileState.BuildingPiece != PieceType.NullPiece)
-                    GameState.BoardState.Board[decrementedTile.X, decrementedTile.Y].BuildTileState =
+                    GameState.BoardState.Board[decrementedTile.X][decrementedTile.Y].BuildTileState =
                         new BuildTileState(buildTileState.Turns + 1, buildTileState.BuildingPiece);
             }
 
@@ -127,13 +127,13 @@ namespace Models.Services.Game.Implementations
             {
                 var movedToPosition = gameStateChanges.Move.To;
                 var movedFromPosition = gameStateChanges.Move.From;
-                var movedPiece = GameState.BoardState.Board[movedToPosition.X, movedToPosition.Y].CurrentPiece.Type;
+                var movedPiece = GameState.BoardState.Board[movedToPosition.X][movedToPosition.Y].CurrentPiece.Type;
 
-                GameState.BoardState.Board[movedToPosition.X, movedToPosition.Y].CurrentPiece =
+                GameState.BoardState.Board[movedToPosition.X][movedToPosition.Y].CurrentPiece =
                     new Piece(PieceType.NullPiece);
                 GameState.BoardState.ActivePieces.Remove(movedToPosition);
 
-                GameState.BoardState.Board[movedFromPosition.X, movedFromPosition.Y].CurrentPiece =
+                GameState.BoardState.Board[movedFromPosition.X][movedFromPosition.Y].CurrentPiece =
                     new Piece(movedPiece);
                 GameState.BoardState.ActivePieces.Add(movedFromPosition);
             }

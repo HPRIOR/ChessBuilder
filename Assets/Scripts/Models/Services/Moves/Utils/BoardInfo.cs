@@ -26,7 +26,7 @@ namespace Models.Services.Moves.Utils
             var enemyMoves = new Dictionary<Position, List<Position>>();
 
             var activeTiles = boardState.ActivePieces.ToArray()
-                .Select(position => boardState.Board[position.X, position.Y]);
+                .Select(position => boardState.Board[position.X][position.Y]);
 
             foreach (var tile in activeTiles)
             {

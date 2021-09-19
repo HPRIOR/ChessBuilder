@@ -48,27 +48,27 @@ namespace Tests.UnitTests.Controllers.PieceMovers
         public void EvacuatedTilePieceIsNull()
         {
             var board = _boardGenerator.GenerateBoard();
-            board[1, 1].CurrentPiece = new Piece(PieceType.BlackKing);
-            Assert.AreNotEqual(PieceType.NullPiece, board[1, 1].CurrentPiece.Type);
+            board[1][1].CurrentPiece = new Piece(PieceType.BlackKing);
+            Assert.AreNotEqual(PieceType.NullPiece, board[1][1].CurrentPiece.Type);
 
             var boardState = new BoardState(board);
 
             _pieceMover.ModifyBoardState(boardState, new Position(1, 1), new Position(2, 2));
-            Assert.AreEqual(PieceType.NullPiece, boardState.Board[1, 1].CurrentPiece.Type);
+            Assert.AreEqual(PieceType.NullPiece, boardState.Board[1][1].CurrentPiece.Type);
         }
 
         [Test]
         public void PieceInTileIsDisplacedOnMove()
         {
             var board = _boardGenerator.GenerateBoard();
-            board[1, 1].CurrentPiece = new Piece(PieceType.BlackKing);
-            board[2, 2].CurrentPiece = new Piece(PieceType.WhiteKing);
+            board[1][1].CurrentPiece = new Piece(PieceType.BlackKing);
+            board[2][2].CurrentPiece = new Piece(PieceType.WhiteKing);
 
             var boardState = new BoardState(board);
 
             _pieceMover.ModifyBoardState(boardState, new Position(1, 1), new Position(2, 2));
-            Assert.AreEqual(PieceType.BlackKing, boardState.Board[2, 2].CurrentPiece.Type);
-            Assert.AreEqual(PieceType.NullPiece, boardState.Board[1, 1].CurrentPiece.Type);
+            Assert.AreEqual(PieceType.BlackKing, boardState.Board[2][2].CurrentPiece.Type);
+            Assert.AreEqual(PieceType.NullPiece, boardState.Board[1][1].CurrentPiece.Type);
         }
 
 
@@ -76,14 +76,14 @@ namespace Tests.UnitTests.Controllers.PieceMovers
         public void TileContainsNewPiece()
         {
             var board = _boardGenerator.GenerateBoard();
-            board[1, 1].CurrentPiece = new Piece(PieceType.BlackKing);
+            board[1][1].CurrentPiece = new Piece(PieceType.BlackKing);
             var boardState = new BoardState(board);
 
-            var oldPiece = board[1, 1].CurrentPiece;
+            var oldPiece = board[1][1].CurrentPiece;
 
             _pieceMover.ModifyBoardState(boardState, new Position(1, 1), new Position(2, 2));
 
-            var newPiece = boardState.Board[2, 2].CurrentPiece;
+            var newPiece = boardState.Board[2][2].CurrentPiece;
             Assert.AreNotSame(oldPiece, newPiece);
         }
 
@@ -91,7 +91,7 @@ namespace Tests.UnitTests.Controllers.PieceMovers
         public void ActivePiecesModified()
         {
             var board = _boardGenerator.GenerateBoard();
-            board[1, 1].CurrentPiece = new Piece(PieceType.BlackKing);
+            board[1][1].CurrentPiece = new Piece(PieceType.BlackKing);
             var boardState = new BoardState(board);
 
             Assert.That(boardState.ActivePieces, Is.EquivalentTo(new HashSet<Position> { new Position(1, 1) }));
@@ -105,7 +105,7 @@ namespace Tests.UnitTests.Controllers.PieceMovers
         public void ActiveWhitePiecesModified()
         {
             var board = _boardGenerator.GenerateBoard();
-            board[1, 1].CurrentPiece = new Piece(PieceType.WhiteKing);
+            board[1][1].CurrentPiece = new Piece(PieceType.WhiteKing);
             var boardState = new BoardState(board);
 
             Assert.That(boardState.ActiveWhitePieces, Is.EquivalentTo(new HashSet<Position> { new Position(1, 1) }));
@@ -118,7 +118,7 @@ namespace Tests.UnitTests.Controllers.PieceMovers
         public void ActiveBlackPiecesModified()
         {
             var board = _boardGenerator.GenerateBoard();
-            board[1, 1].CurrentPiece = new Piece(PieceType.BlackKing);
+            board[1][1].CurrentPiece = new Piece(PieceType.BlackKing);
             var boardState = new BoardState(board);
 
             Assert.That(boardState.ActiveBlackPieces, Is.EquivalentTo(new HashSet<Position> { new Position(1, 1) }));
@@ -131,8 +131,8 @@ namespace Tests.UnitTests.Controllers.PieceMovers
         public void OnTakeActiveOppositePiecesAreModified()
         {
             var board = _boardGenerator.GenerateBoard();
-            board[1, 1].CurrentPiece = new Piece(PieceType.BlackKing);
-            board[2, 2].CurrentPiece = new Piece(PieceType.WhitePawn);
+            board[1][1].CurrentPiece = new Piece(PieceType.BlackKing);
+            board[2][2].CurrentPiece = new Piece(PieceType.WhitePawn);
             var boardState = new BoardState(board);
 
             Assert.That(boardState.ActiveBlackPieces, Is.EquivalentTo(new HashSet<Position> { new Position(1, 1) }));

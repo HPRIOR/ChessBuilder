@@ -19,8 +19,10 @@ namespace View.Renderers
         {
             GameObjectDestroyer.DestroyChildrenOfObjectWith("BuildingPieces");
             var board = newState.Board;
-            foreach (var tile in board)
+            for (var i = 0; i < 8; i++)
+            for (var j = 0; j < 8; j++)
             {
+                var tile = board[i][j];
                 var isBuilding = tile.BuildTileState.BuildingPiece != PieceType.NullPiece;
                 if (isBuilding)
                     _buildingPieceFactory.Create(tile.BuildTileState, tile.Position);

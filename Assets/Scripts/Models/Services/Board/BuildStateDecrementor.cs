@@ -9,8 +9,10 @@ namespace Models.Services.Board
         public static IEnumerable<Position> DecrementBuilds(BoardState boardState)
         {
             var decrementedTiles = new List<Position>();
-            foreach (var tile in boardState.Board)
+            for (var i = 0; i < 8; i++)
+            for (var j = 0; j < 8; j++)
             {
+                var tile = boardState.Board[i][j];
                 var pieceBeingBuilt = tile.BuildTileState.BuildingPiece != PieceType.NullPiece;
                 if (pieceBeingBuilt)
                 {

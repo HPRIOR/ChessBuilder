@@ -22,8 +22,8 @@ namespace Models.Services.Moves.Utils
 
         public Tile GetRelativeTileAt(Position position, BoardState boardState) =>
             _pieceColour == PieceColour.White
-                ? boardState.Board[position.X, position.Y]
-                : boardState.Board[Math.Abs(position.X - 7), Math.Abs(position.Y - 7)];
+                ? boardState.Board[position.X][position.Y]
+                : boardState.Board[Math.Abs(position.X - 7)][Math.Abs(position.Y - 7)];
 
         public class Factory : PlaceholderFactory<PieceColour, PositionTranslator>
         {

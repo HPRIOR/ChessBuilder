@@ -14,8 +14,8 @@ namespace Models.Services.Moves.MoveGenerators
             ModifyActivePieces(boardState, from, destination);
 
             // modify board state
-            var destinationTile = boardState.Board[destination.X, destination.Y];
-            var fromTile = boardState.Board[from.X, from.Y];
+            var destinationTile = boardState.Board[destination.X][destination.Y];
+            var fromTile = boardState.Board[from.X][from.Y];
 
             // swap pieces
             destinationTile.CurrentPiece = fromTile.CurrentPiece;
@@ -30,7 +30,7 @@ namespace Models.Services.Moves.MoveGenerators
             boardState.ActivePieces.Remove(from);
             boardState.ActivePieces.Add(destination);
 
-            var currentPiece = boardState.Board[from.X, from.Y].CurrentPiece.Type;
+            var currentPiece = boardState.Board[from.X][from.Y].CurrentPiece.Type;
 
             if (TileContainsPieceAt(destination, boardState))
                 if (currentPiece != PieceType.NullPiece)
@@ -66,6 +66,6 @@ namespace Models.Services.Moves.MoveGenerators
         }
 
         private static bool TileContainsPieceAt(Position position, BoardState boardState) =>
-            boardState.Board[position.X, position.Y].CurrentPiece.Type != PieceType.NullPiece;
+            boardState.Board[position.X][position.Y].CurrentPiece.Type != PieceType.NullPiece;
     }
 }

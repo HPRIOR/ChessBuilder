@@ -45,7 +45,7 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
         {
             {
                 var board = _boardGenerator.GenerateBoard();
-                board[1, 1].CurrentPiece = new Piece(pieceType);
+                board[1][1].CurrentPiece = new Piece(pieceType);
 
                 var boardState = new BoardState(board);
                 var moveState =
@@ -62,7 +62,7 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
         )
         {
             var board = _boardGenerator.GenerateBoard();
-            board[1, 1].CurrentPiece = new Piece(pieceType);
+            board[1][1].CurrentPiece = new Piece(pieceType);
 
             var boardState = new BoardState(board);
             var moveState =
@@ -78,7 +78,7 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
         )
         {
             var board = _boardGenerator.GenerateBoard();
-            board[1, 1].CurrentPiece = new Piece(pieceType);
+            board[1][1].CurrentPiece = new Piece(pieceType);
 
             var boardState = new BoardState(board);
             var moveState =
@@ -94,7 +94,7 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
         )
         {
             var board = _boardGenerator.GenerateBoard();
-            board[1, 1].CurrentPiece = new Piece(pieceType);
+            board[1][1].CurrentPiece = new Piece(pieceType);
 
 
             var boardState = new BoardState(board);
@@ -107,9 +107,9 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
         public void WhenCheckedAndNoInterceptAvailable_OnlyKingCanMoveToAvoid()
         {
             var board = _boardGenerator.GenerateBoard();
-            board[1, 6].CurrentPiece = new Piece(PieceType.BlackKing);
-            board[4, 6].CurrentPiece = new Piece(PieceType.BlackPawn);
-            board[1, 1].CurrentPiece = new Piece(PieceType.WhiteQueen);
+            board[1][6].CurrentPiece = new Piece(PieceType.BlackKing);
+            board[4][6].CurrentPiece = new Piece(PieceType.BlackPawn);
+            board[1][1].CurrentPiece = new Piece(PieceType.WhiteQueen);
 
             var boardState = new BoardState(board);
 
@@ -123,9 +123,9 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
         {
             var blackQueenPosition = new Position(4, 6);
             var board = _boardGenerator.GenerateBoard();
-            board[1, 6].CurrentPiece = new Piece(PieceType.BlackKing);
-            board[4, 6].CurrentPiece = new Piece(PieceType.BlackQueen);
-            board[1, 1].CurrentPiece = new Piece(PieceType.WhiteQueen);
+            board[1][6].CurrentPiece = new Piece(PieceType.BlackKing);
+            board[4][6].CurrentPiece = new Piece(PieceType.BlackQueen);
+            board[1][1].CurrentPiece = new Piece(PieceType.WhiteQueen);
 
             var boardState = new BoardState(board);
 
@@ -140,9 +140,9 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
         )
         {
             var board = _boardGenerator.GenerateBoard();
-            board[1, 6].CurrentPiece = new Piece(PieceType.BlackKing);
-            board[4, 6].CurrentPiece = new Piece(PieceType.BlackPawn);
-            board[1, 1].CurrentPiece = new Piece(PieceType.WhiteQueen);
+            board[1][6].CurrentPiece = new Piece(PieceType.BlackKing);
+            board[4][6].CurrentPiece = new Piece(PieceType.BlackPawn);
+            board[1][1].CurrentPiece = new Piece(PieceType.WhiteQueen);
 
             var boardState = new BoardState(board);
 
@@ -155,10 +155,10 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
         public void WhenCheckByMoreThanOnePiece_OnlyKingCanMove()
         {
             var board = _boardGenerator.GenerateBoard();
-            board[1, 6].CurrentPiece = new Piece(PieceType.BlackKing);
-            board[4, 6].CurrentPiece = new Piece(PieceType.BlackQueen);
-            board[1, 1].CurrentPiece = new Piece(PieceType.WhiteQueen);
-            board[6, 1].CurrentPiece = new Piece(PieceType.WhiteQueen);
+            board[1][6].CurrentPiece = new Piece(PieceType.BlackKing);
+            board[4][6].CurrentPiece = new Piece(PieceType.BlackQueen);
+            board[1][1].CurrentPiece = new Piece(PieceType.WhiteQueen);
+            board[6][1].CurrentPiece = new Piece(PieceType.WhiteQueen);
 
             var boardState = new BoardState(board);
 
@@ -176,9 +176,9 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
         public void WhenCheckByMoreThanOnePiece_KingsMovesAreReducesByAll()
         {
             var board = _boardGenerator.GenerateBoard();
-            board[1, 6].CurrentPiece = new Piece(PieceType.BlackKing);
-            board[1, 1].CurrentPiece = new Piece(PieceType.WhiteQueen);
-            board[6, 1].CurrentPiece = new Piece(PieceType.WhiteQueen);
+            board[1][6].CurrentPiece = new Piece(PieceType.BlackKing);
+            board[1][1].CurrentPiece = new Piece(PieceType.WhiteQueen);
+            board[6][1].CurrentPiece = new Piece(PieceType.WhiteQueen);
 
             var boardState = new BoardState(board);
 
@@ -200,9 +200,9 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
         public void WhenInCheck_OnlyInterceptingMovesAreGiven()
         {
             var board = _boardGenerator.GenerateBoard();
-            board[0, 0].CurrentPiece = new Piece(PieceType.WhiteKing);
-            board[3, 5].CurrentPiece = new Piece(PieceType.WhiteQueen);
-            board[7, 7].CurrentPiece = new Piece(PieceType.BlackQueen);
+            board[0][0].CurrentPiece = new Piece(PieceType.WhiteKing);
+            board[3][5].CurrentPiece = new Piece(PieceType.WhiteQueen);
+            board[7][7].CurrentPiece = new Piece(PieceType.BlackQueen);
 
 
             var boardState = new BoardState(board);
@@ -223,9 +223,9 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
         public void WhenInCheck_InterceptingMovesIncludeCheckingPiece()
         {
             var board = _boardGenerator.GenerateBoard();
-            board[0, 0].CurrentPiece = new Piece(PieceType.WhiteKing);
-            board[3, 3].CurrentPiece = new Piece(PieceType.WhiteQueen);
-            board[1, 1].CurrentPiece = new Piece(PieceType.BlackPawn);
+            board[0][0].CurrentPiece = new Piece(PieceType.WhiteKing);
+            board[3][3].CurrentPiece = new Piece(PieceType.WhiteQueen);
+            board[1][1].CurrentPiece = new Piece(PieceType.BlackPawn);
 
 
             var boardState = new BoardState(board);
@@ -244,9 +244,9 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
         public void PawnCanCheckKing()
         {
             var board = _boardGenerator.GenerateBoard();
-            board[0, 0].CurrentPiece = new Piece(PieceType.WhiteKing);
-            board[4, 2].CurrentPiece = new Piece(PieceType.WhiteQueen);
-            board[1, 1].CurrentPiece = new Piece(PieceType.BlackPawn);
+            board[0][0].CurrentPiece = new Piece(PieceType.WhiteKing);
+            board[4][2].CurrentPiece = new Piece(PieceType.WhiteQueen);
+            board[1][1].CurrentPiece = new Piece(PieceType.BlackPawn);
 
             var boardState = new BoardState(board);
 
@@ -260,8 +260,8 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
         public void KingCanTakeToAvoidCheck()
         {
             var board = _boardGenerator.GenerateBoard();
-            board[0, 0].CurrentPiece = new Piece(PieceType.WhiteKing);
-            board[1, 1].CurrentPiece = new Piece(PieceType.BlackKing);
+            board[0][0].CurrentPiece = new Piece(PieceType.WhiteKing);
+            board[1][1].CurrentPiece = new Piece(PieceType.BlackKing);
 
 
             var boardState = new BoardState(board);
@@ -276,8 +276,8 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
         public void PawnTakingMovesAreTakenFromKingMoves()
         {
             var board = _boardGenerator.GenerateBoard();
-            board[4, 4].CurrentPiece = new Piece(PieceType.WhiteKing);
-            board[4, 6].CurrentPiece = new Piece(PieceType.BlackPawn);
+            board[4][4].CurrentPiece = new Piece(PieceType.WhiteKing);
+            board[4][6].CurrentPiece = new Piece(PieceType.BlackPawn);
 
 
             var boardState = new BoardState(board);
@@ -296,9 +296,9 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
         public void WhenInCheck_PawnTakingMovesAreTakenFromKingMoves()
         {
             var board = _boardGenerator.GenerateBoard();
-            board[4, 4].CurrentPiece = new Piece(PieceType.WhiteKing);
-            board[4, 6].CurrentPiece = new Piece(PieceType.BlackPawn);
-            board[7, 4].CurrentPiece = new Piece(PieceType.BlackRook);
+            board[4][4].CurrentPiece = new Piece(PieceType.WhiteKing);
+            board[4][6].CurrentPiece = new Piece(PieceType.BlackPawn);
+            board[7][4].CurrentPiece = new Piece(PieceType.BlackRook);
 
             var boardState = new BoardState(board);
 
@@ -317,9 +317,9 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
         public void WhenInCheck_MoveStateIsCheck()
         {
             var board = _boardGenerator.GenerateBoard();
-            board[4, 4].CurrentPiece = new Piece(PieceType.WhiteKing);
-            board[4, 6].CurrentPiece = new Piece(PieceType.BlackPawn);
-            board[7, 4].CurrentPiece = new Piece(PieceType.BlackRook);
+            board[4][4].CurrentPiece = new Piece(PieceType.WhiteKing);
+            board[4][6].CurrentPiece = new Piece(PieceType.BlackPawn);
+            board[7][4].CurrentPiece = new Piece(PieceType.BlackRook);
 
 
             var boardState = new BoardState(board);
@@ -335,8 +335,8 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
         public void WhenNotInCheck_MoveStateIsNot()
         {
             var board = _boardGenerator.GenerateBoard();
-            board[4, 4].CurrentPiece = new Piece(PieceType.WhiteKing);
-            board[4, 6].CurrentPiece = new Piece(PieceType.BlackPawn);
+            board[4][4].CurrentPiece = new Piece(PieceType.WhiteKing);
+            board[4][6].CurrentPiece = new Piece(PieceType.BlackPawn);
 
 
             var boardState = new BoardState(board);
@@ -351,9 +351,9 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
         public void KingCannotTakeProtectedPiece()
         {
             var board = _boardGenerator.GenerateBoard();
-            board[4, 4].CurrentPiece = new Piece(PieceType.WhiteKing);
-            board[4, 5].CurrentPiece = new Piece(PieceType.BlackPawn);
-            board[7, 5].CurrentPiece = new Piece(PieceType.BlackRook);
+            board[4][4].CurrentPiece = new Piece(PieceType.WhiteKing);
+            board[4][5].CurrentPiece = new Piece(PieceType.BlackPawn);
+            board[7][5].CurrentPiece = new Piece(PieceType.BlackRook);
 
 
             var boardState = new BoardState(board);
@@ -370,9 +370,9 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
         public void RookCanPinPiece()
         {
             var board = _boardGenerator.GenerateBoard();
-            board[3, 4].CurrentPiece = new Piece(PieceType.WhiteKing);
-            board[4, 4].CurrentPiece = new Piece(PieceType.WhitePawn);
-            board[7, 4].CurrentPiece = new Piece(PieceType.BlackRook);
+            board[3][4].CurrentPiece = new Piece(PieceType.WhiteKing);
+            board[4][4].CurrentPiece = new Piece(PieceType.WhitePawn);
+            board[7][4].CurrentPiece = new Piece(PieceType.BlackRook);
 
 
             var boardState = new BoardState(board);
@@ -389,9 +389,9 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
         public void QueenCanPinPiece()
         {
             var board = _boardGenerator.GenerateBoard();
-            board[3, 4].CurrentPiece = new Piece(PieceType.WhiteKing);
-            board[4, 4].CurrentPiece = new Piece(PieceType.WhitePawn);
-            board[7, 4].CurrentPiece = new Piece(PieceType.BlackQueen);
+            board[3][4].CurrentPiece = new Piece(PieceType.WhiteKing);
+            board[4][4].CurrentPiece = new Piece(PieceType.WhitePawn);
+            board[7][4].CurrentPiece = new Piece(PieceType.BlackQueen);
 
 
             var boardState = new BoardState(board);
@@ -408,9 +408,9 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
         public void BishopCanPinPiece()
         {
             var board = _boardGenerator.GenerateBoard();
-            board[3, 4].CurrentPiece = new Piece(PieceType.WhiteKing);
-            board[4, 3].CurrentPiece = new Piece(PieceType.WhitePawn);
-            board[7, 0].CurrentPiece = new Piece(PieceType.BlackBishop);
+            board[3][4].CurrentPiece = new Piece(PieceType.WhiteKing);
+            board[4][3].CurrentPiece = new Piece(PieceType.WhitePawn);
+            board[7][0].CurrentPiece = new Piece(PieceType.BlackBishop);
 
 
             var boardState = new BoardState(board);
@@ -426,9 +426,9 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
         public void WhenPinned_PieceCanTakePinningPiece()
         {
             var board = _boardGenerator.GenerateBoard();
-            board[3, 4].CurrentPiece = new Piece(PieceType.WhiteKing);
-            board[4, 3].CurrentPiece = new Piece(PieceType.WhiteQueen);
-            board[7, 0].CurrentPiece = new Piece(PieceType.BlackBishop);
+            board[3][4].CurrentPiece = new Piece(PieceType.WhiteKing);
+            board[4][3].CurrentPiece = new Piece(PieceType.WhiteQueen);
+            board[7][0].CurrentPiece = new Piece(PieceType.BlackBishop);
 
 
             var boardState = new BoardState(board);
@@ -444,10 +444,10 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
         public void PinIsBlockedByFriendInBetween()
         {
             var board = _boardGenerator.GenerateBoard();
-            board[3, 4].CurrentPiece = new Piece(PieceType.WhiteKing);
-            board[4, 3].CurrentPiece = new Piece(PieceType.WhiteQueen);
-            board[6, 1].CurrentPiece = new Piece(PieceType.BlackBishop);
-            board[7, 0].CurrentPiece = new Piece(PieceType.BlackBishop);
+            board[3][4].CurrentPiece = new Piece(PieceType.WhiteKing);
+            board[4][3].CurrentPiece = new Piece(PieceType.WhiteQueen);
+            board[6][1].CurrentPiece = new Piece(PieceType.BlackBishop);
+            board[7][0].CurrentPiece = new Piece(PieceType.BlackBishop);
 
 
             var boardState = new BoardState(board);
@@ -463,10 +463,10 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
         public void PinIsBlockedByEnemyInBetween()
         {
             var board = _boardGenerator.GenerateBoard();
-            board[3, 4].CurrentPiece = new Piece(PieceType.WhiteKing);
-            board[4, 3].CurrentPiece = new Piece(PieceType.WhiteQueen);
-            board[6, 1].CurrentPiece = new Piece(PieceType.WhiteBishop);
-            board[7, 0].CurrentPiece = new Piece(PieceType.BlackBishop);
+            board[3][4].CurrentPiece = new Piece(PieceType.WhiteKing);
+            board[4][3].CurrentPiece = new Piece(PieceType.WhiteQueen);
+            board[6][1].CurrentPiece = new Piece(PieceType.WhiteBishop);
+            board[7][0].CurrentPiece = new Piece(PieceType.BlackBishop);
 
 
             var boardState = new BoardState(board);
@@ -483,9 +483,9 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
         public void WhenPinned_PieceCanMoveIntoAnotherBlockingPosition()
         {
             var board = _boardGenerator.GenerateBoard();
-            board[3, 4].CurrentPiece = new Piece(PieceType.WhiteKing);
-            board[4, 3].CurrentPiece = new Piece(PieceType.WhiteQueen);
-            board[7, 0].CurrentPiece = new Piece(PieceType.BlackBishop);
+            board[3][4].CurrentPiece = new Piece(PieceType.WhiteKing);
+            board[4][3].CurrentPiece = new Piece(PieceType.WhiteQueen);
+            board[7][0].CurrentPiece = new Piece(PieceType.BlackBishop);
 
 
             var boardState = new BoardState(board);
@@ -503,9 +503,9 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
         public void QueenPinnedByEnemyQueen()
         {
             var board = _boardGenerator.GenerateBoard();
-            board[4, 1].CurrentPiece = new Piece(PieceType.WhiteKing);
-            board[3, 2].CurrentPiece = new Piece(PieceType.WhiteQueen);
-            board[1, 4].CurrentPiece = new Piece(PieceType.BlackQueen);
+            board[4][1].CurrentPiece = new Piece(PieceType.WhiteKing);
+            board[3][2].CurrentPiece = new Piece(PieceType.WhiteQueen);
+            board[1][4].CurrentPiece = new Piece(PieceType.BlackQueen);
 
 
             var boardState = new BoardState(board);
@@ -524,10 +524,10 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
         public void WithPieceBehindKingOfPinnedPiece_PieceIsPinned()
         {
             var board = _boardGenerator.GenerateBoard();
-            board[2, 7].CurrentPiece = new Piece(PieceType.BlackPawn);
-            board[3, 6].CurrentPiece = new Piece(PieceType.BlackKing);
-            board[4, 5].CurrentPiece = new Piece(PieceType.BlackBishop);
-            board[6, 3].CurrentPiece = new Piece(PieceType.WhiteQueen);
+            board[2][7].CurrentPiece = new Piece(PieceType.BlackPawn);
+            board[3][6].CurrentPiece = new Piece(PieceType.BlackKing);
+            board[4][5].CurrentPiece = new Piece(PieceType.BlackBishop);
+            board[6][3].CurrentPiece = new Piece(PieceType.WhiteQueen);
 
             var boardState = new BoardState(board);
 

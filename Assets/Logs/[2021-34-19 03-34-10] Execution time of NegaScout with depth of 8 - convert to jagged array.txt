@@ -1,0 +1,4 @@
+Execution time of NegaScout with depth of 8 - convert to jagged array: 
+      21194 ms 
+      21 s 
+      0 min

@@ -47,7 +47,7 @@ namespace Tests.UnitTests.PossibleMoves.BuildMoves
         public void PointsAreSubtracted_ByBuildingPiece()
         {
             var board = _boardGenerator.GenerateBoard();
-            board[1, 1].BuildTileState = new BuildTileState(PieceType.BlackQueen);
+            board[1][1].BuildTileState = new BuildTileState(PieceType.BlackQueen);
 
 
             var boardState = new BoardState(board);
@@ -64,7 +64,7 @@ namespace Tests.UnitTests.PossibleMoves.BuildMoves
         public void PointsAreSubtracted_ByBuildPiece()
         {
             var board = _boardGenerator.GenerateBoard();
-            board[1, 1].CurrentPiece = new Piece(PieceType.BlackQueen);
+            board[1][1].CurrentPiece = new Piece(PieceType.BlackQueen);
 
 
             var boardState = new BoardState(board);
@@ -81,8 +81,8 @@ namespace Tests.UnitTests.PossibleMoves.BuildMoves
         public void PointsAreSubtracted_ByBuiltPiece_AndBuildingPiece()
         {
             var board = _boardGenerator.GenerateBoard();
-            board[1, 1].BuildTileState = new BuildTileState(PieceType.BlackQueen);
-            board[2, 2].CurrentPiece = new Piece(PieceType.BlackPawn);
+            board[1][1].BuildTileState = new BuildTileState(PieceType.BlackQueen);
+            board[2][2].CurrentPiece = new Piece(PieceType.BlackPawn);
 
 
             var boardState = new BoardState(board);
@@ -102,8 +102,8 @@ namespace Tests.UnitTests.PossibleMoves.BuildMoves
             var queen = pieceColour == PieceColour.Black ? PieceType.BlackQueen : PieceType.WhiteQueen;
 
             var board = _boardGenerator.GenerateBoard();
-            board[1, 1].BuildTileState = new BuildTileState(queen);
-            board[2, 2].CurrentPiece = new Piece(pawn);
+            board[1][1].BuildTileState = new BuildTileState(queen);
+            board[2][2].CurrentPiece = new Piece(pawn);
 
 
             var boardState = new BoardState(board);
@@ -120,7 +120,7 @@ namespace Tests.UnitTests.PossibleMoves.BuildMoves
         public void KingPieceDoesNotCount()
         {
             var board = _boardGenerator.GenerateBoard();
-            board[2, 2].CurrentPiece = new Piece(PieceType.BlackKing);
+            board[2][2].CurrentPiece = new Piece(PieceType.BlackKing);
         }
     }
 }

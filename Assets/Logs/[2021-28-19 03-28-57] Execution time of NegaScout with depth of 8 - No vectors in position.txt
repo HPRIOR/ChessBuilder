@@ -1,0 +1,4 @@
+Execution time of NegaScout with depth of 8 - No vectors in position: 
+      19336 ms 
+      19 s 
+      0 min

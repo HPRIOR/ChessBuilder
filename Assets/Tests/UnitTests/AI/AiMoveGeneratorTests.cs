@@ -58,6 +58,7 @@ namespace Tests.UnitTests.AI
             AiMoveGeneratorInstaller.Install(Container);
             StaticEvaluatorInstaller.Install(Container);
             MoveOrdererInstaller.Install(Container);
+            CheckedStateManagerInstaller.Install(Container);
         }
 
         private void ResolveContainer()
@@ -118,7 +119,7 @@ namespace Tests.UnitTests.AI
             var depth = 8;
             
             logTimer.LogExecutionTime(
-                $"NegaScout with depth of {depth.ToString()} - tile as ref struct",
+                $"NegaScout with depth of {depth.ToString()} - remove allocation in possible move eval",
                 () => _aiMoveGenerator.GetMove(gameState, depth, PieceColour.White));
 
             // var move = _miniMax.GetMove(gameState, depth, PieceColour.White);

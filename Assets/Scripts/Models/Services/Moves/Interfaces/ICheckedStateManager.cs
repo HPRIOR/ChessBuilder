@@ -10,6 +10,6 @@ namespace Models.Services.Moves.Interfaces
         void EvaluateCheck(IDictionary<Position, List<Position>> nonTurnMoves,
             Position kingPosition);
 
-        void UpdatePossibleMovesWhenInCheck(IBoardInfo boardInfo);
+        void UpdatePossibleMovesWhenInCheck(IBoardInfo boardInfo, BoardState boardState);
     }
 }

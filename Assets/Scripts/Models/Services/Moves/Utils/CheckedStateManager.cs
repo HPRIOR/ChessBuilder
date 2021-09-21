@@ -19,13 +19,8 @@ namespace Models.Services.Moves.Utils
             PieceType.WhiteBishop
         };
 
-        private readonly BoardState _boardState;
         private IEnumerable<Position> _checkingPieces;
 
-        public CheckedStateManager(BoardState boardState)
-        {
-            _boardState = boardState;
-        }
 
         public bool IsCheck { get; private set; }
 
@@ -50,7 +45,7 @@ namespace Models.Services.Moves.Utils
         /// </summary>
         /// <param name="boardInfo"></param>
         /// <returns></returns>
-        public void UpdatePossibleMovesWhenInCheck(IBoardInfo boardInfo)
+        public void UpdatePossibleMovesWhenInCheck(IBoardInfo boardInfo, BoardState boardState)
         {
             var checkedWithSinglePiece = _checkingPieces.Count() == 1;
             var checkedWithMultiplePieces = _checkingPieces.Count() > 1;
@@ -60,7 +55,7 @@ namespace Models.Services.Moves.Utils
 
             if (checkedWithMultiplePieces) RemoveAllNonKingMoves(boardInfo.TurnMoves, boardInfo.KingPosition);
 
-            RemoveEnemyMovesFromKingMoves(boardInfo.TurnMoves, boardInfo.EnemyMoves, boardInfo.KingPosition);
+            RemoveEnemyMovesFromKingMoves(boardInfo.TurnMoves, boardInfo.EnemyMoves, boardInfo.KingPosition, boardState);
         }
 
         private static IEnumerable<Position> GetCheckingPieces(IDictionary<Position, List<Position>> enemyMoves,
@@ -114,14 +109,14 @@ namespace Models.Services.Moves.Utils
 
         private void RemoveEnemyMovesFromKingMoves(IDictionary<Position, List<Position>> turnMoves,
             IDictionary<Position, List<Position>> enemyMoves,
-            Position kingPosition)
+            Position kingPosition, BoardState boardState)
         {
             // this won't remove the moves of scanning pieces past king 
             KingMoveFilter.RemoveEnemyMovesFromKingMoves(turnMoves, enemyMoves, kingPosition);
 
             // extra logic needed here to do that
             foreach (var checkingPiecePosition in _checkingPieces)
-                if (ScanningPieces.Contains(PieceAt(checkingPiecePosition).Type))
+                if (ScanningPieces.Contains(PieceAt(checkingPiecePosition, boardState).Type))
                 {
                     // remove extended possible moves that go 'through' king
                     var movesExtendedThroughKing =
@@ -140,7 +135,7 @@ namespace Models.Services.Moves.Utils
                     turnMove.Value.Clear();
         }
 
-        private Piece PieceAt(Position position) =>
-            _boardState.Board[position.X][position.Y].CurrentPiece;
+        private Piece PieceAt(Position position, BoardState boardState) =>
+            boardState.Board[position.X][position.Y].CurrentPiece;
     }
 }

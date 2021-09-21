@@ -33,6 +33,7 @@ namespace Bindings.MonoInstallers
             PossibleMovesFactoryInstaller.Install(Container);
             TileEvaluatorInstaller.Install(Container);
             TileFactoryInstaller.Install(Container);
+            CheckedStateManagerInstaller.Install(Container);
         }
     }
 }

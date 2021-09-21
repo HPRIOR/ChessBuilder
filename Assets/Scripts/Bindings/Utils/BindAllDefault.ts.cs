@@ -36,6 +36,7 @@ namespace Bindings.Utils
             GameInitializerInstaller.Install(container);
             BuilderInstaller.Install(container);
             BuildStateDecrementorInstaller.Install(container);
+            CheckedStateManagerInstaller.Install(container);
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Models.Services.Build.Interfaces;
 using Models.State.Board;
 using Models.State.PieceState;
@@ -14,15 +16,13 @@ namespace Models.Services.Build.Utils
             int maxPoints)
         {
             var result = 0;
-            var activeTiles = new List<Tile>();
-            var board = boardState.Board;
             var activeBuilds = boardState.ActiveBuilds;
             var activePieces = boardState.ActivePieces;
-
-            foreach (var pos in activeBuilds) activeTiles.Add(board[pos.X][pos.Y]);
-            foreach (var pos in activePieces) activeTiles.Add(board[pos.X][pos.Y]);
-            foreach (var tile in activeTiles)
+            var activePositions = activeBuilds.Union(activePieces);
+            
+            foreach (var pos in activePositions)
             {
+                ref var tile = ref boardState.GetTileAt(pos);
                 var pieceIsOfColourType = tile.CurrentPiece.Colour == pieceColour &&
                                           tile.CurrentPiece.Type != PieceType.NullPiece;
                 if (pieceIsOfColourType)

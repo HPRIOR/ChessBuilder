@@ -1,0 +1,4 @@
+Execution time of NegaScout with depth of 8 - tile as ref struct: 
+      11953 ms 
+      11 s 
+      0 min

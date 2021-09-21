@@ -14,8 +14,8 @@ namespace Models.Services.Moves.MoveGenerators
             ModifyActivePieces(boardState, from, destination);
 
             // modify board state
-            var destinationTile = boardState.Board[destination.X][destination.Y];
-            var fromTile = boardState.Board[from.X][from.Y];
+            ref var destinationTile = ref boardState.GetTileAt(destination);
+            ref var fromTile = ref boardState.GetTileAt(from);
 
             // swap pieces
             destinationTile.CurrentPiece = fromTile.CurrentPiece;

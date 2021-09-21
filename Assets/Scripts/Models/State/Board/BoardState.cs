@@ -1,12 +1,16 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Models.State.PieceState;
 using Models.Utils.ExtensionMethods.PieceTypeExt;
 
 namespace Models.State.Board
 {
+    // make me ref struct
     public class BoardState
     {
         public readonly Tile[][] Board;
+        public ref Tile GetTileAt(Position pos) => ref Board[pos.X][pos.Y];
+        public ref Tile GetTileAt(int x, int y) => ref Board[x][y];
 
         public BoardState(Tile[][] board)
         {
@@ -60,7 +64,7 @@ namespace Models.State.Board
             for (var i = 0; i < 8; i++)
             for (var j = 0; j < 8; j++)
             {
-                var tile = Board[i][j];
+                ref var tile = ref GetTileAt(i,j);
                 if (tile.CurrentPiece.Type != PieceType.NullPiece)
                 {
                     ActivePieces.Add(tile.Position);

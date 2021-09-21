@@ -36,8 +36,8 @@ namespace Models.Services.Moves.MoveGenerators.TurnMoves
                 if (!(0 > newPosition.X || newPosition.X > 7
                                         || 0 > newPosition.Y || newPosition.Y > 7))
                 {
-                    var potentialMoveTile = _positionTranslator.GetRelativeTileAt(newPosition, boardState);
-                    if (_tileEvaluator.OpposingPieceIn(potentialMoveTile) ||
+                    ref var potentialMoveTile = ref _positionTranslator.GetRelativeTileAt(newPosition, boardState);
+                    if (_tileEvaluator.OpposingPieceIn(ref potentialMoveTile) ||
                         potentialMoveTile.CurrentPiece.Type == PieceType.NullPiece)
                         possibleMoves.Add(newRelativePosition);
                 }

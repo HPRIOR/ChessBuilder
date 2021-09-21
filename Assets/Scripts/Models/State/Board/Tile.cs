@@ -3,10 +3,9 @@ using Models.State.PieceState;
 
 namespace Models.State.Board
 {
-    public class Tile
+    public struct Tile
     {
         public BuildTileState BuildTileState;
-
         public Piece CurrentPiece;
         public Position Position;
 

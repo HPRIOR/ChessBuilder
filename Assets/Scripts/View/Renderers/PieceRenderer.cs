@@ -22,7 +22,7 @@ namespace View.Renderers
             for (var i = 0; i < 8; i++)
             for (var j = 0; j < 8; j++)
             {
-                var tile = board[i][j];
+                ref var tile = ref newState.GetTileAt(i, j);
                 var currentPiece = tile.CurrentPiece;
                 if (currentPiece.Type != PieceType.NullPiece)
                     _pieceFactory.CreatePiece(currentPiece.Type, tile.Position);

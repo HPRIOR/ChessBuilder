@@ -25,11 +25,9 @@ namespace Models.Services.Moves.Utils
             var turnMoves = new Dictionary<Position, List<Position>>();
             var enemyMoves = new Dictionary<Position, List<Position>>();
 
-            var activeTiles = boardState.ActivePieces.ToArray()
-                .Select(position => boardState.Board[position.X][position.Y]);
-
-            foreach (var tile in activeTiles)
+            foreach (var pos in boardState.ActivePieces)
             {
+                ref var tile = ref boardState.GetTileAt(pos);
                 var currentPiece = tile.CurrentPiece;
                 var playerTurn = currentPiece.Type != PieceType.NullPiece && currentPiece.Colour == turn;
                 var opponentTurn = currentPiece.Type != PieceType.NullPiece && currentPiece.Colour != turn;

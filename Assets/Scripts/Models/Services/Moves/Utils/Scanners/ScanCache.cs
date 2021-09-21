@@ -11,6 +11,7 @@ namespace Models.Services.Moves.Utils.Scanners
             Direction.NE, Direction.NW, Direction.SE, Direction.SW
         };
 
+        // TODO make this a Direction -> Span<T>
         private static readonly Dictionary<Position, Dictionary<Direction, Position[]>> Cache = GetCache();
         public static Position[] GetPositionsToEndOfBoard(Position pos, Direction direction) => Cache[pos][direction];
 

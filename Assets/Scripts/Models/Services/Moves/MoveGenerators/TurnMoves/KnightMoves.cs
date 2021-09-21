@@ -33,7 +33,7 @@ namespace Models.Services.Moves.MoveGenerators.TurnMoves
 
         private bool FriendlyPieceNotInTile((int X, int Y) coord, BoardState boardState) =>
             !_tileEvaluator.FriendlyPieceIn(
-                _positionTranslator.GetRelativeTileAt(new Position(coord.X, coord.Y), boardState));
+                ref _positionTranslator.GetRelativeTileAt(new Position(coord.X, coord.Y), boardState));
 
         private bool CoordInBounds((int X, int Y) coord) =>
             0 <= coord.X && coord.X <= 7 && 0 <= coord.Y && coord.Y <= 7;

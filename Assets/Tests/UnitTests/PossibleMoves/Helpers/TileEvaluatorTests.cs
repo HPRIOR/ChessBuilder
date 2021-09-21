@@ -42,7 +42,7 @@ namespace Tests.UnitTests.PossibleMoves.Helpers
         {
             var tileEval = _tileEvaluatorFactory.Create(PieceColour.White);
             var tile = new Tile(new Position(1, 1)) {CurrentPiece = new Piece(PieceType.NullPiece)};
-            Assert.IsTrue(tileEval.NoPieceIn(tile));
+            Assert.IsTrue(tileEval.NoPieceIn(ref tile));
         }
 
         [Test]
@@ -53,7 +53,7 @@ namespace Tests.UnitTests.PossibleMoves.Helpers
             var tileEval = _tileEvaluatorFactory.Create(PieceColour.White);
             var tile = new Tile(new Position(1, 1)) {CurrentPiece = new Piece(pieceType)};
             if (pieceType != PieceType.NullPiece)
-                Assert.IsFalse(tileEval.NoPieceIn(tile));
+                Assert.IsFalse(tileEval.NoPieceIn(ref tile));
         }
 
         [Test]
@@ -61,7 +61,7 @@ namespace Tests.UnitTests.PossibleMoves.Helpers
         {
             var tileEval = _tileEvaluatorFactory.Create(PieceColour.Black);
             var tile = new Tile(new Position(1, 1)) {CurrentPiece = new Piece(PieceType.BlackBishop)};
-            Assert.IsTrue(tileEval.FriendlyPieceIn(tile));
+            Assert.IsTrue(tileEval.FriendlyPieceIn(ref tile));
         }
 
         [Test]
@@ -69,7 +69,7 @@ namespace Tests.UnitTests.PossibleMoves.Helpers
         {
             var tileEval = _tileEvaluatorFactory.Create(PieceColour.White);
             var tile = new Tile(new Position(1, 1)) {CurrentPiece = new Piece(PieceType.WhiteBishop)};
-            Assert.IsTrue(tileEval.FriendlyPieceIn(tile));
+            Assert.IsTrue(tileEval.FriendlyPieceIn(ref tile));
         }
 
         [Test]
@@ -77,7 +77,7 @@ namespace Tests.UnitTests.PossibleMoves.Helpers
         {
             var tileEval = _tileEvaluatorFactory.Create(PieceColour.White);
             var tile = new Tile(new Position(1, 1)) {CurrentPiece = new Piece(PieceType.BlackBishop)};
-            Assert.IsTrue(tileEval.OpposingPieceIn(tile));
+            Assert.IsTrue(tileEval.OpposingPieceIn(ref tile));
         }
 
         [Test]
@@ -85,7 +85,7 @@ namespace Tests.UnitTests.PossibleMoves.Helpers
         {
             var tileEval = _tileEvaluatorFactory.Create(PieceColour.Black);
             var tile = new Tile(new Position(1, 1)) {CurrentPiece = new Piece(PieceType.WhiteBishop)};
-            Assert.IsTrue(tileEval.OpposingPieceIn(tile));
+            Assert.IsTrue(tileEval.OpposingPieceIn(ref tile));
         }
     }
 }

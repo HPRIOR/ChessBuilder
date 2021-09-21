@@ -4,10 +4,10 @@ namespace Models.Services.Moves.Interfaces
 {
     public interface ITileEvaluator
     {
-        bool OpposingPieceIn(Tile tile);
+        bool OpposingPieceIn(ref Tile tile);
 
-        bool FriendlyPieceIn(Tile tile);
+        bool FriendlyPieceIn(ref Tile tile);
 
-        bool NoPieceIn(Tile tile);
+        bool NoPieceIn(ref Tile tile);
     }
 }

@@ -5,7 +5,6 @@ using Models.Utils.ExtensionMethods.PieceTypeExt;
 
 namespace Models.State.Board
 {
-    // make me ref struct
     public class BoardState
     {
         public readonly Tile[][] Board;

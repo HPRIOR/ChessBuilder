@@ -66,6 +66,13 @@ namespace Tests.UnitTests.Utils.Extensions
         }
 
         [Test]
+        public void NoDirection()
+        {
+            var result = new Position(4, 4).DirectionTo(new Position(4,7));
+            Assert.That(result, Is.EqualTo(Direction.Null));
+        }
+
+        [Test]
         public void SamePositionThrowError()
         {
             Assert.Throws<DirectionException>(() => new Position(4, 4).DirectionTo(new Position(4, 4)));

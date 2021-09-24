@@ -20,6 +20,14 @@ namespace Models.Services.Moves.Utils
         };
 
 
+        /*
+         * New algo: fix direction map so incoherent directions produce Null Direction.
+         * For each enemy scanning piece, if their direction to king != Null direction
+         * generate the moves in that direction and check the board against them for
+         * 'the next piece is king' if so then intersect the pinned piece moves from that
+         * of the enemy pieces moves.
+         * 
+         */
         public void FilterMoves(IBoardInfo boardInfo, BoardState boardState)
         {
             var turnMoves = boardInfo.TurnMoves;

@@ -5,13 +5,13 @@ using Models.Utils.ExtensionMethods.BoardPosExt;
 
 namespace Models.Services.Utils
 {
-    public class ScanMap
+    public class ScanCache
     {
         private static readonly Dictionary<PositionDirection, IEnumerable<Position>> ScanPositions;
         private static readonly Dictionary<PositionPair, IEnumerable<Position>> ScanToPositions;
         private static readonly Dictionary<PositionPair, IEnumerable<Position>> ScanBetweenPositions;
 
-        static ScanMap()
+        static ScanCache()
         {
             ScanPositions = GetScanPositions();
             ScanBetweenPositions = GetScanBetweenPositions();
@@ -50,8 +50,9 @@ namespace Models.Services.Utils
             foreach (var position2 in positions)
                 if (position1 != position2)
                 {
-                    var direction = DirectionMap.DirectionFrom(position1, position2);
-                    result[new PositionDirection(position1, direction)] = position1.Scan(direction);
+                    var direction = DirectionCache.DirectionFrom(position1, position2);
+                    if (direction != Direction.Null)
+                        result[new PositionDirection(position1, direction)] = position1.Scan(direction);
                 }
 
             return result;
@@ -65,7 +66,12 @@ namespace Models.Services.Utils
             foreach (var position1 in positions)
             foreach (var position2 in positions)
                 if (position1 != position2)
-                    result[new PositionPair(position1, position2)] = position1.ScanTo(position2);
+                {
+                    var direction = DirectionCache.DirectionFrom(position1, position2);
+                    if (direction != Direction.Null) 
+                        result[new PositionPair(position1, position2)] = position1.ScanTo(position2);
+                }
+
             return result;
         }
 
@@ -76,7 +82,11 @@ namespace Models.Services.Utils
             foreach (var position1 in positions)
             foreach (var position2 in positions)
                 if (position1 != position2)
-                    result[new PositionPair(position1, position2)] = position1.ScanBetween(position2);
+                {
+                    var direction = DirectionCache.DirectionFrom(position1, position2);
+                    if (direction != Direction.Null) 
+                        result[new PositionPair(position1, position2)] = position1.ScanBetween(position2);
+                }
 
             return result;
         }

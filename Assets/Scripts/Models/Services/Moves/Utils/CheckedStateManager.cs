@@ -99,7 +99,7 @@ namespace Models.Services.Moves.Utils
             foreach (var boardPosition in possibleMoves)
                 if (kingPosition == boardPosition)
                 {
-                    var positionsBetweenCheckedKing = ScanMap.ScanBetween(boardPosition, checkingPiecePosition);
+                    var positionsBetweenCheckedKing = ScanCache.ScanBetween(boardPosition, checkingPiecePosition);
                     var result = new HashSet<Position>(positionsBetweenCheckedKing) { checkingPiecePosition };
                     return result;
                 }
@@ -120,8 +120,8 @@ namespace Models.Services.Moves.Utils
                 {
                     // remove extended possible moves that go 'through' king
                     var movesExtendedThroughKing =
-                        ScanMap.Scan(checkingPiecePosition,
-                            DirectionMap.DirectionFrom(checkingPiecePosition, kingPosition));
+                        ScanCache.Scan(checkingPiecePosition,
+                            DirectionCache.DirectionFrom(checkingPiecePosition, kingPosition));
                     turnMoves[kingPosition] = turnMoves[kingPosition].Except(movesExtendedThroughKing).ToList();
                 }
         }

@@ -12,6 +12,8 @@ namespace Models.Services.Moves.Utils
             Position kingPosition)
         {
             if (kingPosition != new Position(8, 8)) // null king check
+                // create enemyMoves hashset
+                // foreach turn of the king, remove if in enemy HashSet
                 foreach (var enemyMove in enemyMoves)
                     turnMoves[kingPosition] = turnMoves[kingPosition].Except(enemyMove.Value).ToList();
         }

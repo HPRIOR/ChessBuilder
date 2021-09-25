@@ -1,15 +1,17 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Models.Services.Moves.Utils;
 using Models.State.Board;
 using Models.Utils.ExtensionMethods.BoardPosExt;
+using UnityEngine;
 
 namespace Models.Services.Utils
 {
-    public static class DirectionMap
+    public static class DirectionCache
     {
         private static readonly Dictionary<(Position p1, Position p2), Direction> Directions;
 
-        static DirectionMap()
+        static DirectionCache()
         {
             Directions = new Dictionary<(Position p1, Position p2), Direction>();
             var positions = GetPositions();
@@ -17,6 +19,7 @@ namespace Models.Services.Utils
             foreach (var position2 in positions)
                 if (position1 != position2)
                     Directions[(position1, position2)] = position1.DirectionTo(position2);
+            
         }
 
 
@@ -29,6 +32,7 @@ namespace Models.Services.Utils
             return positions;
         }
 
-        public static Direction DirectionFrom(Position origin, Position target) => Directions[(origin, target)];
+        public static Direction DirectionFrom(Position origin, Position target) => 
+            Directions[(origin, target)];
     }
 }

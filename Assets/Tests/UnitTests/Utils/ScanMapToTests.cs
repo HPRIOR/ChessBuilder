@@ -23,7 +23,7 @@ namespace Tests.UnitTests.Utils
                 new Position(5, 5)
             };
 
-            var result = ScanMap.ScanTo(startPosition, endPosition);
+            var result = ScanCache.ScanTo(startPosition, endPosition);
 
             Assert.That(result, Is.EquivalentTo(expectedPositions));
         }
@@ -36,7 +36,7 @@ namespace Tests.UnitTests.Utils
             var endPosition = new Position(1, 1);
 
             var expectedPositions = new List<Position> {new Position(1, 1)};
-            var result = ScanMap.ScanTo(startPosition, endPosition);
+            var result = ScanCache.ScanTo(startPosition, endPosition);
 
             Assert.That(result, Is.EquivalentTo(expectedPositions));
         }

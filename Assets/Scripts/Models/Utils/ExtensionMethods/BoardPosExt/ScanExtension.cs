@@ -32,7 +32,7 @@ namespace Models.Utils.ExtensionMethods.BoardPosExt
 
         public static IEnumerable<Position> ScanBetween(this Position start, Position destination)
         {
-            var direction = DirectionMap.DirectionFrom(start, destination);
+            var direction = DirectionCache.DirectionFrom(start, destination);
 
             bool StopScanningPredicate(Position position) =>
                 PieceCannotMoveTo(position) || position == destination;
@@ -43,7 +43,7 @@ namespace Models.Utils.ExtensionMethods.BoardPosExt
 
         public static IEnumerable<Position> ScanTo(this Position start, Position destination)
         {
-            var direction = DirectionMap.DirectionFrom(start, destination);
+            var direction = DirectionCache.DirectionFrom(start, destination);
 
             bool StopScanningPredicate(Position position) =>
                 PieceCannotMoveTo(position) || position == destination.Add(Move.In(direction));

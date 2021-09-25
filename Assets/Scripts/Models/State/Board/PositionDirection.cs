@@ -20,6 +20,8 @@ namespace Models.State.Board
 
         public override int GetHashCode()
         {
+            // TODO change hashcode to more efficient
+           
             unchecked
             {
                 return (_position.GetHashCode() * 397) ^ (int)_direction;

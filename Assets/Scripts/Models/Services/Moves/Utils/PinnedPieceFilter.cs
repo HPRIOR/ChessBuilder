@@ -37,28 +37,28 @@ namespace Models.Services.Moves.Utils
             turnPiecePosition.Remove(kingPosition);
             foreach (var enemyMoves in enemyScanningMoves)
             {
-                var turnPiecesPositionWhichCanBeTaken =
+                var potentialPinnedPieces =
                     enemyMoves.Value.Intersect(turnPiecePosition).ToList();
-                if (!turnPiecesPositionWhichCanBeTaken.Any()) continue;
-                foreach (var turnPiece in turnPiecesPositionWhichCanBeTaken)
-                    if (DirectionOfPinPointsToKing(kingPosition, turnPiece, enemyMoves.Key))
+                if (!potentialPinnedPieces.Any()) continue;
+                foreach (var turnPiece in potentialPinnedPieces)
+                    // if (DirectionOfPinPointsToKing(kingPosition, turnPiece, enemyMoves.Key))
+                    // {
+                    if (TheNextPieceIsKing(enemyMoves.Key, turnPiece, kingPosition, boardState))
                     {
-                        if (TheNextPieceIsKing(enemyMoves.Key, turnPiece, kingPosition, boardState))
-                        {
-                            turnMoves[turnPiece] = turnMoves[turnPiece]
-                                .Intersect(PossibleEscapeMoves(kingPosition, turnPiece, enemyMoves.Key))
-                                .ToList();
-                        }
-
-                        return;
+                        turnMoves[turnPiece] = turnMoves[turnPiece]
+                            .Intersect(PossibleEscapeMoves(kingPosition, turnPiece, enemyMoves.Key))
+                            .ToList();
                     }
+
+                return;
+                // }
             }
         }
 
         private static HashSet<Position> PossibleEscapeMoves(
             Position kingPosition, Position pinnedPiecePosition, Position pinningPiecePosition)
         {
-            var positionsBetweenPinAndKing = new HashSet<Position>(ScanMap.ScanTo(kingPosition, pinningPiecePosition));
+            var positionsBetweenPinAndKing = new HashSet<Position>(ScanCache.ScanTo(kingPosition, pinningPiecePosition));
             positionsBetweenPinAndKing.Remove(pinnedPiecePosition);
 
             return positionsBetweenPinAndKing;
@@ -67,8 +67,8 @@ namespace Models.Services.Moves.Utils
         private static bool DirectionOfPinPointsToKing(Position kingPosition, Position pinnedPosition,
             Position pinningPosition)
         {
-            var pinDirection = DirectionMap.DirectionFrom(pinningPosition, pinnedPosition);
-            var pinnedToKingDirection = DirectionMap.DirectionFrom(pinnedPosition, kingPosition);
+            var pinDirection = DirectionCache.DirectionFrom(pinningPosition, pinnedPosition);
+            var pinnedToKingDirection = DirectionCache.DirectionFrom(pinnedPosition, kingPosition);
             return pinDirection == pinnedToKingDirection;
         }
 
@@ -88,7 +88,7 @@ namespace Models.Services.Moves.Utils
             Position kingPosition, BoardState boardState)
         {
             var scannedBoardPositions =
-                ScanMap.Scan(turnPiecePosition, DirectionMap.DirectionFrom(enemyPosition, kingPosition));
+                ScanCache.Scan(turnPiecePosition, DirectionCache.DirectionFrom(enemyPosition, kingPosition));
             foreach (var position in scannedBoardPositions)
             {
                 if (position == kingPosition) return true;

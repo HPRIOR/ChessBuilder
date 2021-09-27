@@ -24,7 +24,7 @@ namespace Models.Services.Game.Implementations
 
         public GameState InitialiseGame(BoardState boardState)
         {
-            var whiteKingPosition = getWhiteKingPosition(boardState);
+            var whiteKingPosition = GetWhiteKingPosition(boardState);
 
             var moves = _whiteKingMoveGenerator.GetPossiblePieceMoves(whiteKingPosition, boardState);
             var movesDict = new Dictionary<Position, List<Position>>
@@ -39,9 +39,8 @@ namespace Models.Services.Game.Implementations
                 boardState);
         }
 
-        private Position getWhiteKingPosition(BoardState boardState)
+        private Position GetWhiteKingPosition(BoardState boardState)
         {
-            Position position;
             var board = boardState.Board;
             for (var i = 0; i < 8; i++)
             for (var j = 0; j < 8; j++)

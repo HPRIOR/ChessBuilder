@@ -16,12 +16,25 @@ namespace Tests.UnitTests.Utils.Extensions
             var end = new Position(5, 5);
             var expected = new List<Position>()
             {
-                new Position(0,0),
-                new Position(1,1),
-                new Position(2,2),
-                new Position(3,3),
-                new Position(4,4),
-                new Position(5,5)
+                new Position(0, 0),
+                new Position(1, 1),
+                new Position(2, 2),
+                new Position(3, 3),
+                new Position(4, 4),
+                new Position(5, 5)
+            };
+            Assert.That(start.ScanInclusiveTo(end), Is.EquivalentTo(expected));
+        }
+
+        [Test]
+        public void ScanIncludesStartAndDestination_NextToEachOther()
+        {
+            var start = new Position(0, 0);
+            var end = new Position(1, 1);
+            var expected = new List<Position>()
+            {
+                new Position(0, 0),
+                new Position(1, 1)
             };
             Assert.That(start.ScanInclusiveTo(end), Is.EquivalentTo(expected));
         }

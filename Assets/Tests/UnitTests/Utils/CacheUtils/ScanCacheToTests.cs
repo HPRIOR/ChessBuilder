@@ -7,7 +7,7 @@ using Zenject;
 namespace Tests.UnitTests.Utils
 {
     [TestFixture]
-    public class ScanMapToTests : ZenjectUnitTestFixture
+    public class ScanCacheToTests : ZenjectUnitTestFixture
     {
         [Test]
         public void ScansBetweenTwoPositions()

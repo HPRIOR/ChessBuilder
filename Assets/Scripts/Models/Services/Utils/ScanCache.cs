@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Drawing;
+using System.Linq;
 using Models.Services.Moves.Utils;
 using Models.State.Board;
 using Models.Utils.ExtensionMethods.BoardPosExt;
@@ -10,13 +12,16 @@ namespace Models.Services.Utils
         private static readonly Dictionary<PositionDirection, IEnumerable<Position>> ScanPositions;
         private static readonly Dictionary<PositionPair, IEnumerable<Position>> ScanToPositions;
         private static readonly Dictionary<PositionPair, IEnumerable<Position>> ScanBetweenPositions;
+        private static readonly Dictionary<PositionPair, IEnumerable<Position>> ScanInclusiveToPositions;
 
         static ScanCache()
         {
             ScanPositions = GetScanPositions();
             ScanBetweenPositions = GetScanBetweenPositions();
             ScanToPositions = GetScanToPositions();
+            ScanInclusiveToPositions = GetScanInclusiveToPositions();
         }
+
 
 
         /// <summary>
@@ -69,9 +74,17 @@ namespace Models.Services.Utils
         }
 
 
+        public static IEnumerable<Position> ScanInclusiveTo(Position p1, Position p2)
+        {
+            var positionPair = new PositionPair(p1, p2);
+            return ScanInclusiveToPositions.ContainsKey(positionPair)
+                ? ScanInclusiveToPositions[positionPair]
+                : new List<Position>();
+        }
+        
         private static Dictionary<PositionDirection, IEnumerable<Position>> GetScanPositions()
         {
-            var result = new Dictionary<PositionDirection, IEnumerable<Position>>();
+            var result = new Dictionary<PositionDirection, IEnumerable<Position>>(new PositionDirectionComparer());
             var positions = GetPositions();
             foreach (var position1 in positions)
             foreach (var position2 in positions)
@@ -88,7 +101,7 @@ namespace Models.Services.Utils
 
         private static Dictionary<PositionPair, IEnumerable<Position>> GetScanToPositions()
         {
-            var result = new Dictionary<PositionPair, IEnumerable<Position>>();
+            var result = new Dictionary<PositionPair, IEnumerable<Position>>(new PositionPairComparer());
             var positions = GetPositions();
             foreach (var position1 in positions)
             foreach (var position2 in positions)
@@ -104,7 +117,7 @@ namespace Models.Services.Utils
 
         private static Dictionary<PositionPair, IEnumerable<Position>> GetScanBetweenPositions()
         {
-            var result = new Dictionary<PositionPair, IEnumerable<Position>>();
+            var result = new Dictionary<PositionPair, IEnumerable<Position>>(new PositionPairComparer());
             var positions = GetPositions();
             foreach (var position1 in positions)
             foreach (var position2 in positions)
@@ -118,6 +131,22 @@ namespace Models.Services.Utils
             return result;
         }
 
+        private static Dictionary<PositionPair,IEnumerable<Position>> GetScanInclusiveToPositions()
+        {
+            var result = new Dictionary<PositionPair, IEnumerable<Position>>(new PositionPairComparer());
+            var positions = GetPositions();
+            foreach(var position1 in positions)
+            foreach(var position2 in positions)
+                if (position1 != position2)
+                {
+                    var direction = DirectionCache.DirectionFrom(position1, position2);
+                    if (direction != Direction.Null)
+                        result[new PositionPair(position1, position2)] = position1.ScanInclusiveTo(position2);
+                }
+
+            return result;
+        }
+        
         private static Position[,] GetPositions()
         {
             var positions = new Position[8, 8];
@@ -126,5 +155,6 @@ namespace Models.Services.Utils
                 positions[i, j] = new Position(i, j);
             return positions;
         }
+
     }
 }

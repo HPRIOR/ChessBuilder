@@ -18,12 +18,6 @@ namespace Models.State.Board
 
         public override bool Equals(object obj) => obj is PositionPair other && Equals(other);
 
-        public override int GetHashCode()
-        {
-            unchecked
-            {
-                return (_position1.GetHashCode() * 397) ^ _position2.GetHashCode();
-            }
-        }
+        public override int GetHashCode() => (_position1.X, _position1.Y, _position2.X, _position2.Y).GetHashCode();
     }
 }

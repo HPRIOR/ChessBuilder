@@ -7,7 +7,7 @@ using Zenject;
 namespace Tests.UnitTests.Utils
 {
     [TestFixture]
-    public class ScanMapBetweenTests : ZenjectUnitTestFixture
+    public class ScanCacheInclusiveTests : ZenjectUnitTestFixture
     {
         [Test]
         public void ScansBetweenTwoPositions()
@@ -16,26 +16,28 @@ namespace Tests.UnitTests.Utils
             var endPosition = new Position(5, 5);
             var expectedPositions = new List<Position>
             {
+                new Position(0,0),
                 new Position(1, 1),
                 new Position(2, 2),
                 new Position(3, 3),
-                new Position(4, 4)
+                new Position(4, 4),
+                new Position(5, 5)
             };
 
-            var result = ScanCache.ScanBetween(startPosition, endPosition);
+            var result = ScanCache.ScanInclusiveTo(startPosition, endPosition);
 
             Assert.That(result, Is.EquivalentTo(expectedPositions));
         }
 
 
         [Test]
-        public void WithTwoPositionsNextToEachOther_ReturnsEmptyList()
+        public void WithTwoPositionsNextToEachOther_ReturnsSingleItemList()
         {
             var startPosition = new Position(0, 0);
             var endPosition = new Position(1, 1);
 
-            var expectedPositions = new List<Position>();
-            var result = ScanCache.ScanBetween(startPosition, endPosition);
+            var expectedPositions = new List<Position> {new Position(1, 1)};
+            var result = ScanCache.ScanTo(startPosition, endPosition);
 
             Assert.That(result, Is.EquivalentTo(expectedPositions));
         }

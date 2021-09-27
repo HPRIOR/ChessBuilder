@@ -62,6 +62,7 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
         )
         {
             var board = _boardGenerator.GenerateBoard();
+            board[7][7].CurrentPiece = new Piece(PieceType.BlackKing);
             board[1][1].CurrentPiece = new Piece(pieceType);
 
             var boardState = new BoardState(board);
@@ -95,7 +96,6 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
         {
             var board = _boardGenerator.GenerateBoard();
             board[1][1].CurrentPiece = new Piece(pieceType);
-
 
             var boardState = new BoardState(board);
             var moveState =

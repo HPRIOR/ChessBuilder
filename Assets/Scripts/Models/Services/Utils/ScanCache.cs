@@ -19,6 +19,15 @@ namespace Models.Services.Utils
         }
 
 
+        /// <summary>
+        /// Returns a list of positions to then end of the board, excluding the first argument.
+        /// </summary>
+        /// <remarks>
+        /// Results are cached rather than computed on method call.
+        /// </remarks>
+        /// <param name="p"></param>
+        /// <param name="d"></param>
+        /// <returns></returns>
         public static IEnumerable<Position> Scan(Position p, Direction d)
         {
             var positionDirection = new PositionDirection(p, d);
@@ -27,12 +36,30 @@ namespace Models.Services.Utils
                 : new List<Position>();
         }
 
+        /// <summary>
+        /// Returns list of positions between arguments, excluding the first argument, including second argument.
+        /// </summary>
+        /// <remarks>
+        /// Results are cached rather than computed on method call.
+        /// </remarks>
+        /// <param name="start"></param>
+        /// <param name="destination"></param>
+        /// <returns></returns>
         public static IEnumerable<Position> ScanTo(Position p1, Position p2)
         {
             var positionPair = new PositionPair(p1, p2);
             return ScanToPositions.ContainsKey(positionPair) ? ScanToPositions[positionPair] : new List<Position>();
         }
 
+        /// <summary>
+        /// Returns all positions between two points, excluding the input arguments.
+        /// </summary>
+        /// <remarks>
+        /// Results are cached rather than computed on method call.
+        /// </remarks>
+        /// <param name="p1"></param>
+        /// <param name="p2"></param>
+        /// <returns></returns>
         public static IEnumerable<Position> ScanBetween(Position p1, Position p2)
         {
             var positionPair = new PositionPair(p1, p2);

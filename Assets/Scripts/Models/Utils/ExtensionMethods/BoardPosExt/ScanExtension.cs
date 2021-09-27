@@ -9,9 +9,11 @@ namespace Models.Utils.ExtensionMethods.BoardPosExt
     public static class ScanExtension
     {
         private static IEnumerable<Position> BaseScan(Position position, Direction direction,
-            Predicate<Position> stopScanningPredicate)
+            Predicate<Position> stopScanningPredicate, Action<List<Position>> startFunc = null) 
         {
             var result = new List<Position>();
+            startFunc?.Invoke(result);
+            
             var iteratingPosition = position;
 
             while (true)
@@ -30,6 +32,12 @@ namespace Models.Utils.ExtensionMethods.BoardPosExt
         public static IEnumerable<Position> Scan(this Position position, Direction direction) =>
             BaseScan(position, direction, PieceCannotMoveTo);
 
+        /// <summary>
+        /// Returns positions between two points, excluding the first and second arguments
+        /// </summary>
+        /// <param name="start"></param>
+        /// <param name="destination"></param>
+        /// <returns></returns>
         public static IEnumerable<Position> ScanBetween(this Position start, Position destination)
         {
             var direction = DirectionCache.DirectionFrom(start, destination);
@@ -41,6 +49,12 @@ namespace Models.Utils.ExtensionMethods.BoardPosExt
         }
 
 
+        /// <summary>
+        /// Returns positions between two points, excluding the first argument, including the second
+        /// </summary>
+        /// <param name="start"></param>
+        /// <param name="destination"></param>
+        /// <returns></returns>
         public static IEnumerable<Position> ScanTo(this Position start, Position destination)
         {
             var direction = DirectionCache.DirectionFrom(start, destination);
@@ -49,6 +63,25 @@ namespace Models.Utils.ExtensionMethods.BoardPosExt
                 PieceCannotMoveTo(position) || position == destination.Add(Move.In(direction));
 
             return BaseScan(start, direction, StopScanningPredicate);
+        }
+
+        /// <summary>
+        /// Returns positions between two points, including first and second arguments
+        /// </summary>
+        /// <param name="start"></param>
+        /// <param name="destination"></param>
+        /// <returns></returns>
+        public static IEnumerable<Position> ScanInclusiveTo(this Position start, Position destination)
+        {
+            var direction = DirectionCache.DirectionFrom(start, destination);
+
+            bool StopScanningPredicate(Position position) =>
+                PieceCannotMoveTo(position) || position == destination.Add(Move.In(direction));
+
+            void StartScanningAction(List<Position> positions) =>
+                 positions.Add(start);
+
+            return BaseScan(start, direction, StopScanningPredicate, StartScanningAction);
         }
 
 

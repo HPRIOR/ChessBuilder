@@ -20,7 +20,7 @@ namespace Models.Services.Utils
 
 
         /// <summary>
-        /// Returns a list of positions to then end of the board, excluding the first argument.
+        /// Returns a list of positions to the end of the board, excluding the first argument.
         /// </summary>
         /// <remarks>
         /// Results are cached rather than computed on method call.

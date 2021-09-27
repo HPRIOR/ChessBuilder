@@ -123,7 +123,7 @@ namespace Models.Services.Moves.Utils
                     var kingThreatMoves = ScanCache.ScanTo(enemyScanningMove.Key, kingPosition).ToList();
                     var (pinExists, pinnedPiecePosition, pinnedPieceIndex) =
                         PinExists(kingThreatMoves, boardState, kingColour, kingPosition);
-                    if (pinExists) // this should return the pinned piece
+                    if (pinExists) 
                     {
                         kingThreatMoves.RemoveAt(pinnedPieceIndex);
                         kingThreatMoves.Add(enemyScanningMove.Key);

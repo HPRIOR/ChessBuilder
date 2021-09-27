@@ -5,7 +5,7 @@ using Models.Services.Utils;
 using Models.State.Board;
 using NUnit.Framework;
 
-namespace Tests.UnitTests.Utils
+namespace Tests.UnitTests.Utils.CacheUtils
 {
     [TestFixture]
     public class ScanCacheTests

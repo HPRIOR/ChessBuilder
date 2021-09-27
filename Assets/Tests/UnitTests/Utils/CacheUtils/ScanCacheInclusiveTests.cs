@@ -4,7 +4,7 @@ using Models.State.Board;
 using NUnit.Framework;
 using Zenject;
 
-namespace Tests.UnitTests.Utils
+namespace Tests.UnitTests.Utils.CacheUtils
 {
     [TestFixture]
     public class ScanCacheInclusiveTests : ZenjectUnitTestFixture

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Models.Services.Moves.MoveGenerators.TurnMoves;
 using Models.State.Board;
 
 namespace Models.Services.Moves.Utils
@@ -12,10 +13,18 @@ namespace Models.Services.Moves.Utils
             Position kingPosition)
         {
             if (kingPosition != new Position(8, 8)) // null king check
-                // create enemyMoves hashset
-                // foreach turn of the king, remove if in enemy HashSet
-                foreach (var enemyMove in enemyMoves)
-                    turnMoves[kingPosition] = turnMoves[kingPosition].Except(enemyMove.Value).ToList();
+            {
+                var kingMoves = new HashSet<Position>(turnMoves[kingPosition]);
+                
+                foreach (var keyVal in enemyMoves)
+                foreach (var enemyMove in keyVal.Value)
+                    if (kingMoves.Contains(enemyMove))
+                    {
+                        kingMoves.Remove(enemyMove);
+                    }
+
+                turnMoves[kingPosition] = kingMoves.ToList();
+            }
         }
     }
 }

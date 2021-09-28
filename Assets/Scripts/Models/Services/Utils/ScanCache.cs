@@ -14,6 +14,12 @@ namespace Models.Services.Utils
         private static readonly Dictionary<PositionPair, IEnumerable<Position>> ScanBetweenPositions;
         private static readonly Dictionary<PositionPair, IEnumerable<Position>> ScanInclusiveToPositions;
 
+        private static readonly Direction[] Directions =
+        {
+            Direction.N, Direction.E, Direction.S, Direction.W,
+            Direction.NE, Direction.NW, Direction.SE, Direction.SW,
+        };
+
         static ScanCache()
         {
             ScanPositions = GetScanPositions();
@@ -21,7 +27,6 @@ namespace Models.Services.Utils
             ScanToPositions = GetScanToPositions();
             ScanInclusiveToPositions = GetScanInclusiveToPositions();
         }
-
 
 
         /// <summary>
@@ -81,19 +86,17 @@ namespace Models.Services.Utils
                 ? ScanInclusiveToPositions[positionPair]
                 : new List<Position>();
         }
-        
+
         private static Dictionary<PositionDirection, IEnumerable<Position>> GetScanPositions()
         {
             var result = new Dictionary<PositionDirection, IEnumerable<Position>>(new PositionDirectionComparer());
             var positions = GetPositions();
-            foreach (var position1 in positions)
-            foreach (var position2 in positions)
-                if (position1 != position2)
-                {
-                    var direction = DirectionCache.DirectionFrom(position1, position2);
-                    if (direction != Direction.Null)
-                        result[new PositionDirection(position1, direction)] = position1.Scan(direction);
-                }
+            foreach (var position in positions)
+            foreach (var direction in Directions)
+            {
+                result[new PositionDirection(position, direction)] = position.Scan(direction);
+            }
+
 
             return result;
         }
@@ -108,7 +111,7 @@ namespace Models.Services.Utils
                 if (position1 != position2)
                 {
                     var direction = DirectionCache.DirectionFrom(position1, position2);
-                    if (direction != Direction.Null) 
+                    if (direction != Direction.Null)
                         result[new PositionPair(position1, position2)] = position1.ScanTo(position2);
                 }
 
@@ -124,19 +127,19 @@ namespace Models.Services.Utils
                 if (position1 != position2)
                 {
                     var direction = DirectionCache.DirectionFrom(position1, position2);
-                    if (direction != Direction.Null) 
+                    if (direction != Direction.Null)
                         result[new PositionPair(position1, position2)] = position1.ScanBetween(position2);
                 }
 
             return result;
         }
 
-        private static Dictionary<PositionPair,IEnumerable<Position>> GetScanInclusiveToPositions()
+        private static Dictionary<PositionPair, IEnumerable<Position>> GetScanInclusiveToPositions()
         {
             var result = new Dictionary<PositionPair, IEnumerable<Position>>(new PositionPairComparer());
             var positions = GetPositions();
-            foreach(var position1 in positions)
-            foreach(var position2 in positions)
+            foreach (var position1 in positions)
+            foreach (var position2 in positions)
                 if (position1 != position2)
                 {
                     var direction = DirectionCache.DirectionFrom(position1, position2);
@@ -146,7 +149,7 @@ namespace Models.Services.Utils
 
             return result;
         }
-        
+
         private static Position[,] GetPositions()
         {
             var positions = new Position[8, 8];
@@ -155,6 +158,5 @@ namespace Models.Services.Utils
                 positions[i, j] = new Position(i, j);
             return positions;
         }
-
     }
 }

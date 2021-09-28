@@ -11,7 +11,7 @@ namespace Models.Services.Moves.Utils
 {
     public class PinnedPieceFilter
     {
-        private readonly HashSet<PieceType> _scanningPieces = new HashSet<PieceType>(new PieceTypeComparer())
+        private static readonly HashSet<PieceType> ScanningPieces = new HashSet<PieceType>(new PieceTypeComparer())
         {
             PieceType.BlackBishop,
             PieceType.BlackQueen,
@@ -37,23 +37,21 @@ namespace Models.Services.Moves.Utils
             Direction.NE, Direction.NW, Direction.SE, Direction.SW
         };
 
-        private bool PieceIsScanner(KeyValuePair<Position, List<Position>> pieceMoves,
+        private static bool PieceIsScanner(KeyValuePair<Position, List<Position>> pieceMoves,
             BoardState boardState)
         {
             var pieceAtBoardPosition = boardState.Board[pieceMoves.Key.X][pieceMoves.Key.Y].CurrentPiece.Type;
-            return _scanningPieces.Contains(pieceAtBoardPosition);
+            return ScanningPieces.Contains(pieceAtBoardPosition);
         }
 
-        private IDictionary<Position, List<Position>> GetScanningPiecesMoves(
+        private static List<Position> GetScanningPiecesMoves(
             IDictionary<Position, List<Position>> moves, BoardState boardState)
         {
-            // Avoid allocation by returning a stack allocated list of positions which can be used 
-            // as keys to the existing dict
-            // Span<Position> keys = stackalloc Position[64]; 
-            var result = new Dictionary<Position, List<Position>>();
+            // TODO avoid allocations here or use pooling 
+            var result = new List<Position>();
             foreach (var keyVal in moves)
                 if (PieceIsScanner(keyVal, boardState))
-                    result.Add(keyVal.Key, keyVal.Value);
+                    result.Add(keyVal.Key);
             return result;
         }
 
@@ -101,6 +99,7 @@ namespace Models.Services.Moves.Utils
                     index++;
                     continue;
                 }
+
                 var pieceType = tile.CurrentPiece.Type;
                 if (pieceType == PieceType.NullPiece)
                 {
@@ -142,19 +141,21 @@ namespace Models.Services.Moves.Utils
                 return;
             var kingColour = boardState.GetTileAt(kingPosition).CurrentPiece.Type.Colour();
             var enemyScanningMoves = GetScanningPiecesMoves(boardInfo.EnemyMoves, boardState);
-            foreach (var enemyScanningMove in enemyScanningMoves)
+            for (var index = 0; index < enemyScanningMoves.Count; index++)
             {
-                var pieceCanMoveToKing = PieceCanMoveToKing(enemyScanningMove.Key, kingPosition, boardState);
+                var enemyScanningMove = enemyScanningMoves[index];
+                var pieceCanMoveToKing = PieceCanMoveToKing(enemyScanningMove, kingPosition, boardState);
                 if (pieceCanMoveToKing)
                 {
-                    var kingThreatMoves = ScanCache.ScanInclusiveTo(enemyScanningMove.Key, kingPosition).ToList();
+                    // avoid allocations here somehow 
+                    var kingThreatMoves = ScanCache.ScanInclusiveTo(enemyScanningMove, kingPosition).ToList();
                     var (pinExists, pinnedPiecePosition, pinnedPieceIndex) =
                         PinExists(kingThreatMoves, boardState, kingColour, kingPosition);
                     if (pinExists)
                     {
                         kingThreatMoves.RemoveAt(pinnedPieceIndex);
                         boardInfo.TurnMoves[pinnedPiecePosition] = boardInfo.TurnMoves[pinnedPiecePosition]
-                            .Intersect(kingThreatMoves).ToList(); // need to remove position of pinned piece
+                            .Intersect(kingThreatMoves).ToList();
                     }
                 }
             }

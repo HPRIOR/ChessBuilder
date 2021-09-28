@@ -96,6 +96,11 @@ namespace Models.Services.Moves.Utils
             {
                 ref var tile = ref boardState.GetTileAt(position);
 
+                if (index == 0)
+                {
+                    index++;
+                    continue;
+                }
                 var pieceType = tile.CurrentPiece.Type;
                 if (pieceType == PieceType.NullPiece)
                 {
@@ -142,13 +147,12 @@ namespace Models.Services.Moves.Utils
                 var pieceCanMoveToKing = PieceCanMoveToKing(enemyScanningMove.Key, kingPosition, boardState);
                 if (pieceCanMoveToKing)
                 {
-                    var kingThreatMoves = ScanCache.ScanTo(enemyScanningMove.Key, kingPosition).ToList();
+                    var kingThreatMoves = ScanCache.ScanInclusiveTo(enemyScanningMove.Key, kingPosition).ToList();
                     var (pinExists, pinnedPiecePosition, pinnedPieceIndex) =
                         PinExists(kingThreatMoves, boardState, kingColour, kingPosition);
                     if (pinExists)
                     {
                         kingThreatMoves.RemoveAt(pinnedPieceIndex);
-                        kingThreatMoves.Add(enemyScanningMove.Key);
                         boardInfo.TurnMoves[pinnedPiecePosition] = boardInfo.TurnMoves[pinnedPiecePosition]
                             .Intersect(kingThreatMoves).ToList(); // need to remove position of pinned piece
                     }

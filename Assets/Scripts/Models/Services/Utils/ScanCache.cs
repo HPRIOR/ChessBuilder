@@ -52,8 +52,8 @@ namespace Models.Services.Utils
         /// <remarks>
         /// Results are cached rather than computed on method call.
         /// </remarks>
-        /// <param name="start"></param>
-        /// <param name="destination"></param>
+        /// <param name="p1"></param>
+        /// <param name="p2"></param>
         /// <returns></returns>
         public static IEnumerable<Position> ScanTo(Position p1, Position p2)
         {

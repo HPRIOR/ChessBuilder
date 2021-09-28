@@ -18,14 +18,31 @@ namespace Models.Services.AI.Implementations
         // GetBuildCommands(gameState.PossibleBuildMoves)
         // .Concat(GetMoveCommands(gameState.PossiblePieceMoves));
 
-        private IEnumerable<AiMove> GetMoveCommands(IDictionary<Position, List<Position>> moves) =>
-            moves.SelectMany(moveSet =>
-                moveSet.Value.Select(move =>
+        private IEnumerable<AiMove> GetMoveCommands(IDictionary<Position, List<Position>> moves)
+        {
+            var result = new List<AiMove>();
+            foreach (var moveSet in moves)
+            {
+                foreach (var move in moveSet.Value)
                 {
                     Action<PieceColour, IGameStateUpdater> command = (turn, gameStateUpdater) =>
                         gameStateUpdater.UpdateGameState(moveSet.Key, move, turn.NextTurn());
-                    return new AiMove(MoveType.Move, moveSet.Key, move, command, PieceType.NullPiece);
-                }));
+                    result.Add(
+                            new AiMove(MoveType.Move, moveSet.Key, move, command, PieceType.NullPiece)
+                        );
+                }
+            }
+
+            return result;
+
+            // return moves.SelectMany(moveSet =>
+            //     moveSet.Value.Select(move =>
+            //     {
+            //         Action<PieceColour, IGameStateUpdater> command = (turn, gameStateUpdater) =>
+            //             gameStateUpdater.UpdateGameState(moveSet.Key, move, turn.NextTurn());
+            //         return new AiMove(MoveType.Move, moveSet.Key, move, command, PieceType.NullPiece);
+            //     }));
+        }
 
 
         private IEnumerable<AiMove> GetBuildCommands(BuildMoves builds) =>

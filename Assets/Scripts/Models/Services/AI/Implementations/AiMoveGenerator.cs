@@ -5,6 +5,7 @@ using Models.Services.Game.Implementations;
 using Models.Services.Game.Interfaces;
 using Models.State.GameState;
 using Models.State.PieceState;
+using Models.Utils.ExtensionMethods.PieceTypeExt;
 using UnityEngine;
 
 namespace Models.Services.AI.Implementations
@@ -27,7 +28,7 @@ namespace Models.Services.AI.Implementations
             _moveOrderer = moveOrderer;
         }
 
-        public Action<PieceColour, IGameStateUpdater> GetMove(
+        public AiMove GetMove(
             GameState gameState,
             int depth,
             PieceColour turn)
@@ -43,7 +44,7 @@ namespace Models.Services.AI.Implementations
             return move;
         }
 
-        private (Action<PieceColour, IGameStateUpdater> move, int score) NegaScout(
+        private (AiMove move, int score) NegaScout(
             IGameStateUpdater gameStateUpdater,
             int maxDepth,
             int currentDepth,
@@ -61,7 +62,7 @@ namespace Models.Services.AI.Implementations
             _numPosEvaluated++;
 
             // initialise best move placeholders
-            Action<PieceColour, IGameStateUpdater> bestMove = null;
+            AiMove bestMove = null;
             var bestScore = int.MinValue;
             var adaptiveBeta = beta;
 
@@ -81,7 +82,11 @@ namespace Models.Services.AI.Implementations
             foreach (var move in moves)
             {
                 // get updated board state
-                move.Move(turn, gameStateUpdater);
+                // move.Move(turn, gameStateUpdater);
+                if (move.MoveType == MoveType.Move)
+                    gameStateUpdater.UpdateGameState(move.From, move.To, turn.NextTurn());
+                else
+                    gameStateUpdater.UpdateGameState(move.From, move.Type, turn.NextTurn());
 
                 // recurse
                 var (_, recurseScore) = NegaScout(gameStateUpdater, maxDepth, currentDepth + 1, turn,
@@ -93,7 +98,7 @@ namespace Models.Services.AI.Implementations
                     if (adaptiveBeta == beta || currentDepth >= maxDepth - 2)
                     {
                         bestScore = currentScore;
-                        bestMove = move.Move;
+                        bestMove = move;
                     }
                     else
                     {
@@ -101,7 +106,7 @@ namespace Models.Services.AI.Implementations
                             gameStateUpdater, maxDepth, currentDepth, turn, -beta, -currentScore
                         );
                         bestScore = -negativeBestScore;
-                        bestMove = move.Move;
+                        bestMove = move;
                     }
 
                     if (bestScore >= beta)

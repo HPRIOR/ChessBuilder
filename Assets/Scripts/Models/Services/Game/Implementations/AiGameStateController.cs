@@ -4,6 +4,7 @@ using Models.Services.Game.Interfaces;
 using Models.State.Board;
 using Models.State.GameState;
 using Models.State.PieceState;
+using Models.Utils.ExtensionMethods.PieceTypeExt;
 
 namespace Models.Services.Game.Implementations
 {
@@ -102,7 +103,11 @@ namespace Models.Services.Game.Implementations
         {
             var move = _aiMoveGenerator.GetMove(CurrentGameState, 4, Turn);
             var previousState = _gameStateUpdater?.GameState.BoardState.Clone();
-            move(Turn, _gameStateUpdater);
+            if (move.MoveType == MoveType.Move)
+                _gameStateUpdater?.UpdateGameState(move.From, move.To, Turn.NextTurn());
+            else
+                _gameStateUpdater?.UpdateGameState(move.From, move.Type, Turn.NextTurn());
+
             CurrentGameState = _gameStateUpdater?.GameState;
             GameStateChangeEvent?.Invoke(previousState, CurrentGameState?.BoardState);
             Turn = NextTurn();

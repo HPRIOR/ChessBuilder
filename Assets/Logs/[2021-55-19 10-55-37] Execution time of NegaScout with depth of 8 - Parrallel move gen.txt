@@ -1,0 +1,4 @@
+Execution time of NegaScout with depth of 8 - Parrallel move gen: 
+      173195 ms 
+      173 s 
+      2 min

@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Models.Services.Utils;
 using Models.State.Board;
+using Models.Utils.ExtensionMethods.BoardPosExt;
 
 namespace Models.Services.Moves.Utils.Scanners
 {
@@ -13,48 +15,34 @@ namespace Models.Services.Moves.Utils.Scanners
             Direction.NE, Direction.NW, Direction.SE, Direction.SW
         };
 
-        private static readonly Dictionary<Position, Dictionary<Direction, Position[]>> Cache = GetCache();
-        public static Position[] GetPositionsToEndOfBoard(Position pos, Direction direction) => Cache[pos][direction];
+        private static readonly Dictionary<PositionDirection, Position[]> Cache = GetScanPositions();
 
-        private static Dictionary<Position, Dictionary<Direction, Position[]>> GetCache()
+        public static Span<Position> GetPositionsToEndOfBoard(Position pos, Direction direction) =>
+            Cache[new PositionDirection(pos, direction)].AsSpan();
+
+
+        private static Dictionary<PositionDirection, Position[]> GetScanPositions()
         {
-            var result = new Dictionary<Position, Dictionary<Direction, Position[]>>();
+            var result = new Dictionary<PositionDirection, Position[]>(new PositionDirectionComparer());
+            var positions = GetPositions();
+            foreach (var position in positions)
+            foreach (var direction in Directions)
+                result[new PositionDirection(position, direction)] = position
+                    .Scan(direction)
+                    .Select(pos => new Position(Math.Abs(pos.X - 7), Math.Abs(pos.Y - 7)))
+                    .ToArray();
+
+
+            return result;
+        }
+
+        private static Position[,] GetPositions()
+        {
+            var positions = new Position[8, 8];
             for (var i = 0; i < 8; i++)
             for (var j = 0; j < 8; j++)
-            {
-                var position = new Position(i, j);
-                result.Add(position, GetPositionsToEndOfBoard(position));
-            }
-
-            return result;
-        }
-
-        private static Dictionary<Direction, Position[]> GetPositionsToEndOfBoard(Position pos)
-        {
-            var result = new Dictionary<Direction, Position[]>(new DirectionComparer());
-            foreach (var direction in Directions) result.Add(direction, GetPositionToEndOfBoard(pos, direction));
-
-            return result;
-        }
-
-        private static Position[] GetPositionToEndOfBoard(Position pos, Direction dir)
-        {
-            var result = new List<Position>();
-            var iteratingPosition = pos.Add(Move.In(dir));
-            while (!PositionOutOfBounds(iteratingPosition))
-            {
-                result.Add(iteratingPosition);
-                iteratingPosition = iteratingPosition.Add(Move.In(dir));
-            }
-
-            return result.Select(pos => new Position(Math.Abs(pos.X - 7), Math.Abs(pos.Y - 7))).ToArray();
-        }
-
-        private static bool PositionOutOfBounds(Position pos)
-        {
-            var x = pos.X;
-            var y = pos.Y;
-            return 0 > x || x > 7 || 0 > y || y > 7;
+                positions[i, j] = new Position(i, j);
+            return positions;
         }
     }
 }

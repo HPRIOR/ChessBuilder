@@ -46,7 +46,7 @@ namespace Models.Services.Moves.MoveGenerators
             else
                 KingMoveFilter.RemoveEnemyMovesFromKingMoves(turnMoves, enemyMoves, kingPosition);
 
-            _pinnedPieceFilter.FilterMovesTwo(_boardInfo, boardState);
+            _pinnedPieceFilter.FilterMoves(_boardInfo, boardState);
             return new MoveState(turnMoves, _checkedStateManager.IsCheck);
         }
     }

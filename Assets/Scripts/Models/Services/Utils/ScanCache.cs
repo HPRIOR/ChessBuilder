@@ -7,7 +7,7 @@ using Models.Utils.ExtensionMethods.BoardPosExt;
 
 namespace Models.Services.Utils
 {
-    public class ScanCache
+    public static class ScanCache
     {
         private static readonly Dictionary<PositionDirection, IEnumerable<Position>> ScanPositions;
         private static readonly Dictionary<PositionPair, IEnumerable<Position>> ScanToPositions;

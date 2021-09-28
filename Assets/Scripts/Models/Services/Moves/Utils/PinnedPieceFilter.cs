@@ -135,7 +135,7 @@ namespace Models.Services.Moves.Utils
             return (false, new Position(), 0);
         }
 
-        public void FilterMovesTwo(IBoardInfo boardInfo, BoardState boardState)
+        public void FilterMoves(IBoardInfo boardInfo, BoardState boardState)
         {
             var kingPosition = boardInfo.KingPosition;
             if (kingPosition == new Position(8, 8))

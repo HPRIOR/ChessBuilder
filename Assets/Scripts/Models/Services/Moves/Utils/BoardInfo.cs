@@ -40,7 +40,6 @@ namespace Models.Services.Moves.Utils
                     var possibleMoves = _movesGeneratorRepository.GetPossibleMoveGenerator(currentPiece, true)
                         .GetPossiblePieceMoves(boardPos, boardState);
 
-                    // converting to hashset here is inefficient!
                     turnMoves.Add(boardPos, possibleMoves);
                 }
 
@@ -49,7 +48,6 @@ namespace Models.Services.Moves.Utils
                     var boardPos = tile.Position;
                     var possibleMoves = _movesGeneratorRepository.GetPossibleMoveGenerator(currentPiece, false)
                         .GetPossiblePieceMoves(boardPos, boardState);
-                    // converting to hashset here is inefficient!
                     enemyMoves.Add(boardPos, possibleMoves);
                 }
 

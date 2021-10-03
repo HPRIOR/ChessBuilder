@@ -3,7 +3,7 @@ using Models.State.Board;
 
 namespace Models.Services.Utils
 {
-    public class PositionDirectionComparer : IEqualityComparer<PositionDirection>
+    public sealed class PositionDirectionComparer : IEqualityComparer<PositionDirection>
     {
         public bool Equals(PositionDirection x, PositionDirection y)
             => x.Equals(y);

@@ -7,7 +7,7 @@ using Models.State.PieceState;
 
 namespace Models.Services.AI.Implementations
 {
-    public class AiPossibleMoveGenerator : IAiPossibleMoveGenerator
+    public sealed class AiPossibleMoveGenerator : IAiPossibleMoveGenerator
     {
         public IEnumerable<AiMove> GenerateMoves(GameState gameState) =>
             GetMoveCommands(gameState.PossiblePieceMoves);

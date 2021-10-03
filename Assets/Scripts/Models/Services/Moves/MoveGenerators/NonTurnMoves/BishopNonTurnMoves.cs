@@ -7,7 +7,7 @@ using Zenject;
 
 namespace Models.Services.Moves.MoveGenerators.NonTurnMoves
 {
-    public class BishopNonTurnMoves : IPieceMoveGenerator
+    public sealed class BishopNonTurnMoves : IPieceMoveGenerator
     {
         private static readonly Direction[] Directions =
             { Direction.NE, Direction.NW, Direction.SE, Direction.SW };

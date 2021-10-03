@@ -6,7 +6,7 @@ using Models.State.PieceState;
 
 namespace Models.Services.Moves.MoveGenerators
 {
-    public class MovesGenerator : IMovesGenerator
+    public sealed class MovesGenerator : IMovesGenerator
     {
         private readonly IBoardInfo _boardInfo;
         private readonly PinnedPieceFilter _pinnedPieceFilter;

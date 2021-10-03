@@ -7,7 +7,7 @@ using Zenject;
 
 namespace Models.Services.Moves.MoveGenerators.TurnMoves
 {
-    public class QueenMoves : IPieceMoveGenerator
+    public sealed class QueenMoves : IPieceMoveGenerator
     {
         private static readonly Direction[] Directions =
         {
@@ -39,7 +39,7 @@ namespace Models.Services.Moves.MoveGenerators.TurnMoves
             return possibleMoves;
         }
 
-        public class Factory : PlaceholderFactory<PieceColour, QueenMoves>
+        public sealed class Factory : PlaceholderFactory<PieceColour, QueenMoves>
         {
         }
     }

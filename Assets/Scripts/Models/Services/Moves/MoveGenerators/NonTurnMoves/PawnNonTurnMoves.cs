@@ -7,7 +7,7 @@ using Zenject;
 
 namespace Models.Services.Moves.MoveGenerators.NonTurnMoves
 {
-    public class PawnNonTurnMoves : IPieceMoveGenerator
+    public sealed class PawnNonTurnMoves : IPieceMoveGenerator
     {
         private readonly IPositionTranslator _positionTranslator;
         private readonly ITileEvaluator _tileEvaluator;

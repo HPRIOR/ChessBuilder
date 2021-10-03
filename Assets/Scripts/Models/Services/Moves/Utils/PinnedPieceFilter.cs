@@ -9,7 +9,7 @@ using Models.Utils.ExtensionMethods.PieceTypeExt;
 
 namespace Models.Services.Moves.Utils
 {
-    public class PinnedPieceFilter
+    public sealed class PinnedPieceFilter
     {
         private static readonly HashSet<PieceType> ScanningPieces = new HashSet<PieceType>(new PieceTypeComparer())
         {

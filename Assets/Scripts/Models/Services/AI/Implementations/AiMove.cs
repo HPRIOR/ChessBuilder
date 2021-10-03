@@ -10,7 +10,7 @@ namespace Models.Services.AI.Implementations
         Move
     }
 
-    public class AiMove : IEquatable<AiMove>
+    public sealed class AiMove : IEquatable<AiMove>
     {
         public AiMove(MoveType moveType, Position from, Position to,
             PieceType type)

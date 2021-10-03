@@ -2,7 +2,7 @@
 
 namespace Models.Services.Board
 {
-    public class BoardGenerator : IBoardGenerator
+    public sealed class BoardGenerator : IBoardGenerator
     {
         public Tile[][] GenerateBoard()
         {

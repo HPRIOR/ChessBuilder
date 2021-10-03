@@ -6,7 +6,7 @@ using Models.State.PieceState;
 
 namespace Models.Services.Moves.Utils
 {
-    public class BoardInfo : IBoardInfo
+    public sealed class BoardInfo : IBoardInfo
     {
         private readonly IMovesGeneratorRepository _movesGeneratorRepository;
 

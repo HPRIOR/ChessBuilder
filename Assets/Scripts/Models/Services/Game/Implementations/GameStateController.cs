@@ -6,7 +6,7 @@ using Models.State.PieceState;
 
 namespace Models.Services.Game.Implementations
 {
-    public class GameStateController : IGameStateController, ITurnEventInvoker
+    public sealed class GameStateController : IGameStateController, ITurnEventInvoker
     {
         private readonly GameInitializer _gameInitializer;
         private readonly GameStateUpdaterFactory _gameStateUpdaterFactory;

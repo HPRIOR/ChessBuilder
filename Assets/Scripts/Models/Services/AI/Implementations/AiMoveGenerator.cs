@@ -10,7 +10,7 @@ using UnityEngine;
 
 namespace Models.Services.AI.Implementations
 {
-    public class AiMoveGenerator
+    public sealed class AiMoveGenerator
     {
         private const int WindowSize = 3000;
         private readonly IAiPossibleMoveGenerator _aiPossibleMoveGenerator;

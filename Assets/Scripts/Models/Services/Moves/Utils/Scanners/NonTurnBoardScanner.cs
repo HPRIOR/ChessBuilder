@@ -6,7 +6,7 @@ using Zenject;
 
 namespace Models.Services.Moves.Utils.Scanners
 {
-    public class NonTurnBoardScanner : IBoardScanner
+    public sealed class NonTurnBoardScanner : IBoardScanner
     {
         private readonly IPositionTranslator _positionTranslator;
         private readonly ITileEvaluator _tileEvaluator;
@@ -56,7 +56,7 @@ namespace Models.Services.Moves.Utils.Scanners
         private bool TileContainsFriendlyPieceAt(Position relativePosition, BoardState boardState) =>
             _tileEvaluator.FriendlyPieceIn(ref boardState.GetTileAt(relativePosition));
 
-        public class Factory : PlaceholderFactory<PieceColour, NonTurnBoardScanner>
+        public sealed class Factory : PlaceholderFactory<PieceColour, NonTurnBoardScanner>
         {
         }
     }

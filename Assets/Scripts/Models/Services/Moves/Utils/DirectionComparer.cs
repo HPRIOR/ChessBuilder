@@ -2,7 +2,7 @@
 
 namespace Models.Services.Moves.Utils
 {
-    public class DirectionComparer : IEqualityComparer<Direction>
+    public sealed class DirectionComparer : IEqualityComparer<Direction>
     {
         public bool Equals(Direction x, Direction y) => x == y;
 

@@ -7,7 +7,7 @@ using Zenject;
 
 namespace Models.Services.Moves.MoveGenerators.TurnMoves
 {
-    public class PawnMoves : IPieceMoveGenerator
+    public sealed class PawnMoves : IPieceMoveGenerator
     {
         private readonly IPositionTranslator _positionTranslator;
         private readonly ITileEvaluator _tileEvaluator;
@@ -57,7 +57,7 @@ namespace Models.Services.Moves.MoveGenerators.TurnMoves
             return possibleMoves;
         }
 
-        public class Factory : PlaceholderFactory<PieceColour, PawnMoves>
+        public sealed class Factory : PlaceholderFactory<PieceColour, PawnMoves>
         {
         }
     }

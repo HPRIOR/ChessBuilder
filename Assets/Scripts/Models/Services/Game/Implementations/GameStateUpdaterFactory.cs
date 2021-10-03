@@ -3,7 +3,7 @@ using Models.State.GameState;
 
 namespace Models.Services.Game.Implementations
 {
-    public class GameStateUpdaterFactory
+    public sealed class GameStateUpdaterFactory
     {
         private readonly GameStateUpdater.Factory _gameStateUpdaterFactory;
 

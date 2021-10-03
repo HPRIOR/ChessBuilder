@@ -6,7 +6,7 @@ using Models.Utils.ExtensionMethods.PieceTypeExt;
 
 namespace Models.Services.Moves.MoveGenerators
 {
-    public class PieceMover : IPieceMover
+    public sealed class PieceMover : IPieceMover
     {
         public void ModifyBoardState(BoardState boardState, Position from,
             Position destination)

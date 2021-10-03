@@ -7,7 +7,7 @@ using Models.Utils.ExtensionMethods.PieceTypeExt;
 
 namespace Models.Services.AI.Implementations
 {
-    public class MoveOrderer : IMoveOrderer
+    public sealed class MoveOrderer : IMoveOrderer
     {
         public IEnumerable<AiMove> OrderMoves(IEnumerable<AiMove> moves, BoardState boardState)
         {

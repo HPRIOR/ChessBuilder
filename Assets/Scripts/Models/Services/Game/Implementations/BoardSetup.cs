@@ -6,7 +6,7 @@ using Models.State.PieceState;
 
 namespace Models.Services.Game.Implementations
 {
-    public class BoardSetup
+    public sealed class BoardSetup
     {
         private readonly IBoardGenerator _boardGenerator;
 

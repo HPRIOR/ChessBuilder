@@ -7,7 +7,7 @@ using Models.State.PieceState;
 
 namespace Models.Services.Moves.Utils
 {
-    public class CheckedStateManager : ICheckedStateManager
+    public sealed class CheckedStateManager : ICheckedStateManager
     {
         private static readonly HashSet<PieceType> ScanningPieces = new HashSet<PieceType>
         {

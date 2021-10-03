@@ -14,7 +14,7 @@ using Zenject;
 
 namespace Models.Services.Game.Implementations
 {
-    public class GameStateUpdater : IGameStateUpdater
+    public sealed class GameStateUpdater : IGameStateUpdater
     {
         //TODO inject me
         private const int maxBuildPoints = 39;

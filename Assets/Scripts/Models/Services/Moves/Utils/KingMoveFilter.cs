@@ -6,7 +6,7 @@ using Models.State.Board;
 
 namespace Models.Services.Moves.Utils
 {
-    public class KingMoveFilter
+    public sealed class KingMoveFilter
     {
         public static void RemoveEnemyMovesFromKingMoves(IDictionary<Position, List<Position>> turnMoves,
             IDictionary<Position, List<Position>> enemyMoves,

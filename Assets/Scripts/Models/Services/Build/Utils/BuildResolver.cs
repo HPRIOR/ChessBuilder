@@ -9,7 +9,7 @@ using Models.Utils.ExtensionMethods.PieceTypeExt;
 
 namespace Models.Services.Build.Utils
 {
-    public class BuildResolver : IBuildResolver
+    public sealed class BuildResolver : IBuildResolver
     {
         public IEnumerable<(Position, PieceType)> ResolveBuilds(BoardState boardState, PieceColour turn)
         {

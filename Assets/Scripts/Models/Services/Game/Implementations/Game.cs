@@ -7,7 +7,7 @@ using Zenject;
 
 namespace Models.Services.Game.Implementations
 {
-    public class Game : MonoBehaviour
+    public sealed class Game : MonoBehaviour
     {
         private IBoardGenerator _boardGenerator;
         private IGameStateController GameStateController { get; set; }

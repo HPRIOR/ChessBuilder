@@ -5,7 +5,7 @@ using Models.State.PieceState;
 
 namespace Models.State.GameState
 {
-    public class Move
+    public sealed class Move
     {
         public Move(Position to, Position from)
         {
@@ -35,7 +35,7 @@ namespace Models.State.GameState
     ///     For example, the available moves are stored from the previous state, whereas the change in BoardState is recorded
     ///     so that it can be reverted.
     /// </summary>
-    public class GameStateChanges
+    public sealed class GameStateChanges
     {
         public GameStateChanges()
         {

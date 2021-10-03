@@ -6,7 +6,7 @@ using Zenject;
 
 namespace Models.Services.Moves.MoveGenerators.NonTurnMoves
 {
-    public class KnightNonTurnMoves : IPieceMoveGenerator
+    public sealed class KnightNonTurnMoves : IPieceMoveGenerator
     {
         private readonly IPositionTranslator _positionTranslator;
 

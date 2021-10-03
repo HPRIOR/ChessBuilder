@@ -7,7 +7,7 @@ using Zenject;
 
 namespace Models.Services.Moves.MoveGenerators.NonTurnMoves
 {
-    public class QueenNonTurnMoves : IPieceMoveGenerator
+    public sealed class QueenNonTurnMoves : IPieceMoveGenerator
     {
         private static readonly Direction[] Directions =
         {

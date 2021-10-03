@@ -5,7 +5,7 @@ using Models.Utils.ExtensionMethods.PieceTypeExt;
 
 namespace Models.State.Board
 {
-    public class BoardState
+    public sealed class BoardState
     {
         public readonly Tile[][] Board;
         public ref Tile GetTileAt(Position pos) => ref Board[pos.X][pos.Y];

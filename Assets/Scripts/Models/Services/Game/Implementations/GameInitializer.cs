@@ -9,7 +9,7 @@ using Models.State.PlayerState;
 
 namespace Models.Services.Game.Implementations
 {
-    public class GameInitializer
+    public sealed class GameInitializer
     {
         private readonly IBuildMoveGenerator _buildMoveGenerator;
         private readonly IPieceMoveGenerator _whiteKingMoveGenerator;

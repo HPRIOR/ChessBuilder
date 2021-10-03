@@ -6,7 +6,7 @@ using Models.State.PieceState;
 
 namespace Models.State.GameState
 {
-    public class GameState : ICloneable
+    public sealed class GameState : ICloneable
     {
         public GameState(bool check, bool checkMate,
             PlayerState.PlayerState playerState,

@@ -7,7 +7,7 @@ using Zenject;
 
 namespace Models.Services.Moves.MoveGenerators.TurnMoves
 {
-    public class RookTurnMoves : IPieceMoveGenerator
+    public sealed class RookTurnMoves : IPieceMoveGenerator
     {
         private static readonly Direction[] Directions = { Direction.N, Direction.E, Direction.S, Direction.W };
         private readonly IBoardScanner _boardScanner;
@@ -35,7 +35,7 @@ namespace Models.Services.Moves.MoveGenerators.TurnMoves
             return possibleMoves;
         }
 
-        public class Factory : PlaceholderFactory<PieceColour, RookTurnMoves>
+        public sealed class Factory : PlaceholderFactory<PieceColour, RookTurnMoves>
         {
         }
     }

@@ -7,7 +7,7 @@ using Zenject;
 
 namespace Models.Services.Moves.MoveGenerators.NonTurnMoves
 {
-    public class RookNonTurnMoves : IPieceMoveGenerator
+    public sealed class RookNonTurnMoves : IPieceMoveGenerator
     {
         private static readonly Direction[] Directions = { Direction.N, Direction.E, Direction.S, Direction.W };
         private readonly IBoardScanner _boardScanner;

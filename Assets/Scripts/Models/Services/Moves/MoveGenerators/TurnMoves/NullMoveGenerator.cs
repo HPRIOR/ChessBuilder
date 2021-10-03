@@ -4,7 +4,7 @@ using Models.State.Board;
 
 namespace Models.Services.Moves.MoveGenerators.TurnMoves
 {
-    public class NullMoveGenerator : IPieceMoveGenerator
+    public sealed class NullMoveGenerator : IPieceMoveGenerator
     {
         public List<Position> GetPossiblePieceMoves(Position originPosition, BoardState boardState) =>
             new List<Position>();

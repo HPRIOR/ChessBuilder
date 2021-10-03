@@ -6,7 +6,7 @@ using Models.Utils.ExtensionMethods.PieceTypeExt;
 
 namespace Models.Services.AI.Implementations
 {
-    public class StaticEvaluator : IStaticEvaluator
+    public sealed class StaticEvaluator : IStaticEvaluator
     {
         public BoardScore Evaluate(GameState gameState)
         {

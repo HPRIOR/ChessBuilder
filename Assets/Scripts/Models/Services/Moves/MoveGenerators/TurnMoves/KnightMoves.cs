@@ -6,7 +6,7 @@ using Zenject;
 
 namespace Models.Services.Moves.MoveGenerators.TurnMoves
 {
-    public class KnightMoves : IPieceMoveGenerator
+    public sealed class KnightMoves : IPieceMoveGenerator
     {
         private readonly IPositionTranslator _positionTranslator;
         private readonly ITileEvaluator _tileEvaluator;
@@ -68,7 +68,7 @@ namespace Models.Services.Moves.MoveGenerators.TurnMoves
             };
         }
 
-        public class Factory : PlaceholderFactory<PieceColour, KnightMoves>
+        public sealed class Factory : PlaceholderFactory<PieceColour, KnightMoves>
         {
         }
     }

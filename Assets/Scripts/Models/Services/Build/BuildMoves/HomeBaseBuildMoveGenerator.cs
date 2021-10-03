@@ -7,7 +7,7 @@ using Models.Utils.ExtensionMethods.PieceTypeExt;
 
 namespace Models.Services.Build.BuildMoves
 {
-    internal class HomeBaseBuildMoveGenerator : IBuildMoveGenerator
+    internal sealed class HomeBaseBuildMoveGenerator : IBuildMoveGenerator
     {
         private static readonly HashSet<PieceType> BlackPieces = new HashSet<PieceType>
         {

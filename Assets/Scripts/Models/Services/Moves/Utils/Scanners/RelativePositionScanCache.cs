@@ -7,7 +7,7 @@ using Models.Utils.ExtensionMethods.BoardPosExt;
 
 namespace Models.Services.Moves.Utils.Scanners
 {
-    public static class RelativePositionScanCache
+    public static  class RelativePositionScanCache
     {
         private static readonly Direction[] Directions =
         {

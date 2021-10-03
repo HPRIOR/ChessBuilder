@@ -6,7 +6,7 @@ using Models.State.PieceState;
 
 namespace Models.Services.Moves.MoveGenerators
 {
-    public class MovesGeneratorRepository : IMovesGeneratorRepository
+    public sealed class MovesGeneratorRepository : IMovesGeneratorRepository
     {
         private readonly MovesFactory _movesFactory;
         private readonly Dictionary<PieceType, IPieceMoveGenerator> _nonMovePieceGenerator;

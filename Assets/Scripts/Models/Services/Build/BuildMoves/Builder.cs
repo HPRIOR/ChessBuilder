@@ -6,7 +6,7 @@ using Models.Utils.ExtensionMethods.PieceTypeExt;
 
 namespace Models.Services.Build.BuildMoves
 {
-    public class Builder : IBuilder
+    public sealed class Builder : IBuilder
     {
         public void GenerateNewBoardState(BoardState boardState, Position buildPosition, PieceType piece)
         {

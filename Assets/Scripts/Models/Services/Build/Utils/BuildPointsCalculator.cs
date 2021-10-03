@@ -9,7 +9,7 @@ using Models.Utils.ExtensionMethods.PieceTypeExt;
 
 namespace Models.Services.Build.Utils
 {
-    public class BuildPointsCalculator : IBuildPointsCalculator
+    public sealed class BuildPointsCalculator : IBuildPointsCalculator
     {
         // TODO inject max points 
         public PlayerState CalculateBuildPoints(PieceColour pieceColour, BoardState boardState,

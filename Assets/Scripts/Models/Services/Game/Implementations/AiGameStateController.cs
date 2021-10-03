@@ -8,7 +8,7 @@ using Models.Utils.ExtensionMethods.PieceTypeExt;
 
 namespace Models.Services.Game.Implementations
 {
-    public class AiGameStateController : IGameStateController, ITurnEventInvoker
+    public sealed class AiGameStateController : IGameStateController, ITurnEventInvoker
     {
         private readonly AiMoveGenerator _aiMoveGenerator;
         private readonly GameInitializer _gameInitializer;

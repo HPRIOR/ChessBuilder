@@ -4,7 +4,7 @@ using Models.State.PieceState;
 
 namespace Models.Services.Board
 {
-    public class BuildStateDecrementor
+    public sealed class BuildStateDecrementor
     {
         public static IEnumerable<Position> DecrementBuilds(BoardState boardState)
         {

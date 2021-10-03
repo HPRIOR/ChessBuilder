@@ -11,11 +11,13 @@ namespace Models.Services.Moves.MoveGenerators
         public void ModifyBoardState(BoardState boardState, Position from,
             Position destination)
         {
-            ModifyActivePieces(boardState, from, destination);
-
-            // modify board state
+            
             ref var destinationTile = ref boardState.GetTileAt(destination);
             ref var fromTile = ref boardState.GetTileAt(from);
+
+            var isTakingMove = destinationTile.CurrentPiece.Type != PieceType.NullPiece;
+            
+            ModifyActivePieces(boardState, from, destination, isTakingMove);
 
             // swap pieces
             destinationTile.CurrentPiece = fromTile.CurrentPiece;
@@ -24,17 +26,15 @@ namespace Models.Services.Moves.MoveGenerators
             // return nothing 
         }
 
-        private static void ModifyActivePieces(BoardState boardState, Position from, Position destination)
+        private static void ModifyActivePieces(BoardState boardState, Position @from, Position destination,
+            bool isTakingMove)
         {
             // modify active pieces 
             boardState.ActivePieces.Remove(from);
-            boardState.ActivePieces.Add(destination);
+            if(!isTakingMove)
+                boardState.ActivePieces.Add(destination);
 
         }
 
-    
-
-        private static bool TileContainsPieceAt(Position position, BoardState boardState) =>
-            boardState.Board[position.X][position.Y].CurrentPiece.Type != PieceType.NullPiece;
     }
 }

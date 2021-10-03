@@ -14,13 +14,13 @@ namespace Models.State.Board
         public BoardState(Tile[][] board)
         {
             Board = board;
-            ActivePieces = new HashSet<Position>();
-            ActiveBuilds = new HashSet<Position>();
+            ActivePieces = new List<Position>();
+            ActiveBuilds = new List<Position>();
      
             GenerateActivePieces();
         }
 
-        private BoardState(Tile[][] board, HashSet<Position> activePieces, HashSet<Position> activeBuilds)
+        private BoardState(Tile[][] board, List<Position> activePieces, List<Position> activeBuilds)
         {
             Board = board;
             ActivePieces = activePieces;
@@ -42,8 +42,8 @@ namespace Models.State.Board
             Board = board;
         }
 
-        public HashSet<Position> ActivePieces { get; }
-        public HashSet<Position> ActiveBuilds { get; }
+        public List<Position> ActivePieces { get; }
+        public List<Position> ActiveBuilds { get; }
         
 
         private void GenerateActivePieces()
@@ -74,7 +74,7 @@ namespace Models.State.Board
                     newBoard[i][j] = Board[i][j].Clone();
             }
 
-            return new BoardState(newBoard, new HashSet<Position>(ActivePieces), new HashSet<Position>(ActiveBuilds));
+            return new BoardState(newBoard, new List<Position>(ActivePieces), new List<Position>(ActiveBuilds));
         }
 
         public BoardState CloneWithDecrementBuildState()
@@ -87,7 +87,7 @@ namespace Models.State.Board
                     newBoard[i][j] = Board[i][j].CloneWithDecrementBuildState();
             }
 
-            return new BoardState(newBoard, new HashSet<Position>(ActivePieces), new HashSet<Position>(ActiveBuilds));
+            return new BoardState(newBoard, new List<Position>(ActivePieces), new List<Position>(ActiveBuilds));
         }
     }
 }

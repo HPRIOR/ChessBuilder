@@ -4,15 +4,15 @@ using Models.State.PieceState;
 
 namespace Models.State.BuildState
 {
-    public class BuildMoves
+    public readonly struct BuildMoves
     {
-        public BuildMoves(HashSet<Position> buildPositions, HashSet<PieceType> buildPieces)
+        public BuildMoves(List<Position> buildPositions, List<PieceType> buildPieces)
         {
             BuildPositions = buildPositions;
             BuildPieces = buildPieces;
         }
 
-        public HashSet<PieceType> BuildPieces { get; }
-        public HashSet<Position> BuildPositions { get; }
+        public List<PieceType> BuildPieces { get; }
+        public List<Position> BuildPositions { get; }
     }
 }

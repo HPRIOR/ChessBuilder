@@ -112,7 +112,7 @@ namespace Tests.UnitTests.AI
             };
 
             var gameState = new GameState(false, false, new PlayerState(0), possibleMoves,
-                new BuildMoves(new HashSet<Position>(), new HashSet<PieceType>()), boardState);
+                new BuildMoves(new List<Position>(), new List<PieceType>()), boardState);
             // _aiMoveGenerator.GetMove(gameState, 3, PieceColour.White);
 
             var logTimer = new LogExecutionTimer();

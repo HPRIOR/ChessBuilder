@@ -95,7 +95,7 @@ namespace Tests.UnitTests.Game
             _gameStateController.UpdateGameState(initialBoardState);
 
             var expectedBuildMoves =
-                new BuildMoves(new HashSet<Position>(), new HashSet<PieceType>());
+                new BuildMoves(new List<Position>(), new List<PieceType>());
             Assert.That(_gameStateController.CurrentGameState.PossibleBuildMoves.BuildPieces,
                 Is.EquivalentTo(expectedBuildMoves.BuildPieces));
             Assert.That(_gameStateController.CurrentGameState.PossibleBuildMoves.BuildPositions,

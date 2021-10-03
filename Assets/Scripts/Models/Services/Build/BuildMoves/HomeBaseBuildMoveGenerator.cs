@@ -27,22 +27,22 @@ namespace Models.Services.Build.BuildMoves
             : new State.BuildState.BuildMoves(GetWhitePositions(), RemovePiecesByCost(playerState, WhitePieces));
 
 
-        private static HashSet<PieceType> RemovePiecesByCost(PlayerState playerState,
+        private static List<PieceType> RemovePiecesByCost(PlayerState playerState,
             IEnumerable<PieceType> pieces)
             => GetAvailablePieces(pieces, playerState); // expensive
 
-        private static HashSet<PieceType> GetAvailablePieces(IEnumerable<PieceType> pieces, PlayerState playerState)
+        private static List<PieceType> GetAvailablePieces(IEnumerable<PieceType> pieces, PlayerState playerState)
         {
-            var result = new HashSet<PieceType>();
+            var result = new List<PieceType>();
             foreach (var piece in pieces)
                 if (piece.Value() <= playerState.BuildPoints)
                     result.Add(piece);
             return result;
         }
 
-        private static HashSet<Position> GetWhitePositions()
+        private static List<Position> GetWhitePositions()
         {
-            var builder = new HashSet<Position>();
+            var builder = new List<Position>();
             for (var y = 0; y < 2; y++)
             for (var x = 0; x < 8; x++)
                 builder.Add(new Position(x, y)); // expensive
@@ -50,9 +50,9 @@ namespace Models.Services.Build.BuildMoves
         }
 
 
-        private static HashSet<Position> GetBlackPositions()
+        private static List<Position> GetBlackPositions()
         {
-            var builder = new HashSet<Position>();
+            var builder = new List<Position>();
             for (var x = 0; x < 8; x++)
             for (var y = 7; y > 5; y--)
                 builder.Add(new Position(x, y));

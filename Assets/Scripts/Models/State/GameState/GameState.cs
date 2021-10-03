@@ -31,8 +31,8 @@ namespace Models.State.GameState
         public object Clone()
         {
             var possibleMoves = new Dictionary<Position, List<Position>>(PossiblePieceMoves);
-            var builds = new HashSet<PieceType>(PossibleBuildMoves.BuildPieces);
-            var buildPosition = new HashSet<Position>(PossibleBuildMoves.BuildPositions);
+            var builds = new List<PieceType>(PossibleBuildMoves.BuildPieces);
+            var buildPosition = new List<Position>(PossibleBuildMoves.BuildPositions);
             var buildMoves = new BuildMoves(buildPosition, builds);
             return new GameState(Check, CheckMate, PlayerState, possibleMoves, buildMoves,
                 BoardState.Clone());

@@ -148,7 +148,7 @@ namespace Models.Services.Game.Implementations
         private BuildMoves GetPossibleBuildMoves(BoardState newBoardState, PieceColour turn, MoveState moveState,
             PlayerState relevantPlayerState) =>
             moveState.Check
-                ? new BuildMoves(new HashSet<Position>(), new HashSet<PieceType>()) // no build moves when in check
+                ? new BuildMoves(new List<Position>(), new List<PieceType>()) // no build moves when in check
                 : _buildMoveGenerator.GetPossibleBuildMoves(newBoardState, turn, relevantPlayerState);
 
         private PlayerState GetPlayerState(BoardState newBoardState, PieceColour turn)

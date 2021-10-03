@@ -39,8 +39,8 @@ namespace Tests.UnitTests.PossibleMoves.BuildMoves
         [Test]
         public void WithBuildMovesAndPieces_CanBuild()
         {
-            var possibleBuildMoves = new HashSet<Position> { new Position(1, 1) };
-            var possibleBuildPieces = new HashSet<PieceType> { PieceType.BlackKnight };
+            var possibleBuildMoves = new List<Position> { new Position(1, 1) };
+            var possibleBuildPieces = new List<PieceType> { PieceType.BlackKnight };
             var buildMoves = new Models.State.BuildState.BuildMoves(possibleBuildMoves,
                 possibleBuildPieces);
 
@@ -52,8 +52,8 @@ namespace Tests.UnitTests.PossibleMoves.BuildMoves
         [Test]
         public void WithBuildMovesAndNotPiece_CannotBuild()
         {
-            var possibleBuildMoves = new HashSet<Position> { new Position(1, 1) };
-            var possibleBuildPieces = new HashSet<PieceType> { PieceType.WhiteKnight };
+            var possibleBuildMoves = new List<Position> { new Position(1, 1) };
+            var possibleBuildPieces = new List<PieceType> { PieceType.WhiteKnight };
 
             var buildMoves = new Models.State.BuildState.BuildMoves(possibleBuildMoves,
                 possibleBuildPieces);
@@ -67,8 +67,8 @@ namespace Tests.UnitTests.PossibleMoves.BuildMoves
         [Test]
         public void WithNoBuildMovesAndPiece_CannotBuild()
         {
-            var possibleBuildMoves = new HashSet<Position> { new Position(2, 2) };
-            var possibleBuildPieces = new HashSet<PieceType> { PieceType.BlackKnight };
+            var possibleBuildMoves = new List<Position> { new Position(2, 2) };
+            var possibleBuildPieces = new List<PieceType> { PieceType.BlackKnight };
 
             var buildMoves = new Models.State.BuildState.BuildMoves(possibleBuildMoves,
                 possibleBuildPieces);

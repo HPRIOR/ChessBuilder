@@ -14,7 +14,7 @@ namespace Models.Services.Moves.Utils.Scanners
         public BoardScanner(
             PieceColour pieceColour,
             ITileEvaluatorFactory tileEvaluatorFactory
-            )
+        )
         {
             _tileEvaluator = tileEvaluatorFactory.Create(pieceColour);
             _turn = pieceColour;
@@ -32,7 +32,8 @@ namespace Models.Services.Moves.Utils.Scanners
         /// <param name="boardState"></param>
         /// <param name="possibleMoves"></param>
         /// <returns></returns>
-        public void ScanIn(Direction direction, Position currentPosition,
+        public void ScanIn(Direction direction,
+            Position currentPosition, // make me return Span instead of possible moves
             BoardState boardState, List<Position> possibleMoves)
         {
             var possibleMovePositions = _turn == PieceColour.White

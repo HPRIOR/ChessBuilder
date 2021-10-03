@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using Models.Services.AI.Interfaces;
-using Models.Services.Game.Interfaces;
 using Models.State.Board;
 using Models.State.BuildState;
 using Models.State.GameState;
 using Models.State.PieceState;
-using Models.Utils.ExtensionMethods.PieceTypeExt;
 
 namespace Models.Services.AI.Implementations
 {
@@ -23,35 +19,24 @@ namespace Models.Services.AI.Implementations
             var result = new List<AiMove>();
             foreach (var moveSet in moves)
             {
-                foreach (var move in moveSet.Value)
+                for (var index = 0; index < moveSet.Value.Count; index++)
                 {
-                    Action<PieceColour, IGameStateUpdater> command = (turn, gameStateUpdater) =>
-                        gameStateUpdater.UpdateGameState(moveSet.Key, move, turn.NextTurn());
-                    result.Add(
-                            new AiMove(MoveType.Move, moveSet.Key, move, command, PieceType.NullPiece)
-                        );
+                    var move = moveSet.Value[index];
+                    result.Add(new AiMove(MoveType.Move, moveSet.Key, move, PieceType.NullPiece));
                 }
             }
 
             return result;
-
-            // return moves.SelectMany(moveSet =>
-            //     moveSet.Value.Select(move =>
-            //     {
-            //         Action<PieceColour, IGameStateUpdater> command = (turn, gameStateUpdater) =>
-            //             gameStateUpdater.UpdateGameState(moveSet.Key, move, turn.NextTurn());
-            //         return new AiMove(MoveType.Move, moveSet.Key, move, command, PieceType.NullPiece);
-            //     }));
         }
 
 
-        private IEnumerable<AiMove> GetBuildCommands(BuildMoves builds) =>
-            builds.BuildPositions.SelectMany(position =>
-                builds.BuildPieces.Select(piece =>
-                {
-                    Action<PieceColour, IGameStateUpdater> command = (turn, gameStateUpdater) =>
-                        gameStateUpdater.UpdateGameState(position, piece, turn.NextTurn());
-                    return new AiMove(MoveType.Build, position, new Position(), command, piece);
-                }));
+        private IEnumerable<AiMove> GetBuildCommands(BuildMoves builds)
+        {
+            var result = new List<AiMove>();
+            foreach (var position in builds.BuildPositions)
+            foreach (var piece in builds.BuildPieces)
+                result.Add(new AiMove(MoveType.Build, position, new Position(), piece));
+            return result;
+        }
     }
 }

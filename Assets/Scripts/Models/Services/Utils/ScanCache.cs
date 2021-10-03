@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Drawing;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Models.Services.Moves.Utils;
 using Models.State.Board;
@@ -9,10 +9,10 @@ namespace Models.Services.Utils
 {
     public static class ScanCache
     {
-        private static readonly Dictionary<PositionDirection, IEnumerable<Position>> ScanPositions;
-        private static readonly Dictionary<PositionPair, IEnumerable<Position>> ScanToPositions;
-        private static readonly Dictionary<PositionPair, IEnumerable<Position>> ScanBetweenPositions;
-        private static readonly Dictionary<PositionPair, IEnumerable<Position>> ScanInclusiveToPositions;
+        private static readonly Dictionary<PositionDirection, Position[]> ScanPositions;
+        private static readonly Dictionary<PositionPair, Position[]> ScanToPositions;
+        private static readonly Dictionary<PositionPair, Position[]> ScanBetweenPositions;
+        private static readonly Dictionary<PositionPair, Position[]> ScanInclusiveToPositions;
 
         private static readonly Direction[] Directions =
         {
@@ -30,7 +30,7 @@ namespace Models.Services.Utils
 
 
         /// <summary>
-        /// Returns a list of positions to the end of the board, excluding the first argument.
+        /// Returns an array of positions to the end of the board, excluding the first argument.
         /// </summary>
         /// <remarks>
         /// Results are cached rather than computed on method call.
@@ -38,16 +38,16 @@ namespace Models.Services.Utils
         /// <param name="p"></param>
         /// <param name="d"></param>
         /// <returns></returns>
-        public static IEnumerable<Position> Scan(Position p, Direction d)
+        public static Position[] Scan(Position p, Direction d)
         {
             var positionDirection = new PositionDirection(p, d);
             return ScanPositions.ContainsKey(positionDirection)
                 ? ScanPositions[positionDirection]
-                : new List<Position>();
+                : Array.Empty<Position>();
         }
 
         /// <summary>
-        /// Returns list of positions between arguments, excluding the first argument, including second argument.
+        /// Returns array of positions between arguments, excluding the first argument, including second argument.
         /// </summary>
         /// <remarks>
         /// Results are cached rather than computed on method call.
@@ -55,10 +55,10 @@ namespace Models.Services.Utils
         /// <param name="p1"></param>
         /// <param name="p2"></param>
         /// <returns></returns>
-        public static IEnumerable<Position> ScanTo(Position p1, Position p2)
+        public static Position[] ScanTo(Position p1, Position p2)
         {
             var positionPair = new PositionPair(p1, p2);
-            return ScanToPositions.ContainsKey(positionPair) ? ScanToPositions[positionPair] : new List<Position>();
+            return ScanToPositions.ContainsKey(positionPair) ? ScanToPositions[positionPair] : Array.Empty<Position>();
         }
 
         /// <summary>
@@ -70,31 +70,31 @@ namespace Models.Services.Utils
         /// <param name="p1"></param>
         /// <param name="p2"></param>
         /// <returns></returns>
-        public static IEnumerable<Position> ScanBetween(Position p1, Position p2)
+        public static Position[] ScanBetween(Position p1, Position p2)
         {
             var positionPair = new PositionPair(p1, p2);
             return ScanBetweenPositions.ContainsKey(positionPair)
                 ? ScanBetweenPositions[positionPair]
-                : new List<Position>();
+                : Array.Empty<Position>();
         }
 
 
-        public static IEnumerable<Position> ScanInclusiveTo(Position p1, Position p2)
+        public static Position[] ScanInclusiveTo(Position p1, Position p2)
         {
             var positionPair = new PositionPair(p1, p2);
             return ScanInclusiveToPositions.ContainsKey(positionPair)
                 ? ScanInclusiveToPositions[positionPair]
-                : new List<Position>();
+                : Array.Empty<Position>();
         }
 
-        private static Dictionary<PositionDirection, IEnumerable<Position>> GetScanPositions()
+        private static Dictionary<PositionDirection, Position[]> GetScanPositions()
         {
-            var result = new Dictionary<PositionDirection, IEnumerable<Position>>(new PositionDirectionComparer());
+            var result = new Dictionary<PositionDirection, Position[]>(new PositionDirectionComparer());
             var positions = GetPositions();
             foreach (var position in positions)
             foreach (var direction in Directions)
             {
-                result[new PositionDirection(position, direction)] = position.Scan(direction);
+                result[new PositionDirection(position, direction)] = position.Scan(direction).ToArray();
             }
 
 
@@ -102,9 +102,9 @@ namespace Models.Services.Utils
         }
 
 
-        private static Dictionary<PositionPair, IEnumerable<Position>> GetScanToPositions()
+        private static Dictionary<PositionPair, Position[]> GetScanToPositions()
         {
-            var result = new Dictionary<PositionPair, IEnumerable<Position>>(new PositionPairComparer());
+            var result = new Dictionary<PositionPair, Position[]>(new PositionPairComparer());
             var positions = GetPositions();
             foreach (var position1 in positions)
             foreach (var position2 in positions)
@@ -112,15 +112,15 @@ namespace Models.Services.Utils
                 {
                     var direction = DirectionCache.DirectionFrom(position1, position2);
                     if (direction != Direction.Null)
-                        result[new PositionPair(position1, position2)] = position1.ScanTo(position2);
+                        result[new PositionPair(position1, position2)] = position1.ScanTo(position2).ToArray();
                 }
 
             return result;
         }
 
-        private static Dictionary<PositionPair, IEnumerable<Position>> GetScanBetweenPositions()
+        private static Dictionary<PositionPair, Position[]> GetScanBetweenPositions()
         {
-            var result = new Dictionary<PositionPair, IEnumerable<Position>>(new PositionPairComparer());
+            var result = new Dictionary<PositionPair, Position[]>(new PositionPairComparer());
             var positions = GetPositions();
             foreach (var position1 in positions)
             foreach (var position2 in positions)
@@ -128,15 +128,15 @@ namespace Models.Services.Utils
                 {
                     var direction = DirectionCache.DirectionFrom(position1, position2);
                     if (direction != Direction.Null)
-                        result[new PositionPair(position1, position2)] = position1.ScanBetween(position2);
+                        result[new PositionPair(position1, position2)] = position1.ScanBetween(position2).ToArray();
                 }
 
             return result;
         }
 
-        private static Dictionary<PositionPair, IEnumerable<Position>> GetScanInclusiveToPositions()
+        private static Dictionary<PositionPair, Position[]> GetScanInclusiveToPositions()
         {
-            var result = new Dictionary<PositionPair, IEnumerable<Position>>(new PositionPairComparer());
+            var result = new Dictionary<PositionPair, Position[]>(new PositionPairComparer());
             var positions = GetPositions();
             foreach (var position1 in positions)
             foreach (var position2 in positions)
@@ -144,7 +144,7 @@ namespace Models.Services.Utils
                 {
                     var direction = DirectionCache.DirectionFrom(position1, position2);
                     if (direction != Direction.Null)
-                        result[new PositionPair(position1, position2)] = position1.ScanInclusiveTo(position2);
+                        result[new PositionPair(position1, position2)] = position1.ScanInclusiveTo(position2).ToArray();
                 }
 
             return result;

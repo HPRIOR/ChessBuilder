@@ -25,8 +25,11 @@ namespace Models.Services.Moves.MoveGenerators.NonTurnMoves
             var relativePosition = _positionTranslator.GetRelativePosition(originPosition);
             var possibleMoves = new List<Position>();
 
-            foreach (var direction in Directions)
+            for (var index = 0; index < Directions.Length; index++)
+            {
+                var direction = Directions[index];
                 _boardScanner.ScanIn(direction, relativePosition, boardState, possibleMoves);
+            }
 
             return possibleMoves;
         }

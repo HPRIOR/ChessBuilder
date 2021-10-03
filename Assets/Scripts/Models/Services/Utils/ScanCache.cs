@@ -91,10 +91,15 @@ namespace Models.Services.Utils
         {
             var result = new Dictionary<PositionDirection, Position[]>(new PositionDirectionComparer());
             var positions = GetPositions();
-            foreach (var position in positions)
-            foreach (var direction in Directions)
+            for (var index0 = 0; index0 < positions.GetLength(0); index0++)
+            for (var index1 = 0; index1 < positions.GetLength(1); index1++)
             {
-                result[new PositionDirection(position, direction)] = position.Scan(direction).ToArray();
+                var position = positions[index0, index1];
+                for (var index = 0; index < Directions.Length; index++)
+                {
+                    var direction = Directions[index];
+                    result[new PositionDirection(position, direction)] = position.Scan(direction).ToArray();
+                }
             }
 
 
@@ -106,14 +111,18 @@ namespace Models.Services.Utils
         {
             var result = new Dictionary<PositionPair, Position[]>(new PositionPairComparer());
             var positions = GetPositions();
-            foreach (var position1 in positions)
-            foreach (var position2 in positions)
-                if (position1 != position2)
-                {
-                    var direction = DirectionCache.DirectionFrom(position1, position2);
-                    if (direction != Direction.Null)
-                        result[new PositionPair(position1, position2)] = position1.ScanTo(position2).ToArray();
-                }
+            for (var index0 = 0; index0 < positions.GetLength(0); index0++)
+            for (var index1 = 0; index1 < positions.GetLength(1); index1++)
+            {
+                var position1 = positions[index0, index1];
+                foreach (var position2 in positions)
+                    if (position1 != position2)
+                    {
+                        var direction = DirectionCache.DirectionFrom(position1, position2);
+                        if (direction != Direction.Null)
+                            result[new PositionPair(position1, position2)] = position1.ScanTo(position2).ToArray();
+                    }
+            }
 
             return result;
         }
@@ -122,14 +131,18 @@ namespace Models.Services.Utils
         {
             var result = new Dictionary<PositionPair, Position[]>(new PositionPairComparer());
             var positions = GetPositions();
-            foreach (var position1 in positions)
-            foreach (var position2 in positions)
-                if (position1 != position2)
-                {
-                    var direction = DirectionCache.DirectionFrom(position1, position2);
-                    if (direction != Direction.Null)
-                        result[new PositionPair(position1, position2)] = position1.ScanBetween(position2).ToArray();
-                }
+            for (var index0 = 0; index0 < positions.GetLength(0); index0++)
+            for (var index1 = 0; index1 < positions.GetLength(1); index1++)
+            {
+                var position1 = positions[index0, index1];
+                foreach (var position2 in positions)
+                    if (position1 != position2)
+                    {
+                        var direction = DirectionCache.DirectionFrom(position1, position2);
+                        if (direction != Direction.Null)
+                            result[new PositionPair(position1, position2)] = position1.ScanBetween(position2).ToArray();
+                    }
+            }
 
             return result;
         }
@@ -138,14 +151,19 @@ namespace Models.Services.Utils
         {
             var result = new Dictionary<PositionPair, Position[]>(new PositionPairComparer());
             var positions = GetPositions();
-            foreach (var position1 in positions)
-            foreach (var position2 in positions)
-                if (position1 != position2)
-                {
-                    var direction = DirectionCache.DirectionFrom(position1, position2);
-                    if (direction != Direction.Null)
-                        result[new PositionPair(position1, position2)] = position1.ScanInclusiveTo(position2).ToArray();
-                }
+            for (var index0 = 0; index0 < positions.GetLength(0); index0++)
+            for (var index1 = 0; index1 < positions.GetLength(1); index1++)
+            {
+                var position1 = positions[index0, index1];
+                foreach (var position2 in positions)
+                    if (position1 != position2)
+                    {
+                        var direction = DirectionCache.DirectionFrom(position1, position2);
+                        if (direction != Direction.Null)
+                            result[new PositionPair(position1, position2)] =
+                                position1.ScanInclusiveTo(position2).ToArray();
+                    }
+            }
 
             return result;
         }

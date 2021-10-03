@@ -25,12 +25,19 @@ namespace Models.Services.Moves.Utils.Scanners
         {
             var result = new Dictionary<PositionDirection, Position[]>(new PositionDirectionComparer());
             var positions = GetPositions();
-            foreach (var position in positions)
-            foreach (var direction in Directions)
-                result[new PositionDirection(position, direction)] = position
-                    .Scan(direction)
-                    .Select(pos => new Position(Math.Abs(pos.X - 7), Math.Abs(pos.Y - 7)))
-                    .ToArray();
+            for (var index0 = 0; index0 < positions.GetLength(0); index0++)
+            for (var index1 = 0; index1 < positions.GetLength(1); index1++)
+            {
+                var position = positions[index0, index1];
+                for (var index = 0; index < Directions.Length; index++)
+                {
+                    var direction = Directions[index];
+                    result[new PositionDirection(position, direction)] = position
+                        .Scan(direction)
+                        .Select(pos => new Position(Math.Abs(pos.X - 7), Math.Abs(pos.Y - 7)))
+                        .ToArray();
+                }
+            }
 
 
             return result;

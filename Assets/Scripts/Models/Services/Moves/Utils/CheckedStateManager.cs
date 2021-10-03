@@ -80,8 +80,9 @@ namespace Models.Services.Moves.Utils
         {
             var positionsBetweenKingAndCheckPiece = GetPositionsBetweenCheckedKing(kingPosition, enemyMoves);
             var turnMovePositions = turnMoves.Keys.ToList();
-            foreach (var position in turnMovePositions)
+            for (var index = 0; index < turnMovePositions.Count; index++)
             {
+                var position = turnMovePositions[index];
                 var notKingPiece = position != kingPosition;
                 if (notKingPiece)
                 {
@@ -96,13 +97,16 @@ namespace Models.Services.Moves.Utils
         {
             var checkingPiecePosition = _checkingPieces.First();
             var possibleMoves = enemyMoves[checkingPiecePosition];
-            foreach (var boardPosition in possibleMoves)
+            for (var index = 0; index < possibleMoves.Count; index++)
+            {
+                var boardPosition = possibleMoves[index];
                 if (kingPosition == boardPosition)
                 {
                     var positionsBetweenCheckedKing = ScanCache.ScanBetween(boardPosition, checkingPiecePosition);
                     var result = new HashSet<Position>(positionsBetweenCheckedKing) { checkingPiecePosition };
                     return result;
                 }
+            }
 
             return new HashSet<Position>();
         }

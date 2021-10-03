@@ -17,10 +17,13 @@ namespace Models.Services.Moves.Utils
                 var kingMoves = new HashSet<Position>(turnMoves[kingPosition]);
                 
                 foreach (var keyVal in enemyMoves)
-                foreach (var enemyMove in keyVal.Value)
-                    if (kingMoves.Contains(enemyMove))
+                    for (var index = 0; index < keyVal.Value.Count; index++)
                     {
-                        kingMoves.Remove(enemyMove);
+                        var enemyMove = keyVal.Value[index];
+                        if (kingMoves.Contains(enemyMove))
+                        {
+                            kingMoves.Remove(enemyMove);
+                        }
                     }
 
                 turnMoves[kingPosition] = kingMoves.ToList();

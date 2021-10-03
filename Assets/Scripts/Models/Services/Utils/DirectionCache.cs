@@ -15,11 +15,14 @@ namespace Models.Services.Utils
         {
             Directions = new Dictionary<(Position p1, Position p2), Direction>();
             var positions = GetPositions();
-            foreach (var position1 in positions)
-            foreach (var position2 in positions)
-                if (position1 != position2)
-                    Directions[(position1, position2)] = position1.DirectionTo(position2);
-            
+            for (var index0 = 0; index0 < positions.GetLength(0); index0++)
+            for (var index1 = 0; index1 < positions.GetLength(1); index1++)
+            {
+                var position1 = positions[index0, index1];
+                foreach (var position2 in positions)
+                    if (position1 != position2)
+                        Directions[(position1, position2)] = position1.DirectionTo(position2);
+            }
         }
 
 

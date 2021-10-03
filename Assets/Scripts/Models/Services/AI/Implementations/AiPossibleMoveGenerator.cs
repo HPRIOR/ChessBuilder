@@ -33,9 +33,16 @@ namespace Models.Services.AI.Implementations
         private IEnumerable<AiMove> GetBuildCommands(BuildMoves builds)
         {
             var result = new List<AiMove>();
-            foreach (var position in builds.BuildPositions)
-            foreach (var piece in builds.BuildPieces)
-                result.Add(new AiMove(MoveType.Build, position, new Position(), piece));
+            for (var index = 0; index < builds.BuildPositions.Count; index++)
+            {
+                var position = builds.BuildPositions[index];
+                for (var i = 0; i < builds.BuildPieces.Count; i++)
+                {
+                    var piece = builds.BuildPieces[i];
+                    result.Add(new AiMove(MoveType.Build, position, new Position(), piece));
+                }
+            }
+
             return result;
         }
     }

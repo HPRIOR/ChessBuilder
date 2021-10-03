@@ -29,8 +29,9 @@ namespace Models.Services.Moves.MoveGenerators.TurnMoves
             var possibleMoves = new List<Position>();
             var relativePosition = _positionTranslator.GetRelativePosition(originPosition);
 
-            foreach (var direction in Directions)
+            for (var index = 0; index < Directions.Length; index++)
             {
+                var direction = Directions[index];
                 var newPosition = relativePosition.Add(Move.In(direction));
                 var newRelativePosition = _positionTranslator.GetRelativePosition(newPosition);
                 if (!(0 > newPosition.X || newPosition.X > 7

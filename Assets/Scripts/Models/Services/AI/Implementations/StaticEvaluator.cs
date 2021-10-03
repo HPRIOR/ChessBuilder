@@ -13,8 +13,9 @@ namespace Models.Services.AI.Implementations
             var blackPoints = 0;
             var whitePoints = 0;
             var activePieces = gameState.BoardState.ActivePieces;
-            foreach (var position in activePieces)
+            for (var index = 0; index < activePieces.Count; index++)
             {
+                var position = activePieces[index];
                 ref var tile = ref gameState.BoardState.GetTileAt(position);
                 var currentPiece = tile.CurrentPiece;
                 var multiplier = 100;

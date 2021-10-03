@@ -13,11 +13,6 @@ namespace Models.Services.Build.BuildMoves
             // add build positions to active pieces 
             boardState.ActiveBuilds.Add(buildPosition);
 
-            if (piece.Colour() == PieceColour.Black)
-                boardState.ActiveBlackBuilds.Add(buildPosition);
-            if (piece.Colour() == PieceColour.White)
-                boardState.ActiveWhiteBuilds.Add(buildPosition);
-
             // modify board state 
             boardState.Board[buildPosition.X][buildPosition.Y].BuildTileState = new BuildTileState(piece);
         }

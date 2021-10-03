@@ -16,24 +16,15 @@ namespace Models.State.Board
             Board = board;
             ActivePieces = new HashSet<Position>();
             ActiveBuilds = new HashSet<Position>();
-            ActiveBlackBuilds = new HashSet<Position>();
-            ActiveWhiteBuilds = new HashSet<Position>();
-            ActiveBlackPieces = new HashSet<Position>();
-            ActiveWhitePieces = new HashSet<Position>();
+     
             GenerateActivePieces();
         }
 
-        private BoardState(Tile[][] board, HashSet<Position> activePieces, HashSet<Position> activeBuilds,
-            HashSet<Position> activeBlackPieces, HashSet<Position> activeWhitePieces,
-            HashSet<Position> activeBlackBuilds, HashSet<Position> activeWhiteBuilds)
+        private BoardState(Tile[][] board, HashSet<Position> activePieces, HashSet<Position> activeBuilds)
         {
             Board = board;
             ActivePieces = activePieces;
             ActiveBuilds = activeBuilds;
-            ActiveBlackPieces = activeBlackPieces;
-            ActiveWhitePieces = activeWhitePieces;
-            ActiveBlackBuilds = activeBlackBuilds;
-            ActiveWhiteBuilds = activeWhiteBuilds;
         }
 
         public BoardState()
@@ -53,10 +44,7 @@ namespace Models.State.Board
 
         public HashSet<Position> ActivePieces { get; }
         public HashSet<Position> ActiveBuilds { get; }
-        public HashSet<Position> ActiveBlackPieces { get; }
-        public HashSet<Position> ActiveWhitePieces { get; }
-        public HashSet<Position> ActiveBlackBuilds { get; }
-        public HashSet<Position> ActiveWhiteBuilds { get; }
+        
 
         private void GenerateActivePieces()
         {
@@ -67,19 +55,11 @@ namespace Models.State.Board
                 if (tile.CurrentPiece.Type != PieceType.NullPiece)
                 {
                     ActivePieces.Add(tile.Position);
-                    if (tile.CurrentPiece.Colour == PieceColour.Black)
-                        ActiveBlackPieces.Add(tile.Position);
-                    else
-                        ActiveWhitePieces.Add(tile.Position);
                 }
 
                 if (tile.BuildTileState.BuildingPiece != PieceType.NullPiece)
                 {
                     ActiveBuilds.Add(tile.Position);
-                    if (tile.BuildTileState.BuildingPiece.Colour() == PieceColour.Black)
-                        ActiveBlackBuilds.Add(tile.Position);
-                    else
-                        ActiveWhiteBuilds.Add(tile.Position);
                 }
             }
         }
@@ -94,9 +74,7 @@ namespace Models.State.Board
                     newBoard[i][j] = Board[i][j].Clone();
             }
 
-            return new BoardState(newBoard, new HashSet<Position>(ActivePieces), new HashSet<Position>(ActiveBuilds),
-                new HashSet<Position>(ActiveBlackPieces), new HashSet<Position>(ActiveWhitePieces),
-                new HashSet<Position>(ActiveBlackBuilds), new HashSet<Position>(ActiveWhiteBuilds));
+            return new BoardState(newBoard, new HashSet<Position>(ActivePieces), new HashSet<Position>(ActiveBuilds));
         }
 
         public BoardState CloneWithDecrementBuildState()
@@ -109,9 +87,7 @@ namespace Models.State.Board
                     newBoard[i][j] = Board[i][j].CloneWithDecrementBuildState();
             }
 
-            return new BoardState(newBoard, new HashSet<Position>(ActivePieces), new HashSet<Position>(ActiveBuilds),
-                new HashSet<Position>(ActiveBlackPieces), new HashSet<Position>(ActiveWhitePieces),
-                new HashSet<Position>(ActiveBlackBuilds), new HashSet<Position>(ActiveWhiteBuilds));
+            return new BoardState(newBoard, new HashSet<Position>(ActivePieces), new HashSet<Position>(ActiveBuilds));
         }
     }
 }

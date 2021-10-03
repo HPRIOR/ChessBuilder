@@ -95,29 +95,5 @@ namespace Tests.UnitTests.PossibleMoves.BuildMoves
             Assert.That(boardState.ActiveBuilds, Is.EquivalentTo(new HashSet<Position> { new Position(5, 5) }));
         }
 
-        [Test]
-        public void UpdatesActiveBlackBuilds()
-        {
-            var board = _boardGenerator.GenerateBoard();
-            var boardState = new BoardState(board);
-            boardState.Board[5][5].BuildTileState = new BuildTileState(PieceType.BlackPawn);
-
-            _builder.GenerateNewBoardState(boardState, new Position(5, 5), PieceType.BlackKnight);
-
-            Assert.That(boardState.ActiveBlackBuilds, Is.EquivalentTo(new HashSet<Position> { new Position(5, 5) }));
-        }
-
-
-        [Test]
-        public void UpdatesActiveWhiteBuilds()
-        {
-            var board = _boardGenerator.GenerateBoard();
-            var boardState = new BoardState(board);
-            boardState.Board[5][5].BuildTileState = new BuildTileState(PieceType.BlackPawn);
-
-            _builder.GenerateNewBoardState(boardState, new Position(5, 5), PieceType.BlackKnight);
-
-            Assert.That(boardState.ActiveBlackBuilds, Is.EquivalentTo(new HashSet<Position> { new Position(5, 5) }));
-        }
     }
 }

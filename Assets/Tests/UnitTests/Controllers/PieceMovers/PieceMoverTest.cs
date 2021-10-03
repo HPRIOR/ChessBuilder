@@ -101,45 +101,8 @@ namespace Tests.UnitTests.Controllers.PieceMovers
         }
 
 
-        [Test]
-        public void ActiveWhitePiecesModified()
-        {
-            var board = _boardGenerator.GenerateBoard();
-            board[1][1].CurrentPiece = new Piece(PieceType.WhiteKing);
-            var boardState = new BoardState(board);
+        
 
-            Assert.That(boardState.ActiveWhitePieces, Is.EquivalentTo(new HashSet<Position> { new Position(1, 1) }));
-            _pieceMover.ModifyBoardState(boardState, new Position(1, 1), new Position(2, 2));
-
-            Assert.That(boardState.ActiveWhitePieces, Is.EquivalentTo(new HashSet<Position> { new Position(2, 2) }));
-        }
-
-        [Test]
-        public void ActiveBlackPiecesModified()
-        {
-            var board = _boardGenerator.GenerateBoard();
-            board[1][1].CurrentPiece = new Piece(PieceType.BlackKing);
-            var boardState = new BoardState(board);
-
-            Assert.That(boardState.ActiveBlackPieces, Is.EquivalentTo(new HashSet<Position> { new Position(1, 1) }));
-            _pieceMover.ModifyBoardState(boardState, new Position(1, 1), new Position(2, 2));
-
-            Assert.That(boardState.ActiveBlackPieces, Is.EquivalentTo(new HashSet<Position> { new Position(2, 2) }));
-        }
-
-        [Test]
-        public void OnTakeActiveOppositePiecesAreModified()
-        {
-            var board = _boardGenerator.GenerateBoard();
-            board[1][1].CurrentPiece = new Piece(PieceType.BlackKing);
-            board[2][2].CurrentPiece = new Piece(PieceType.WhitePawn);
-            var boardState = new BoardState(board);
-
-            Assert.That(boardState.ActiveBlackPieces, Is.EquivalentTo(new HashSet<Position> { new Position(1, 1) }));
-            Assert.That(boardState.ActiveWhitePieces, Is.EquivalentTo(new HashSet<Position> { new Position(2, 2) }));
-            _pieceMover.ModifyBoardState(boardState, new Position(1, 1), new Position(2, 2));
-
-            Assert.That(boardState.ActiveWhitePieces, Is.EquivalentTo(new HashSet<Position>()));
-        }
+        
     }
 }

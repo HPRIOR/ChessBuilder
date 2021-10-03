@@ -30,18 +30,6 @@ namespace Models.Services.Build.Utils
                     boardState.ActiveBuilds.Remove(tile.Position);
                     boardState.ActivePieces.Add(tile.Position);
 
-                    if (turn == PieceColour.Black)
-                    {
-                        boardState.ActiveBlackBuilds.Remove(tile.Position);
-                        boardState.ActiveBlackPieces.Add(tile.Position);
-                    }
-
-                    if (turn == PieceColour.White)
-                    {
-                        boardState.ActiveWhiteBuilds.Remove(tile.Position);
-                        boardState.ActiveWhitePieces.Add(tile.Position);
-                    }
-
                     tile.CurrentPiece = new Piece(tile.BuildTileState.BuildingPiece);
                     tile.BuildTileState = new BuildTileState(); // reset build state
 

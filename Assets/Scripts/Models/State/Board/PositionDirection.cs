@@ -18,12 +18,6 @@ namespace Models.State.Board
 
         public override bool Equals(object obj) => obj is PositionDirection other && Equals(other);
 
-        public override int GetHashCode()
-        {
-            unchecked
-            {
-                return (_position.GetHashCode() * 397) ^ (int)_direction;
-            }
-        }
+        public override int GetHashCode() => (_position.X, _position.Y, (int)_direction).GetHashCode();
     }
 }

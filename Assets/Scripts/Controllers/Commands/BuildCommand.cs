@@ -9,26 +9,20 @@ namespace Controllers.Commands
 {
     public class BuildCommand : ICommand
     {
-        private static IBuilder _builder;
         private static IBuildValidator _buildValidator;
         private readonly Position _at;
         private readonly IGameStateController _gameStateController;
         private readonly PieceType _piece;
-        private readonly BoardState _stateTransitionedFrom;
 
-        public BuildCommand(
-            Position at,
+        public BuildCommand(Position at,
             PieceType piece,
-            IBuilder builder,
             IBuildValidator buildValidator,
             IGameStateController gameStateController)
         {
             _at = at;
             _piece = piece;
-            _builder = builder;
             _buildValidator = buildValidator;
             _gameStateController = gameStateController;
-            _stateTransitionedFrom = _gameStateController.CurrentGameState.BoardState.Clone();
         }
 
         public void Execute()

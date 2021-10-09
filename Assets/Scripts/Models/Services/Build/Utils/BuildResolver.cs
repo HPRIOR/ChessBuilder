@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Models.Services.Build.Interfaces;
 using Models.State.Board;
@@ -8,18 +9,17 @@ using Models.Utils.ExtensionMethods.PieceTypeExt;
 
 namespace Models.Services.Build.Utils
 {
-    public class BuildResolver : IBuildResolver
+    public sealed class BuildResolver : IBuildResolver
     {
         public IEnumerable<(Position, PieceType)> ResolveBuilds(BoardState boardState, PieceColour turn)
         {
-            var activeBuildPositions =
-                new List<Tile>(
-                    boardState.ActiveBuilds.Select(position =>
-                        boardState.Board[position.X, position.Y])); //TODO remove linq
-
+            var activeBuildPositions = boardState.ActiveBuilds.ToArray();
             var resolvedBuilds = new List<(Position, PieceType)>();
-            foreach (var tile in activeBuildPositions)
+            
+            for (int i = 0; i < activeBuildPositions.Length; i++)
             {
+                var pos = activeBuildPositions[i];
+                ref var tile = ref boardState.GetTileAt(pos);
                 var canBuild = tile.BuildTileState.Turns == 0 &&
                                tile.BuildTileState.BuildingPiece != PieceType.NullPiece &&
                                tile.CurrentPiece.Type == PieceType.NullPiece &&

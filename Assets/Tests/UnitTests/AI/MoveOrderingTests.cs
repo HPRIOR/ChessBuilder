@@ -50,18 +50,18 @@ namespace Tests.UnitTests.AI
         public void MovesAreOrderedInDescendingOrder()
         {
             var board = _boardGenerator.GenerateBoard();
-            board[0, 0].CurrentPiece = new Piece(PieceType.WhiteKing);
-            board[1, 1].CurrentPiece = new Piece(PieceType.WhitePawn);
-            board[2, 2].CurrentPiece = new Piece(PieceType.BlackQueen);
-            board[5, 5].CurrentPiece = new Piece(PieceType.WhitePawn);
-            board[6, 6].CurrentPiece = new Piece(PieceType.BlackRook);
+            board[0][0].CurrentPiece = new Piece(PieceType.WhiteKing);
+            board[1][1].CurrentPiece = new Piece(PieceType.WhitePawn);
+            board[2][2].CurrentPiece = new Piece(PieceType.BlackQueen);
+            board[5][5].CurrentPiece = new Piece(PieceType.WhitePawn);
+            board[6][6].CurrentPiece = new Piece(PieceType.BlackRook);
             var boardState = new BoardState(board);
 
-            var highestMove = new AiMove(MoveType.Move, new Position(1, 1), new Position(2, 2), _actionStub,
+            var highestMove = new AiMove(MoveType.Move, new Position(1, 1), new Position(2, 2),
                 PieceType.NullPiece);
-            var midMove = new AiMove(MoveType.Move, new Position(5, 5), new Position(6, 6), _actionStub,
+            var midMove = new AiMove(MoveType.Move, new Position(5, 5), new Position(6, 6),
                 PieceType.NullPiece);
-            var lowestMove = new AiMove(MoveType.Move, new Position(0, 0), new Position(0, 1), _actionStub,
+            var lowestMove = new AiMove(MoveType.Move, new Position(0, 0), new Position(0, 1),
                 PieceType.NullPiece);
             var actionList = new List<AiMove>
             {
@@ -80,18 +80,18 @@ namespace Tests.UnitTests.AI
         public void NonTakeMovesScoreZero()
         {
             var board = _boardGenerator.GenerateBoard();
-            board[0, 0].CurrentPiece = new Piece(PieceType.WhiteQueen);
-            board[1, 1].CurrentPiece = new Piece(PieceType.WhitePawn);
-            board[2, 2].CurrentPiece = new Piece(PieceType.BlackBishop);
-            board[5, 5].CurrentPiece = new Piece(PieceType.WhitePawn);
-            board[6, 6].CurrentPiece = new Piece(PieceType.BlackPawn);
+            board[0][0].CurrentPiece = new Piece(PieceType.WhiteQueen);
+            board[1][1].CurrentPiece = new Piece(PieceType.WhitePawn);
+            board[2][2].CurrentPiece = new Piece(PieceType.BlackBishop);
+            board[5][5].CurrentPiece = new Piece(PieceType.WhitePawn);
+            board[6][6].CurrentPiece = new Piece(PieceType.BlackPawn);
             var boardState = new BoardState(board);
 
-            var highestMove = new AiMove(MoveType.Move, new Position(1, 1), new Position(2, 2), _actionStub,
+            var highestMove = new AiMove(MoveType.Move, new Position(1, 1), new Position(2, 2),
                 PieceType.NullPiece);
-            var midMove = new AiMove(MoveType.Move, new Position(5, 5), new Position(6, 6), _actionStub,
+            var midMove = new AiMove(MoveType.Move, new Position(5, 5), new Position(6, 6),
                 PieceType.NullPiece);
-            var lowestMove = new AiMove(MoveType.Move, new Position(0, 0), new Position(0, 1), _actionStub,
+            var lowestMove = new AiMove(MoveType.Move, new Position(0, 0), new Position(0, 1),
                 PieceType.NullPiece);
             var actionList = new List<AiMove>
             {

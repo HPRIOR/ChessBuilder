@@ -6,7 +6,7 @@ using Models.State.PieceState;
 
 namespace Models.Services.Moves.Utils
 {
-    public class BoardInfo : IBoardInfo
+    public sealed class BoardInfo : IBoardInfo
     {
         private readonly IMovesGeneratorRepository _movesGeneratorRepository;
 
@@ -16,18 +16,19 @@ namespace Models.Services.Moves.Utils
         }
 
         // could possibly make this data static and return 
-        public IDictionary<Position, HashSet<Position>> TurnMoves { get; private set; }
-        public IDictionary<Position, HashSet<Position>> EnemyMoves { get; private set; }
+        public IDictionary<Position, List<Position>> TurnMoves { get; private set; }
+        public IDictionary<Position, List<Position>> EnemyMoves { get; private set; }
         public Position KingPosition { get; private set; } = new Position(8, 8);
 
         public void EvaluateBoard(BoardState boardState, PieceColour turn)
         {
-            var turnMoves = new Dictionary<Position, HashSet<Position>>();
-            var enemyMoves = new Dictionary<Position, HashSet<Position>>();
+            var turnMoves = new Dictionary<Position, List<Position>>();
+            var enemyMoves = new Dictionary<Position, List<Position>>();
 
-            var activeTiles = boardState.ActivePieces.Select(position => boardState.Board[position.X, position.Y]);
-            foreach (var tile in activeTiles)
+            for (var index = 0; index < boardState.ActivePieces.Count; index++)
             {
+                var pos = boardState.ActivePieces[index];
+                ref var tile = ref boardState.GetTileAt(pos);
                 var currentPiece = tile.CurrentPiece;
                 var playerTurn = currentPiece.Type != PieceType.NullPiece && currentPiece.Colour == turn;
                 var opponentTurn = currentPiece.Type != PieceType.NullPiece && currentPiece.Colour != turn;
@@ -39,7 +40,7 @@ namespace Models.Services.Moves.Utils
                     var possibleMoves = _movesGeneratorRepository.GetPossibleMoveGenerator(currentPiece, true)
                         .GetPossiblePieceMoves(boardPos, boardState);
 
-                    turnMoves.Add(boardPos, new HashSet<Position>(possibleMoves));
+                    turnMoves.Add(boardPos, possibleMoves);
                 }
 
                 if (opponentTurn)
@@ -47,7 +48,7 @@ namespace Models.Services.Moves.Utils
                     var boardPos = tile.Position;
                     var possibleMoves = _movesGeneratorRepository.GetPossibleMoveGenerator(currentPiece, false)
                         .GetPossiblePieceMoves(boardPos, boardState);
-                    enemyMoves.Add(boardPos, new HashSet<Position>(possibleMoves));
+                    enemyMoves.Add(boardPos, possibleMoves);
                 }
 
                 TurnMoves = turnMoves;

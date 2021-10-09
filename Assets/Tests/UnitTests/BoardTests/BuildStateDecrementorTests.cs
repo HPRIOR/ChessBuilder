@@ -46,8 +46,11 @@ namespace Tests.UnitTests.BoardTests
             var board = _boardGenerator.GenerateBoard();
             var boardState = new BoardState(board);
             BuildStateDecrementor.DecrementBuilds(boardState);
-            foreach (var tile in boardState.Board)
+            for (var i = 0; i < 8; i++)
+            for (var j = 0; j < 8; j++)
             {
+                var tile = board[i][j];
+
                 Assert.That(tile.BuildTileState.BuildingPiece, Is.EqualTo(PieceType.NullPiece));
                 Assert.That(tile.BuildTileState.Turns, Is.EqualTo(0));
             }
@@ -57,12 +60,14 @@ namespace Tests.UnitTests.BoardTests
         public void NonEmptyBoard_WithNoBuilds_WillNotChange()
         {
             var board = _boardGenerator.GenerateBoard();
-            board[1, 1].CurrentPiece = new Piece(PieceType.WhiteKing);
-            board[7, 7].CurrentPiece = new Piece(PieceType.BlackKing);
+            board[1][1].CurrentPiece = new Piece(PieceType.WhiteKing);
+            board[7][7].CurrentPiece = new Piece(PieceType.BlackKing);
             var boardState = new BoardState(board);
             BuildStateDecrementor.DecrementBuilds(boardState);
-            foreach (var tile in boardState.Board)
+            for (var i = 0; i < 8; i++)
+            for (var j = 0; j < 8; j++)
             {
+                var tile = board[i][j];
                 Assert.That(tile.BuildTileState.BuildingPiece, Is.EqualTo(PieceType.NullPiece));
                 Assert.That(tile.BuildTileState.Turns, Is.EqualTo(0));
             }
@@ -72,13 +77,13 @@ namespace Tests.UnitTests.BoardTests
         public void NonEmptyBoard_WithBuilds_WillBeDecremented()
         {
             var board = _boardGenerator.GenerateBoard();
-            board[1, 1].CurrentPiece = new Piece(PieceType.WhiteKing);
-            board[7, 7].CurrentPiece = new Piece(PieceType.BlackKing);
-            board[6, 6].BuildTileState = new BuildTileState(PieceType.WhiteQueen);
+            board[1][1].CurrentPiece = new Piece(PieceType.WhiteKing);
+            board[7][7].CurrentPiece = new Piece(PieceType.BlackKing);
+            board[6][6].BuildTileState = new BuildTileState(PieceType.WhiteQueen);
             var boardState = new BoardState(board);
             BuildStateDecrementor.DecrementBuilds(boardState);
 
-            var sut = boardState.Board[6, 6].BuildTileState;
+            var sut = boardState.Board[6][6].BuildTileState;
             Assert.That(sut.Turns, Is.EqualTo(8));
             Assert.That(sut.BuildingPiece, Is.EqualTo(PieceType.WhiteQueen));
         }

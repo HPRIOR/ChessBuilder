@@ -1,0 +1,4 @@
+Execution time of NegaScout with depth of 8 - new hash function: 
+      28436 ms 
+      28 s 
+      0 min

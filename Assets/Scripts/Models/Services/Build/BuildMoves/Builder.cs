@@ -2,10 +2,11 @@
 using Models.State.Board;
 using Models.State.BuildState;
 using Models.State.PieceState;
+using Models.Utils.ExtensionMethods.PieceTypeExt;
 
 namespace Models.Services.Build.BuildMoves
 {
-    public class Builder : IBuilder
+    public sealed class Builder : IBuilder
     {
         public void GenerateNewBoardState(BoardState boardState, Position buildPosition, PieceType piece)
         {
@@ -13,7 +14,7 @@ namespace Models.Services.Build.BuildMoves
             boardState.ActiveBuilds.Add(buildPosition);
 
             // modify board state 
-            boardState.Board[buildPosition.X, buildPosition.Y].BuildTileState = new BuildTileState(piece);
+            boardState.Board[buildPosition.X][buildPosition.Y].BuildTileState = new BuildTileState(piece);
         }
     }
 }

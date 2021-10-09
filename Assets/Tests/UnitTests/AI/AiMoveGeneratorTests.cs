@@ -58,6 +58,7 @@ namespace Tests.UnitTests.AI
             AiMoveGeneratorInstaller.Install(Container);
             StaticEvaluatorInstaller.Install(Container);
             MoveOrdererInstaller.Install(Container);
+            CheckedStateManagerInstaller.Install(Container);
         }
 
         private void ResolveContainer()
@@ -70,85 +71,56 @@ namespace Tests.UnitTests.AI
         public void MoveIsGenerated()
         {
             var board = _boardGenerator.GenerateBoard();
-            board[6, 7].CurrentPiece = new Piece(PieceType.BlackKing);
-            board[5, 7].CurrentPiece = new Piece(PieceType.BlackRook);
-            board[3, 7].CurrentPiece = new Piece(PieceType.BlackQueen);
-            board[0, 7].CurrentPiece = new Piece(PieceType.BlackRook);
-            board[1, 6].CurrentPiece = new Piece(PieceType.BlackPawn);
-            board[3, 6].CurrentPiece = new Piece(PieceType.BlackBishop);
-            board[5, 6].CurrentPiece = new Piece(PieceType.BlackPawn);
-            board[6, 6].CurrentPiece = new Piece(PieceType.BlackPawn);
-            board[7, 6].CurrentPiece = new Piece(PieceType.BlackPawn);
-            board[0, 5].CurrentPiece = new Piece(PieceType.BlackPawn);
-            board[2, 5].CurrentPiece = new Piece(PieceType.BlackKnight);
-            board[4, 5].CurrentPiece = new Piece(PieceType.BlackPawn);
-            board[5, 5].CurrentPiece = new Piece(PieceType.BlackKnight);
-            board[3, 4].CurrentPiece = new Piece(PieceType.BlackPawn);
+            board[6][7].CurrentPiece = new Piece(PieceType.BlackKing);
+            board[5][7].CurrentPiece = new Piece(PieceType.BlackRook);
+            board[3][7].CurrentPiece = new Piece(PieceType.BlackQueen);
+            board[0][7].CurrentPiece = new Piece(PieceType.BlackRook);
+            board[1][6].CurrentPiece = new Piece(PieceType.BlackPawn);
+            board[3][6].CurrentPiece = new Piece(PieceType.BlackBishop);
+            board[5][6].CurrentPiece = new Piece(PieceType.BlackPawn);
+            board[6][6].CurrentPiece = new Piece(PieceType.BlackPawn);
+            board[7][6].CurrentPiece = new Piece(PieceType.BlackPawn);
+            board[0][5].CurrentPiece = new Piece(PieceType.BlackPawn);
+            board[2][5].CurrentPiece = new Piece(PieceType.BlackKnight);
+            board[4][5].CurrentPiece = new Piece(PieceType.BlackPawn);
+            board[5][5].CurrentPiece = new Piece(PieceType.BlackKnight);
+            board[3][4].CurrentPiece = new Piece(PieceType.BlackPawn);
 
-            board[6, 0].CurrentPiece = new Piece(PieceType.WhiteKing);
-            board[4, 0].CurrentPiece = new Piece(PieceType.WhiteRook);
-            board[3, 0].CurrentPiece = new Piece(PieceType.WhiteRook);
-            board[1, 1].CurrentPiece = new Piece(PieceType.WhitePawn);
-            board[5, 1].CurrentPiece = new Piece(PieceType.WhitePawn);
-            board[6, 1].CurrentPiece = new Piece(PieceType.WhitePawn);
-            board[0, 2].CurrentPiece = new Piece(PieceType.WhitePawn);
-            board[2, 2].CurrentPiece = new Piece(PieceType.WhiteKnight);
-            board[3, 2].CurrentPiece = new Piece(PieceType.WhiteQueen);
-            board[5, 2].CurrentPiece = new Piece(PieceType.WhiteKnight);
-            board[7, 2].CurrentPiece = new Piece(PieceType.WhitePawn);
-            board[1, 3].CurrentPiece = new Piece(PieceType.WhitePawn);
-            board[5, 3].CurrentPiece = new Piece(PieceType.WhiteBishop);
+            board[6][0].CurrentPiece = new Piece(PieceType.WhiteKing);
+            board[4][0].CurrentPiece = new Piece(PieceType.WhiteRook);
+            board[3][0].CurrentPiece = new Piece(PieceType.WhiteRook);
+            board[1][1].CurrentPiece = new Piece(PieceType.WhitePawn);
+            board[5][1].CurrentPiece = new Piece(PieceType.WhitePawn);
+            board[6][1].CurrentPiece = new Piece(PieceType.WhitePawn);
+            board[0][2].CurrentPiece = new Piece(PieceType.WhitePawn);
+            board[2][2].CurrentPiece = new Piece(PieceType.WhiteKnight);
+            board[3][2].CurrentPiece = new Piece(PieceType.WhiteQueen);
+            board[5][2].CurrentPiece = new Piece(PieceType.WhiteKnight);
+            board[7][2].CurrentPiece = new Piece(PieceType.WhitePawn);
+            board[1][3].CurrentPiece = new Piece(PieceType.WhitePawn);
+            board[5][3].CurrentPiece = new Piece(PieceType.WhiteBishop);
 
-            var activePieces = new HashSet<Position>
+
+            var boardState = new BoardState(board);
+            var possibleMoves = new Dictionary<Position, List<Position>>
             {
-                new Position(6, 7),
-                new Position(5, 7),
-                new Position(3, 7),
-                new Position(0, 7),
-                new Position(1, 6),
-                new Position(3, 6),
-                new Position(5, 6),
-                new Position(6, 6),
-                new Position(7, 6),
-                new Position(0, 5),
-                new Position(2, 5),
-                new Position(4, 5),
-                new Position(5, 5),
-                new Position(3, 4),
-                new Position(6, 0),
-                new Position(4, 0),
-                new Position(3, 0),
-                new Position(1, 1),
-                new Position(5, 1),
-                new Position(6, 1),
-                new Position(0, 2),
-                new Position(2, 2),
-                new Position(3, 2),
-                new Position(5, 2),
-                new Position(7, 2),
-                new Position(1, 3),
-                new Position(5, 3)
-            };
-            var boardState = new BoardState(board, activePieces, new HashSet<Position>());
-            var possibleMoves = new Dictionary<Position, HashSet<Position>>
-            {
-                { new Position(5, 5), new HashSet<Position> { new Position(6, 6), new Position(6, 5) } },
+                { new Position(5, 5), new List<Position> { new Position(6, 6), new Position(6, 5) } },
                 {
                     new Position(0, 7),
-                    new HashSet<Position> { new Position(0, 6), new Position(1, 6), new Position(1, 7) }
+                    new List<Position> { new Position(0, 6), new Position(1, 6), new Position(1, 7) }
                 }
             };
 
             var gameState = new GameState(false, false, new PlayerState(0), possibleMoves,
-                new BuildMoves(new HashSet<Position>(), new HashSet<PieceType>()), boardState);
+                new BuildMoves(new List<Position>(), new List<PieceType>()), boardState);
             // _aiMoveGenerator.GetMove(gameState, 3, PieceColour.White);
 
             var logTimer = new LogExecutionTimer();
-            var depth = 4;
-
-            logTimer.LogExecutionTime(
-                $"NegaScout with depth of {depth.ToString()} init move order + move enum comparison fix",
-                () => _aiMoveGenerator.GetMove(gameState, depth, PieceColour.White));
+            // var depth = 8;
+            //
+            // logTimer.LogExecutionTime(
+            //     $"NegaScout with depth of {depth.ToString()} - hashsets as active pieces",
+            //     () => _aiMoveGenerator.GetMove(gameState, depth, PieceColour.White));
 
             // var move = _miniMax.GetMove(gameState, depth, PieceColour.White);
             // var newGameState = move(gameState.BoardState, PieceColour.White);

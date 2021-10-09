@@ -7,7 +7,7 @@ using Zenject;
 
 namespace Models.Services.Moves.MoveGenerators.NonTurnMoves
 {
-    public class PawnNonTurnMoves : IPieceMoveGenerator
+    public sealed class PawnNonTurnMoves : IPieceMoveGenerator
     {
         private readonly IPositionTranslator _positionTranslator;
         private readonly ITileEvaluator _tileEvaluator;
@@ -19,29 +19,29 @@ namespace Models.Services.Moves.MoveGenerators.NonTurnMoves
             _tileEvaluator = tileEvaluatorFactory.Create(pieceColour);
         }
 
-        public IEnumerable<Position> GetPossiblePieceMoves(Position originPosition, BoardState boardState)
+        public List<Position> GetPossiblePieceMoves(Position originPosition, BoardState boardState)
         {
-            var potentialMoves = new List<Position>();
+            var possibleMoves = new List<Position>();
             originPosition = _positionTranslator.GetRelativePosition(originPosition);
 
-            if (originPosition.Y == 7) return potentialMoves;
+            if (originPosition.Y == 7) return possibleMoves;
 
             if (originPosition.X > 0)
             {
                 var topLeftTile =
                     _positionTranslator.GetRelativeTileAt(originPosition.Add(Move.In(Direction.NW)), boardState);
 
-                potentialMoves.Add(topLeftTile.Position);
+                possibleMoves.Add(topLeftTile.Position);
             }
 
             if (originPosition.X < 7)
             {
                 var topRightTile =
                     _positionTranslator.GetRelativeTileAt(originPosition.Add(Move.In(Direction.NE)), boardState);
-                potentialMoves.Add(topRightTile.Position);
+                possibleMoves.Add(topRightTile.Position);
             }
 
-            return potentialMoves;
+            return possibleMoves;
         }
 
 

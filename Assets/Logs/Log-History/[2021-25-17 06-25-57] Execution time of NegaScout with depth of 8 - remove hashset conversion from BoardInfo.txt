@@ -1,0 +1,4 @@
+Execution time of NegaScout with depth of 8 - remove hashset conversion from BoardInfo: 
+      30619 ms 
+      30 s 
+      0 min

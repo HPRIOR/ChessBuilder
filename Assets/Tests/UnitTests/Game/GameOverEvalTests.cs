@@ -38,9 +38,9 @@ namespace Tests.UnitTests.Game
         [Test]
         public void CheckAndNoMovesProduces_GameOver()
         {
-            var moves = new Dictionary<Position, HashSet<Position>>
+            var moves = new Dictionary<Position, List<Position>>
             {
-                { new Position(4, 4), new HashSet<Position>() }
+                { new Position(4, 4), new List<Position>() }
             };
             const bool check = true;
 

@@ -11,7 +11,7 @@ namespace Tests.UnitTests.Utils.Extensions
         [Test]
         public void DirectionNorth()
         {
-            var result = new Position(4, 4).DirectionTo(new Position(4, 6));
+            var result = new Position(1, 1).DirectionTo(new Position(1, 6));
             Assert.That(result, Is.EqualTo(Direction.N));
         }
 
@@ -19,6 +19,13 @@ namespace Tests.UnitTests.Utils.Extensions
         public void DirectionSouth()
         {
             var result = new Position(4, 4).DirectionTo(new Position(4, 1));
+            Assert.That(result, Is.EqualTo(Direction.S));
+        }
+
+        [Test]
+        public void DirectionSouth_Two()
+        {
+            var result = new Position(1,6).DirectionTo(new Position(1,1));
             Assert.That(result, Is.EqualTo(Direction.S));
         }
 
@@ -63,6 +70,35 @@ namespace Tests.UnitTests.Utils.Extensions
         {
             var result = new Position(4, 4).DirectionTo(new Position(2, 2));
             Assert.That(result, Is.EqualTo(Direction.SW));
+        }
+
+        [Test]
+        public void NoDirection_NE()
+        {
+            var result = new Position(4, 4).DirectionTo(new Position(5, 7));
+            Assert.That(result, Is.EqualTo(Direction.Null));
+        }
+
+
+        [Test]
+        public void NoDirection_NW()
+        {
+            var result = new Position(4, 4).DirectionTo(new Position(3, 7));
+            Assert.That(result, Is.EqualTo(Direction.Null));
+        }
+
+        [Test]
+        public void NoDirection_SE()
+        {
+            var result = new Position(4, 4).DirectionTo(new Position(5, 0));
+            Assert.That(result, Is.EqualTo(Direction.Null));
+        }
+
+        [Test]
+        public void NoDirection_SW()
+        {
+            var result = new Position(4, 4).DirectionTo(new Position(3, 0));
+            Assert.That(result, Is.EqualTo(Direction.Null));
         }
 
         [Test]

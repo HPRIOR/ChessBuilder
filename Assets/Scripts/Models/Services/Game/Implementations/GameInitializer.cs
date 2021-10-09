@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System;
+using System.Collections.Generic;
 using Models.Services.Build.Interfaces;
 using Models.Services.Moves.Interfaces;
 using Models.State.Board;
@@ -9,7 +9,7 @@ using Models.State.PlayerState;
 
 namespace Models.Services.Game.Implementations
 {
-    public class GameInitializer
+    public sealed class GameInitializer
     {
         private readonly IBuildMoveGenerator _buildMoveGenerator;
         private readonly IPieceMoveGenerator _whiteKingMoveGenerator;
@@ -24,17 +24,12 @@ namespace Models.Services.Game.Implementations
 
         public GameState InitialiseGame(BoardState boardState)
         {
-            var whiteKingPosition =
-            (
-                from Tile tile in boardState.Board
-                where tile.CurrentPiece.Type.Equals(PieceType.WhiteKing)
-                select tile.Position
-            ).First();
+            var whiteKingPosition = GetWhiteKingPosition(boardState);
 
             var moves = _whiteKingMoveGenerator.GetPossiblePieceMoves(whiteKingPosition, boardState);
-            var movesDict = new Dictionary<Position, HashSet<Position>>
+            var movesDict = new Dictionary<Position, List<Position>>
             {
-                { whiteKingPosition, new HashSet<Position>(moves) }
+                { whiteKingPosition, new List<Position>(moves) }
             };
 
             var builds = _buildMoveGenerator.GetPossibleBuildMoves(boardState, PieceColour.White, new PlayerState(39));
@@ -42,6 +37,17 @@ namespace Models.Services.Game.Implementations
 
             return new GameState(false, false, new PlayerState(39), movesDict, builds,
                 boardState);
+        }
+
+        private Position GetWhiteKingPosition(BoardState boardState)
+        {
+            var board = boardState.Board;
+            for (var i = 0; i < 8; i++)
+            for (var j = 0; j < 8; j++)
+                if (board[i][j].CurrentPiece.Type.Equals(PieceType.WhiteKing))
+                    return board[i][j].Position;
+
+            throw new Exception("No white king found during game initialisation");
         }
     }
 }

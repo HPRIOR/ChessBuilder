@@ -5,10 +5,10 @@ using Models.State.Board;
 
 namespace Models.Services.Game.Implementations
 {
-    public class GameOverEval : IGameOverEval
+    public sealed class GameOverEval : IGameOverEval
     {
         public bool CheckMate(bool check,
-            IDictionary<Position, HashSet<Position>> possiblePieceMoves) =>
+            IDictionary<Position, List<Position>> possiblePieceMoves) =>
             check && !possiblePieceMoves.Any(moves => moves.Value.Count > 0);
     }
 }

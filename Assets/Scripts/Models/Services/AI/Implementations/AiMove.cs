@@ -1,5 +1,4 @@
 ﻿using System;
-using Models.Services.Game.Interfaces;
 using Models.State.Board;
 using Models.State.PieceState;
 
@@ -11,15 +10,14 @@ namespace Models.Services.AI.Implementations
         Move
     }
 
-    public readonly struct AiMove : IEquatable<AiMove>
+    public sealed class AiMove : IEquatable<AiMove>
     {
-        public AiMove(MoveType moveType, Position from, Position to, Action<PieceColour, IGameStateUpdater> move,
+        public AiMove(MoveType moveType, Position from, Position to,
             PieceType type)
         {
             MoveType = moveType;
             From = from;
             To = to;
-            Move = move;
             Type = type;
         }
 
@@ -27,7 +25,6 @@ namespace Models.Services.AI.Implementations
         public Position From { get; }
         public Position To { get; } // null if build move 
         public PieceType Type { get; } // null if build move 
-        public Action<PieceColour, IGameStateUpdater> Move { get; }
 
 
         public bool Equals(AiMove other) => MoveType == other.MoveType && From.Equals(other.From) &&

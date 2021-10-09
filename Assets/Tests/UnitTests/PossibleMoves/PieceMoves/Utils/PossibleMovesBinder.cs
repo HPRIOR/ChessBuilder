@@ -20,6 +20,7 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves.Utils
             BoardInfoInstaller.Install(Container);
             KingMoveFilterInstaller.Install(Container);
             PinnedPieceFilterInstaller.Install(Container);
+            CheckedStateManagerInstaller.Install(Container);
         }
     }
 }

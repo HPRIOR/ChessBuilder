@@ -1,0 +1,4 @@
+Execution time of NegaScout with depth of 4 - boardScanner cache: 
+      120 ms 
+      0 s 
+      0 min

@@ -6,18 +6,18 @@ using Zenject;
 
 namespace Models.Services.Moves.Utils.Scanners
 {
-    public class BoardScanner : IBoardScanner
+    public sealed class BoardScanner : IBoardScanner
     {
-        private readonly IPositionTranslator _positionTranslator;
         private readonly ITileEvaluator _tileEvaluator;
+        private readonly PieceColour _turn;
 
         public BoardScanner(
             PieceColour pieceColour,
-            ITileEvaluatorFactory tileEvaluatorFactory,
-            IPositionTranslatorFactory positionTranslatorFactory)
+            ITileEvaluatorFactory tileEvaluatorFactory
+        )
         {
             _tileEvaluator = tileEvaluatorFactory.Create(pieceColour);
-            _positionTranslator = positionTranslatorFactory.Create(pieceColour);
+            _turn = pieceColour;
         }
 
         /// <summary>
@@ -30,47 +30,32 @@ namespace Models.Services.Moves.Utils.Scanners
         /// <param name="direction"></param>
         /// <param name="currentPosition"></param>
         /// <param name="boardState"></param>
+        /// <param name="possibleMoves"></param>
         /// <returns></returns>
-        public IEnumerable<Position> ScanIn(Direction direction, Position currentPosition,
-            BoardState boardState)
+        public void ScanIn(Direction direction,
+            Position currentPosition, // make me return Span instead of possible moves
+            BoardState boardState, List<Position> possibleMoves)
         {
-            var result = new List<Position>();
-            var iteratingPosition = currentPosition;
+            var possibleMovePositions = _turn == PieceColour.White
+                ? ScanCache.GetPositionsToEndOfBoard(currentPosition, direction)
+                : RelativePositionScanCache.GetPositionsToEndOfBoard(currentPosition, direction);
 
-
-            while (true)
+            for (var i = 0; i < possibleMovePositions.Length; i++)
             {
-                var newPosition = iteratingPosition.Add(Move.In(direction));
-                var relativePosition = _positionTranslator.GetRelativePosition(newPosition);
-
-                if (PieceCannotMoveTo(newPosition) || TileContainsFriendlyPieceAt(relativePosition, boardState)) break;
-                if (TileContainsOpposingPieceAt(relativePosition, boardState))
-                {
-                    result.Add(relativePosition);
-                    break;
-                }
-
-                result.Add(relativePosition);
-                iteratingPosition = newPosition;
+                var position = possibleMovePositions[i];
+                if (TileContainsFriendlyPieceAt(position, boardState)) break;
+                possibleMoves.Add(position);
+                if (TileContainsOpposingPieceAt(position, boardState)) break;
             }
-
-            return result;
-        }
-
-        private static bool PieceCannotMoveTo(Position position)
-        {
-            var x = position.X;
-            var y = position.Y;
-            return 0 > x || x > 7 || 0 > y || y > 7;
         }
 
         private bool TileContainsOpposingPieceAt(Position relativePosition, BoardState boardState) =>
-            _tileEvaluator.OpposingPieceIn(boardState.Board[relativePosition.X, relativePosition.Y]);
+            _tileEvaluator.OpposingPieceIn(ref boardState.GetTileAt(relativePosition));
 
         private bool TileContainsFriendlyPieceAt(Position relativePosition, BoardState boardState) =>
-            _tileEvaluator.FriendlyPieceIn(boardState.Board[relativePosition.X, relativePosition.Y]);
+            _tileEvaluator.FriendlyPieceIn(ref boardState.GetTileAt(relativePosition));
 
-        public class Factory : PlaceholderFactory<PieceColour, BoardScanner>
+        public sealed class Factory : PlaceholderFactory<PieceColour, BoardScanner>
         {
         }
     }

@@ -1,0 +1,4 @@
+Execution time of NegaScout with depth of 9 - Scan in span: 
+      137337851 ms 
+      137337 s 
+      2288 min

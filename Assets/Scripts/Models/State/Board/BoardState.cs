@@ -1,15 +1,26 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using Models.State.PieceState;
+using Models.Utils.ExtensionMethods.PieceTypeExt;
 
 namespace Models.State.Board
 {
-    public class BoardState
+    public sealed class BoardState
     {
-        public BoardState(Tile[,] board)
+        public readonly Tile[][] Board;
+        public ref Tile GetTileAt(Position pos) => ref Board[pos.X][pos.Y];
+        public ref Tile GetTileAt(int x, int y) => ref Board[x][y];
+
+        public BoardState(Tile[][] board)
         {
             Board = board;
+            ActivePieces = new List<Position>();
+            ActiveBuilds = new List<Position>();
+     
+            GenerateActivePieces();
         }
 
-        public BoardState(Tile[,] board, HashSet<Position> activePieces, HashSet<Position> activeBuilds)
+        private BoardState(Tile[][] board, List<Position> activePieces, List<Position> activeBuilds)
         {
             Board = board;
             ActivePieces = activePieces;
@@ -18,46 +29,65 @@ namespace Models.State.Board
 
         public BoardState()
         {
-            var board = new Tile[8, 8];
+            var board = new Tile[8][];
             for (var i = 0; i < 8; i++)
-            for (var j = 0; j < 8; j++)
-                board[i, j] = new Tile(
-                    new Position(i, j)
-                );
+            {
+                board[i] = new Tile[8];
+                for (var j = 0; j < 8; j++)
+                    board[i][j] = new Tile(
+                        new Position(i, j)
+                    );
+            }
+
             Board = board;
         }
 
+        public List<Position> ActivePieces { get; }
+        public List<Position> ActiveBuilds { get; }
+        
 
-        public Tile[,] Board { get; }
+        private void GenerateActivePieces()
+        {
+            for (var i = 0; i < 8; i++)
+            for (var j = 0; j < 8; j++)
+            {
+                ref var tile = ref GetTileAt(i,j);
+                if (tile.CurrentPiece.Type != PieceType.NullPiece)
+                {
+                    ActivePieces.Add(tile.Position);
+                }
 
-        public HashSet<Position> ActivePieces { get; }
-        public HashSet<Position> ActiveBuilds { get; }
+                if (tile.BuildTileState.BuildingPiece != PieceType.NullPiece)
+                {
+                    ActiveBuilds.Add(tile.Position);
+                }
+            }
+        }
 
         public BoardState Clone()
         {
-            var newBoard = new Tile[8, 8];
+            var newBoard = new Tile[8][];
             for (var i = 0; i < 8; i++)
-            for (var j = 0; j < 8; j++)
-                newBoard[i, j] = Board[i, j].Clone();
-            return new BoardState(newBoard, new HashSet<Position>(ActivePieces), new HashSet<Position>(ActiveBuilds));
+            {
+                newBoard[i] = new Tile[8];
+                for (var j = 0; j < 8; j++)
+                    newBoard[i][j] = Board[i][j].Clone();
+            }
+
+            return new BoardState(newBoard, new List<Position>(ActivePieces), new List<Position>(ActiveBuilds));
         }
 
         public BoardState CloneWithDecrementBuildState()
         {
-            var newBoard = new Tile[8, 8];
+            var newBoard = new Tile[8][];
             for (var i = 0; i < 8; i++)
-            for (var j = 0; j < 8; j++)
-                newBoard[i, j] = Board[i, j].CloneWithDecrementBuildState();
-            return new BoardState(newBoard, new HashSet<Position>(ActivePieces), new HashSet<Position>(ActiveBuilds));
-        }
+            {
+                newBoard[i] = new Tile[8];
+                for (var j = 0; j < 8; j++)
+                    newBoard[i][j] = Board[i][j].CloneWithDecrementBuildState();
+            }
 
-        public BoardState CloneWithDecrementBuildState(HashSet<Position> activePieces, HashSet<Position> activeBuilds)
-        {
-            var newBoard = new Tile[8, 8];
-            for (var i = 0; i < 8; i++)
-            for (var j = 0; j < 8; j++)
-                newBoard[i, j] = Board[i, j].CloneWithDecrementBuildState();
-            return new BoardState(newBoard, activePieces, activeBuilds);
+            return new BoardState(newBoard, new List<Position>(ActivePieces), new List<Position>(ActiveBuilds));
         }
     }
 }

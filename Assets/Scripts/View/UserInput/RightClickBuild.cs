@@ -42,7 +42,7 @@ namespace View.UserInput
             if (_gameStateController.CurrentGameState.PossibleBuildMoves.BuildPositions.Contains(_nearestPos))
             {
                 RenderSelections(_gameStateController.Turn == PieceColour.Black ? BlackSelection : WhiteSelection,
-                    _nearestPos.Vector);
+                    _nearestPos.GetVector());
                 _buildSelectionInstigated = true;
             }
         }

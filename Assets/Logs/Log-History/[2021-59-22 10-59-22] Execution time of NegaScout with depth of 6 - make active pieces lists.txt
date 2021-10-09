@@ -1,0 +1,4 @@
+Execution time of NegaScout with depth of 6 - make active pieces lists: 
+      1055 ms 
+      1 s 
+      0 min

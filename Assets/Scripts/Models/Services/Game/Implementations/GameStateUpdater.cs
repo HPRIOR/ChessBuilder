@@ -14,7 +14,7 @@ using Zenject;
 
 namespace Models.Services.Game.Implementations
 {
-    public class GameStateUpdater : IGameStateUpdater
+    public sealed class GameStateUpdater : IGameStateUpdater
     {
         //TODO inject me
         private const int maxBuildPoints = 39;
@@ -84,8 +84,6 @@ namespace Models.Services.Game.Implementations
             GameState.Check = moveState.Check;
 
             GameState.PossibleBuildMoves = GetPossibleBuildMoves(GameState.BoardState, turn, moveState, playerState);
-            ;
-
             GameState.CheckMate = _gameOverEval.CheckMate(moveState.Check, moveState.PossibleMoves);
         }
 
@@ -96,11 +94,13 @@ namespace Models.Services.Game.Implementations
 
         private void RevertGameStateChanges(GameStateChanges gameStateChanges)
         {
+            // TODO modify active colour pieces
+
             // revert resolved pieces
             foreach (var (position, type) in gameStateChanges.ResolvedBuilds)
             {
-                GameState.BoardState.Board[position.X, position.Y].CurrentPiece = new Piece(PieceType.NullPiece);
-                GameState.BoardState.Board[position.X, position.Y].BuildTileState = new BuildTileState(0, type);
+                GameState.BoardState.Board[position.X][position.Y].CurrentPiece = new Piece(PieceType.NullPiece);
+                GameState.BoardState.Board[position.X][position.Y].BuildTileState = new BuildTileState(0, type);
                 GameState.BoardState.ActiveBuilds.Add(position);
                 GameState.BoardState.ActivePieces.Remove(position);
             }
@@ -109,16 +109,16 @@ namespace Models.Services.Game.Implementations
             var build = gameStateChanges.Build;
             if (build != null)
             {
-                GameState.BoardState.Board[build.At.X, build.At.Y].BuildTileState = new BuildTileState();
+                GameState.BoardState.Board[build.At.X][build.At.Y].BuildTileState = new BuildTileState();
                 GameState.BoardState.ActiveBuilds.Remove(build.At);
             }
 
             // increment decremented builds
             foreach (var decrementedTile in gameStateChanges.DecrementedTiles)
             {
-                var buildTileState = GameState.BoardState.Board[decrementedTile.X, decrementedTile.Y].BuildTileState;
+                var buildTileState = GameState.BoardState.Board[decrementedTile.X][decrementedTile.Y].BuildTileState;
                 if (buildTileState.BuildingPiece != PieceType.NullPiece)
-                    GameState.BoardState.Board[decrementedTile.X, decrementedTile.Y].BuildTileState =
+                    GameState.BoardState.Board[decrementedTile.X][decrementedTile.Y].BuildTileState =
                         new BuildTileState(buildTileState.Turns + 1, buildTileState.BuildingPiece);
             }
 
@@ -127,13 +127,13 @@ namespace Models.Services.Game.Implementations
             {
                 var movedToPosition = gameStateChanges.Move.To;
                 var movedFromPosition = gameStateChanges.Move.From;
-                var movedPiece = GameState.BoardState.Board[movedToPosition.X, movedToPosition.Y].CurrentPiece.Type;
+                var movedPiece = GameState.BoardState.Board[movedToPosition.X][movedToPosition.Y].CurrentPiece.Type;
 
-                GameState.BoardState.Board[movedToPosition.X, movedToPosition.Y].CurrentPiece =
+                GameState.BoardState.Board[movedToPosition.X][movedToPosition.Y].CurrentPiece =
                     new Piece(PieceType.NullPiece);
                 GameState.BoardState.ActivePieces.Remove(movedToPosition);
 
-                GameState.BoardState.Board[movedFromPosition.X, movedFromPosition.Y].CurrentPiece =
+                GameState.BoardState.Board[movedFromPosition.X][movedFromPosition.Y].CurrentPiece =
                     new Piece(movedPiece);
                 GameState.BoardState.ActivePieces.Add(movedFromPosition);
             }
@@ -148,7 +148,7 @@ namespace Models.Services.Game.Implementations
         private BuildMoves GetPossibleBuildMoves(BoardState newBoardState, PieceColour turn, MoveState moveState,
             PlayerState relevantPlayerState) =>
             moveState.Check
-                ? new BuildMoves(new HashSet<Position>(), new HashSet<PieceType>()) // no build moves when in check
+                ? new BuildMoves(new List<Position>(), new List<PieceType>()) // no build moves when in check
                 : _buildMoveGenerator.GetPossibleBuildMoves(newBoardState, turn, relevantPlayerState);
 
         private PlayerState GetPlayerState(BoardState newBoardState, PieceColour turn)

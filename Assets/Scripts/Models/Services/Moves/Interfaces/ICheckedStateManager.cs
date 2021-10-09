@@ -7,10 +7,9 @@ namespace Models.Services.Moves.Interfaces
     {
         bool IsCheck { get; }
 
-        void EvaluateCheck(
-            IDictionary<Position, HashSet<Position>> nonTurnMoves,
+        void EvaluateCheck(IDictionary<Position, List<Position>> nonTurnMoves,
             Position kingPosition);
 
-        void UpdatePossibleMovesWhenInCheck(IBoardInfo boardInfo);
+        void UpdatePossibleMovesWhenInCheck(IBoardInfo boardInfo, BoardState boardState);
     }
 }

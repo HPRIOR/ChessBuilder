@@ -6,6 +6,6 @@ namespace Models.Services.Moves.Interfaces
     {
         Position GetRelativePosition(Position originalPosition);
 
-        Tile GetRelativeTileAt(Position position, BoardState fromBoard);
+        ref Tile GetRelativeTileAt(Position position, BoardState fromBoard);
     }
 }

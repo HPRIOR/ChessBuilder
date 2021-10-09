@@ -19,7 +19,7 @@ namespace View.Prefab.Spawners
         {
             var thisGameObject = gameObject;
             // move piece to vector
-            thisGameObject.transform.position = _position.Vector;
+            thisGameObject.transform.position = _position.GetVector();
 
             var spriteRenderer = GetComponent<SpriteRenderer>();
             if (_renderInfo.SpriteAssetPath != "")

@@ -6,7 +6,7 @@ using Zenject;
 
 namespace Models.Services.Moves.Utils
 {
-    public class PositionTranslator : IPositionTranslator
+    public sealed class PositionTranslator : IPositionTranslator
     {
         private readonly PieceColour _pieceColour;
 
@@ -20,12 +20,17 @@ namespace Models.Services.Moves.Utils
                 ? originalPosition
                 : new Position(Math.Abs(originalPosition.X - 7), Math.Abs(originalPosition.Y - 7));
 
-        public Tile GetRelativeTileAt(Position position, BoardState boardState) =>
-            _pieceColour == PieceColour.White
-                ? boardState.Board[position.X, position.Y]
-                : boardState.Board[Math.Abs(position.X - 7), Math.Abs(position.Y - 7)];
+        public ref Tile GetRelativeTileAt(Position position, BoardState boardState)
+        {
+            if (_pieceColour == PieceColour.White)
+            {
+                return ref boardState.GetTileAt(position);
+            }
 
-        public class Factory : PlaceholderFactory<PieceColour, PositionTranslator>
+            return ref boardState.GetTileAt(Math.Abs(position.X - 7), Math.Abs(position.Y - 7));
+        }
+
+        public sealed class Factory : PlaceholderFactory<PieceColour, PositionTranslator>
         {
         }
     }

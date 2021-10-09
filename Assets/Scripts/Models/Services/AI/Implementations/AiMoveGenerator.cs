@@ -5,16 +5,19 @@ using Models.Services.Game.Implementations;
 using Models.Services.Game.Interfaces;
 using Models.State.GameState;
 using Models.State.PieceState;
+using Models.Utils.ExtensionMethods.PieceTypeExt;
+using UnityEngine;
 
 namespace Models.Services.AI.Implementations
 {
-    public class AiMoveGenerator
+    public sealed class AiMoveGenerator
     {
         private const int WindowSize = 3000;
         private readonly IAiPossibleMoveGenerator _aiPossibleMoveGenerator;
         private readonly GameStateUpdaterFactory _gameStateUpdaterFactory;
         private readonly IMoveOrderer _moveOrderer;
         private readonly IStaticEvaluator _staticEvaluator;
+        private int _numPosEvaluated;
 
         public AiMoveGenerator(IStaticEvaluator staticEvaluator, IAiPossibleMoveGenerator aiPossibleMoveGenerator,
             GameStateUpdaterFactory gameStateUpdaterFactory, IMoveOrderer moveOrderer)
@@ -25,21 +28,23 @@ namespace Models.Services.AI.Implementations
             _moveOrderer = moveOrderer;
         }
 
-        public Action<PieceColour, IGameStateUpdater> GetMove(
+        public AiMove GetMove(
             GameState gameState,
             int depth,
             PieceColour turn)
         {
+            _numPosEvaluated = 0;
             const int alpha = int.MinValue;
             const int beta = int.MaxValue;
 
             // need to pass in a copy of the game state
             var (move, _) = NegaScout(_gameStateUpdaterFactory.Create(gameState.Clone() as GameState), depth, 0, turn,
                 alpha, beta);
+            Debug.Log(_numPosEvaluated.ToString());
             return move;
         }
 
-        private (Action<PieceColour, IGameStateUpdater> move, int score) NegaScout(
+        private (AiMove move, int score) NegaScout(
             IGameStateUpdater gameStateUpdater,
             int maxDepth,
             int currentDepth,
@@ -54,8 +59,10 @@ namespace Models.Services.AI.Implementations
                 return (null, boardEval);
             }
 
+            _numPosEvaluated++;
+
             // initialise best move placeholders
-            Action<PieceColour, IGameStateUpdater> bestMove = null;
+            AiMove bestMove = null;
             var bestScore = int.MinValue;
             var adaptiveBeta = beta;
 
@@ -75,7 +82,11 @@ namespace Models.Services.AI.Implementations
             foreach (var move in moves)
             {
                 // get updated board state
-                move.Move(turn, gameStateUpdater);
+                // move.Move(turn, gameStateUpdater);
+                if (move.MoveType == MoveType.Move)
+                    gameStateUpdater.UpdateGameState(move.From, move.To, turn.NextTurn());
+                else
+                    gameStateUpdater.UpdateGameState(move.From, move.Type, turn.NextTurn());
 
                 // recurse
                 var (_, recurseScore) = NegaScout(gameStateUpdater, maxDepth, currentDepth + 1, turn,
@@ -87,7 +98,7 @@ namespace Models.Services.AI.Implementations
                     if (adaptiveBeta == beta || currentDepth >= maxDepth - 2)
                     {
                         bestScore = currentScore;
-                        bestMove = move.Move;
+                        bestMove = move;
                     }
                     else
                     {
@@ -95,7 +106,7 @@ namespace Models.Services.AI.Implementations
                             gameStateUpdater, maxDepth, currentDepth, turn, -beta, -currentScore
                         );
                         bestScore = -negativeBestScore;
-                        bestMove = move.Move;
+                        bestMove = move;
                     }
 
                     if (bestScore >= beta)

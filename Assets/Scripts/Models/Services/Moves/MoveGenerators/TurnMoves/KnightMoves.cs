@@ -6,7 +6,7 @@ using Zenject;
 
 namespace Models.Services.Moves.MoveGenerators.TurnMoves
 {
-    public class KnightMoves : IPieceMoveGenerator
+    public sealed class KnightMoves : IPieceMoveGenerator
     {
         private readonly IPositionTranslator _positionTranslator;
         private readonly ITileEvaluator _tileEvaluator;
@@ -18,23 +18,25 @@ namespace Models.Services.Moves.MoveGenerators.TurnMoves
             _tileEvaluator = tileEvaluatorFactory.Create(pieceColour);
         }
 
-        public IEnumerable<Position> GetPossiblePieceMoves(Position originPosition, BoardState boardState)
+        public List<Position> GetPossiblePieceMoves(Position originPosition, BoardState boardState)
         {
-            bool CoordInBounds((int X, int Y) coord) => 0 <= coord.X && coord.X <= 7 && 0 <= coord.Y && coord.Y <= 7;
-
-            bool FriendlyPieceNotInTile((int X, int Y) coord) =>
-                !_tileEvaluator.FriendlyPieceIn(
-                    _positionTranslator.GetRelativeTileAt(new Position(coord.X, coord.Y), boardState));
+            var result = new List<Position>();
 
             var possibleMoveCoords = GetMoveCoords(_positionTranslator.GetRelativePosition(originPosition));
-            var result = new List<Position>();
             foreach (var possibleMoveCoord in possibleMoveCoords)
-                if (CoordInBounds(possibleMoveCoord) && FriendlyPieceNotInTile(possibleMoveCoord))
+                if (CoordInBounds(possibleMoveCoord) && FriendlyPieceNotInTile(possibleMoveCoord, boardState))
                     result.Add(_positionTranslator.GetRelativePosition(
                         new Position(possibleMoveCoord.X, possibleMoveCoord.Y))
                     );
             return result;
         }
+
+        private bool FriendlyPieceNotInTile((int X, int Y) coord, BoardState boardState) =>
+            !_tileEvaluator.FriendlyPieceIn(
+                ref _positionTranslator.GetRelativeTileAt(new Position(coord.X, coord.Y), boardState));
+
+        private bool CoordInBounds((int X, int Y) coord) =>
+            0 <= coord.X && coord.X <= 7 && 0 <= coord.Y && coord.Y <= 7;
 
         private static IEnumerable<(int X, int Y)> GetMoveCoords(Position position)
         {
@@ -66,7 +68,7 @@ namespace Models.Services.Moves.MoveGenerators.TurnMoves
             };
         }
 
-        public class Factory : PlaceholderFactory<PieceColour, KnightMoves>
+        public sealed class Factory : PlaceholderFactory<PieceColour, KnightMoves>
         {
         }
     }

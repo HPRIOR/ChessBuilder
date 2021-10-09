@@ -51,10 +51,10 @@ namespace Tests.UnitTests.Game
         public void GameStateChange_Build_IsNullWithNoBuilds()
         {
             var board = _boardGenerator.GenerateBoard();
-            board[1, 1].CurrentPiece = new Piece(PieceType.BlackKing);
-            board[7, 7].CurrentPiece = new Piece(PieceType.WhiteKing);
-            var activePieces = new HashSet<Position> { new Position(1, 1), new Position(7, 7) };
-            var boardState = new BoardState(board, activePieces, new HashSet<Position>());
+            board[1][1].CurrentPiece = new Piece(PieceType.BlackKing);
+            board[7][7].CurrentPiece = new Piece(PieceType.WhiteKing);
+
+            var boardState = new BoardState(board);
             var gameState = _gameStateInitializer.InitialiseGame(boardState);
             var gameStateUpdater = _gameStateUpdaterFactory.Create(gameState);
             gameStateUpdater.UpdateGameState(new Position(1, 1), new Position(2, 2), PieceColour.Black);
@@ -67,10 +67,10 @@ namespace Tests.UnitTests.Game
         public void GameStateChange_Move_IsCorrect()
         {
             var board = _boardGenerator.GenerateBoard();
-            board[1, 1].CurrentPiece = new Piece(PieceType.BlackKing);
-            board[7, 7].CurrentPiece = new Piece(PieceType.WhiteKing);
-            var activePieces = new HashSet<Position> { new Position(1, 1), new Position(7, 7) };
-            var boardState = new BoardState(board, activePieces, new HashSet<Position>());
+            board[1][1].CurrentPiece = new Piece(PieceType.BlackKing);
+            board[7][7].CurrentPiece = new Piece(PieceType.WhiteKing);
+
+            var boardState = new BoardState(board);
             var gameState = _gameStateInitializer.InitialiseGame(boardState);
             var gameStateUpdater = _gameStateUpdaterFactory.Create(gameState);
             gameStateUpdater.UpdateGameState(new Position(1, 1), new Position(2, 2), PieceColour.Black);
@@ -84,10 +84,10 @@ namespace Tests.UnitTests.Game
         public void GameStateChange_Move_IsNull_GivenBuild()
         {
             var board = _boardGenerator.GenerateBoard();
-            board[1, 1].CurrentPiece = new Piece(PieceType.BlackKing);
-            board[7, 7].CurrentPiece = new Piece(PieceType.WhiteKing);
-            var activePieces = new HashSet<Position> { new Position(1, 1), new Position(7, 7) };
-            var boardState = new BoardState(board, activePieces, new HashSet<Position>());
+            board[1][1].CurrentPiece = new Piece(PieceType.BlackKing);
+            board[7][7].CurrentPiece = new Piece(PieceType.WhiteKing);
+
+            var boardState = new BoardState(board);
             var gameState = _gameStateInitializer.InitialiseGame(boardState);
             var gameStateUpdater = _gameStateUpdaterFactory.Create(gameState);
             gameStateUpdater.UpdateGameState(new Position(1, 1), PieceType.WhiteKnight, PieceColour.Black);
@@ -101,10 +101,10 @@ namespace Tests.UnitTests.Game
         public void GameStateChange_Build_IsCorrect()
         {
             var board = _boardGenerator.GenerateBoard();
-            board[1, 1].CurrentPiece = new Piece(PieceType.BlackKing);
-            board[7, 7].CurrentPiece = new Piece(PieceType.WhiteKing);
-            var activePieces = new HashSet<Position> { new Position(1, 1), new Position(7, 7) };
-            var boardState = new BoardState(board, activePieces, new HashSet<Position>());
+            board[1][1].CurrentPiece = new Piece(PieceType.BlackKing);
+            board[7][7].CurrentPiece = new Piece(PieceType.WhiteKing);
+
+            var boardState = new BoardState(board);
             var gameState = _gameStateInitializer.InitialiseGame(boardState);
             var gameStateUpdater = _gameStateUpdaterFactory.Create(gameState);
             gameStateUpdater.UpdateGameState(new Position(1, 1), PieceType.WhiteKnight, PieceColour.Black);
@@ -119,11 +119,11 @@ namespace Tests.UnitTests.Game
         public void GameStateChange_Check_IsCorrect()
         {
             var board = _boardGenerator.GenerateBoard();
-            board[1, 1].CurrentPiece = new Piece(PieceType.BlackKing);
-            board[7, 7].CurrentPiece = new Piece(PieceType.WhiteKing);
-            board[6, 4].CurrentPiece = new Piece(PieceType.WhiteQueen);
-            var activePieces = new HashSet<Position> { new Position(1, 1), new Position(7, 7), new Position(6, 4) };
-            var boardState = new BoardState(board, activePieces, new HashSet<Position>());
+            board[1][1].CurrentPiece = new Piece(PieceType.BlackKing);
+            board[7][7].CurrentPiece = new Piece(PieceType.WhiteKing);
+            board[6][4].CurrentPiece = new Piece(PieceType.WhiteQueen);
+
+            var boardState = new BoardState(board);
             var gameState = _gameStateInitializer.InitialiseGame(boardState);
             var gameStateUpdater = _gameStateUpdaterFactory.Create(gameState);
 
@@ -141,10 +141,10 @@ namespace Tests.UnitTests.Game
         public void GameStateChange_PossibleMovesAreSaved()
         {
             var board = _boardGenerator.GenerateBoard();
-            board[0, 0].CurrentPiece = new Piece(PieceType.BlackKing);
-            board[7, 7].CurrentPiece = new Piece(PieceType.WhiteKing);
-            var activePieces = new HashSet<Position> { new Position(0, 0), new Position(7, 7) };
-            var boardState = new BoardState(board, activePieces, new HashSet<Position>());
+            board[0][0].CurrentPiece = new Piece(PieceType.BlackKing);
+            board[7][7].CurrentPiece = new Piece(PieceType.WhiteKing);
+
+            var boardState = new BoardState(board);
             var gameState = _gameStateInitializer.InitialiseGame(boardState);
             var gameStateUpdater = _gameStateUpdaterFactory.Create(gameState);
 
@@ -169,10 +169,10 @@ namespace Tests.UnitTests.Game
             GameStateChange_PossibleMovesAreSaved_AndAreNotChangedByReference() // this will break when further mutability is introduced
         {
             var board = _boardGenerator.GenerateBoard();
-            board[0, 0].CurrentPiece = new Piece(PieceType.BlackKing);
-            board[7, 7].CurrentPiece = new Piece(PieceType.WhiteKing);
-            var activePieces = new HashSet<Position> { new Position(0, 0), new Position(7, 7) };
-            var boardState = new BoardState(board, activePieces, new HashSet<Position>());
+            board[0][0].CurrentPiece = new Piece(PieceType.BlackKing);
+            board[7][7].CurrentPiece = new Piece(PieceType.WhiteKing);
+
+            var boardState = new BoardState(board);
             var gameState = _gameStateInitializer.InitialiseGame(boardState);
             var gameStateUpdater = _gameStateUpdaterFactory.Create(gameState);
 
@@ -199,10 +199,10 @@ namespace Tests.UnitTests.Game
         public void GameStateChange_PossibleBuildsAreSaved()
         {
             var board = _boardGenerator.GenerateBoard();
-            board[7, 7].CurrentPiece = new Piece(PieceType.BlackKing);
-            board[0, 0].CurrentPiece = new Piece(PieceType.WhiteKing);
-            var activePieces = new HashSet<Position> { new Position(0, 0), new Position(7, 7) };
-            var boardState = new BoardState(board, activePieces, new HashSet<Position>());
+            board[7][7].CurrentPiece = new Piece(PieceType.BlackKing);
+            board[0][0].CurrentPiece = new Piece(PieceType.WhiteKing);
+
+            var boardState = new BoardState(board);
             var gameState = _gameStateInitializer.InitialiseGame(boardState);
             var gameStateUpdater = _gameStateUpdaterFactory.Create(gameState);
 
@@ -248,10 +248,10 @@ namespace Tests.UnitTests.Game
         public void GameStateChange_PlayerStateIsCorrect()
         {
             var board = _boardGenerator.GenerateBoard();
-            board[1, 1].CurrentPiece = new Piece(PieceType.BlackKing);
-            board[7, 7].CurrentPiece = new Piece(PieceType.WhiteKing);
-            var activePieces = new HashSet<Position> { new Position(1, 1), new Position(7, 7) };
-            var boardState = new BoardState(board, activePieces, new HashSet<Position>());
+            board[1][1].CurrentPiece = new Piece(PieceType.BlackKing);
+            board[7][7].CurrentPiece = new Piece(PieceType.WhiteKing);
+
+            var boardState = new BoardState(board);
             var gameState = _gameStateInitializer.InitialiseGame(boardState);
             var initialPlayerState = gameState.PlayerState;
             var gameStateUpdater = _gameStateUpdaterFactory.Create(gameState);
@@ -270,10 +270,10 @@ namespace Tests.UnitTests.Game
         public void GameStateChange_ResolvedBuildsAreCorrect()
         {
             var board = _boardGenerator.GenerateBoard();
-            board[1, 1].CurrentPiece = new Piece(PieceType.BlackKing);
-            board[7, 7].CurrentPiece = new Piece(PieceType.WhiteKing);
-            var activePieces = new HashSet<Position> { new Position(1, 1), new Position(7, 7) };
-            var boardState = new BoardState(board, activePieces, new HashSet<Position>());
+            board[1][1].CurrentPiece = new Piece(PieceType.BlackKing);
+            board[7][7].CurrentPiece = new Piece(PieceType.WhiteKing);
+
+            var boardState = new BoardState(board);
             var gameState = _gameStateInitializer.InitialiseGame(boardState);
             var gameStateUpdater = _gameStateUpdaterFactory.Create(gameState);
 
@@ -292,25 +292,19 @@ namespace Tests.UnitTests.Game
         public void RevertingGameState_CorrectlyReversePossibleMoves()
         {
             var board = _boardGenerator.GenerateBoard();
-            board[0, 0].CurrentPiece = new Piece(PieceType.WhiteKing);
-            board[1, 0].CurrentPiece = new Piece(PieceType.WhitePawn);
+            board[0][0].CurrentPiece = new Piece(PieceType.WhiteKing);
+            board[1][0].CurrentPiece = new Piece(PieceType.WhitePawn);
 
-            board[0, 7].CurrentPiece = new Piece(PieceType.BlackKing);
-            board[1, 7].CurrentPiece = new Piece(PieceType.BlackPawn);
+            board[0][7].CurrentPiece = new Piece(PieceType.BlackKing);
+            board[1][7].CurrentPiece = new Piece(PieceType.BlackPawn);
 
-            var activePieces = new HashSet<Position>
-            {
-                new Position(0, 0),
-                new Position(1, 0),
-                new Position(0, 7),
-                new Position(1, 7)
-            };
-            var boardState = new BoardState(board, activePieces, new HashSet<Position>());
+
+            var boardState = new BoardState(board);
             var gameState = _gameStateInitializer.InitialiseGame(boardState);
             var gameStateUpdater = _gameStateUpdaterFactory.Create(gameState);
 
             var initialPossibleMoves =
-                new Dictionary<Position, HashSet<Position>>(gameState.PossiblePieceMoves);
+                new Dictionary<Position, List<Position>>(gameState.PossiblePieceMoves);
 
             gameStateUpdater.UpdateGameState(new Position(1, 0), new Position(1, 2), PieceColour.Black);
             gameStateUpdater.UpdateGameState(new Position(1, 7), new Position(2, 7), PieceColour.White);
@@ -334,20 +328,14 @@ namespace Tests.UnitTests.Game
         public void RevertingGameState_CorrectlyReversesPossibleBuilds()
         {
             var board = _boardGenerator.GenerateBoard();
-            board[0, 0].CurrentPiece = new Piece(PieceType.WhiteKing);
-            board[1, 0].CurrentPiece = new Piece(PieceType.WhitePawn);
+            board[0][0].CurrentPiece = new Piece(PieceType.WhiteKing);
+            board[1][0].CurrentPiece = new Piece(PieceType.WhitePawn);
 
-            board[0, 7].CurrentPiece = new Piece(PieceType.BlackKing);
-            board[1, 7].CurrentPiece = new Piece(PieceType.BlackPawn);
+            board[0][7].CurrentPiece = new Piece(PieceType.BlackKing);
+            board[1][7].CurrentPiece = new Piece(PieceType.BlackPawn);
 
-            var activePieces = new HashSet<Position>
-            {
-                new Position(0, 0),
-                new Position(1, 0),
-                new Position(0, 7),
-                new Position(1, 7)
-            };
-            var boardState = new BoardState(board, activePieces, new HashSet<Position>());
+
+            var boardState = new BoardState(board);
             var gameState = _gameStateInitializer.InitialiseGame(boardState);
             var gameStateUpdater = _gameStateUpdaterFactory.Create(gameState);
 
@@ -389,20 +377,14 @@ namespace Tests.UnitTests.Game
         public void RevertingGameState_CorrectlyReversesResolvedBuilds()
         {
             var board = _boardGenerator.GenerateBoard();
-            board[0, 0].CurrentPiece = new Piece(PieceType.WhiteKing);
-            board[1, 0].CurrentPiece = new Piece(PieceType.WhitePawn);
+            board[0][0].CurrentPiece = new Piece(PieceType.WhiteKing);
+            board[1][0].CurrentPiece = new Piece(PieceType.WhitePawn);
 
-            board[0, 7].CurrentPiece = new Piece(PieceType.BlackKing);
-            board[1, 7].CurrentPiece = new Piece(PieceType.BlackPawn);
+            board[0][7].CurrentPiece = new Piece(PieceType.BlackKing);
+            board[1][7].CurrentPiece = new Piece(PieceType.BlackPawn);
 
-            var activePieces = new HashSet<Position>
-            {
-                new Position(0, 0),
-                new Position(1, 0),
-                new Position(0, 7),
-                new Position(1, 7)
-            };
-            var boardState = new BoardState(board, activePieces, new HashSet<Position>());
+
+            var boardState = new BoardState(board);
             var gameState = _gameStateInitializer.InitialiseGame(boardState);
             var gameStateUpdater = _gameStateUpdaterFactory.Create(gameState);
 
@@ -422,12 +404,12 @@ namespace Tests.UnitTests.Game
             gameStateUpdater.RevertGameState();
 
             var sut = gameStateUpdater.GameState;
-            Assert.That(sut.BoardState.Board[2, 3].CurrentPiece.Type, Is.EqualTo(PieceType.NullPiece));
-            Assert.That(sut.BoardState.Board[3, 3].CurrentPiece.Type, Is.EqualTo(PieceType.NullPiece));
-            Assert.That(sut.BoardState.Board[3, 4].CurrentPiece.Type, Is.EqualTo(PieceType.NullPiece));
-            Assert.That(sut.BoardState.Board[3, 5].CurrentPiece.Type, Is.EqualTo(PieceType.NullPiece));
-            Assert.That(sut.BoardState.Board[3, 6].CurrentPiece.Type, Is.EqualTo(PieceType.NullPiece));
-            Assert.That(sut.BoardState.Board[3, 7].CurrentPiece.Type, Is.EqualTo(PieceType.NullPiece));
+            Assert.That(sut.BoardState.Board[2][3].CurrentPiece.Type, Is.EqualTo(PieceType.NullPiece));
+            Assert.That(sut.BoardState.Board[3][3].CurrentPiece.Type, Is.EqualTo(PieceType.NullPiece));
+            Assert.That(sut.BoardState.Board[3][4].CurrentPiece.Type, Is.EqualTo(PieceType.NullPiece));
+            Assert.That(sut.BoardState.Board[3][5].CurrentPiece.Type, Is.EqualTo(PieceType.NullPiece));
+            Assert.That(sut.BoardState.Board[3][6].CurrentPiece.Type, Is.EqualTo(PieceType.NullPiece));
+            Assert.That(sut.BoardState.Board[3][7].CurrentPiece.Type, Is.EqualTo(PieceType.NullPiece));
         }
 
 
@@ -435,20 +417,14 @@ namespace Tests.UnitTests.Game
         public void RevertingGameState_CorrectlyReversesBuildState_AfterRevertingBuilds()
         {
             var board = _boardGenerator.GenerateBoard();
-            board[0, 0].CurrentPiece = new Piece(PieceType.WhiteKing);
-            board[1, 0].CurrentPiece = new Piece(PieceType.WhitePawn);
+            board[0][0].CurrentPiece = new Piece(PieceType.WhiteKing);
+            board[1][0].CurrentPiece = new Piece(PieceType.WhitePawn);
 
-            board[0, 7].CurrentPiece = new Piece(PieceType.BlackKing);
-            board[1, 7].CurrentPiece = new Piece(PieceType.BlackPawn);
+            board[0][7].CurrentPiece = new Piece(PieceType.BlackKing);
+            board[1][7].CurrentPiece = new Piece(PieceType.BlackPawn);
 
-            var activePieces = new HashSet<Position>
-            {
-                new Position(0, 0),
-                new Position(1, 0),
-                new Position(0, 7),
-                new Position(1, 7)
-            };
-            var boardState = new BoardState(board, activePieces, new HashSet<Position>());
+
+            var boardState = new BoardState(board);
             var gameState = _gameStateInitializer.InitialiseGame(boardState);
             var gameStateUpdater = _gameStateUpdaterFactory.Create(gameState);
 
@@ -468,19 +444,19 @@ namespace Tests.UnitTests.Game
             gameStateUpdater.RevertGameState();
 
             var sut = gameStateUpdater.GameState;
-            Assert.That(sut.BoardState.Board[2, 3].BuildTileState.BuildingPiece, Is.EqualTo(PieceType.NullPiece));
-            Assert.That(sut.BoardState.Board[3, 3].BuildTileState.BuildingPiece, Is.EqualTo(PieceType.NullPiece));
-            Assert.That(sut.BoardState.Board[3, 4].BuildTileState.BuildingPiece, Is.EqualTo(PieceType.NullPiece));
-            Assert.That(sut.BoardState.Board[3, 5].BuildTileState.BuildingPiece, Is.EqualTo(PieceType.NullPiece));
-            Assert.That(sut.BoardState.Board[3, 6].BuildTileState.BuildingPiece, Is.EqualTo(PieceType.NullPiece));
-            Assert.That(sut.BoardState.Board[3, 7].BuildTileState.BuildingPiece, Is.EqualTo(PieceType.NullPiece));
+            Assert.That(sut.BoardState.Board[2][3].BuildTileState.BuildingPiece, Is.EqualTo(PieceType.NullPiece));
+            Assert.That(sut.BoardState.Board[3][3].BuildTileState.BuildingPiece, Is.EqualTo(PieceType.NullPiece));
+            Assert.That(sut.BoardState.Board[3][4].BuildTileState.BuildingPiece, Is.EqualTo(PieceType.NullPiece));
+            Assert.That(sut.BoardState.Board[3][5].BuildTileState.BuildingPiece, Is.EqualTo(PieceType.NullPiece));
+            Assert.That(sut.BoardState.Board[3][6].BuildTileState.BuildingPiece, Is.EqualTo(PieceType.NullPiece));
+            Assert.That(sut.BoardState.Board[3][7].BuildTileState.BuildingPiece, Is.EqualTo(PieceType.NullPiece));
 
-            Assert.That(sut.BoardState.Board[2, 3].BuildTileState.Turns, Is.EqualTo(0));
-            Assert.That(sut.BoardState.Board[3, 3].BuildTileState.Turns, Is.EqualTo(0));
-            Assert.That(sut.BoardState.Board[3, 4].BuildTileState.Turns, Is.EqualTo(0));
-            Assert.That(sut.BoardState.Board[3, 5].BuildTileState.Turns, Is.EqualTo(0));
-            Assert.That(sut.BoardState.Board[3, 6].BuildTileState.Turns, Is.EqualTo(0));
-            Assert.That(sut.BoardState.Board[3, 7].BuildTileState.Turns, Is.EqualTo(0));
+            Assert.That(sut.BoardState.Board[2][3].BuildTileState.Turns, Is.EqualTo(0));
+            Assert.That(sut.BoardState.Board[3][3].BuildTileState.Turns, Is.EqualTo(0));
+            Assert.That(sut.BoardState.Board[3][4].BuildTileState.Turns, Is.EqualTo(0));
+            Assert.That(sut.BoardState.Board[3][5].BuildTileState.Turns, Is.EqualTo(0));
+            Assert.That(sut.BoardState.Board[3][6].BuildTileState.Turns, Is.EqualTo(0));
+            Assert.That(sut.BoardState.Board[3][7].BuildTileState.Turns, Is.EqualTo(0));
         }
 
 
@@ -488,20 +464,14 @@ namespace Tests.UnitTests.Game
         public void RevertingGameState_CorrectlyReversesDecrements()
         {
             var board = _boardGenerator.GenerateBoard();
-            board[0, 0].CurrentPiece = new Piece(PieceType.WhiteKing);
-            board[1, 0].CurrentPiece = new Piece(PieceType.WhitePawn);
+            board[0][0].CurrentPiece = new Piece(PieceType.WhiteKing);
+            board[1][0].CurrentPiece = new Piece(PieceType.WhitePawn);
 
-            board[0, 7].CurrentPiece = new Piece(PieceType.BlackKing);
-            board[1, 7].CurrentPiece = new Piece(PieceType.BlackPawn);
+            board[0][7].CurrentPiece = new Piece(PieceType.BlackKing);
+            board[1][7].CurrentPiece = new Piece(PieceType.BlackPawn);
 
-            var activePieces = new HashSet<Position>
-            {
-                new Position(0, 0),
-                new Position(1, 0),
-                new Position(0, 7),
-                new Position(1, 7)
-            };
-            var boardState = new BoardState(board, activePieces, new HashSet<Position>());
+
+            var boardState = new BoardState(board);
             var gameState = _gameStateInitializer.InitialiseGame(boardState);
             var gameStateUpdater = _gameStateUpdaterFactory.Create(gameState);
 
@@ -518,7 +488,7 @@ namespace Tests.UnitTests.Game
             gameStateUpdater.RevertGameState();
 
             var sut = gameStateUpdater.GameState;
-            Assert.That(sut.BoardState.Board[2, 3].BuildTileState.Turns, Is.EqualTo(7));
+            Assert.That(sut.BoardState.Board[2][3].BuildTileState.Turns, Is.EqualTo(7));
         }
 
 
@@ -526,20 +496,14 @@ namespace Tests.UnitTests.Game
         public void RevertingGameState_DoesNotIncrementBlockedBuild()
         {
             var board = _boardGenerator.GenerateBoard();
-            board[0, 0].CurrentPiece = new Piece(PieceType.WhiteKing);
-            board[1, 0].CurrentPiece = new Piece(PieceType.WhitePawn);
+            board[0][0].CurrentPiece = new Piece(PieceType.WhiteKing);
+            board[1][0].CurrentPiece = new Piece(PieceType.WhitePawn);
 
-            board[0, 7].CurrentPiece = new Piece(PieceType.BlackKing);
-            board[1, 7].CurrentPiece = new Piece(PieceType.BlackPawn);
+            board[0][7].CurrentPiece = new Piece(PieceType.BlackKing);
+            board[1][7].CurrentPiece = new Piece(PieceType.BlackPawn);
 
-            var activePieces = new HashSet<Position>
-            {
-                new Position(0, 0),
-                new Position(1, 0),
-                new Position(0, 7),
-                new Position(1, 7)
-            };
-            var boardState = new BoardState(board, activePieces, new HashSet<Position>());
+
+            var boardState = new BoardState(board);
             var gameState = _gameStateInitializer.InitialiseGame(boardState);
             var gameStateUpdater = _gameStateUpdaterFactory.Create(gameState);
 
@@ -556,7 +520,7 @@ namespace Tests.UnitTests.Game
             gameStateUpdater.RevertGameState();
 
             var sut = gameStateUpdater.GameState;
-            Assert.That(sut.BoardState.Board[0, 0].BuildTileState.Turns, Is.EqualTo(0));
+            Assert.That(sut.BoardState.Board[0][0].BuildTileState.Turns, Is.EqualTo(0));
         }
 
 
@@ -564,20 +528,14 @@ namespace Tests.UnitTests.Game
         public void RevertingGameState_CorrectlyReversesBoardPieces()
         {
             var board = _boardGenerator.GenerateBoard();
-            board[0, 0].CurrentPiece = new Piece(PieceType.WhiteKing);
-            board[1, 0].CurrentPiece = new Piece(PieceType.WhitePawn);
+            board[0][0].CurrentPiece = new Piece(PieceType.WhiteKing);
+            board[1][0].CurrentPiece = new Piece(PieceType.WhitePawn);
 
-            board[0, 7].CurrentPiece = new Piece(PieceType.BlackKing);
-            board[1, 7].CurrentPiece = new Piece(PieceType.BlackPawn);
+            board[0][7].CurrentPiece = new Piece(PieceType.BlackKing);
+            board[1][7].CurrentPiece = new Piece(PieceType.BlackPawn);
 
-            var activePieces = new HashSet<Position>
-            {
-                new Position(0, 0),
-                new Position(1, 0),
-                new Position(0, 7),
-                new Position(1, 7)
-            };
-            var boardState = new BoardState(board, activePieces, new HashSet<Position>());
+
+            var boardState = new BoardState(board);
             var gameState = _gameStateInitializer.InitialiseGame(boardState);
             var gameStateUpdater = _gameStateUpdaterFactory.Create(gameState);
 
@@ -597,11 +555,11 @@ namespace Tests.UnitTests.Game
             gameStateUpdater.RevertGameState();
 
             var sut = gameStateUpdater.GameState.BoardState.Board;
-            Assert.That(sut[0, 0].CurrentPiece.Type, Is.EqualTo(PieceType.WhiteKing));
-            Assert.That(sut[1, 0].CurrentPiece.Type, Is.EqualTo(PieceType.WhitePawn));
+            Assert.That(sut[0][0].CurrentPiece.Type, Is.EqualTo(PieceType.WhiteKing));
+            Assert.That(sut[1][0].CurrentPiece.Type, Is.EqualTo(PieceType.WhitePawn));
 
-            Assert.That(sut[0, 7].CurrentPiece.Type, Is.EqualTo(PieceType.BlackKing));
-            Assert.That(sut[1, 7].CurrentPiece.Type, Is.EqualTo(PieceType.BlackPawn));
+            Assert.That(sut[0][7].CurrentPiece.Type, Is.EqualTo(PieceType.BlackKing));
+            Assert.That(sut[1][7].CurrentPiece.Type, Is.EqualTo(PieceType.BlackPawn));
         }
 
 
@@ -609,20 +567,14 @@ namespace Tests.UnitTests.Game
         public void RevertingGameState_CorrectlyReversesActivePieces()
         {
             var board = _boardGenerator.GenerateBoard();
-            board[0, 0].CurrentPiece = new Piece(PieceType.WhiteKing);
-            board[1, 0].CurrentPiece = new Piece(PieceType.WhitePawn);
+            board[0][0].CurrentPiece = new Piece(PieceType.WhiteKing);
+            board[1][0].CurrentPiece = new Piece(PieceType.WhitePawn);
 
-            board[0, 7].CurrentPiece = new Piece(PieceType.BlackKing);
-            board[1, 7].CurrentPiece = new Piece(PieceType.BlackPawn);
+            board[0][7].CurrentPiece = new Piece(PieceType.BlackKing);
+            board[1][7].CurrentPiece = new Piece(PieceType.BlackPawn);
 
-            var activePieces = new HashSet<Position>
-            {
-                new Position(0, 0),
-                new Position(1, 0),
-                new Position(0, 7),
-                new Position(1, 7)
-            };
-            var boardState = new BoardState(board, activePieces, new HashSet<Position>());
+
+            var boardState = new BoardState(board);
             var gameState = _gameStateInitializer.InitialiseGame(boardState);
             var gameStateUpdater = _gameStateUpdaterFactory.Create(gameState);
 

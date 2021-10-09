@@ -65,7 +65,7 @@ namespace Tests.UnitTests.PossibleMoves.Helpers
         {
             var positionTranslator = _positionTranslatorFactory.Create(PieceColour.Black);
             var board = new BoardState();
-            board.Board[7, 7].CurrentPiece = new Piece(PieceType.BlackKnight);
+            board.Board[7][7].CurrentPiece = new Piece(PieceType.BlackKnight);
             var mirroredTile = positionTranslator.GetRelativeTileAt(new Position(0, 0), board);
             Assert.AreEqual(PieceType.BlackKnight, mirroredTile.CurrentPiece.Type);
         }
@@ -75,7 +75,7 @@ namespace Tests.UnitTests.PossibleMoves.Helpers
         {
             var positionTranslator = _positionTranslatorFactory.Create(PieceColour.White);
             var board = new BoardState();
-            board.Board[7, 7].CurrentPiece = new Piece(PieceType.BlackKnight);
+            board.Board[7][7].CurrentPiece = new Piece(PieceType.BlackKnight);
             var mirroredTile = positionTranslator.GetRelativeTileAt(new Position(7, 7), board);
             Assert.AreEqual(PieceType.BlackKnight, mirroredTile.CurrentPiece.Type);
         }

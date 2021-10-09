@@ -1,6 +1,5 @@
 ﻿using Controllers.Interfaces;
 using Models.Services.Game.Interfaces;
-using Models.Services.Moves.Interfaces;
 using Models.State.Board;
 using Zenject;
 
@@ -8,30 +7,23 @@ namespace Controllers.Commands
 {
     public class MoveCommand : ICommand
     {
-        private static IPieceMover _pieceMover;
         private static IMoveValidator _moveValidator;
         private readonly Position _destination;
         private readonly Position _from;
         private readonly IGameStateController _gameStateController;
-        private readonly BoardState _stateTransitionedFrom;
 
 
-        public MoveCommand(
-            Position from,
+        public MoveCommand(Position from,
             Position destination,
-            IPieceMover pieceMover,
             IMoveValidator moveValidator,
-            IGameStateController gameStateController
-        )
+            IGameStateController gameStateController)
         {
             _gameStateController = gameStateController;
-            _stateTransitionedFrom = _gameStateController.CurrentGameState.BoardState.Clone();
 
             _from = from;
             _destination = destination;
 
             _moveValidator = moveValidator;
-            _pieceMover = pieceMover;
         }
 
         public void Execute()

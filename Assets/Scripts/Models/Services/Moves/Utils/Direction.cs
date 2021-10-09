@@ -4,12 +4,12 @@
     {
         Null,
         N,
-        NE,
+        Ne,
         E,
-        SE,
+        Se,
         S,
-        SW,
+        Sw,
         W,
-        NW
+        Nw
     }
 }

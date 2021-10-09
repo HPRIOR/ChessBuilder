@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Bindings.Installers.AIInstallers;
 using Bindings.Installers.ModelInstallers.Board;
 using Models.Services.AI.Implementations;
 using Models.Services.AI.Interfaces;
 using Models.Services.Board;
-using Models.Services.Game.Interfaces;
 using Models.State.Board;
 using Models.State.PieceState;
 using NUnit.Framework;
@@ -32,7 +30,6 @@ namespace Tests.UnitTests.AI
 
         private IBoardGenerator _boardGenerator;
         private IMoveOrderer _moveOrderer;
-        private readonly Action<PieceColour, IGameStateUpdater> _actionStub = (colour, updater) => { };
 
         private void InstallBindings()
         {

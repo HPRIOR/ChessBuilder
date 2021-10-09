@@ -4,7 +4,7 @@ using Models.State.Board;
 using NUnit.Framework;
 using Zenject;
 
-namespace Tests.UnitTests.Utils
+namespace Tests.UnitTests.Utils.CacheUtils
 {
     [TestFixture]
     public class DirectionMapTests : ZenjectUnitTestFixture
@@ -42,28 +42,28 @@ namespace Tests.UnitTests.Utils
         public void DirectionNorthEast()
         {
             var result = DirectionCache.DirectionFrom(new Position(4, 4), new Position(5, 5));
-            Assert.That(result, Is.EqualTo(Direction.NE));
+            Assert.That(result, Is.EqualTo(Direction.Ne));
         }
 
         [Test]
         public void DirectionNorthWest()
         {
             var result = DirectionCache.DirectionFrom(new Position(4, 4), new Position(3, 5));
-            Assert.That(result, Is.EqualTo(Direction.NW));
+            Assert.That(result, Is.EqualTo(Direction.Nw));
         }
 
         [Test]
         public void DirectionSouthEast()
         {
             var result = DirectionCache.DirectionFrom(new Position(4, 4), new Position(5, 3));
-            Assert.That(result, Is.EqualTo(Direction.SE));
+            Assert.That(result, Is.EqualTo(Direction.Se));
         }
 
         [Test]
         public void DirectionSouthWest()
         {
             var result = DirectionCache.DirectionFrom(new Position(4, 4), new Position(2, 2));
-            Assert.That(result, Is.EqualTo(Direction.SW));
+            Assert.That(result, Is.EqualTo(Direction.Sw));
         }
     }
 }

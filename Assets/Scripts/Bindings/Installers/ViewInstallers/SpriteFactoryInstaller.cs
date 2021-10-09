@@ -1,5 +1,4 @@
-﻿using UnityEditor;
-using UnityEngine;
+﻿using UnityEngine;
 using View.Prefab.Factories;
 using View.Prefab.Spawners;
 using Zenject;

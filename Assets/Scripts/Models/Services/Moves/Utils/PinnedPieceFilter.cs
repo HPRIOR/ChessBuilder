@@ -22,7 +22,7 @@ namespace Models.Services.Moves.Utils
 
         private static readonly HashSet<Direction> BishopDirections = new HashSet<Direction>(new DirectionComparer())
         {
-            Direction.NE, Direction.NW, Direction.SE, Direction.SW
+            Direction.Ne, Direction.Nw, Direction.Se, Direction.Sw
         };
 
         private static readonly HashSet<Direction> RookDirections = new HashSet<Direction>(new DirectionComparer())
@@ -33,7 +33,7 @@ namespace Models.Services.Moves.Utils
         private static readonly HashSet<Direction> QueenDirections = new HashSet<Direction>(new DirectionComparer())
         {
             Direction.N, Direction.E, Direction.S, Direction.W,
-            Direction.NE, Direction.NW, Direction.SE, Direction.SW
+            Direction.Ne, Direction.Nw, Direction.Se, Direction.Sw
         };
 
         private static bool PieceIsScanner(KeyValuePair<Position, List<Position>> pieceMoves,

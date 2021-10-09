@@ -8,17 +8,13 @@ namespace Models.Services.Moves.Utils.Scanners
 {
     public sealed class NonTurnBoardScanner : IBoardScanner
     {
-        private readonly IPositionTranslator _positionTranslator;
         private readonly ITileEvaluator _tileEvaluator;
         private readonly PieceColour _turn;
 
-        public NonTurnBoardScanner(
-            PieceColour pieceColour,
-            ITileEvaluatorFactory tileEvaluatorFactory,
-            IPositionTranslatorFactory positionTranslatorFactory)
+        public NonTurnBoardScanner(PieceColour pieceColour,
+            ITileEvaluatorFactory tileEvaluatorFactory)
         {
             _tileEvaluator = tileEvaluatorFactory.Create(pieceColour);
-            _positionTranslator = positionTranslatorFactory.Create(pieceColour);
             _turn = pieceColour;
         }
 

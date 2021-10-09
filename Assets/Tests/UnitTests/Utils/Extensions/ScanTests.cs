@@ -59,7 +59,7 @@ namespace Tests.UnitTests.Utils.Extensions
         [Test]
         public void ScanNorthEast()
         {
-            var result = new Position(4, 4).Scan(Direction.NE);
+            var result = new Position(4, 4).Scan(Direction.Ne);
             Assert.That(result.Count(), Is.EqualTo(3));
             Assert.That(result,
                 Is.EquivalentTo(new List<Position>
@@ -72,7 +72,7 @@ namespace Tests.UnitTests.Utils.Extensions
         [Test]
         public void ScanNorthWest()
         {
-            var result = new Position(4, 4).Scan(Direction.NW);
+            var result = new Position(4, 4).Scan(Direction.Nw);
             Assert.That(result.Count(), Is.EqualTo(3));
             Assert.That(result,
                 Is.EquivalentTo(new List<Position>
@@ -84,7 +84,7 @@ namespace Tests.UnitTests.Utils.Extensions
         [Test]
         public void ScanSouthWest()
         {
-            var result = new Position(4, 4).Scan(Direction.SW);
+            var result = new Position(4, 4).Scan(Direction.Sw);
             Assert.That(result.Count(), Is.EqualTo(4));
             Assert.That(result,
                 Is.EquivalentTo(new List<Position>
@@ -96,7 +96,7 @@ namespace Tests.UnitTests.Utils.Extensions
         [Test]
         public void ScanSouthEast()
         {
-            var result = new Position(4, 4).Scan(Direction.SE);
+            var result = new Position(4, 4).Scan(Direction.Se);
             Assert.That(result.Count(), Is.EqualTo(3));
             Assert.That(result,
                 Is.EquivalentTo(new List<Position>
@@ -108,14 +108,14 @@ namespace Tests.UnitTests.Utils.Extensions
         [Test]
         public void ScanOnEdge()
         {
-            var result = new Position(7, 7).Scan(Direction.NE);
+            var result = new Position(7, 7).Scan(Direction.Ne);
             Assert.That(result.Count(), Is.EqualTo(0));
         }
 
         [Test]
         public void ScanResultsInCorrectOrder_StartToFinish()
         {
-            var result = new Position(4, 4).Scan(Direction.SE).ToList();
+            var result = new Position(4, 4).Scan(Direction.Se).ToList();
             Assert.That(result.Count(), Is.EqualTo(3));
             Assert.That(result,
                 Is.EqualTo(new List<Position>

@@ -26,7 +26,6 @@ namespace Tests.UnitTests.BoardTests
         }
 
         private IBoardGenerator _boardGenerator;
-        private BuildStateDecrementor _buildStateDecrementor;
 
         private void InstallBindings()
         {
@@ -37,7 +36,6 @@ namespace Tests.UnitTests.BoardTests
         private void ResolveContainer()
         {
             _boardGenerator = Container.Resolve<IBoardGenerator>();
-            _buildStateDecrementor = Container.Resolve<BuildStateDecrementor>();
         }
 
         [Test]

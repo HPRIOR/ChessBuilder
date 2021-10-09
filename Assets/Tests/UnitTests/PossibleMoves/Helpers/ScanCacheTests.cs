@@ -63,7 +63,7 @@ namespace Tests.UnitTests.PossibleMoves.Helpers
         [Test]
         public void IncludesCorrectPositionsNorthEast()
         {
-            var sut = ScanCache.GetPositionsToEndOfBoard(new Position(5, 5), Direction.NE);
+            var sut = ScanCache.GetPositionsToEndOfBoard(new Position(5, 5), Direction.Ne);
             Assert.That(sut.ToArray(),
                 Is.EquivalentTo(new[]
                 {
@@ -75,7 +75,7 @@ namespace Tests.UnitTests.PossibleMoves.Helpers
         [Test]
         public void IncludesCorrectPositionsNorthWest()
         {
-            var sut = ScanCache.GetPositionsToEndOfBoard(new Position(5, 5), Direction.NW);
+            var sut = ScanCache.GetPositionsToEndOfBoard(new Position(5, 5), Direction.Nw);
             Assert.That(sut.ToArray(),
                 Is.EquivalentTo(new[]
                 {
@@ -86,7 +86,7 @@ namespace Tests.UnitTests.PossibleMoves.Helpers
         [Test]
         public void IncludesCorrectPositionsSouthWest()
         {
-            var sut = ScanCache.GetPositionsToEndOfBoard(new Position(5, 5), Direction.SW);
+            var sut = ScanCache.GetPositionsToEndOfBoard(new Position(5, 5), Direction.Sw);
             Assert.That(sut.ToArray(),
                 Is.EquivalentTo(new[]
                 {
@@ -97,7 +97,7 @@ namespace Tests.UnitTests.PossibleMoves.Helpers
         [Test]
         public void IncludesCorrectPositionsSouthEast()
         {
-            var sut = ScanCache.GetPositionsToEndOfBoard(new Position(5, 5), Direction.SE);
+            var sut = ScanCache.GetPositionsToEndOfBoard(new Position(5, 5), Direction.Se);
             Assert.That(sut.ToArray(),
                 Is.EquivalentTo(new[]
                 {
@@ -108,7 +108,7 @@ namespace Tests.UnitTests.PossibleMoves.Helpers
         [Test]
         public void OnEdgeEmptyListReturned()
         {
-            var sut = ScanCache.GetPositionsToEndOfBoard(new Position(7, 0), Direction.SE);
+            var sut = ScanCache.GetPositionsToEndOfBoard(new Position(7, 0), Direction.Se);
             Assert.That(sut.ToArray(),
                 Is.EquivalentTo(new Position[] { }));
         }

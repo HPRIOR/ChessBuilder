@@ -48,7 +48,7 @@ namespace Tests.UnitTests.PossibleMoves.Helpers
             var boardScanner = _boardScannerFactory.Create(PieceColour.White, Turn.Turn);
             var board = new BoardState();
             var result = new List<Position>();
-            boardScanner.ScanIn(Direction.NE, new Position(0, 0), board, result);
+            boardScanner.ScanIn(Direction.Ne, new Position(0, 0), board, result);
             var expected = new List<Position>
             {
                 new Position(1, 1),
@@ -69,7 +69,7 @@ namespace Tests.UnitTests.PossibleMoves.Helpers
             var boardScanner = _boardScannerFactory.Create(PieceColour.Black, Turn.Turn);
             var board = new BoardState();
             var result = new List<Position>();
-            boardScanner.ScanIn(Direction.NE, new Position(0, 0), board, result);
+            boardScanner.ScanIn(Direction.Ne, new Position(0, 0), board, result);
             var expected = new List<Position>
             {
                 new Position(0, 0),
@@ -91,7 +91,7 @@ namespace Tests.UnitTests.PossibleMoves.Helpers
             var board = new BoardState();
             board.Board[0][0].CurrentPiece = PieceType.WhiteKnight;
             var result = new List<Position>();
-            boardScanner.ScanIn(Direction.NE, new Position(0, 0), board, result);
+            boardScanner.ScanIn(Direction.Ne, new Position(0, 0), board, result);
             var expected = new List<Position>
             {
                 new Position(0, 0),
@@ -114,7 +114,7 @@ namespace Tests.UnitTests.PossibleMoves.Helpers
             var board = new BoardState();
             board.Board[7][7].CurrentPiece = PieceType.BlackBishop;
             var result = new List<Position>();
-            boardScanner.ScanIn(Direction.NE, new Position(0, 0), board, result);
+            boardScanner.ScanIn(Direction.Ne, new Position(0, 0), board, result);
             var expected = new List<Position>
             {
                 new Position(1, 1),
@@ -137,7 +137,7 @@ namespace Tests.UnitTests.PossibleMoves.Helpers
             var board = new BoardState();
             board.Board[7][7].CurrentPiece = PieceType.WhiteBishop;
             var result = new List<Position>();
-            boardScanner.ScanIn(Direction.NE, new Position(0, 0), board, result);
+            boardScanner.ScanIn(Direction.Ne, new Position(0, 0), board, result);
             var expected = new List<Position>
             {
                 new Position(1, 1),
@@ -159,7 +159,7 @@ namespace Tests.UnitTests.PossibleMoves.Helpers
             var board = new BoardState();
             board.Board[0][0].CurrentPiece = PieceType.BlackKnight;
             var result = new List<Position>();
-            boardScanner.ScanIn(Direction.NE, new Position(0, 0), board, result);
+            boardScanner.ScanIn(Direction.Ne, new Position(0, 0), board, result);
             var expected = new List<Position>
             {
                 new Position(1, 1),
@@ -180,7 +180,7 @@ namespace Tests.UnitTests.PossibleMoves.Helpers
             var board = new BoardState();
             board.Board[4][4].CurrentPiece = PieceType.WhiteBishop;
             var result = new List<Position>();
-            boardScanner.ScanIn(Direction.NE, new Position(0, 0), board, result);
+            boardScanner.ScanIn(Direction.Ne, new Position(0, 0), board, result);
             var expected = new List<Position>
             {
                 new Position(1, 1),
@@ -198,7 +198,7 @@ namespace Tests.UnitTests.PossibleMoves.Helpers
             var board = new BoardState();
             board.Board[4][4].CurrentPiece = PieceType.BlackKnight;
             var result = new List<Position>();
-            boardScanner.ScanIn(Direction.NE, new Position(0, 0), board, result);
+            boardScanner.ScanIn(Direction.Ne, new Position(0, 0), board, result);
             var expected = new List<Position>
             {
                 new Position(5, 5),
@@ -215,7 +215,7 @@ namespace Tests.UnitTests.PossibleMoves.Helpers
             var board = new BoardState();
             board.Board[4][4].CurrentPiece = PieceType.BlackBishop;
             var result = new List<Position>();
-            boardScanner.ScanIn(Direction.NE, new Position(0, 0), board, result);
+            boardScanner.ScanIn(Direction.Ne, new Position(0, 0), board, result);
             var expected = new List<Position>
             {
                 new Position(1, 1),
@@ -235,7 +235,7 @@ namespace Tests.UnitTests.PossibleMoves.Helpers
             var board = new BoardState();
             board.Board[4][4].CurrentPiece = PieceType.WhiteKnight;
             var result = new List<Position>();
-            boardScanner.ScanIn(Direction.NE, new Position(0, 0), board, result);
+            boardScanner.ScanIn(Direction.Ne, new Position(0, 0), board, result);
             var expected = new List<Position>
             {
                 new Position(4, 4),

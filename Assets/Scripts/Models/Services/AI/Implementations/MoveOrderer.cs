@@ -11,6 +11,7 @@ namespace Models.Services.AI.Implementations
     {
         public IEnumerable<AiMove> OrderMoves(IEnumerable<AiMove> moves, BoardState boardState)
         {
+            // TODO remove linq
             var movePoints = new Dictionary<AiMove, int>();
             foreach (var action in moves) // need some way of storing the location of a move
             {

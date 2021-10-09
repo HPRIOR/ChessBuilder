@@ -44,6 +44,7 @@ namespace Models.Services.Moves.Utils
         ///     Updates turn move dictionary with the possible moves available under check
         /// </summary>
         /// <param name="boardInfo"></param>
+        /// <param name="boardState"></param>
         /// <returns></returns>
         public void UpdatePossibleMovesWhenInCheck(IBoardInfo boardInfo, BoardState boardState)
         {

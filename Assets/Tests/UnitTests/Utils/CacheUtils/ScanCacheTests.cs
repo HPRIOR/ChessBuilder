@@ -17,7 +17,7 @@ namespace Tests.UnitTests.Utils.CacheUtils
             Assert.That(result.Count(), Is.EqualTo(3));
             Assert.That(result,
                 Is.EquivalentTo(new List<Position>
-                    {new Position(4, 5), new Position(4, 6), new Position(4, 7)}));
+                    { new Position(4, 5), new Position(4, 6), new Position(4, 7) }));
         }
 
         [Test]
@@ -59,7 +59,7 @@ namespace Tests.UnitTests.Utils.CacheUtils
         [Test]
         public void ScanNorthEast()
         {
-            var result = ScanCache.Scan(new Position(4, 4), Direction.NE);
+            var result = ScanCache.Scan(new Position(4, 4), Direction.Ne);
             Assert.That(result.Count(), Is.EqualTo(3));
             Assert.That(result,
                 Is.EquivalentTo(new List<Position>
@@ -72,7 +72,7 @@ namespace Tests.UnitTests.Utils.CacheUtils
         [Test]
         public void ScanNorthWest()
         {
-            var result = ScanCache.Scan(new Position(4, 4), Direction.NW);
+            var result = ScanCache.Scan(new Position(4, 4), Direction.Nw);
             Assert.That(result.Count(), Is.EqualTo(3));
             Assert.That(result,
                 Is.EquivalentTo(new List<Position>
@@ -84,7 +84,7 @@ namespace Tests.UnitTests.Utils.CacheUtils
         [Test]
         public void ScanSouthWest()
         {
-            var result = ScanCache.Scan(new Position(4, 4), Direction.SW);
+            var result = ScanCache.Scan(new Position(4, 4), Direction.Sw);
             Assert.That(result.Count(), Is.EqualTo(4));
             Assert.That(result,
                 Is.EquivalentTo(new List<Position>
@@ -96,7 +96,7 @@ namespace Tests.UnitTests.Utils.CacheUtils
         [Test]
         public void ScanSouthEast()
         {
-            var result = ScanCache.Scan(new Position(4, 4), Direction.SE);
+            var result = ScanCache.Scan(new Position(4, 4), Direction.Se);
             Assert.That(result.Count(), Is.EqualTo(3));
             Assert.That(result,
                 Is.EquivalentTo(new List<Position>
@@ -108,14 +108,14 @@ namespace Tests.UnitTests.Utils.CacheUtils
         [Test]
         public void ScanOnEdge()
         {
-            var result = ScanCache.Scan(new Position(7, 7), Direction.NE);
+            var result = ScanCache.Scan(new Position(7, 7), Direction.Ne);
             Assert.That(result.Count(), Is.EqualTo(0));
         }
 
         [Test]
         public void ScanResultsInCorrectOrder_StartToFinish()
         {
-            var result = ScanCache.Scan(new Position(4, 4), Direction.SE);
+            var result = ScanCache.Scan(new Position(4, 4), Direction.Se);
             Assert.That(result.Count(), Is.EqualTo(3));
             Assert.That(result,
                 Is.EqualTo(new List<Position>

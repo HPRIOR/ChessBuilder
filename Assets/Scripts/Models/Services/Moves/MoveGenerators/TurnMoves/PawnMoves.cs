@@ -19,7 +19,6 @@ namespace Models.Services.Moves.MoveGenerators.TurnMoves
             _tileEvaluator = tileEvaluatorFactory.Create(pieceColour);
         }
 
-        // TODO: refactor me
         public List<Position> GetPossiblePieceMoves(Position originPosition, BoardState boardState)
         {
             var possibleMoves = new List<Position>();

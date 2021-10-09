@@ -46,7 +46,6 @@ namespace Models.Services.Moves.Utils
         private static List<Position> GetScanningPiecesMoves(
             IDictionary<Position, List<Position>> moves, BoardState boardState)
         {
-            // TODO avoid allocations here or use pooling 
             var result = new List<Position>();
             foreach (var keyVal in moves)
                 if (PieceIsScanner(keyVal, boardState))

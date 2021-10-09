@@ -69,8 +69,12 @@ namespace Models.Services.Game.Implementations
             StateHistory.Push(_gameStateChanges);
         }
 
-        // TODO: make private 
-        public void UpdateGameState(PieceColour turn)
+        public void RevertGameState()
+        {
+            if (StateHistory.Any()) RevertGameStateChanges(StateHistory.Pop());
+        }
+
+        private void UpdateGameState(PieceColour turn)
         {
             // opposite turn from current needs to be passed to build resolver 
             // this is due to builds being resolved at the end of a players turn - not the start of their turn
@@ -85,11 +89,6 @@ namespace Models.Services.Game.Implementations
 
             GameState.PossibleBuildMoves = GetPossibleBuildMoves(GameState.BoardState, turn, moveState, playerState);
             GameState.CheckMate = _gameOverEval.CheckMate(moveState.Check, moveState.PossibleMoves);
-        }
-
-        public void RevertGameState()
-        {
-            if (StateHistory.Any()) RevertGameStateChanges(StateHistory.Pop());
         }
 
         private void RevertGameStateChanges(GameStateChanges gameStateChanges)

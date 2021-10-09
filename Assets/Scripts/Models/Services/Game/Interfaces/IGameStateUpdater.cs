@@ -10,7 +10,6 @@ namespace Models.Services.Game.Interfaces
         GameState GameState { get; }
         Stack<GameStateChanges> StateHistory { get; }
         void RevertGameState();
-        void UpdateGameState(PieceColour turn);
         void UpdateGameState(Position from, Position to, PieceColour turn);
 
         void UpdateGameState(Position buildPosition, PieceType piece,

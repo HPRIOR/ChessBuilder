@@ -16,7 +16,6 @@ namespace View.Renderers
 
         public void Render()
         {
-            // TODO: refactor to use one loop 
             var board = CreateBoardPositions();
             var boardParent = new GameObject("BoardRender");
             var lightDarkColourSwitch = true;

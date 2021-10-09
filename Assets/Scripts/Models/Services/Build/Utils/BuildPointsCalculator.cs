@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using Models.Services.Build.Interfaces;
 using Models.State.Board;
 using Models.State.PieceState;
@@ -19,14 +17,14 @@ namespace Models.Services.Build.Utils
             var activeBuilds = boardState.ActiveBuilds;
             var activePieces = boardState.ActivePieces;
             var activePositions = activeBuilds.Union(activePieces);
-            
+
             foreach (var pos in activePositions)
             {
                 ref var tile = ref boardState.GetTileAt(pos);
-                var pieceIsOfColourType = tile.CurrentPiece.Colour == pieceColour &&
-                                          tile.CurrentPiece.Type != PieceType.NullPiece;
+                var pieceIsOfColourType = tile.CurrentPiece.Colour() == pieceColour &&
+                                          tile.CurrentPiece != PieceType.NullPiece;
                 if (pieceIsOfColourType)
-                    result += tile.CurrentPiece.Type.Value();
+                    result += tile.CurrentPiece.Value();
 
                 var pieceOfColourIsBeingBuilt = tile.BuildTileState.BuildingPiece != PieceType.NullPiece &&
                                                 tile.BuildTileState.BuildingPiece.Colour() == pieceColour;

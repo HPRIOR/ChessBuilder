@@ -64,7 +64,7 @@ namespace Tests.UnitTests.PossibleMoves.BuildMoves
         public void PointsAreSubtracted_ByBuildPiece()
         {
             var board = _boardGenerator.GenerateBoard();
-            board[1][1].CurrentPiece = new Piece(PieceType.BlackQueen);
+            board[1][1].CurrentPiece = PieceType.BlackQueen;
 
 
             var boardState = new BoardState(board);
@@ -82,7 +82,7 @@ namespace Tests.UnitTests.PossibleMoves.BuildMoves
         {
             var board = _boardGenerator.GenerateBoard();
             board[1][1].BuildTileState = new BuildTileState(PieceType.BlackQueen);
-            board[2][2].CurrentPiece = new Piece(PieceType.BlackPawn);
+            board[2][2].CurrentPiece = PieceType.BlackPawn;
 
 
             var boardState = new BoardState(board);
@@ -103,7 +103,7 @@ namespace Tests.UnitTests.PossibleMoves.BuildMoves
 
             var board = _boardGenerator.GenerateBoard();
             board[1][1].BuildTileState = new BuildTileState(queen);
-            board[2][2].CurrentPiece = new Piece(pawn);
+            board[2][2].CurrentPiece = pawn;
 
 
             var boardState = new BoardState(board);
@@ -120,7 +120,7 @@ namespace Tests.UnitTests.PossibleMoves.BuildMoves
         public void KingPieceDoesNotCount()
         {
             var board = _boardGenerator.GenerateBoard();
-            board[2][2].CurrentPiece = new Piece(PieceType.BlackKing);
+            board[2][2].CurrentPiece = PieceType.BlackKing;
         }
     }
 }

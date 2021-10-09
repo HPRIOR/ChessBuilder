@@ -79,7 +79,7 @@ namespace Tests.UnitTests.PossibleMoves.BuildMoves
 
             Assert.That(boardState.Board[5][5].BuildTileState,
                 Is.EqualTo(new BuildTileState(3, PieceType.BlackKnight)));
-            Assert.That(boardState.Board[5][5].CurrentPiece.Type,
+            Assert.That(boardState.Board[5][5].CurrentPiece,
                 Is.EqualTo(PieceType.NullPiece));
         }
 
@@ -94,6 +94,5 @@ namespace Tests.UnitTests.PossibleMoves.BuildMoves
 
             Assert.That(boardState.ActiveBuilds, Is.EquivalentTo(new HashSet<Position> { new Position(5, 5) }));
         }
-
     }
 }

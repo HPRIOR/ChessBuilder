@@ -55,7 +55,8 @@ namespace Models.Services.Moves.Utils
 
             if (checkedWithMultiplePieces) RemoveAllNonKingMoves(boardInfo.TurnMoves, boardInfo.KingPosition);
 
-            RemoveEnemyMovesFromKingMoves(boardInfo.TurnMoves, boardInfo.EnemyMoves, boardInfo.KingPosition, boardState);
+            RemoveEnemyMovesFromKingMoves(boardInfo.TurnMoves, boardInfo.EnemyMoves, boardInfo.KingPosition,
+                boardState);
         }
 
         private static IEnumerable<Position> GetCheckingPieces(IDictionary<Position, List<Position>> enemyMoves,
@@ -120,7 +121,7 @@ namespace Models.Services.Moves.Utils
 
             // extra logic needed here to do that
             foreach (var checkingPiecePosition in _checkingPieces)
-                if (ScanningPieces.Contains(PieceAt(checkingPiecePosition, boardState).Type))
+                if (ScanningPieces.Contains(PieceAt(checkingPiecePosition, boardState)))
                 {
                     // remove extended possible moves that go 'through' king
                     var movesExtendedThroughKing =
@@ -139,7 +140,7 @@ namespace Models.Services.Moves.Utils
                     turnMove.Value.Clear();
         }
 
-        private Piece PieceAt(Position position, BoardState boardState) =>
+        private PieceType PieceAt(Position position, BoardState boardState) =>
             boardState.Board[position.X][position.Y].CurrentPiece;
     }
 }

@@ -21,8 +21,8 @@ namespace Models.Services.Moves.MoveGenerators
             _nonMovePieceGenerator = GetPieceMoveGenerators(false);
         }
 
-        public IPieceMoveGenerator GetPossibleMoveGenerator(Piece piece, bool turnMove) =>
-            turnMove ? _pieceMoveGenerators[piece.Type] : _nonMovePieceGenerator[piece.Type];
+        public IPieceMoveGenerator GetPossibleMoveGenerator(PieceType piece, bool turnMove) =>
+            turnMove ? _pieceMoveGenerators[piece] : _nonMovePieceGenerator[piece];
 
         private Dictionary<PieceType, IPieceMoveGenerator> GetPieceMoveGenerators(bool turnMoveType) =>
             new Dictionary<PieceType, IPieceMoveGenerator>(new PieceTypeComparer())

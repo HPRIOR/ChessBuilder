@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Models.State.PieceState;
 
 namespace Models.Utils.ExtensionMethods.PieceTypeExt
@@ -7,7 +6,7 @@ namespace Models.Utils.ExtensionMethods.PieceTypeExt
     public static class PieceTypeColour
     {
         private static readonly HashSet<PieceType> BlackPieces =
-            new HashSet<PieceType>
+            new HashSet<PieceType>(new PieceTypeComparer())
             {
                 PieceType.BlackBishop,
                 PieceType.BlackKing,
@@ -21,7 +20,7 @@ namespace Models.Utils.ExtensionMethods.PieceTypeExt
         public static PieceColour Colour(this PieceType pieceType)
         {
             if (pieceType == PieceType.NullPiece)
-                throw new Exception("Null Piece Has No Colour");
+                return PieceColour.Black;
 
             return BlackPieces.Contains(pieceType)
                 ? PieceColour.Black

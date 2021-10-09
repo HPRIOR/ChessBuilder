@@ -39,7 +39,7 @@ namespace Models.Services.Moves.MoveGenerators.TurnMoves
                 {
                     ref var potentialMoveTile = ref _positionTranslator.GetRelativeTileAt(newPosition, boardState);
                     if (_tileEvaluator.OpposingPieceIn(ref potentialMoveTile) ||
-                        potentialMoveTile.CurrentPiece.Type == PieceType.NullPiece)
+                        potentialMoveTile.CurrentPiece == PieceType.NullPiece)
                         possibleMoves.Add(newRelativePosition);
                 }
             }

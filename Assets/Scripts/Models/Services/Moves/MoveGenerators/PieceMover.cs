@@ -1,8 +1,6 @@
-﻿using System;
-using Models.Services.Moves.Interfaces;
+﻿using Models.Services.Moves.Interfaces;
 using Models.State.Board;
 using Models.State.PieceState;
-using Models.Utils.ExtensionMethods.PieceTypeExt;
 
 namespace Models.Services.Moves.MoveGenerators
 {
@@ -11,17 +9,16 @@ namespace Models.Services.Moves.MoveGenerators
         public void ModifyBoardState(BoardState boardState, Position from,
             Position destination)
         {
-            
             ref var destinationTile = ref boardState.GetTileAt(destination);
             ref var fromTile = ref boardState.GetTileAt(from);
 
-            var isTakingMove = destinationTile.CurrentPiece.Type != PieceType.NullPiece;
-            
+            var isTakingMove = destinationTile.CurrentPiece != PieceType.NullPiece;
+
             ModifyActivePieces(boardState, from, destination, isTakingMove);
 
             // swap pieces
             destinationTile.CurrentPiece = fromTile.CurrentPiece;
-            fromTile.CurrentPiece = new Piece(PieceType.NullPiece);
+            fromTile.CurrentPiece = PieceType.NullPiece;
 
             // return nothing 
         }
@@ -31,10 +28,8 @@ namespace Models.Services.Moves.MoveGenerators
         {
             // modify active pieces 
             boardState.ActivePieces.Remove(from);
-            if(!isTakingMove)
+            if (!isTakingMove)
                 boardState.ActivePieces.Add(destination);
-
         }
-
     }
 }

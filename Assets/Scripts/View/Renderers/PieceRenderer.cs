@@ -24,8 +24,8 @@ namespace View.Renderers
             {
                 ref var tile = ref newState.GetTileAt(i, j);
                 var currentPiece = tile.CurrentPiece;
-                if (currentPiece.Type != PieceType.NullPiece)
-                    _pieceFactory.CreatePiece(currentPiece.Type, tile.Position);
+                if (currentPiece != PieceType.NullPiece)
+                    _pieceFactory.CreatePiece(currentPiece, tile.Position);
             }
         }
     }

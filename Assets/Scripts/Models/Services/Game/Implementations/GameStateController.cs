@@ -59,7 +59,6 @@ namespace Models.Services.Game.Implementations
             GameStateChangeEvent?.Invoke(previousBoardState, CurrentGameState.BoardState);
         }
 
-
         /// <summary>
         ///     Emits event with current board state
         /// </summary>

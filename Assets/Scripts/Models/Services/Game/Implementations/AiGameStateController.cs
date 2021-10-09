@@ -30,6 +30,12 @@ namespace Models.Services.Game.Implementations
         public GameState CurrentGameState { get; private set; }
         public PieceColour Turn { get; private set; }
 
+        public void RevertGameState()
+        {
+            Turn = NextTurn();
+            _gameStateUpdater.RevertGameState();
+        }
+
 
         public void UpdateGameState(Position from, Position to)
         {
@@ -48,11 +54,6 @@ namespace Models.Services.Game.Implementations
             RetainBoardState();
         }
 
-        public void RevertGameState()
-        {
-            Turn = NextTurn();
-            _gameStateUpdater.RevertGameState();
-        }
 
         public void UpdateGameState(Position buildPosition, PieceType piece)
         {

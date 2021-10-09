@@ -25,7 +25,7 @@ namespace Tests.UnitTests.Utils.Extensions
         [Test]
         public void DirectionSouth_Two()
         {
-            var result = new Position(1,6).DirectionTo(new Position(1,1));
+            var result = new Position(1, 6).DirectionTo(new Position(1, 1));
             Assert.That(result, Is.EqualTo(Direction.S));
         }
 
@@ -48,28 +48,28 @@ namespace Tests.UnitTests.Utils.Extensions
         public void DirectionNorthEast()
         {
             var result = new Position(4, 4).DirectionTo(new Position(5, 5));
-            Assert.That(result, Is.EqualTo(Direction.NE));
+            Assert.That(result, Is.EqualTo(Direction.Ne));
         }
 
         [Test]
         public void DirectionNorthWest()
         {
             var result = new Position(4, 4).DirectionTo(new Position(3, 5));
-            Assert.That(result, Is.EqualTo(Direction.NW));
+            Assert.That(result, Is.EqualTo(Direction.Nw));
         }
 
         [Test]
         public void DirectionSouthEast()
         {
             var result = new Position(4, 4).DirectionTo(new Position(5, 3));
-            Assert.That(result, Is.EqualTo(Direction.SE));
+            Assert.That(result, Is.EqualTo(Direction.Se));
         }
 
         [Test]
         public void DirectionSouthWest()
         {
             var result = new Position(4, 4).DirectionTo(new Position(2, 2));
-            Assert.That(result, Is.EqualTo(Direction.SW));
+            Assert.That(result, Is.EqualTo(Direction.Sw));
         }
 
         [Test]

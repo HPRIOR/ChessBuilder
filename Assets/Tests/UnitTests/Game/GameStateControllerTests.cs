@@ -52,11 +52,10 @@ namespace Tests.UnitTests.Game
         public void BoardStateIsUpdated_WhenPassedBoardState()
         {
             var board = _boardGenerator.GenerateBoard();
-            board[1][1].CurrentPiece = new Piece(PieceType.BlackKing);
-            board[7][7].CurrentPiece = new Piece(PieceType.WhiteKing);
+            board[1][1].CurrentPiece = PieceType.BlackKing;
+            board[7][7].CurrentPiece = PieceType.WhiteKing;
             var initialBoardState = new BoardState(board);
             _gameStateController.InitializeGame(initialBoardState);
-            _gameStateController.UpdateGameState(initialBoardState);
 
             Assert.AreSame(initialBoardState, _gameStateController.CurrentGameState.BoardState);
         }
@@ -73,8 +72,8 @@ namespace Tests.UnitTests.Game
             turnEventInvoker.GameStateChangeEvent += MockFunc;
 
             var board = _boardGenerator.GenerateBoard();
-            board[1][1].CurrentPiece = new Piece(PieceType.BlackKing);
-            board[7][7].CurrentPiece = new Piece(PieceType.WhiteKing);
+            board[1][1].CurrentPiece = PieceType.BlackKing;
+            board[7][7].CurrentPiece = PieceType.WhiteKing;
             var boardState = new BoardState(board);
             _gameStateController.InitializeGame(boardState);
 
@@ -86,13 +85,14 @@ namespace Tests.UnitTests.Game
         {
             var board = _boardGenerator.GenerateBoard();
 
-            board[4][4].CurrentPiece = new Piece(PieceType.WhiteKing);
-            board[6][4].CurrentPiece = new Piece(PieceType.BlackQueen);
+            board[4][4].CurrentPiece = PieceType.WhiteKing;
+            board[6][0].CurrentPiece = PieceType.BlackQueen;
             var initialBoardState =
                 new BoardState(board);
             _gameStateController.InitializeGame(initialBoardState);
-            _gameStateController.UpdateGameState(initialBoardState);
-            _gameStateController.UpdateGameState(initialBoardState);
+
+            _gameStateController.UpdateGameState(new Position(4, 4), new Position(5, 4));
+            _gameStateController.UpdateGameState(new Position(6, 0), new Position(5, 0));
 
             var expectedBuildMoves =
                 new BuildMoves(new List<Position>(), new List<PieceType>());
@@ -108,8 +108,8 @@ namespace Tests.UnitTests.Game
         {
             // setup board
             var board = _boardGenerator.GenerateBoard();
-            board[1][1].CurrentPiece = new Piece(PieceType.WhiteKing);
-            board[7][7].CurrentPiece = new Piece(PieceType.BlackKing);
+            board[1][1].CurrentPiece = PieceType.WhiteKing;
+            board[7][7].CurrentPiece = PieceType.BlackKing;
             board[4][4].BuildTileState = new BuildTileState(0, PieceType.WhitePawn);
 
             var initialBoardState = new BoardState(board);
@@ -118,9 +118,9 @@ namespace Tests.UnitTests.Game
             _gameStateController.InitializeGame(initialBoardState);
 
             //Make white turn
-            _gameStateController.UpdateGameState(initialBoardState);
+            _gameStateController.UpdateGameState(new Position(1, 1), new Position(2, 2));
 
-            Assert.That(_gameStateController.CurrentGameState.BoardState.Board[4][4].CurrentPiece.Type,
+            Assert.That(_gameStateController.CurrentGameState.BoardState.Board[4][4].CurrentPiece,
                 Is.EqualTo(PieceType.WhitePawn));
         }
 
@@ -130,24 +130,16 @@ namespace Tests.UnitTests.Game
         {
             // setup board
             var board = _boardGenerator.GenerateBoard();
-            board[4][4].CurrentPiece = new Piece(PieceType.WhiteKing);
-            board[7][7].CurrentPiece = new Piece(PieceType.BlackKing);
+            board[4][4].CurrentPiece = PieceType.WhiteKing;
+            board[7][7].CurrentPiece = PieceType.BlackKing;
             board[4][4].BuildTileState = new BuildTileState(PieceType.WhitePawn);
 
             var initialBoardState = new BoardState(board);
 
             //generate initial game state
             _gameStateController.InitializeGame(initialBoardState);
-            _gameStateController.UpdateGameState(initialBoardState);
 
-            //iterate through game state
-            var whiteTurn = initialBoardState.CloneWithDecrementBuildState();
-            _gameStateController.UpdateGameState(whiteTurn);
-
-            // blackTurn
-            _gameStateController.UpdateGameState(whiteTurn.CloneWithDecrementBuildState());
-
-            Assert.That(_gameStateController.CurrentGameState.BoardState.Board[4][4].CurrentPiece.Type,
+            Assert.That(_gameStateController.CurrentGameState.BoardState.Board[4][4].CurrentPiece,
                 Is.EqualTo(PieceType.WhiteKing));
         }
 
@@ -157,21 +149,16 @@ namespace Tests.UnitTests.Game
         {
             // setup board
             var board = _boardGenerator.GenerateBoard();
-            board[4][4].CurrentPiece = new Piece(PieceType.BlackKing);
-            board[7][7].CurrentPiece = new Piece(PieceType.WhiteKing);
+            board[4][4].CurrentPiece = PieceType.BlackKing;
+            board[7][7].CurrentPiece = PieceType.WhiteKing;
             board[4][4].BuildTileState = new BuildTileState(PieceType.WhitePawn);
 
             var initialBoardState = new BoardState(board);
 
             //generate initial game state
             _gameStateController.InitializeGame(initialBoardState);
-            _gameStateController.UpdateGameState(initialBoardState);
 
-            //iterate through game state
-            var whiteTurn = initialBoardState.CloneWithDecrementBuildState();
-            _gameStateController.UpdateGameState(whiteTurn);
-
-            Assert.That(_gameStateController.CurrentGameState.BoardState.Board[4][4].CurrentPiece.Type,
+            Assert.That(_gameStateController.CurrentGameState.BoardState.Board[4][4].CurrentPiece,
                 Is.EqualTo(PieceType.BlackKing));
         }
 
@@ -181,17 +168,16 @@ namespace Tests.UnitTests.Game
         {
             // setup board
             var board = _boardGenerator.GenerateBoard();
-            board[7][7].CurrentPiece = new Piece(PieceType.WhiteKing);
-            board[4][4].CurrentPiece = new Piece(PieceType.BlackKing);
+            board[7][7].CurrentPiece = PieceType.WhiteKing;
+            board[4][4].CurrentPiece = PieceType.BlackKing;
             board[4][4].BuildTileState = new BuildTileState(PieceType.WhitePawn);
 
             var initialBoardState = new BoardState(board);
 
             //generate initial game state
             _gameStateController.InitializeGame(initialBoardState);
-            _gameStateController.UpdateGameState(initialBoardState);
 
-            //iterate through game state
+            // iterate through game state
             _gameStateController.UpdateGameState(new Position(3, 3), new Position(3, 3)); // pseudo-move
 
             Assert.That(_gameStateController.CurrentGameState.BoardState.Board[4][4].BuildTileState.Turns,
@@ -207,15 +193,14 @@ namespace Tests.UnitTests.Game
         {
             // setup board
             var board = _boardGenerator.GenerateBoard();
-            board[4][4].CurrentPiece = new Piece(PieceType.WhiteKing);
-            board[7][7].CurrentPiece = new Piece(PieceType.BlackKing);
+            board[4][4].CurrentPiece = PieceType.WhiteKing;
+            board[7][7].CurrentPiece = PieceType.BlackKing;
             board[4][4].BuildTileState = new BuildTileState(PieceType.WhitePawn);
 
             var initialBoardState = new BoardState(board);
 
             //generate initial game state
             _gameStateController.InitializeGame(initialBoardState);
-            _gameStateController.UpdateGameState(initialBoardState);
 
             //iterate through game state
             _gameStateController.UpdateGameState(new Position(3, 3), new Position(3, 3)); // pseudo-move
@@ -233,18 +218,17 @@ namespace Tests.UnitTests.Game
         {
             // setup board
             var board = _boardGenerator.GenerateBoard();
-            board[0][0].CurrentPiece = new Piece(PieceType.WhiteKing);
-            board[7][7].CurrentPiece = new Piece(PieceType.BlackKing);
+            board[0][0].CurrentPiece = PieceType.WhiteKing;
+            board[7][7].CurrentPiece = PieceType.BlackKing;
             board[4][4].BuildTileState = new BuildTileState(0, PieceType.WhitePawn);
             var initialState = new BoardState(board);
 
             //generate initial game state
             _gameStateController.InitializeGame(initialState);
-            _gameStateController.UpdateGameState(initialState);
+            // _gameStateController.UpdateGameState(initialState);
 
             //iterate through game state
-            var whiteTurn = initialState.CloneWithDecrementBuildState();
-            _gameStateController.UpdateGameState(whiteTurn);
+            _gameStateController.UpdateGameState(new Position(0, 0), new Position(1, 1));
 
             Assert.That(_gameStateController.CurrentGameState.BoardState.Board[4][4].BuildTileState.Turns,
                 Is.EqualTo(0));
@@ -258,8 +242,8 @@ namespace Tests.UnitTests.Game
         {
             // setup board
             var board = _boardGenerator.GenerateBoard();
-            board[7][7].CurrentPiece = new Piece(PieceType.WhiteKing);
-            board[0][0].CurrentPiece = new Piece(PieceType.BlackKing);
+            board[7][7].CurrentPiece = PieceType.WhiteKing;
+            board[0][0].CurrentPiece = PieceType.BlackKing;
             var initialBoardState = new BoardState(board);
 
             //generate initial game state
@@ -272,7 +256,7 @@ namespace Tests.UnitTests.Game
 
             Assert.That(_gameStateController.CurrentGameState.BoardState.Board[4][4].BuildTileState.Turns,
                 Is.EqualTo(0));
-            Assert.That(_gameStateController.CurrentGameState.BoardState.Board[4][4].CurrentPiece.Type,
+            Assert.That(_gameStateController.CurrentGameState.BoardState.Board[4][4].CurrentPiece,
                 Is.EqualTo(PieceType.NullPiece));
         }
 
@@ -282,9 +266,9 @@ namespace Tests.UnitTests.Game
         {
             // setup board
             var board = _boardGenerator.GenerateBoard();
-            board[4][4].CurrentPiece = new Piece(PieceType.WhiteKing);
-            board[7][0].CurrentPiece = new Piece(PieceType.WhitePawn);
-            board[7][7].CurrentPiece = new Piece(PieceType.BlackKing);
+            board[4][4].CurrentPiece = PieceType.WhiteKing;
+            board[7][0].CurrentPiece = PieceType.WhitePawn;
+            board[7][7].CurrentPiece = PieceType.BlackKing;
             var initialBoardState = new BoardState(board);
 
             //generate initial game state
@@ -302,7 +286,7 @@ namespace Tests.UnitTests.Game
             // white turn
             _gameStateController.UpdateGameState(new Position(4, 4), new Position(4, 5));
 
-            Assert.That(_gameStateController.CurrentGameState.BoardState.Board[4][4].CurrentPiece.Type,
+            Assert.That(_gameStateController.CurrentGameState.BoardState.Board[4][4].CurrentPiece,
                 Is.EqualTo(PieceType.WhitePawn));
         }
 
@@ -311,10 +295,10 @@ namespace Tests.UnitTests.Game
         {
             // setup board
             var board = _boardGenerator.GenerateBoard();
-            board[1][1].CurrentPiece = new Piece(PieceType.WhiteKing);
-            board[1][6].CurrentPiece = new Piece(PieceType.WhiteRook);
-            board[0][5].CurrentPiece = new Piece(PieceType.WhiteQueen);
-            board[6][7].CurrentPiece = new Piece(PieceType.BlackKing);
+            board[1][1].CurrentPiece = PieceType.WhiteKing;
+            board[1][6].CurrentPiece = PieceType.WhiteRook;
+            board[0][5].CurrentPiece = PieceType.WhiteQueen;
+            board[6][7].CurrentPiece = PieceType.BlackKing;
 
             var initialBoardState = new BoardState(board);
             _gameStateController.InitializeGame(initialBoardState);
@@ -335,13 +319,13 @@ namespace Tests.UnitTests.Game
         {
             // setup board
             var board = _boardGenerator.GenerateBoard();
-            board[6][7].CurrentPiece = new Piece(PieceType.BlackKing);
-            board[5][6].CurrentPiece = new Piece(PieceType.BlackPawn);
-            board[6][6].CurrentPiece = new Piece(PieceType.BlackPawn);
-            board[7][6].CurrentPiece = new Piece(PieceType.BlackPawn);
+            board[6][7].CurrentPiece = PieceType.BlackKing;
+            board[5][6].CurrentPiece = PieceType.BlackPawn;
+            board[6][6].CurrentPiece = PieceType.BlackPawn;
+            board[7][6].CurrentPiece = PieceType.BlackPawn;
 
-            board[2][0].CurrentPiece = new Piece(PieceType.WhiteRook);
-            board[6][0].CurrentPiece = new Piece(PieceType.WhiteKing);
+            board[2][0].CurrentPiece = PieceType.WhiteRook;
+            board[6][0].CurrentPiece = PieceType.WhiteKing;
 
             // initialise game state
             var initialBoardState = new BoardState(board);
@@ -361,10 +345,10 @@ namespace Tests.UnitTests.Game
         {
             // setup board
             var board = _boardGenerator.GenerateBoard();
-            board[4][7].CurrentPiece = new Piece(PieceType.BlackKing);
-            board[5][4].CurrentPiece = new Piece(PieceType.WhiteKnight);
-            board[7][6].CurrentPiece = new Piece(PieceType.WhiteQueen);
-            board[6][0].CurrentPiece = new Piece(PieceType.WhiteKing);
+            board[4][7].CurrentPiece = PieceType.BlackKing;
+            board[5][4].CurrentPiece = PieceType.WhiteKnight;
+            board[7][6].CurrentPiece = PieceType.WhiteQueen;
+            board[6][0].CurrentPiece = PieceType.WhiteKing;
 
             // initialise game state
             var initialBoardState = new BoardState(board);
@@ -384,14 +368,14 @@ namespace Tests.UnitTests.Game
         {
             // setup board
             var board = _boardGenerator.GenerateBoard();
-            board[6][7].CurrentPiece = new Piece(PieceType.BlackKing);
-            board[5][6].CurrentPiece = new Piece(PieceType.BlackPawn);
-            board[6][6].CurrentPiece = new Piece(PieceType.BlackPawn);
-            board[7][6].CurrentPiece = new Piece(PieceType.BlackPawn);
+            board[6][7].CurrentPiece = PieceType.BlackKing;
+            board[5][6].CurrentPiece = PieceType.BlackPawn;
+            board[6][6].CurrentPiece = PieceType.BlackPawn;
+            board[7][6].CurrentPiece = PieceType.BlackPawn;
 
-            board[2][2].CurrentPiece = new Piece(PieceType.WhiteQueen);
-            board[1][1].CurrentPiece = new Piece(PieceType.WhiteBishop);
-            board[6][0].CurrentPiece = new Piece(PieceType.WhiteKing);
+            board[2][2].CurrentPiece = PieceType.WhiteQueen;
+            board[1][1].CurrentPiece = PieceType.WhiteBishop;
+            board[6][0].CurrentPiece = PieceType.WhiteKing;
 
             // initialise game state
             var initialBoardState = new BoardState(board);
@@ -411,13 +395,12 @@ namespace Tests.UnitTests.Game
         {
             // setup board
             var board = _boardGenerator.GenerateBoard();
-            board[7][7].CurrentPiece = new Piece(PieceType.BlackKing);
-            board[7][6].CurrentPiece = new Piece(PieceType.BlackPawn);
+            board[7][7].CurrentPiece = PieceType.BlackKing;
+            board[7][6].CurrentPiece = PieceType.BlackPawn;
 
-
-            board[3][4].CurrentPiece = new Piece(PieceType.WhiteBishop);
-            board[2][4].CurrentPiece = new Piece(PieceType.WhiteBishop);
-            board[6][0].CurrentPiece = new Piece(PieceType.WhiteKing);
+            board[3][4].CurrentPiece = PieceType.WhiteBishop;
+            board[2][4].CurrentPiece = PieceType.WhiteBishop;
+            board[6][0].CurrentPiece = PieceType.WhiteKing;
 
             // initialise game state
             var initialBoardState = new BoardState(board);
@@ -437,15 +420,15 @@ namespace Tests.UnitTests.Game
         {
             // setup board
             var board = _boardGenerator.GenerateBoard();
-            board[6][7].CurrentPiece = new Piece(PieceType.BlackKing);
-            board[5][6].CurrentPiece = new Piece(PieceType.BlackPawn);
-            board[6][5].CurrentPiece = new Piece(PieceType.BlackPawn);
-            board[7][6].CurrentPiece = new Piece(PieceType.BlackPawn);
-            board[5][7].CurrentPiece = new Piece(PieceType.BlackRook);
+            board[6][7].CurrentPiece = PieceType.BlackKing;
+            board[5][6].CurrentPiece = PieceType.BlackPawn;
+            board[6][5].CurrentPiece = PieceType.BlackPawn;
+            board[7][6].CurrentPiece = PieceType.BlackPawn;
+            board[5][7].CurrentPiece = PieceType.BlackRook;
 
-            board[5][5].CurrentPiece = new Piece(PieceType.WhiteBishop);
-            board[6][3].CurrentPiece = new Piece(PieceType.WhiteKnight);
-            board[6][0].CurrentPiece = new Piece(PieceType.WhiteKing);
+            board[5][5].CurrentPiece = PieceType.WhiteBishop;
+            board[6][3].CurrentPiece = PieceType.WhiteKnight;
+            board[6][0].CurrentPiece = PieceType.WhiteKing;
 
             // initialise game state
             var initialBoardState = new BoardState(board);
@@ -465,12 +448,12 @@ namespace Tests.UnitTests.Game
         {
             // setup board
             var board = _boardGenerator.GenerateBoard();
-            board[3][7].CurrentPiece = new Piece(PieceType.BlackKing);
-            board[7][2].CurrentPiece = new Piece(PieceType.BlackPawn);
+            board[3][7].CurrentPiece = PieceType.BlackKing;
+            board[7][2].CurrentPiece = PieceType.BlackPawn;
 
-            board[3][6].CurrentPiece = new Piece(PieceType.WhitePawn);
-            board[2][5].CurrentPiece = new Piece(PieceType.WhitePawn);
-            board[3][5].CurrentPiece = new Piece(PieceType.WhiteKing);
+            board[3][6].CurrentPiece = PieceType.WhitePawn;
+            board[2][5].CurrentPiece = PieceType.WhitePawn;
+            board[3][5].CurrentPiece = PieceType.WhiteKing;
 
             // initialise game state
             var initialBoardState = new BoardState(board);
@@ -490,13 +473,13 @@ namespace Tests.UnitTests.Game
         {
             // setup board
             var board = _boardGenerator.GenerateBoard();
-            board[7][7].CurrentPiece = new Piece(PieceType.BlackKing);
-            board[7][6].CurrentPiece = new Piece(PieceType.BlackPawn);
-            board[6][6].CurrentPiece = new Piece(PieceType.BlackPawn);
-            board[6][7].CurrentPiece = new Piece(PieceType.BlackRook);
+            board[7][7].CurrentPiece = PieceType.BlackKing;
+            board[7][6].CurrentPiece = PieceType.BlackPawn;
+            board[6][6].CurrentPiece = PieceType.BlackPawn;
+            board[6][7].CurrentPiece = PieceType.BlackRook;
 
-            board[6][4].CurrentPiece = new Piece(PieceType.WhiteKnight);
-            board[3][5].CurrentPiece = new Piece(PieceType.WhiteKing);
+            board[6][4].CurrentPiece = PieceType.WhiteKnight;
+            board[3][5].CurrentPiece = PieceType.WhiteKing;
 
             // initialise game state
             var initialBoardState = new BoardState(board);
@@ -516,14 +499,14 @@ namespace Tests.UnitTests.Game
         {
             // setup board
             var board = _boardGenerator.GenerateBoard();
-            board[7][6].CurrentPiece = new Piece(PieceType.BlackKing);
-            board[6][6].CurrentPiece = new Piece(PieceType.BlackPawn);
-            board[5][6].CurrentPiece = new Piece(PieceType.BlackPawn);
-            board[5][7].CurrentPiece = new Piece(PieceType.BlackRook);
+            board[7][6].CurrentPiece = PieceType.BlackKing;
+            board[6][6].CurrentPiece = PieceType.BlackPawn;
+            board[5][6].CurrentPiece = PieceType.BlackPawn;
+            board[5][7].CurrentPiece = PieceType.BlackRook;
 
-            board[4][6].CurrentPiece = new Piece(PieceType.WhiteKnight);
-            board[3][3].CurrentPiece = new Piece(PieceType.WhiteRook);
-            board[1][1].CurrentPiece = new Piece(PieceType.WhiteKing);
+            board[4][6].CurrentPiece = PieceType.WhiteKnight;
+            board[3][3].CurrentPiece = PieceType.WhiteRook;
+            board[1][1].CurrentPiece = PieceType.WhiteKing;
 
             // initialise game state
             var initialBoardState = new BoardState(board);
@@ -543,12 +526,12 @@ namespace Tests.UnitTests.Game
         {
             // setup board
             var board = _boardGenerator.GenerateBoard();
-            board[7][7].CurrentPiece = new Piece(PieceType.BlackKing);
-            board[7][6].CurrentPiece = new Piece(PieceType.BlackPawn);
-            board[5][6].CurrentPiece = new Piece(PieceType.BlackPawn);
+            board[7][7].CurrentPiece = PieceType.BlackKing;
+            board[7][6].CurrentPiece = PieceType.BlackPawn;
+            board[5][6].CurrentPiece = PieceType.BlackPawn;
 
-            board[4][6].CurrentPiece = new Piece(PieceType.WhiteBishop);
-            board[1][1].CurrentPiece = new Piece(PieceType.WhiteKing);
+            board[4][6].CurrentPiece = PieceType.WhiteBishop;
+            board[1][1].CurrentPiece = PieceType.WhiteKing;
             board[6][0].BuildTileState = new BuildTileState(0, PieceType.WhiteRook);
 
             var initialBoardState = new BoardState(board);

@@ -10,7 +10,7 @@ namespace Models.Services.Moves.MoveGenerators.NonTurnMoves
     public sealed class BishopNonTurnMoves : IPieceMoveGenerator
     {
         private static readonly Direction[] Directions =
-            { Direction.NE, Direction.NW, Direction.SE, Direction.SW };
+            { Direction.Ne, Direction.Nw, Direction.Se, Direction.Sw };
 
         private readonly IBoardScanner _boardScanner;
         private readonly IPositionTranslator _positionTranslator;

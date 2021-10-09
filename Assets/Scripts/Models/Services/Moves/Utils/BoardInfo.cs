@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using Models.Services.Moves.Interfaces;
 using Models.State.Board;
 using Models.State.PieceState;
+using Models.Utils.ExtensionMethods.PieceTypeExt;
 
 namespace Models.Services.Moves.Utils
 {
@@ -30,11 +30,11 @@ namespace Models.Services.Moves.Utils
                 var pos = boardState.ActivePieces[index];
                 ref var tile = ref boardState.GetTileAt(pos);
                 var currentPiece = tile.CurrentPiece;
-                var playerTurn = currentPiece.Type != PieceType.NullPiece && currentPiece.Colour == turn;
-                var opponentTurn = currentPiece.Type != PieceType.NullPiece && currentPiece.Colour != turn;
+                var playerTurn = currentPiece != PieceType.NullPiece && currentPiece.Colour() == turn;
+                var opponentTurn = currentPiece != PieceType.NullPiece && currentPiece.Colour() != turn;
                 if (playerTurn)
                 {
-                    if (currentPiece.Type == PieceType.BlackKing || currentPiece.Type == PieceType.WhiteKing)
+                    if (currentPiece == PieceType.BlackKing || currentPiece == PieceType.WhiteKing)
                         KingPosition = tile.Position;
                     var boardPos = tile.Position;
                     var possibleMoves = _movesGeneratorRepository.GetPossibleMoveGenerator(currentPiece, true)

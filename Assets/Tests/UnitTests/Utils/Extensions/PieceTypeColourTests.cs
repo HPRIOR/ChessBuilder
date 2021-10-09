@@ -1,5 +1,4 @@
-﻿using System;
-using Models.State.PieceState;
+﻿using Models.State.PieceState;
 using Models.Utils.ExtensionMethods.PieceTypeExt;
 using NUnit.Framework;
 using Zenject;
@@ -9,12 +8,6 @@ namespace Tests.UnitTests.Utils.Extensions
     [TestFixture]
     public class PieceTypeColourTests : ZenjectUnitTestFixture
     {
-        [Test]
-        public void NullPieceThrowException()
-        {
-            Assert.Throws<Exception>(() => PieceType.NullPiece.Colour());
-        }
-
         [Test]
         public void CorrectColour_ForBlackTypes(
             [Values(PieceType.BlackBishop, PieceType.BlackKing, PieceType.BlackKnight, PieceType.BlackPawn,

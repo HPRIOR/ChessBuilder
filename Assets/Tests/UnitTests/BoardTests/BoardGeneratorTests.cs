@@ -42,7 +42,7 @@ namespace Tests.UnitTests.BoardTests
             for (var j = 0; j < 8; j++)
             {
                 var tile = board[i][j];
-                Assert.AreEqual(PieceType.NullPiece, tile.CurrentPiece.Type);
+                Assert.AreEqual(PieceType.NullPiece, tile.CurrentPiece);
             }
         }
     }

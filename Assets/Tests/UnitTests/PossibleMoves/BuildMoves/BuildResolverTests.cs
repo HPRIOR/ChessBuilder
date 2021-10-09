@@ -52,7 +52,7 @@ namespace Tests.UnitTests.PossibleMoves.BuildMoves
             var boardState = new BoardState(board);
             _buildResolver.ResolveBuilds(boardState, PieceColour.White);
 
-            Assert.That(board[1][1].CurrentPiece.Type, Is.EqualTo(PieceType.WhiteQueen));
+            Assert.That(board[1][1].CurrentPiece, Is.EqualTo(PieceType.WhiteQueen));
         }
 
         [Test]
@@ -78,7 +78,7 @@ namespace Tests.UnitTests.PossibleMoves.BuildMoves
             var boardState = new BoardState(board);
             _buildResolver.ResolveBuilds(boardState, PieceColour.White);
 
-            Assert.That(board[1][1].CurrentPiece.Type, Is.EqualTo(PieceType.NullPiece));
+            Assert.That(board[1][1].CurrentPiece, Is.EqualTo(PieceType.NullPiece));
         }
 
 
@@ -92,7 +92,7 @@ namespace Tests.UnitTests.PossibleMoves.BuildMoves
             var boardState = new BoardState(board);
             _buildResolver.ResolveBuilds(boardState, PieceColour.White);
 
-            Assert.That(board[1][1].CurrentPiece.Type, Is.EqualTo(PieceType.NullPiece));
+            Assert.That(board[1][1].CurrentPiece, Is.EqualTo(PieceType.NullPiece));
         }
 
 
@@ -100,14 +100,14 @@ namespace Tests.UnitTests.PossibleMoves.BuildMoves
         public void WillNotBuildPiece_WhenTileContainsPiece()
         {
             var board = _boardGenerator.GenerateBoard();
-            board[1][1].CurrentPiece = new Piece(PieceType.BlackKnight);
+            board[1][1].CurrentPiece = PieceType.BlackKnight;
             board[1][1].BuildTileState = new BuildTileState(0, PieceType.WhiteQueen);
 
 
             var boardState = new BoardState(board);
             _buildResolver.ResolveBuilds(boardState, PieceColour.White);
 
-            Assert.That(board[1][1].CurrentPiece.Type, Is.EqualTo(PieceType.BlackKnight));
+            Assert.That(board[1][1].CurrentPiece, Is.EqualTo(PieceType.BlackKnight));
         }
 
 
@@ -121,7 +121,7 @@ namespace Tests.UnitTests.PossibleMoves.BuildMoves
             var boardState = new BoardState(board);
             _buildResolver.ResolveBuilds(boardState, PieceColour.Black);
 
-            Assert.That(board[1][1].CurrentPiece.Type, Is.EqualTo(PieceType.NullPiece));
+            Assert.That(board[1][1].CurrentPiece, Is.EqualTo(PieceType.NullPiece));
         }
 
         [Test]
@@ -156,6 +156,5 @@ namespace Tests.UnitTests.PossibleMoves.BuildMoves
 
             Assert.That(boardState.ActivePieces, Is.EquivalentTo(new HashSet<Position> { new Position(1, 1) }));
         }
-
     }
 }

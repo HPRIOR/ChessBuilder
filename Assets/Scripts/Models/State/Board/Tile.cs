@@ -6,10 +6,10 @@ namespace Models.State.Board
     public struct Tile
     {
         public BuildTileState BuildTileState;
-        public Piece CurrentPiece;
+        public PieceType CurrentPiece;
         public Position Position;
 
-        private Tile(Position position, Piece currentPiece, BuildTileState buildTileState = default)
+        private Tile(Position position, PieceType currentPiece, BuildTileState buildTileState = default)
         {
             Position = position;
             CurrentPiece = currentPiece;
@@ -20,7 +20,7 @@ namespace Models.State.Board
         {
             Position = position;
             BuildTileState = buildTileState;
-            CurrentPiece = new Piece(PieceType.NullPiece);
+            CurrentPiece = PieceType.NullPiece;
         }
 
         public Tile Clone() => new Tile(Position, CurrentPiece, BuildTileState);
@@ -35,6 +35,6 @@ namespace Models.State.Board
 
         public override string ToString() =>
             $"Tile at ({Position.X}, {Position.Y}) containing" +
-            $" {CurrentPiece.Type} and building {BuildTileState.BuildingPiece}";
+            $" {CurrentPiece.ToString()} and building {BuildTileState.BuildingPiece}";
     }
 }

@@ -6,11 +6,11 @@ namespace Bindings.MonoInstallers
 {
     public class GameInstaller : MonoInstaller
     {
-        public bool AI;
+        public bool ai;
 
         public override void InstallBindings()
         {
-            if (AI)
+            if (ai)
                 AiGameStateControllerInstaller.Install(Container);
             else
                 GameStateControllerInstaller.Install(Container);

@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Models.Services.Moves.Utils;
 using Models.State.Board;
 using Models.Utils.ExtensionMethods.BoardPosExt;
-using UnityEngine;
 
 namespace Models.Services.Utils
 {
@@ -35,7 +33,7 @@ namespace Models.Services.Utils
             return positions;
         }
 
-        public static Direction DirectionFrom(Position origin, Position target) => 
+        public static Direction DirectionFrom(Position origin, Position target) =>
             Directions[(origin, target)];
     }
 }

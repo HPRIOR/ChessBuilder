@@ -7,7 +7,7 @@ using Models.Utils.ExtensionMethods.BoardPosExt;
 
 namespace Models.Services.Utils
 {
-    public  static class ScanCache
+    public static class ScanCache
     {
         private static readonly Dictionary<PositionDirection, Position[]> ScanPositions;
         private static readonly Dictionary<PositionPair, Position[]> ScanToPositions;
@@ -17,7 +17,7 @@ namespace Models.Services.Utils
         private static readonly Direction[] Directions =
         {
             Direction.N, Direction.E, Direction.S, Direction.W,
-            Direction.NE, Direction.NW, Direction.SE, Direction.SW,
+            Direction.Ne, Direction.Nw, Direction.Se, Direction.Sw
         };
 
         static ScanCache()

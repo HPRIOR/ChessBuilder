@@ -1,22 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Models.State.PieceState;
-using Models.Utils.ExtensionMethods.PieceTypeExt;
 
 namespace Models.State.Board
 {
     public sealed class BoardState
     {
         public readonly Tile[][] Board;
-        public ref Tile GetTileAt(Position pos) => ref Board[pos.X][pos.Y];
-        public ref Tile GetTileAt(int x, int y) => ref Board[x][y];
 
         public BoardState(Tile[][] board)
         {
             Board = board;
             ActivePieces = new List<Position>();
             ActiveBuilds = new List<Position>();
-     
+
             GenerateActivePieces();
         }
 
@@ -44,15 +40,17 @@ namespace Models.State.Board
 
         public List<Position> ActivePieces { get; }
         public List<Position> ActiveBuilds { get; }
-        
+        public ref Tile GetTileAt(Position pos) => ref Board[pos.X][pos.Y];
+        public ref Tile GetTileAt(int x, int y) => ref Board[x][y];
+
 
         private void GenerateActivePieces()
         {
             for (var i = 0; i < 8; i++)
             for (var j = 0; j < 8; j++)
             {
-                ref var tile = ref GetTileAt(i,j);
-                if (tile.CurrentPiece.Type != PieceType.NullPiece)
+                ref var tile = ref GetTileAt(i, j);
+                if (tile.CurrentPiece != PieceType.NullPiece)
                 {
                     ActivePieces.Add(tile.Position);
                 }

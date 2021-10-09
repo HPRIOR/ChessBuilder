@@ -1,7 +1,6 @@
 ﻿using System;
 using Models.Services.Moves.Utils;
 using Models.State.Board;
-using UnityEngine.Animations;
 
 namespace Models.Utils.ExtensionMethods.BoardPosExt
 {
@@ -22,10 +21,10 @@ namespace Models.Utils.ExtensionMethods.BoardPosExt
             var minusY = target.Y - origin.Y;
             if (Math.Abs(minusX) == Math.Abs(minusY))
             {
-                if (minusX > 0 & minusY > 0) return Direction.NE;
-                if (minusX > 0 & minusY < 0) return Direction.SE;
-                if (minusX < 0 & minusY < 0) return Direction.SW;
-                if (minusX < 0 & minusY > 0) return Direction.NW;
+                if ((minusX > 0) & (minusY > 0)) return Direction.Ne;
+                if ((minusX > 0) & (minusY < 0)) return Direction.Se;
+                if ((minusX < 0) & (minusY < 0)) return Direction.Sw;
+                if ((minusX < 0) & (minusY > 0)) return Direction.Nw;
             }
 
             return Direction.Null;

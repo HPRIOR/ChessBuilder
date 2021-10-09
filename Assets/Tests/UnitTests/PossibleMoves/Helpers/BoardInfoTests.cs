@@ -51,10 +51,10 @@ namespace Tests.UnitTests.PossibleMoves.Helpers
         {
             var board = _boardGenerator.GenerateBoard();
 
-            board[1][1].CurrentPiece = new Piece(PieceType.WhiteKing);
-            board[1][2].CurrentPiece = new Piece(PieceType.WhitePawn);
-            board[7][7].CurrentPiece = new Piece(PieceType.BlackKing);
-            board[7][6].CurrentPiece = new Piece(PieceType.BlackPawn);
+            board[1][1].CurrentPiece = PieceType.WhiteKing;
+            board[1][2].CurrentPiece = PieceType.WhitePawn;
+            board[7][7].CurrentPiece = PieceType.BlackKing;
+            board[7][6].CurrentPiece = PieceType.BlackPawn;
 
             var boardState = new BoardState(board);
 
@@ -73,10 +73,10 @@ namespace Tests.UnitTests.PossibleMoves.Helpers
         {
             var board = _boardGenerator.GenerateBoard();
 
-            board[1][1].CurrentPiece = new Piece(PieceType.WhiteKing);
-            board[1][2].CurrentPiece = new Piece(PieceType.WhitePawn);
-            board[7][7].CurrentPiece = new Piece(PieceType.BlackKing);
-            board[7][6].CurrentPiece = new Piece(PieceType.BlackPawn);
+            board[1][1].CurrentPiece = PieceType.WhiteKing;
+            board[1][2].CurrentPiece = PieceType.WhitePawn;
+            board[7][7].CurrentPiece = PieceType.BlackKing;
+            board[7][6].CurrentPiece = PieceType.BlackPawn;
 
             var boardState = new BoardState(board);
 
@@ -95,10 +95,10 @@ namespace Tests.UnitTests.PossibleMoves.Helpers
         {
             var board = _boardGenerator.GenerateBoard();
 
-            board[1][1].CurrentPiece = new Piece(PieceType.WhiteKing);
-            board[1][2].CurrentPiece = new Piece(PieceType.WhitePawn);
-            board[7][7].CurrentPiece = new Piece(PieceType.BlackKing);
-            board[7][6].CurrentPiece = new Piece(PieceType.BlackPawn);
+            board[1][1].CurrentPiece = PieceType.WhiteKing;
+            board[1][2].CurrentPiece = PieceType.WhitePawn;
+            board[7][7].CurrentPiece = PieceType.BlackKing;
+            board[7][6].CurrentPiece = PieceType.BlackPawn;
 
             var boardState = new BoardState(board);
 
@@ -113,10 +113,10 @@ namespace Tests.UnitTests.PossibleMoves.Helpers
         {
             var board = _boardGenerator.GenerateBoard();
 
-            board[1][1].CurrentPiece = new Piece(PieceType.WhiteKing);
-            board[1][2].CurrentPiece = new Piece(PieceType.WhitePawn);
-            board[7][7].CurrentPiece = new Piece(PieceType.BlackKing);
-            board[7][6].CurrentPiece = new Piece(PieceType.BlackPawn);
+            board[1][1].CurrentPiece = PieceType.WhiteKing;
+            board[1][2].CurrentPiece = PieceType.WhitePawn;
+            board[7][7].CurrentPiece = PieceType.BlackKing;
+            board[7][6].CurrentPiece = PieceType.BlackPawn;
 
             var boardState = new BoardState(board);
 
@@ -130,8 +130,8 @@ namespace Tests.UnitTests.PossibleMoves.Helpers
         {
             var board = _boardGenerator.GenerateBoard();
 
-            board[1][2].CurrentPiece = new Piece(PieceType.WhitePawn);
-            board[7][6].CurrentPiece = new Piece(PieceType.BlackPawn);
+            board[1][2].CurrentPiece = PieceType.WhitePawn;
+            board[7][6].CurrentPiece = PieceType.BlackPawn;
 
             var boardState = new BoardState(board);
 

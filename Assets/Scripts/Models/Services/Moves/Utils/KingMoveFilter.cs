@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using Models.Services.Moves.MoveGenerators.TurnMoves;
 using Models.State.Board;
 
 namespace Models.Services.Moves.Utils
@@ -15,7 +13,7 @@ namespace Models.Services.Moves.Utils
             if (kingPosition != new Position(8, 8)) // null king check
             {
                 var kingMoves = new HashSet<Position>(turnMoves[kingPosition]);
-                
+
                 foreach (var keyVal in enemyMoves)
                     for (var index = 0; index < keyVal.Value.Count; index++)
                     {

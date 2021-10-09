@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using Models.Services.Build.Interfaces;
 using Models.State.Board;
 using Models.State.BuildState;
@@ -15,14 +13,14 @@ namespace Models.Services.Build.Utils
         {
             var activeBuildPositions = boardState.ActiveBuilds.ToArray();
             var resolvedBuilds = new List<(Position, PieceType)>();
-            
+
             for (int i = 0; i < activeBuildPositions.Length; i++)
             {
                 var pos = activeBuildPositions[i];
                 ref var tile = ref boardState.GetTileAt(pos);
                 var canBuild = tile.BuildTileState.Turns == 0 &&
                                tile.BuildTileState.BuildingPiece != PieceType.NullPiece &&
-                               tile.CurrentPiece.Type == PieceType.NullPiece &&
+                               tile.CurrentPiece == PieceType.NullPiece &&
                                tile.BuildTileState.BuildingPiece.Colour() == turn;
                 if (canBuild)
                 {
@@ -30,10 +28,10 @@ namespace Models.Services.Build.Utils
                     boardState.ActiveBuilds.Remove(tile.Position);
                     boardState.ActivePieces.Add(tile.Position);
 
-                    tile.CurrentPiece = new Piece(tile.BuildTileState.BuildingPiece);
+                    tile.CurrentPiece = tile.BuildTileState.BuildingPiece;
                     tile.BuildTileState = new BuildTileState(); // reset build state
 
-                    resolvedBuilds.Add((tile.Position, tile.CurrentPiece.Type));
+                    resolvedBuilds.Add((tile.Position, tile.CurrentPiece));
                 }
             }
 

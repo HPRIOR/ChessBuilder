@@ -17,7 +17,7 @@ namespace Models.Services.Game.Implementations
     public sealed class GameStateUpdater : IGameStateUpdater
     {
         //TODO inject me
-        private const int maxBuildPoints = 39;
+        private const int MAXBuildPoints = 39;
         private readonly IBuilder _builder;
         private readonly IBuildMoveGenerator _buildMoveGenerator;
         private readonly IBuildPointsCalculator _buildPointsCalculator;
@@ -69,8 +69,12 @@ namespace Models.Services.Game.Implementations
             StateHistory.Push(_gameStateChanges);
         }
 
-        // TODO: make private 
-        public void UpdateGameState(PieceColour turn)
+        public void RevertGameState()
+        {
+            if (StateHistory.Any()) RevertGameStateChanges(StateHistory.Pop());
+        }
+
+        private void UpdateGameState(PieceColour turn)
         {
             // opposite turn from current needs to be passed to build resolver 
             // this is due to builds being resolved at the end of a players turn - not the start of their turn
@@ -87,19 +91,12 @@ namespace Models.Services.Game.Implementations
             GameState.CheckMate = _gameOverEval.CheckMate(moveState.Check, moveState.PossibleMoves);
         }
 
-        public void RevertGameState()
-        {
-            if (StateHistory.Any()) RevertGameStateChanges(StateHistory.Pop());
-        }
-
         private void RevertGameStateChanges(GameStateChanges gameStateChanges)
         {
-            // TODO modify active colour pieces
-
             // revert resolved pieces
             foreach (var (position, type) in gameStateChanges.ResolvedBuilds)
             {
-                GameState.BoardState.Board[position.X][position.Y].CurrentPiece = new Piece(PieceType.NullPiece);
+                GameState.BoardState.Board[position.X][position.Y].CurrentPiece = PieceType.NullPiece;
                 GameState.BoardState.Board[position.X][position.Y].BuildTileState = new BuildTileState(0, type);
                 GameState.BoardState.ActiveBuilds.Add(position);
                 GameState.BoardState.ActivePieces.Remove(position);
@@ -127,14 +124,14 @@ namespace Models.Services.Game.Implementations
             {
                 var movedToPosition = gameStateChanges.Move.To;
                 var movedFromPosition = gameStateChanges.Move.From;
-                var movedPiece = GameState.BoardState.Board[movedToPosition.X][movedToPosition.Y].CurrentPiece.Type;
+                var movedPiece = GameState.BoardState.Board[movedToPosition.X][movedToPosition.Y].CurrentPiece;
 
                 GameState.BoardState.Board[movedToPosition.X][movedToPosition.Y].CurrentPiece =
-                    new Piece(PieceType.NullPiece);
+                    PieceType.NullPiece;
                 GameState.BoardState.ActivePieces.Remove(movedToPosition);
 
                 GameState.BoardState.Board[movedFromPosition.X][movedFromPosition.Y].CurrentPiece =
-                    new Piece(movedPiece);
+                    movedPiece;
                 GameState.BoardState.ActivePieces.Add(movedFromPosition);
             }
 
@@ -152,7 +149,7 @@ namespace Models.Services.Game.Implementations
                 : _buildMoveGenerator.GetPossibleBuildMoves(newBoardState, turn, relevantPlayerState);
 
         private PlayerState GetPlayerState(BoardState newBoardState, PieceColour turn)
-            => _buildPointsCalculator.CalculateBuildPoints(turn, newBoardState, maxBuildPoints);
+            => _buildPointsCalculator.CalculateBuildPoints(turn, newBoardState, MAXBuildPoints);
 
         private static PieceColour NextTurn(PieceColour turn) =>
             turn == PieceColour.White ? PieceColour.Black : PieceColour.White;

@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Bindings.Installers.AIInstallers;
 using Bindings.Installers.ModelInstallers.Board;
 using Models.Services.AI.Implementations;
 using Models.Services.AI.Interfaces;
 using Models.Services.Board;
-using Models.Services.Game.Interfaces;
 using Models.State.Board;
 using Models.State.PieceState;
 using NUnit.Framework;
@@ -32,7 +30,6 @@ namespace Tests.UnitTests.AI
 
         private IBoardGenerator _boardGenerator;
         private IMoveOrderer _moveOrderer;
-        private readonly Action<PieceColour, IGameStateUpdater> _actionStub = (colour, updater) => { };
 
         private void InstallBindings()
         {
@@ -50,11 +47,11 @@ namespace Tests.UnitTests.AI
         public void MovesAreOrderedInDescendingOrder()
         {
             var board = _boardGenerator.GenerateBoard();
-            board[0][0].CurrentPiece = new Piece(PieceType.WhiteKing);
-            board[1][1].CurrentPiece = new Piece(PieceType.WhitePawn);
-            board[2][2].CurrentPiece = new Piece(PieceType.BlackQueen);
-            board[5][5].CurrentPiece = new Piece(PieceType.WhitePawn);
-            board[6][6].CurrentPiece = new Piece(PieceType.BlackRook);
+            board[0][0].CurrentPiece = PieceType.WhiteKing;
+            board[1][1].CurrentPiece = PieceType.WhitePawn;
+            board[2][2].CurrentPiece = PieceType.BlackQueen;
+            board[5][5].CurrentPiece = PieceType.WhitePawn;
+            board[6][6].CurrentPiece = PieceType.BlackRook;
             var boardState = new BoardState(board);
 
             var highestMove = new AiMove(MoveType.Move, new Position(1, 1), new Position(2, 2),
@@ -80,11 +77,11 @@ namespace Tests.UnitTests.AI
         public void NonTakeMovesScoreZero()
         {
             var board = _boardGenerator.GenerateBoard();
-            board[0][0].CurrentPiece = new Piece(PieceType.WhiteQueen);
-            board[1][1].CurrentPiece = new Piece(PieceType.WhitePawn);
-            board[2][2].CurrentPiece = new Piece(PieceType.BlackBishop);
-            board[5][5].CurrentPiece = new Piece(PieceType.WhitePawn);
-            board[6][6].CurrentPiece = new Piece(PieceType.BlackPawn);
+            board[0][0].CurrentPiece = PieceType.WhiteQueen;
+            board[1][1].CurrentPiece = PieceType.WhitePawn;
+            board[2][2].CurrentPiece = PieceType.BlackBishop;
+            board[5][5].CurrentPiece = PieceType.WhitePawn;
+            board[6][6].CurrentPiece = PieceType.BlackPawn;
             var boardState = new BoardState(board);
 
             var highestMove = new AiMove(MoveType.Move, new Position(1, 1), new Position(2, 2),

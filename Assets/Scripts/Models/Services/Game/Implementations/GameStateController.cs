@@ -33,25 +33,6 @@ namespace Models.Services.Game.Implementations
             RetainBoardState();
         }
 
-        /// <summary>
-        ///     this is redundant for now. It was used to revert state back by passing in an old board state, however the
-        ///     game state updater no longer supports this functionality. Some new way of reverting changes is needed.
-        ///     Should remove and fix tests and anything else which relies on this.
-        ///     TODO: remove me
-        /// </summary>
-        /// <param name="newBoardState"></param>
-        public void UpdateGameState(BoardState newBoardState)
-        {
-            Turn = NextTurn();
-            var previousState = CurrentGameState?.BoardState.Clone();
-
-            // When white/black turn has been executed, game state needs to be set up in this method for the opposite player
-            // hence why NextTurn() is called at the top of the method
-            _gameStateUpdater.UpdateGameState(Turn);
-            CurrentGameState = _gameStateUpdater.GameState;
-            GameStateChangeEvent?.Invoke(previousState, CurrentGameState.BoardState);
-        }
-
         public void RevertGameState()
         {
             Turn = NextTurn();
@@ -77,7 +58,6 @@ namespace Models.Services.Game.Implementations
 
             GameStateChangeEvent?.Invoke(previousBoardState, CurrentGameState.BoardState);
         }
-
 
         /// <summary>
         ///     Emits event with current board state

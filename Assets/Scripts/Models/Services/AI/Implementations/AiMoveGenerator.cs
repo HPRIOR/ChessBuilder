@@ -12,7 +12,6 @@ namespace Models.Services.AI.Implementations
 {
     public sealed class AiMoveGenerator
     {
-        private const int WindowSize = 3000;
         private readonly IAiPossibleMoveGenerator _aiPossibleMoveGenerator;
         private readonly GameStateUpdaterFactory _gameStateUpdaterFactory;
         private readonly IMoveOrderer _moveOrderer;

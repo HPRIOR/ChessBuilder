@@ -18,14 +18,13 @@ namespace View.Renderers
         public void Render(BoardState previousState, BoardState newState)
         {
             GameObjectDestroyer.DestroyChildrenOfObjectWith("Pieces");
-            var board = newState.Board;
             for (var i = 0; i < 8; i++)
             for (var j = 0; j < 8; j++)
             {
                 ref var tile = ref newState.GetTileAt(i, j);
                 var currentPiece = tile.CurrentPiece;
-                if (currentPiece.Type != PieceType.NullPiece)
-                    _pieceFactory.CreatePiece(currentPiece.Type, tile.Position);
+                if (currentPiece != PieceType.NullPiece)
+                    _pieceFactory.CreatePiece(currentPiece, tile.Position);
             }
         }
     }

@@ -11,7 +11,7 @@ namespace Models.Services.Moves.MoveGenerators.NonTurnMoves
     {
         private static readonly Direction[] Directions =
         {
-            Direction.N, Direction.E, Direction.S, Direction.W, Direction.NE, Direction.NW, Direction.SE, Direction.SW
+            Direction.N, Direction.E, Direction.S, Direction.W, Direction.Ne, Direction.Nw, Direction.Se, Direction.Sw
         };
 
         private readonly IBoardScanner _boardScanner;

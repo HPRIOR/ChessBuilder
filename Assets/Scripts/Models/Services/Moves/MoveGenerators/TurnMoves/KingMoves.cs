@@ -11,7 +11,7 @@ namespace Models.Services.Moves.MoveGenerators.TurnMoves
     {
         private static readonly Direction[] Directions =
         {
-            Direction.N, Direction.E, Direction.S, Direction.W, Direction.NE, Direction.NW, Direction.SE, Direction.SW
+            Direction.N, Direction.E, Direction.S, Direction.W, Direction.Ne, Direction.Nw, Direction.Se, Direction.Sw
         };
 
         private readonly IPositionTranslator _positionTranslator;
@@ -39,7 +39,7 @@ namespace Models.Services.Moves.MoveGenerators.TurnMoves
                 {
                     ref var potentialMoveTile = ref _positionTranslator.GetRelativeTileAt(newPosition, boardState);
                     if (_tileEvaluator.OpposingPieceIn(ref potentialMoveTile) ||
-                        potentialMoveTile.CurrentPiece.Type == PieceType.NullPiece)
+                        potentialMoveTile.CurrentPiece == PieceType.NullPiece)
                         possibleMoves.Add(newRelativePosition);
                 }
             }

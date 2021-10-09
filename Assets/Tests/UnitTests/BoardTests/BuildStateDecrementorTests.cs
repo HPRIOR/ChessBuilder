@@ -26,7 +26,6 @@ namespace Tests.UnitTests.BoardTests
         }
 
         private IBoardGenerator _boardGenerator;
-        private BuildStateDecrementor _buildStateDecrementor;
 
         private void InstallBindings()
         {
@@ -37,7 +36,6 @@ namespace Tests.UnitTests.BoardTests
         private void ResolveContainer()
         {
             _boardGenerator = Container.Resolve<IBoardGenerator>();
-            _buildStateDecrementor = Container.Resolve<BuildStateDecrementor>();
         }
 
         [Test]
@@ -60,8 +58,8 @@ namespace Tests.UnitTests.BoardTests
         public void NonEmptyBoard_WithNoBuilds_WillNotChange()
         {
             var board = _boardGenerator.GenerateBoard();
-            board[1][1].CurrentPiece = new Piece(PieceType.WhiteKing);
-            board[7][7].CurrentPiece = new Piece(PieceType.BlackKing);
+            board[1][1].CurrentPiece = PieceType.WhiteKing;
+            board[7][7].CurrentPiece = PieceType.BlackKing;
             var boardState = new BoardState(board);
             BuildStateDecrementor.DecrementBuilds(boardState);
             for (var i = 0; i < 8; i++)
@@ -77,8 +75,8 @@ namespace Tests.UnitTests.BoardTests
         public void NonEmptyBoard_WithBuilds_WillBeDecremented()
         {
             var board = _boardGenerator.GenerateBoard();
-            board[1][1].CurrentPiece = new Piece(PieceType.WhiteKing);
-            board[7][7].CurrentPiece = new Piece(PieceType.BlackKing);
+            board[1][1].CurrentPiece = PieceType.WhiteKing;
+            board[7][7].CurrentPiece = PieceType.BlackKing;
             board[6][6].BuildTileState = new BuildTileState(PieceType.WhiteQueen);
             var boardState = new BoardState(board);
             BuildStateDecrementor.DecrementBuilds(boardState);

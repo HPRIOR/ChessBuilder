@@ -82,7 +82,7 @@ namespace Tests.UnitTests.BoardTests
         )
         {
             var boardState = GetBoardState();
-            Assert.AreEqual(new Piece(PieceType.NullPiece), boardState.Board[x][y].CurrentPiece);
+            Assert.AreEqual(PieceType.NullPiece, boardState.Board[x][y].CurrentPiece);
         }
 
         [Test]
@@ -113,10 +113,10 @@ namespace Tests.UnitTests.BoardTests
         public void ActivePiecesAreCorrect()
         {
             var board = _boardGenerator.GenerateBoard();
-            board[1][1].CurrentPiece = new Piece(PieceType.BlackBishop);
-            board[2][2].CurrentPiece = new Piece(PieceType.BlackBishop);
-            board[3][3].CurrentPiece = new Piece(PieceType.BlackBishop);
-            board[4][4].CurrentPiece = new Piece(PieceType.BlackBishop);
+            board[1][1].CurrentPiece = PieceType.BlackBishop;
+            board[2][2].CurrentPiece = PieceType.BlackBishop;
+            board[3][3].CurrentPiece = PieceType.BlackBishop;
+            board[4][4].CurrentPiece = PieceType.BlackBishop;
             var boardState = new BoardState(board);
 
             var expected = new HashSet<Position>

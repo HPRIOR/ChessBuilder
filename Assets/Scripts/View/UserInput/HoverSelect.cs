@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
 namespace View.UserInput
 {
@@ -9,7 +8,6 @@ namespace View.UserInput
         public void OnPointerClick(PointerEventData eventData)
         {
             Debug.Log("log");
-            var image = GetComponent<Image>();
         }
     }
 }

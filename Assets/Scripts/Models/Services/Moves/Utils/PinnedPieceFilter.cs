@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Models.Services.Moves.Interfaces;
 using Models.Services.Utils;
@@ -23,7 +22,7 @@ namespace Models.Services.Moves.Utils
 
         private static readonly HashSet<Direction> BishopDirections = new HashSet<Direction>(new DirectionComparer())
         {
-            Direction.NE, Direction.NW, Direction.SE, Direction.SW
+            Direction.Ne, Direction.Nw, Direction.Se, Direction.Sw
         };
 
         private static readonly HashSet<Direction> RookDirections = new HashSet<Direction>(new DirectionComparer())
@@ -34,20 +33,19 @@ namespace Models.Services.Moves.Utils
         private static readonly HashSet<Direction> QueenDirections = new HashSet<Direction>(new DirectionComparer())
         {
             Direction.N, Direction.E, Direction.S, Direction.W,
-            Direction.NE, Direction.NW, Direction.SE, Direction.SW
+            Direction.Ne, Direction.Nw, Direction.Se, Direction.Sw
         };
 
         private static bool PieceIsScanner(KeyValuePair<Position, List<Position>> pieceMoves,
             BoardState boardState)
         {
-            var pieceAtBoardPosition = boardState.Board[pieceMoves.Key.X][pieceMoves.Key.Y].CurrentPiece.Type;
+            var pieceAtBoardPosition = boardState.Board[pieceMoves.Key.X][pieceMoves.Key.Y].CurrentPiece;
             return ScanningPieces.Contains(pieceAtBoardPosition);
         }
 
         private static List<Position> GetScanningPiecesMoves(
             IDictionary<Position, List<Position>> moves, BoardState boardState)
         {
-            // TODO avoid allocations here or use pooling 
             var result = new List<Position>();
             foreach (var keyVal in moves)
                 if (PieceIsScanner(keyVal, boardState))
@@ -58,7 +56,7 @@ namespace Models.Services.Moves.Utils
         private static bool DirectionIsInPieceMoveRepetitious(Direction direction, Position piecePosition,
             BoardState boardState)
         {
-            var pieceType = boardState.GetTileAt(piecePosition).CurrentPiece.Type;
+            var pieceType = boardState.GetTileAt(piecePosition).CurrentPiece;
             switch (pieceType)
             {
                 case PieceType.BlackBishop:
@@ -100,7 +98,7 @@ namespace Models.Services.Moves.Utils
                     continue;
                 }
 
-                var pieceType = tile.CurrentPiece.Type;
+                var pieceType = tile.CurrentPiece;
                 if (pieceType == PieceType.NullPiece)
                 {
                     index++;
@@ -139,7 +137,7 @@ namespace Models.Services.Moves.Utils
             var kingPosition = boardInfo.KingPosition;
             if (kingPosition == new Position(8, 8))
                 return;
-            var kingColour = boardState.GetTileAt(kingPosition).CurrentPiece.Type.Colour();
+            var kingColour = boardState.GetTileAt(kingPosition).CurrentPiece.Colour();
             var enemyScanningMoves = GetScanningPiecesMoves(boardInfo.EnemyMoves, boardState);
             for (var index = 0; index < enemyScanningMoves.Count; index++)
             {

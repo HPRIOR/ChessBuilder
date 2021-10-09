@@ -93,8 +93,6 @@ namespace Models.Services.Game.Implementations
 
         private void RevertGameStateChanges(GameStateChanges gameStateChanges)
         {
-            // TODO modify active colour pieces
-
             // revert resolved pieces
             foreach (var (position, type) in gameStateChanges.ResolvedBuilds)
             {

@@ -29,7 +29,7 @@ namespace Controllers.Commands
             _gameStateController.RetainBoardState();
         }
 
-        public bool IsValid() => true;
+        public bool IsValid(bool peak) => true;
 
         public class Factory : PlaceholderFactory<AiMoveCommand>
         {

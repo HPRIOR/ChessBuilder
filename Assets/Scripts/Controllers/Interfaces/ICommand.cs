@@ -6,6 +6,6 @@
 
         void Undo();
 
-        bool IsValid();
+        bool IsValid(bool peak);
     }
 }

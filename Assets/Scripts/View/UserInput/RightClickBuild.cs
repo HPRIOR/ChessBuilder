@@ -65,11 +65,11 @@ namespace View.UserInput
             if (_buildSelectionInstigated)
             {
                 var buildCommand = _buildCommandFactory.Create(_nearestPos, _pieceToBuild);
-                var commandIsValid = buildCommand.IsValid();
+                var commandIsValid = buildCommand.IsValid(peak: true);
                 _commandInvoker.AddCommand(
                     buildCommand
                 );
-                GameObjectDestroyer.DestroyChildrenOfObjectWith("UI");
+                GameObjectDestroyer.DestroyChildrenOfObjectWithTag("UI");
                 if (commandIsValid & _aiEnabled)
                 {
                     _commandInvoker.AddCommand(

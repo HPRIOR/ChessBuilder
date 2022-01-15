@@ -17,7 +17,7 @@ namespace View.Renderers
 
         public void Render(BoardState previousState, BoardState newState)
         {
-            GameObjectDestroyer.DestroyChildrenOfObjectWith("BuildingPieces");
+            GameObjectDestroyer.DestroyChildrenOfObjectWithTag("BuildingPieces");
             for (var i = 0; i < 8; i++)
             for (var j = 0; j < 8; j++)
             {

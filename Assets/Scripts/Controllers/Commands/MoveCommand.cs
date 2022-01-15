@@ -31,14 +31,14 @@ namespace Controllers.Commands
             _gameStateController.UpdateGameState(_from, _destination);
         }
 
-        public bool IsValid()
+        public bool IsValid(bool peak)
         {
             if (_moveValidator.ValidateMove(_gameStateController.CurrentGameState.PossiblePieceMoves, _from,
                 _destination))
                 return true;
 
 
-            _gameStateController.RetainBoardState();
+            if (!peak) _gameStateController.RetainBoardState();
             return false;
         }
 

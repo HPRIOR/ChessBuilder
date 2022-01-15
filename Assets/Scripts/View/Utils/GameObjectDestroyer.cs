@@ -4,7 +4,7 @@ namespace View.Utils
 {
     public static class GameObjectDestroyer
     {
-        public static void DestroyChildrenOfObjectWith(string tag)
+        public static void DestroyChildrenOfObjectWithTag(string tag)
         {
             var piecesGameObject = GameObject.FindGameObjectWithTag(tag);
             if (piecesGameObject.transform.childCount > 0)

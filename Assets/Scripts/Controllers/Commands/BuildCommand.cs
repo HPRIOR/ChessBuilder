@@ -35,7 +35,7 @@ namespace Controllers.Commands
             _gameStateController.RetainBoardState();
         }
 
-        public bool IsValid()
+        public bool IsValid(bool peak)
         {
             if (_buildValidator.ValidateBuild(_gameStateController.CurrentGameState.PossibleBuildMoves, _at, _piece))
                 return true;

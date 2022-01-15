@@ -57,7 +57,7 @@ namespace View.UserInput
             var nearestBoardPosition = NearestBoardPosFinder.GetNearestBoardPosition(currentMousePosition);
 
             var moveCommand = _moveCommandFactory.Create(_piece.Position, nearestBoardPosition);
-            var moveCommandIsValid = moveCommand.IsValid();
+            var moveCommandIsValid = moveCommand.IsValid(peak: true);
             _commandInvoker.AddCommand(
                 moveCommand
             );

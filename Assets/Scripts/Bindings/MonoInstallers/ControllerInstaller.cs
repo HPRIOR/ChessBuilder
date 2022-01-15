@@ -10,6 +10,7 @@ namespace Bindings.MonoInstallers
             BuildCommandInstaller.Install(Container);
             CommandInvokerInstaller.Install(Container);
             MoveCommandInstaller.Install(Container);
+            AIMoveCommandInstaller.Install(Container);
         }
     }
 }

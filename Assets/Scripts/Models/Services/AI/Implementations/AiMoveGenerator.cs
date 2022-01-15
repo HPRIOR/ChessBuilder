@@ -16,7 +16,6 @@ namespace Models.Services.AI.Implementations
         private readonly GameStateUpdaterFactory _gameStateUpdaterFactory;
         private readonly IMoveOrderer _moveOrderer;
         private readonly IStaticEvaluator _staticEvaluator;
-        private int _numPosEvaluated;
 
         public AiMoveGenerator(IStaticEvaluator staticEvaluator, IAiPossibleMoveGenerator aiPossibleMoveGenerator,
             GameStateUpdaterFactory gameStateUpdaterFactory, IMoveOrderer moveOrderer)
@@ -32,14 +31,12 @@ namespace Models.Services.AI.Implementations
             int depth,
             PieceColour turn)
         {
-            _numPosEvaluated = 0;
             const int alpha = int.MinValue;
             const int beta = int.MaxValue;
 
             // need to pass in a copy of the game state
             var (move, _) = NegaScout(_gameStateUpdaterFactory.Create(gameState.Clone() as GameState), depth, 0, turn,
                 alpha, beta);
-            Debug.Log(_numPosEvaluated.ToString());
             return move;
         }
 
@@ -58,7 +55,6 @@ namespace Models.Services.AI.Implementations
                 return (null, boardEval);
             }
 
-            _numPosEvaluated++;
 
             // initialise best move placeholders
             AiMove bestMove = null;

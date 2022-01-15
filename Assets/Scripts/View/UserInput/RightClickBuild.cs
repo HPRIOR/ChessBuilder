@@ -13,8 +13,26 @@ namespace View.UserInput
 {
     public class RightClickBuild : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     {
-        private static ICommandInvoker _commandInvoker;
+        [Inject(Id = "AiToggle")] private bool _aiEnabled;
+        private AiMoveCommandFactory _aiMoveCommandFactory;
+        private IGameStateController _gameStateController;
+        private PieceBuildSelectorFactory _pieceBuildSelectorFactory;
+        private PieceType _pieceToBuild;
+        private Position _nearestPos;
+        private bool _buildSelectionInstigated;
         private static BuildCommandFactory _buildCommandFactory;
+        private static ICommandInvoker _commandInvoker;
+        
+        [Inject]
+        public void Construct(ICommandInvoker commandInvoker, IGameStateController gameStateController,
+            BuildCommandFactory buildCommandFactory, AiMoveCommandFactory aiMoveCommandFactory, PieceBuildSelectorFactory pieceBuildSelectorFactory)
+        {
+            _aiMoveCommandFactory = aiMoveCommandFactory;
+            _buildCommandFactory = buildCommandFactory;
+            _commandInvoker = commandInvoker;
+            _gameStateController = gameStateController;
+            _pieceBuildSelectorFactory = pieceBuildSelectorFactory;
+        }
 
         private static readonly PieceType[] BlackSelection =
         {
@@ -28,11 +46,6 @@ namespace View.UserInput
             PieceType.WhitePawn
         };
 
-        private bool _buildSelectionInstigated;
-        private IGameStateController _gameStateController;
-        private Position _nearestPos;
-        private PieceBuildSelectorFactory _pieceBuildSelectorFactory;
-        private PieceType _pieceToBuild;
 
 
         public void OnPointerDown(PointerEventData eventData)
@@ -51,25 +64,24 @@ namespace View.UserInput
         {
             if (_buildSelectionInstigated)
             {
+                var buildCommand = _buildCommandFactory.Create(_nearestPos, _pieceToBuild);
+                var commandIsValid = buildCommand.IsValid();
                 _commandInvoker.AddCommand(
-                    _buildCommandFactory.Create(_nearestPos, _pieceToBuild)
+                    buildCommand
                 );
                 GameObjectDestroyer.DestroyChildrenOfObjectWith("UI");
+                if (commandIsValid & _aiEnabled)
+                {
+                    _commandInvoker.AddCommand(
+                        _aiMoveCommandFactory.Create()
+                        );
+                }
             }
         }
 
 
         private void SetPieceCallBack(PieceType pieceType) => _pieceToBuild = pieceType;
 
-        [Inject]
-        public void Construct(ICommandInvoker commandInvoker, IGameStateController gameStateController,
-            BuildCommandFactory buildCommandFactory, PieceBuildSelectorFactory pieceBuildSelectorFactory)
-        {
-            _gameStateController = gameStateController;
-            _commandInvoker = commandInvoker;
-            _buildCommandFactory = buildCommandFactory;
-            _pieceBuildSelectorFactory = pieceBuildSelectorFactory;
-        }
 
         private void RenderSelections(PieceType[] pieces, Vector3 center)
         {

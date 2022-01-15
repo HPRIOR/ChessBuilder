@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using Controllers.Interfaces;
+using Models.Services.AI.Implementations;
 
 namespace Controllers.Commands
 {
     public class CommandInvoker : ICommandInvoker
     {
-        private readonly Stack<ICommand> _commandBuffer;
-
+        private readonly Stack<ICommand> _commandHistoryBuffer;
         public CommandInvoker()
         {
-            _commandBuffer = new Stack<ICommand>();
+            _commandHistoryBuffer = new Stack<ICommand>();
         }
 
         public void AddCommand(ICommand command)
@@ -18,13 +18,13 @@ namespace Controllers.Commands
             if (command.IsValid())
             {
                 command.Execute();
-                _commandBuffer.Push(command);
+                _commandHistoryBuffer.Push(command);
             }
         }
 
         public void RollBackCommand()
         {
-            if (_commandBuffer.Count > 0) _commandBuffer.Pop().Undo();
+            if (_commandHistoryBuffer.Count > 0) _commandHistoryBuffer.Pop().Undo();
         }
 
         public void UndoCommand()

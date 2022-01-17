@@ -10,6 +10,7 @@ using Models.State.GameState;
 using Models.State.MoveState;
 using Models.State.PieceState;
 using Models.State.PlayerState;
+using UnityEngine;
 using Zenject;
 
 namespace Models.Services.Game.Implementations

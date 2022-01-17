@@ -1,4 +1,6 @@
-﻿using Controllers.Interfaces;
+﻿using System.Collections;
+using System.Threading.Tasks;
+using Controllers.Interfaces;
 using Models.Services.Game.Interfaces;
 using Models.State.Board;
 using Models.State.PieceState;
@@ -40,7 +42,7 @@ namespace Controllers.Commands
             if (_buildValidator.ValidateBuild(_gameStateController.CurrentGameState.PossibleBuildMoves, _at, _piece))
                 return true;
 
-            _gameStateController.RetainBoardState();
+            if (!peak) _gameStateController.RetainBoardState();
             return false;
         }
 

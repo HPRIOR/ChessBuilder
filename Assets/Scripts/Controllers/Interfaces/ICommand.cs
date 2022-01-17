@@ -1,4 +1,6 @@
-﻿namespace Controllers.Interfaces
+﻿using System.Threading.Tasks;
+
+namespace Controllers.Interfaces
 {
     public interface ICommand
     {

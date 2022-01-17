@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using Controllers.Interfaces;
 using Models.Services.AI.Implementations;
 using Models.Services.Game.Interfaces;
@@ -6,11 +7,11 @@ using Zenject;
 
 namespace Controllers.Commands
 {
-    public class AiMoveCommand: ICommand
+    public class AiMoveCommand : ICommand
     {
         private readonly IGameStateController _gameStateController;
         private readonly AiMoveExecutor _aiMoveExecutor;
-        
+
 
         public AiMoveCommand(IGameStateController gameStateController, AiMoveExecutor aiMoveExecutor)
         {

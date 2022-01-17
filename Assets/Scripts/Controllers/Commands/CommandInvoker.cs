@@ -1,28 +1,38 @@
 ﻿using System;
 using System.Collections.Generic;
 using Controllers.Interfaces;
-using Models.Services.AI.Implementations;
-using Models.Services.Game.Interfaces;
+using ModestTree;
+using UnityEngine;
+using View.Interfaces;
 
 namespace Controllers.Commands
 {
+    // TODO insure that each command is executed once per frame
     public class CommandInvoker : ICommandInvoker
     {
-        private readonly IGameStateController _gameStateController;
         private readonly Stack<ICommand> _commandHistoryBuffer;
-        public CommandInvoker(IGameStateController gameStateController)
+        private readonly Queue<ICommand> _commandQueue;
+        public CommandInvoker()
         {
-            _gameStateController = gameStateController;
+            _commandQueue = new Queue<ICommand>();
             _commandHistoryBuffer = new Stack<ICommand>();
         }
-
-        public void AddCommand(ICommand command)
+        
+        public void ExecuteCommand()
         {
+            if (_commandQueue.IsEmpty())
+                return;
+            
+            var command = _commandQueue.Dequeue();
             if (command.IsValid(peak: false))
             {
                 command.Execute();
                 _commandHistoryBuffer.Push(command);
             }
+        }
+        public void AddCommand(ICommand command)
+        {
+            _commandQueue.Enqueue(command);
         }
 
         public void RollBackCommand()

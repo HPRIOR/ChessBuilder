@@ -1,8 +1,11 @@
-﻿namespace Controllers.Interfaces
+﻿using System.Threading.Tasks;
+
+namespace Controllers.Interfaces
 {
     public interface ICommandInvoker
     {
         void AddCommand(ICommand command);
+        void ExecuteCommand();
 
         void RollBackCommand();
 

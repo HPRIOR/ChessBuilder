@@ -1,3 +1,4 @@
+using System.Collections;
 using Controllers.Factories;
 using Controllers.Interfaces;
 using UnityEngine;
@@ -61,13 +62,13 @@ namespace View.UserInput
             _commandInvoker.AddCommand(
                 moveCommand
             );
-
+            // this is called within the same game loop and is causing problems with Destroy 
             if (moveCommandIsValid & _aiEnabled)
             {
                 _commandInvoker.AddCommand(_aiMoveCommandFactory.Create());
             }
-
             _isDragging = false;
         }
+
     }
 }

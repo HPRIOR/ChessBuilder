@@ -34,7 +34,7 @@ namespace Controllers.Commands
         public bool IsValid(bool peak)
         {
             if (_moveValidator.ValidateMove(_gameStateController.CurrentGameState.PossiblePieceMoves, _from,
-                _destination))
+                    _destination))
                 return true;
 
 

@@ -7,7 +7,6 @@ using View.Interfaces;
 
 namespace Controllers.Commands
 {
-    // TODO insure that each command is executed once per frame
     public class CommandInvoker : ICommandInvoker
     {
         private readonly Stack<ICommand> _commandHistoryBuffer;

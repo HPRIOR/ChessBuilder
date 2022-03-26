@@ -1,4 +1,5 @@
 ﻿using Models.Services.Game.Implementations;
+using Models.Services.Game.Interfaces;
 using Models.State.GameState;
 using Zenject;
 
@@ -8,8 +9,7 @@ namespace Bindings.Installers.GameInstallers
     {
         public override void InstallBindings()
         {
-            Container.Bind<GameStateUpdaterFactory>().AsSingle();
-            Container.BindFactory<GameState, GameStateUpdater, GameStateUpdater.Factory>();
+            Container.Bind<IGameStateUpdater>().To<GameStateUpdater>().AsSingle();
         }
     }
 }

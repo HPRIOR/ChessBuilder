@@ -8,10 +8,13 @@ namespace Models.State.GameState
 {
     public sealed class GameState : ICloneable
     {
-        public GameState(bool check, bool checkMate,
+        public GameState(
+            bool check,
+            bool checkMate,
             PlayerState.PlayerState playerState,
             IDictionary<Position, List<Position>> possiblePieceMoves,
-            BuildMoves possibleBuildMoves, BoardState boardState)
+            BuildMoves possibleBuildMoves,
+            BoardState boardState)
         {
             Check = check;
             CheckMate = checkMate;
@@ -21,12 +24,12 @@ namespace Models.State.GameState
             BoardState = boardState;
         }
 
-        public BoardState BoardState { get; set; }
-        public bool Check { get; set; }
-        public bool CheckMate { get; set; }
-        public PlayerState.PlayerState PlayerState { get; set; }
-        public IDictionary<Position, List<Position>> PossiblePieceMoves { get; set; }
-        public BuildMoves PossibleBuildMoves { get; set; }
+        public BoardState BoardState { get; }
+        public bool Check { get; }
+        public bool CheckMate { get; }
+        public PlayerState.PlayerState PlayerState { get; }
+        public IDictionary<Position, List<Position>> PossiblePieceMoves { get; }
+        public BuildMoves PossibleBuildMoves { get; }
 
         public object Clone()
         {

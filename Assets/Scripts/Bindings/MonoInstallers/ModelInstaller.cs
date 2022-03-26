@@ -14,7 +14,6 @@ namespace Bindings.MonoInstallers
             BoardInfoInstaller.Install(Container);
 
             // Build
-            BuilderInstaller.Install(Container);
             BuildPointsCalculatorInstaller.Install(Container);
             BuildResolverInstaller.Install(Container);
             BuildValidatorInstaller.Install(Container);
@@ -27,7 +26,6 @@ namespace Bindings.MonoInstallers
             MovesGeneratorInstaller.Install(Container);
             MovesGeneratorRepositoryInstaller.Install(Container);
             MoveValidatorInstaller.Install(Container);
-            PieceMoverInstaller.Install(Container);
             PinnedPieceFilterInstaller.Install(Container);
             PositionTranslatorInstaller.Install(Container);
             PossibleMovesFactoryInstaller.Install(Container);

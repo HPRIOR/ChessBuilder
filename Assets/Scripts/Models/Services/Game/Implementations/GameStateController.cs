@@ -6,19 +6,23 @@ using Models.State.PieceState;
 
 namespace Models.Services.Game.Implementations
 {
+    /*
+     * GamestateUpdater should be return new game state, and game state should become immutable.
+     * Keeping track of the current and historical game states will be the responsibility of this class
+     */
     public sealed class GameStateController : IGameStateController, ITurnEventInvoker
     {
         private readonly GameInitializer _gameInitializer;
         private readonly GameStateUpdaterFactory _gameStateUpdaterFactory;
         private IGameStateUpdater _gameStateUpdater;
-
+        
 
         public GameStateController(
-            GameStateUpdaterFactory gameStateUpdaterFactory, GameInitializer gameInitializer
+            IGameStateUpdater gameStateUpdater, GameInitializer gameInitializer
         )
         {
             _gameInitializer = gameInitializer;
-            _gameStateUpdaterFactory = gameStateUpdaterFactory;
+            _gameStateUpdater = gameStateUpdater;
             Turn = PieceColour.White;
         }
 
@@ -36,7 +40,6 @@ namespace Models.Services.Game.Implementations
         public void RevertGameState()
         {
             Turn = NextTurn();
-            _gameStateUpdater.RevertGameState();
         }
 
 
@@ -44,8 +47,8 @@ namespace Models.Services.Game.Implementations
         {
             Turn = NextTurn();
             var previousBoardState = CurrentGameState?.BoardState.Clone();
-            _gameStateUpdater.UpdateGameState(from, to, Turn);
-            CurrentGameState = _gameStateUpdater.GameState;
+            
+            CurrentGameState = _gameStateUpdater.UpdateGameState(@from, to, Turn);
             GameStateChangeEvent?.Invoke(previousBoardState, CurrentGameState.BoardState);
         }
 
@@ -53,9 +56,8 @@ namespace Models.Services.Game.Implementations
         {
             Turn = NextTurn();
             var previousBoardState = CurrentGameState?.BoardState.Clone();
-            _gameStateUpdater.UpdateGameState(buildPosition, piece, Turn);
-            CurrentGameState = _gameStateUpdater.GameState;
-
+            
+            CurrentGameState = _gameStateUpdater.UpdateGameState(buildPosition, piece, Turn);
             GameStateChangeEvent?.Invoke(previousBoardState, CurrentGameState.BoardState);
         }
 

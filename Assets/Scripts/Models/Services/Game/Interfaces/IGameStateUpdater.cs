@@ -7,12 +7,8 @@ namespace Models.Services.Game.Interfaces
 {
     public interface IGameStateUpdater
     {
-        GameState GameState { get; }
-        Stack<GameStateChanges> StateHistory { get; }
-        void RevertGameState();
-        void UpdateGameState(Position from, Position to, PieceColour turn);
-
-        void UpdateGameState(Position buildPosition, PieceType piece,
+        GameState UpdateGameState(Position @from, Position to, PieceColour turn);
+        GameState UpdateGameState(Position buildPosition, PieceType piece,
             PieceColour turn);
     }
 }

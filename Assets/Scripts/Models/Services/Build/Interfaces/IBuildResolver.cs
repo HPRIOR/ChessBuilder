@@ -6,6 +6,6 @@ namespace Models.Services.Build.Interfaces
 {
     public interface IBuildResolver
     {
-        public IEnumerable<(Position, PieceType)> ResolveBuilds(BoardState boardState, PieceColour turn);
+        public void ResolveBuilds(BoardState boardState, PieceColour turn);
     }
 }

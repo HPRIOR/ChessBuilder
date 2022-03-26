@@ -9,10 +9,9 @@ namespace Models.Services.Build.Utils
 {
     public sealed class BuildResolver : IBuildResolver
     {
-        public IEnumerable<(Position, PieceType)> ResolveBuilds(BoardState boardState, PieceColour turn)
+        public void ResolveBuilds(BoardState boardState, PieceColour turn)
         {
             var activeBuildPositions = boardState.ActiveBuilds.ToArray();
-            var resolvedBuilds = new List<(Position, PieceType)>();
 
             for (int i = 0; i < activeBuildPositions.Length; i++)
             {
@@ -30,12 +29,9 @@ namespace Models.Services.Build.Utils
 
                     tile.CurrentPiece = tile.BuildTileState.BuildingPiece;
                     tile.BuildTileState = new BuildTileState(); // reset build state
-
-                    resolvedBuilds.Add((tile.Position, tile.CurrentPiece));
                 }
             }
 
-            return resolvedBuilds;
         }
     }
 }

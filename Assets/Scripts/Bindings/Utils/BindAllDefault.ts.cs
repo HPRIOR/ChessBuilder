@@ -23,7 +23,6 @@ namespace Bindings.Utils
             PositionTranslatorInstaller.Install(container);
             BoardScannerInstaller.Install(container);
             MoveValidatorInstaller.Install(container);
-            PieceMoverInstaller.Install(container);
             PieceFactoryInstaller.Install(container);
             MovesGeneratorInstaller.Install(container);
             MovesGeneratorRepositoryInstaller.Install(container);
@@ -34,7 +33,6 @@ namespace Bindings.Utils
             GameOverEvalInstaller.Install(container);
             GameStateUpdaterInstaller.Install(container);
             GameInitializerInstaller.Install(container);
-            BuilderInstaller.Install(container);
             BuildStateDecrementorInstaller.Install(container);
             CheckedStateManagerInstaller.Install(container);
         }

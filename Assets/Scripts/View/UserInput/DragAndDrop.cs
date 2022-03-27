@@ -15,19 +15,15 @@ namespace View.UserInput
         private ICommandInvoker _commandInvoker;
         private bool _isDragging;
         private MoveCommandFactory _moveCommandFactory;
-        private AiMoveCommandFactory _aiMoveCommandFactory;
         private PieceSpawner _piece;
         private SpriteRenderer _spriteRenderer;
-        [Inject(Id = "AiToggle")] private bool _aiEnabled;
 
 
         [Inject]
-        public void Construct(ICommandInvoker commandInvoker, MoveCommandFactory moveCommandFactory,
-            AiMoveCommandFactory aiMoveCommandFactory)
+        public void Construct(ICommandInvoker commandInvoker, MoveCommandFactory moveCommandFactory )
         {
             _commandInvoker = commandInvoker;
             _moveCommandFactory = moveCommandFactory;
-            _aiMoveCommandFactory = aiMoveCommandFactory;
         }
 
         private void Start()
@@ -58,15 +54,10 @@ namespace View.UserInput
             var nearestBoardPosition = NearestBoardPosFinder.GetNearestBoardPosition(currentMousePosition);
 
             var moveCommand = _moveCommandFactory.Create(_piece.Position, nearestBoardPosition);
-            var moveCommandIsValid = moveCommand.IsValid(peak: true);
             _commandInvoker.AddCommand(
                 moveCommand
             );
-            // this is called within the same game loop and is causing problems with Destroy 
-            if (moveCommandIsValid & _aiEnabled)
-            {
-                _commandInvoker.AddCommand(_aiMoveCommandFactory.Create());
-            }
+            
             _isDragging = false;
         }
 

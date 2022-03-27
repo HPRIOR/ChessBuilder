@@ -6,15 +6,11 @@ using Models.State.PieceState;
 
 namespace Models.Services.Game.Implementations
 {
-    /*
-     * GamestateUpdater should be return new game state, and game state should become immutable.
-     * Keeping track of the current and historical game states will be the responsibility of this class
-     */
+    
     public sealed class GameStateController : IGameStateController, ITurnEventInvoker
     {
         private readonly GameInitializer _gameInitializer;
-        private readonly GameStateUpdaterFactory _gameStateUpdaterFactory;
-        private IGameStateUpdater _gameStateUpdater;
+        private readonly IGameStateUpdater _gameStateUpdater;
         
 
         public GameStateController(
@@ -31,14 +27,14 @@ namespace Models.Services.Game.Implementations
 
         public void InitializeGame(BoardState boardState)
         {
-            // pass this GameState to GameStateUpdater
             CurrentGameState = _gameInitializer.InitialiseGame(boardState);
-            _gameStateUpdater = _gameStateUpdaterFactory.Create(CurrentGameState);
+            _gameStateUpdater.SetInitialGameState(CurrentGameState);
             RetainBoardState();
         }
 
         public void RevertGameState()
         {
+            CurrentGameState = _gameStateUpdater.RevertGameState();
             Turn = NextTurn();
         }
 
@@ -48,7 +44,7 @@ namespace Models.Services.Game.Implementations
             Turn = NextTurn();
             var previousBoardState = CurrentGameState?.BoardState.Clone();
             
-            CurrentGameState = _gameStateUpdater.UpdateGameState(@from, to, Turn);
+            CurrentGameState = _gameStateUpdater.UpdateGameState(from, to, Turn);
             GameStateChangeEvent?.Invoke(previousBoardState, CurrentGameState.BoardState);
         }
 

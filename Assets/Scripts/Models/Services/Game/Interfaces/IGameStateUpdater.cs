@@ -10,5 +10,9 @@ namespace Models.Services.Game.Interfaces
         GameState UpdateGameState(Position @from, Position to, PieceColour turn);
         GameState UpdateGameState(Position buildPosition, PieceType piece,
             PieceColour turn);
+
+        GameState RevertGameState();
+
+        void SetInitialGameState(GameState gameState);
     }
 }

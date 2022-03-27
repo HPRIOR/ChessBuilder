@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Models.Services.Build.Interfaces;
 using Models.Services.Game.Interfaces;
 using Models.Services.Moves.Interfaces;
@@ -8,6 +9,7 @@ using Models.State.GameState;
 using Models.State.MoveState;
 using Models.State.PieceState;
 using Models.State.PlayerState;
+using Models.Utils.ExtensionMethods.PieceTypeExt;
 
 namespace Models.Services.Game.Implementations
 {
@@ -16,49 +18,47 @@ namespace Models.Services.Game.Implementations
         // TODO: inject me 
         private const int MaxBuildPoints = 39;
         private readonly IBuildMoveGenerator _buildMoveGenerator;
-        private readonly IBuildPointsCalculator _buildPointsCalculator;
-        private readonly IBuildResolver _buildResolver;
         private readonly IGameOverEval _gameOverEval;
         private readonly IMovesGenerator _movesGenerator;
 
         public GameStateUpdater(
             IMovesGenerator movesGenerator,
             IBuildMoveGenerator buildMoveGenerator,
-            IBuildPointsCalculator buildPointsCalculator,
-            IBuildResolver buildResolver,
             IGameOverEval gameOverEval
         )
         {
             _movesGenerator = movesGenerator;
             _buildMoveGenerator = buildMoveGenerator;
-            _buildPointsCalculator = buildPointsCalculator;
-            _buildResolver = buildResolver;
             _gameOverEval = gameOverEval;
         }
 
         private readonly Stack<GameState> _gameStateHistory = new Stack<GameState>();
 
+        public GameState RevertGameState() =>
+            _gameStateHistory.Count > 1 ? _gameStateHistory.Pop() : _gameStateHistory.Peek();
+
+        public void SetInitialGameState(GameState gameState)
+        {
+            _gameStateHistory.Push(gameState);
+        }
+
         public GameState UpdateGameState(Position from, Position to, PieceColour turn)
         {
             var previousGameState = _gameStateHistory.Peek();
-            var newBoardState = GenerateNewBoardStateWithMove(previousGameState.BoardState, from, to);
+            var newBoardState = previousGameState.BoardState.WithMove(from, to, turn);
             return UpdateGameState(turn, newBoardState);
         }
 
         public GameState UpdateGameState(Position buildPosition, PieceType piece, PieceColour turn)
         {
             var previousGameState = _gameStateHistory.Peek();
-            var newBoardState = GenerateNewBoardStateWithBuild(previousGameState.BoardState, buildPosition, piece);
+            var newBoardState = previousGameState.BoardState.WithBuild(buildPosition, piece, turn);
             return UpdateGameState(turn, newBoardState);
         }
 
 
         private GameState UpdateGameState(PieceColour turn, BoardState boardState)
         {
-            // opposite turn from current needs to be passed to build resolver 
-            // this is due to builds being resolved at the end of a players turn - not the start of their turn
-            _buildResolver.ResolveBuilds(boardState, NextTurn(turn));
-
             var playerState = GetPlayerState(boardState, turn);
             var moveState = _movesGenerator.GetPossibleMoves(boardState, turn);
 
@@ -89,38 +89,58 @@ namespace Models.Services.Game.Implementations
                 : _buildMoveGenerator.GetPossibleBuildMoves(newBoardState, turn, relevantPlayerState);
 
         private PlayerState GetPlayerState(BoardState newBoardState, PieceColour turn)
-            => _buildPointsCalculator.CalculateBuildPoints(turn, newBoardState, MaxBuildPoints);
+            => CalculateBuildPoints(turn, newBoardState, MaxBuildPoints);
 
         private static PieceColour NextTurn(PieceColour turn) =>
             turn == PieceColour.White ? PieceColour.Black : PieceColour.White;
 
-        private BoardState GenerateNewBoardStateWithBuild(BoardState boardState, Position buildPosition,
-            PieceType piece)
+        private void ResolveBuilds(BoardState boardState, PieceColour turn)
         {
-            // add build positions to active pieces 
-            boardState.ActiveBuilds.Add(buildPosition);
+            var activeBuildPositions = boardState.ActiveBuilds.ToArray();
 
-            // modify board state 
-            boardState.Board[buildPosition.X][buildPosition.Y].BuildTileState = new BuildTileState(piece);
+            for (int i = 0; i < activeBuildPositions.Length; i++)
+            {
+                var pos = activeBuildPositions[i];
+                ref var tile = ref boardState.GetTileAt(pos);
+                var canBuild = tile.BuildTileState.Turns == 0 &&
+                               tile.BuildTileState.BuildingPiece != PieceType.NullPiece &&
+                               tile.CurrentPiece == PieceType.NullPiece &&
+                               tile.BuildTileState.BuildingPiece.Colour() == turn;
+                if (canBuild)
+                {
+                    // Account for new active piece in active builds and pieces
+                    boardState.ActiveBuilds.Remove(tile.Position);
+                    boardState.ActivePieces.Add(tile.Position);
+
+                    // tile.CurrentPiece = tile.BuildTileState.BuildingPiece;
+                    // tile.BuildTileState = new BuildTileState(); // reset build state
+                }
+            }
         }
 
-        private BoardState GenerateNewBoardStateWithMove(BoardState boardState, Position from,
-            Position destination)
+        private PlayerState CalculateBuildPoints(PieceColour pieceColour, BoardState boardState,
+            int maxPoints)
         {
-            ref var destinationTile = ref boardState.GetTileAt(destination);
-            ref var fromTile = ref boardState.GetTileAt(from);
+            var result = 0;
+            var activeBuilds = boardState.ActiveBuilds;
+            var activePieces = boardState.ActivePieces;
+            var activePositions = activeBuilds.Union(activePieces);
 
-            var isTakingMove = destinationTile.CurrentPiece != PieceType.NullPiece;
+            foreach (var pos in activePositions)
+            {
+                ref var tile = ref boardState.GetTileAt(pos);
+                var pieceIsOfColourType = tile.CurrentPiece.Colour() == pieceColour &&
+                                          tile.CurrentPiece != PieceType.NullPiece;
+                if (pieceIsOfColourType)
+                    result += tile.CurrentPiece.Value();
 
-            boardState.ActivePieces.Remove(from);
-            if (!isTakingMove)
-                boardState.ActivePieces.Add(destination);
+                var pieceOfColourIsBeingBuilt = tile.BuildTileState.BuildingPiece != PieceType.NullPiece &&
+                                                tile.BuildTileState.BuildingPiece.Colour() == pieceColour;
+                if (pieceOfColourIsBeingBuilt)
+                    result += tile.BuildTileState.BuildingPiece.Value();
+            }
 
-            // swap pieces
-            destinationTile.CurrentPiece = fromTile.CurrentPiece;
-            fromTile.CurrentPiece = PieceType.NullPiece;
-
-            // return nothing 
+            return new PlayerState(maxPoints - result);
         }
     }
 }

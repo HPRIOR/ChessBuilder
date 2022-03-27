@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Models.State.BuildState;
 using Models.State.PieceState;
 
 namespace Models.State.Board
@@ -62,6 +63,51 @@ namespace Models.State.Board
             }
         }
 
+        public BoardState WithBuild(Position buildPosition, PieceType piece, PieceColour turn)
+        {
+            var newBoard = new Tile[8][];
+            for (var i = 0; i < 8; i++)
+            {
+                newBoard[i] = new Tile[8];
+                for (var j = 0; j < 8; j++)
+                {
+                    if (buildPosition.X == i && buildPosition.Y == j)
+                        newBoard[i][j] = Board[i][j].WithBuild(piece);
+                    else
+                        newBoard[i][j] = Board[i][j].WithDecrementedBuildState(turn);
+                }
+            }
+
+            return new BoardState(newBoard);
+        }
+
+        public BoardState WithMove(Position from, Position destination, PieceColour turn)
+        {
+            var newBoard = new Tile[8][];
+            for (var i = 0; i < 8; i++)
+            {
+                newBoard[i] = new Tile[8];
+                for (var j = 0; j < 8; j++)
+                {
+                    var movedPiece = Board[from.X][from.Y].CurrentPiece;
+                    if (from.X == i && from.Y == j)
+                    {
+                        newBoard[i][j] = Board[i][j].WithPiece(PieceType.NullPiece, turn);
+                    }
+                    else if (destination.X == i && destination.Y == j)
+                    {
+                        newBoard[i][j] = Board[i][j].WithPiece(movedPiece, turn);
+                    }
+                    else
+                    {
+                        newBoard[i][j] = Board[i][j].WithDecrementedBuildState(turn);
+                    }
+                }
+            }
+
+            return new BoardState(newBoard);
+        }
+
         public BoardState Clone()
         {
             var newBoard = new Tile[8][];
@@ -70,19 +116,6 @@ namespace Models.State.Board
                 newBoard[i] = new Tile[8];
                 for (var j = 0; j < 8; j++)
                     newBoard[i][j] = Board[i][j].Clone();
-            }
-
-            return new BoardState(newBoard, new List<Position>(ActivePieces), new List<Position>(ActiveBuilds));
-        }
-
-        public BoardState CloneWithDecrementBuildState()
-        {
-            var newBoard = new Tile[8][];
-            for (var i = 0; i < 8; i++)
-            {
-                newBoard[i] = new Tile[8];
-                for (var j = 0; j < 8; j++)
-                    newBoard[i][j] = Board[i][j].CloneWithDecrementBuildState();
             }
 
             return new BoardState(newBoard, new List<Position>(ActivePieces), new List<Position>(ActiveBuilds));

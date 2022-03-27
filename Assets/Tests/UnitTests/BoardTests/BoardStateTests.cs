@@ -46,7 +46,7 @@ namespace Tests.UnitTests.BoardTests
         {
             var boardState = GetBoardState();
 
-            Assert.IsNotNull(boardState.GetTileAt(0,0));
+            Assert.IsNotNull(boardState.GetTileAt(0, 0));
         }
 
 
@@ -56,7 +56,7 @@ namespace Tests.UnitTests.BoardTests
         )
         {
             var boardState = GetBoardState();
-            Assert.AreEqual(new Position(x, y), boardState.GetTileAt(x,y).Position);
+            Assert.AreEqual(new Position(x, y), boardState.GetTileAt(x, y).Position);
         }
 
         [Test]
@@ -65,7 +65,7 @@ namespace Tests.UnitTests.BoardTests
         )
         {
             var boardState = GetBoardState();
-            Assert.AreEqual(boardState.GetTileAt(x,y).Position, new Position(x, y));
+            Assert.AreEqual(boardState.GetTileAt(x, y).Position, new Position(x, y));
         }
 
         [Test]
@@ -74,21 +74,21 @@ namespace Tests.UnitTests.BoardTests
         )
         {
             var boardState = GetBoardState();
-            Assert.AreEqual(PieceType.NullPiece, boardState.GetTileAt(x,y).CurrentPiece);
+            Assert.AreEqual(PieceType.NullPiece, boardState.GetTileAt(x, y).CurrentPiece);
         }
 
         [Test]
         public void BoardContains_BuildStateWithNullPiece()
         {
             var boardState = GetBoardState();
-            Assert.AreEqual(PieceType.NullPiece, boardState.GetTileAt(1,1).BuildTileState.BuildingPiece);
+            Assert.AreEqual(PieceType.NullPiece, boardState.GetTileAt(1, 1).BuildTileState.BuildingPiece);
         }
 
         [Test]
         public void BoardContains_BuildStateWithZeroTurns()
         {
             var boardState = GetBoardState();
-            Assert.AreEqual(0, boardState.GetTileAt(1,1).BuildTileState.Turns);
+            Assert.AreEqual(0, boardState.GetTileAt(1, 1).BuildTileState.Turns);
         }
 
         [Test]
@@ -97,19 +97,21 @@ namespace Tests.UnitTests.BoardTests
         )
         {
             var boardState = GetBoardState();
-            Assert.AreEqual(boardState.GetTileAt(x,y).Position.GetVector(),
+            Assert.AreEqual(boardState.GetTileAt(x, y).Position.GetVector(),
                 new Vector2(x + 0.5f, y + 0.5f));
         }
 
         [Test]
         public void ActivePiecesAreCorrect()
         {
-            var board = _boardGenerator.GenerateBoard();
-            board[1][1].CurrentPiece = PieceType.BlackBishop;
-            board[2][2].CurrentPiece = PieceType.BlackBishop;
-            board[3][3].CurrentPiece = PieceType.BlackBishop;
-            board[4][4].CurrentPiece = PieceType.BlackBishop;
-            var boardState = new BoardState(board);
+            var piecesDict = new Dictionary<Position, PieceType>()
+            {
+                { new Position(1, 1), PieceType.BlackBishop },
+                { new Position(2, 2), PieceType.BlackBishop },
+                { new Position(3, 3), PieceType.BlackBishop },
+                { new Position(4, 4), PieceType.BlackBishop },
+            };
+            var boardState = new BoardState(piecesDict);
 
             var expected = new HashSet<Position>
             {
@@ -125,12 +127,14 @@ namespace Tests.UnitTests.BoardTests
         [Test]
         public void ActiveBuildsAreCorrect()
         {
-            var board = _boardGenerator.GenerateBoard();
-            board[1][1].BuildTileState = new BuildTileState(PieceType.BlackBishop);
-            board[2][2].BuildTileState = new BuildTileState(PieceType.BlackBishop);
-            board[3][3].BuildTileState = new BuildTileState(PieceType.WhiteBishop);
-            board[4][4].BuildTileState = new BuildTileState(PieceType.WhiteBishop);
-            var boardState = new BoardState(board);
+            var pieceDict = new Dictionary<Position, (PieceType, BuildTileState)>()
+            {
+                { new Position(1, 1), (PieceType.NullPiece,new BuildTileState(PieceType.BlackBishop)) },
+                { new Position(2, 2), (PieceType.NullPiece,new BuildTileState(PieceType.BlackBishop)) },
+                { new Position(3, 3), (PieceType.NullPiece,new BuildTileState(PieceType.WhiteBishop)) },
+                { new Position(4, 4), (PieceType.NullPiece,new BuildTileState(PieceType.WhiteBishop)) },
+            };
+            var boardState = new BoardState(pieceDict);
 
             var expected = new HashSet<Position>
             {

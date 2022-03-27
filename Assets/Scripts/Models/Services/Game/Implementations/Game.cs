@@ -1,6 +1,8 @@
-﻿using Models.Services.Board;
+﻿using System.Collections.Generic;
+using Models.Services.Board;
 using Models.Services.Game.Interfaces;
 using Models.State.Board;
+using Models.State.BuildState;
 using Models.State.PieceState;
 using UnityEngine;
 using Zenject;
@@ -9,7 +11,6 @@ namespace Models.Services.Game.Implementations
 {
     public sealed class Game : MonoBehaviour
     {
-        private IBoardGenerator _boardGenerator;
         private IGameStateController GameStateController { get; set; }
 
         public void Start()
@@ -23,43 +24,44 @@ namespace Models.Services.Game.Implementations
             IBoardGenerator boardGenerator
         )
         {
-            _boardGenerator = boardGenerator;
             GameStateController = initStateController;
         }
 
         private BoardState InitBoard()
         {
-            var board = _boardGenerator.GenerateBoard();
-            board[6][7].CurrentPiece = PieceType.BlackKing;
-            board[5][7].CurrentPiece = PieceType.BlackRook;
-            board[3][7].CurrentPiece = PieceType.BlackQueen;
-            board[0][7].CurrentPiece = PieceType.BlackRook;
-            board[1][6].CurrentPiece = PieceType.BlackPawn;
-            board[3][6].CurrentPiece = PieceType.BlackBishop;
-            board[5][6].CurrentPiece = PieceType.BlackPawn;
-            board[6][6].CurrentPiece = PieceType.BlackPawn;
-            board[7][6].CurrentPiece = PieceType.BlackPawn;
-            board[0][5].CurrentPiece = PieceType.BlackPawn;
-            board[2][5].CurrentPiece = PieceType.BlackKnight;
-            board[4][5].CurrentPiece = PieceType.BlackPawn;
-            board[5][5].CurrentPiece = PieceType.BlackKnight;
-            board[3][4].CurrentPiece = PieceType.BlackPawn;
+            var piecesDict = new Dictionary<Position, PieceType>()
+            {
+                { new Position(6, 7), PieceType.BlackKing },
+                { new Position(5, 7), PieceType.BlackRook },
+                { new Position(3, 7), PieceType.BlackQueen },
+                { new Position(0, 7), PieceType.BlackRook },
+                { new Position(1, 6), PieceType.BlackPawn },
+                { new Position(3, 6), PieceType.BlackBishop },
+                { new Position(5, 6), PieceType.BlackPawn },
+                { new Position(6, 6), PieceType.BlackPawn },
+                { new Position(7, 6), PieceType.BlackPawn },
+                { new Position(0, 5), PieceType.BlackPawn },
+                { new Position(2, 5), PieceType.BlackKnight },
+                { new Position(4, 5), PieceType.BlackPawn },
+                { new Position(5, 5), PieceType.BlackKnight },
+                { new Position(3, 4), PieceType.BlackPawn },
 
-            board[6][0].CurrentPiece = PieceType.WhiteKing;
-            board[4][0].CurrentPiece = PieceType.WhiteRook;
-            board[3][0].CurrentPiece = PieceType.WhiteRook;
-            board[1][1].CurrentPiece = PieceType.WhitePawn;
-            board[5][1].CurrentPiece = PieceType.WhitePawn;
-            board[6][1].CurrentPiece = PieceType.WhitePawn;
-            board[0][2].CurrentPiece = PieceType.WhitePawn;
-            board[2][2].CurrentPiece = PieceType.WhiteKnight;
-            board[3][2].CurrentPiece = PieceType.WhiteQueen;
-            board[5][2].CurrentPiece = PieceType.WhiteKnight;
-            board[7][2].CurrentPiece = PieceType.WhitePawn;
-            board[1][3].CurrentPiece = PieceType.WhitePawn;
-            board[5][3].CurrentPiece = PieceType.WhiteBishop;
+                { new Position(6, 0), PieceType.WhiteKing },
+                { new Position(4, 0), PieceType.WhiteRook },
+                { new Position(3, 0), PieceType.WhiteRook },
+                { new Position(1, 1), PieceType.WhitePawn },
+                { new Position(5, 1), PieceType.WhitePawn },
+                { new Position(6, 1), PieceType.WhitePawn },
+                { new Position(0, 2), PieceType.WhitePawn },
+                { new Position(2, 2), PieceType.WhiteKnight },
+                { new Position(3, 2), PieceType.WhiteQueen },
+                { new Position(5, 2), PieceType.WhiteKnight },
+                { new Position(7, 2), PieceType.WhitePawn },
+                { new Position(1, 3), PieceType.WhitePawn },
+                { new Position(5, 3), PieceType.WhiteBishop },
+            };
 
-            return new BoardState(board);
+            return new BoardState(piecesDict);
         }
     }
 }

@@ -51,10 +51,16 @@ namespace Tests.UnitTests.Game
         [Test]
         public void BoardStateIsUpdated_WhenPassedBoardState()
         {
-            var board = _boardGenerator.GenerateBoard();
-            board[1][1].CurrentPiece = PieceType.BlackKing;
-            board[7][7].CurrentPiece = PieceType.WhiteKing;
-            var initialBoardState = new BoardState(board);
+            var pieceDict = new Dictionary<Position, PieceType>()
+            {
+                {
+                    new Position(1, 1), PieceType.BlackKing
+                },
+                {
+                    new Position(7, 7), PieceType.WhiteKing
+                }
+            };
+            var initialBoardState = new BoardState(pieceDict);
             _gameStateController.InitializeGame(initialBoardState);
 
             Assert.AreSame(initialBoardState, _gameStateController.CurrentGameState.BoardState);
@@ -71,10 +77,16 @@ namespace Tests.UnitTests.Game
             Debug.Assert(turnEventInvoker != null, nameof(turnEventInvoker) + " != null");
             turnEventInvoker.GameStateChangeEvent += MockFunc;
 
-            var board = _boardGenerator.GenerateBoard();
-            board[1][1].CurrentPiece = PieceType.BlackKing;
-            board[7][7].CurrentPiece = PieceType.WhiteKing;
-            var boardState = new BoardState(board);
+            var pieceDict = new Dictionary<Position, PieceType>()
+            {
+                {
+                    new Position(1, 1), PieceType.BlackKing
+                },
+                {
+                    new Position(7, 7), PieceType.WhiteKing
+                }
+            };
+            var boardState = new BoardState(pieceDict);
             _gameStateController.InitializeGame(boardState);
 
             Assert.AreEqual(1, count);
@@ -83,12 +95,18 @@ namespace Tests.UnitTests.Game
         [Test]
         public void WhenInCheck_NoBuildMovesAvailable()
         {
-            var board = _boardGenerator.GenerateBoard();
+            var pieceDict = new Dictionary<Position, PieceType>()
+            {
+                {
+                    new Position(4, 4), PieceType.WhiteKing
+                },
+                {
+                    new Position(6, 0), PieceType.BlackQueen
+                }
+            };
 
-            board[4][4].CurrentPiece = PieceType.WhiteKing;
-            board[6][0].CurrentPiece = PieceType.BlackQueen;
             var initialBoardState =
-                new BoardState(board);
+                new BoardState(pieceDict);
             _gameStateController.InitializeGame(initialBoardState);
 
             _gameStateController.UpdateGameState(new Position(4, 4), new Position(5, 4));
@@ -107,12 +125,18 @@ namespace Tests.UnitTests.Game
         public void ResolvesBuildsOnBoard()
         {
             // setup board
-            var board = _boardGenerator.GenerateBoard();
-            board[1][1].CurrentPiece = PieceType.WhiteKing;
-            board[7][7].CurrentPiece = PieceType.BlackKing;
-            board[4][4].BuildTileState = new BuildTileState(0, PieceType.WhitePawn);
+            var pieceDict = new Dictionary<Position, (PieceType, BuildTileState)>()
+            {
+                {
+                    new Position(1, 1), (PieceType.WhiteKing, new BuildTileState())
+                },
+                {
+                    new Position(7, 7), (PieceType.BlackKing, new BuildTileState())
+                },
+                { new Position(4, 4), (PieceType.NullPiece, new BuildTileState(0, PieceType.WhitePawn)) }
+            };
 
-            var initialBoardState = new BoardState(board);
+            var initialBoardState = new BoardState(pieceDict);
 
             // Initialise board state
             _gameStateController.InitializeGame(initialBoardState);
@@ -120,7 +144,7 @@ namespace Tests.UnitTests.Game
             //Make white turn
             _gameStateController.UpdateGameState(new Position(1, 1), new Position(2, 2));
 
-            Assert.That(_gameStateController.CurrentGameState.BoardState.GetTileAt(4,4).CurrentPiece,
+            Assert.That(_gameStateController.CurrentGameState.BoardState.GetTileAt(4, 4).CurrentPiece,
                 Is.EqualTo(PieceType.WhitePawn));
         }
 
@@ -129,17 +153,22 @@ namespace Tests.UnitTests.Game
         public void BuildIsBlocked_ByFriendlyPiece()
         {
             // setup board
-            var board = _boardGenerator.GenerateBoard();
-            board[4][4].CurrentPiece = PieceType.WhiteKing;
-            board[7][7].CurrentPiece = PieceType.BlackKing;
-            board[4][4].BuildTileState = new BuildTileState(PieceType.WhitePawn);
+            var pieceDict = new Dictionary<Position, ( PieceType, BuildTileState )>()
+            {
+                {
+                    new Position(4, 4), (PieceType.WhiteKing, new BuildTileState(PieceType.WhitePawn))
+                },
+                {
+                    new Position(7, 7), (PieceType.BlackKing, new BuildTileState())
+                }
+            };
 
-            var initialBoardState = new BoardState(board);
+            var initialBoardState = new BoardState(pieceDict);
 
             //generate initial game state
             _gameStateController.InitializeGame(initialBoardState);
 
-            Assert.That(_gameStateController.CurrentGameState.BoardState.GetTileAt(4,4).CurrentPiece,
+            Assert.That(_gameStateController.CurrentGameState.BoardState.GetTileAt(4, 4).CurrentPiece,
                 Is.EqualTo(PieceType.WhiteKing));
         }
 
@@ -148,17 +177,22 @@ namespace Tests.UnitTests.Game
         public void BuildIsBlocked_ByOpposingPiece()
         {
             // setup board
-            var board = _boardGenerator.GenerateBoard();
-            board[4][4].CurrentPiece = PieceType.BlackKing;
-            board[7][7].CurrentPiece = PieceType.WhiteKing;
-            board[4][4].BuildTileState = new BuildTileState(PieceType.WhitePawn);
+            var pieceDict = new Dictionary<Position, (PieceType, BuildTileState)>()
+            {
+                {
+                    new Position(4, 4), (PieceType.BlackKing, new BuildTileState())
+                },
+                {
+                    new Position(7, 7), (PieceType.WhiteKing, new BuildTileState(PieceType.WhitePawn))
+                }
+            };
 
-            var initialBoardState = new BoardState(board);
+            var initialBoardState = new BoardState(pieceDict);
 
             //generate initial game state
             _gameStateController.InitializeGame(initialBoardState);
 
-            Assert.That(_gameStateController.CurrentGameState.BoardState.GetTileAt(4,4).CurrentPiece,
+            Assert.That(_gameStateController.CurrentGameState.BoardState.GetTileAt(4, 4).CurrentPiece,
                 Is.EqualTo(PieceType.BlackKing));
         }
 
@@ -167,12 +201,17 @@ namespace Tests.UnitTests.Game
         public void BuildIsBlockedByOpposingPiece_ButRemainsInBuildingState()
         {
             // setup board
-            var board = _boardGenerator.GenerateBoard();
-            board[7][7].CurrentPiece = PieceType.WhiteKing;
-            board[4][4].CurrentPiece = PieceType.BlackKing;
-            board[4][4].BuildTileState = new BuildTileState(PieceType.WhitePawn);
+            var pieceDict = new Dictionary<Position, (PieceType, BuildTileState)>()
+            {
+                {
+                    new Position(7, 7), (PieceType.WhiteKing, new BuildTileState())
+                },
+                {
+                    new Position(4, 4), (PieceType.BlackKing, new BuildTileState(PieceType.WhitePawn))
+                }
+            };
 
-            var initialBoardState = new BoardState(board);
+            var initialBoardState = new BoardState(pieceDict);
 
             //generate initial game state
             _gameStateController.InitializeGame(initialBoardState);
@@ -180,10 +219,10 @@ namespace Tests.UnitTests.Game
             // iterate through game state
             _gameStateController.UpdateGameState(new Position(3, 3), new Position(3, 3)); // pseudo-move
 
-            Assert.That(_gameStateController.CurrentGameState.BoardState.GetTileAt(4,4).BuildTileState.Turns,
+            Assert.That(_gameStateController.CurrentGameState.BoardState.GetTileAt(4, 4).BuildTileState.Turns,
                 Is.EqualTo(0));
             Assert.That(
-                _gameStateController.CurrentGameState.BoardState.GetTileAt(4,4).BuildTileState.BuildingPiece,
+                _gameStateController.CurrentGameState.BoardState.GetTileAt(4, 4).BuildTileState.BuildingPiece,
                 Is.EqualTo(PieceType.WhitePawn));
         }
 
@@ -192,12 +231,17 @@ namespace Tests.UnitTests.Game
         public void BuildIsBlockedByFriendlyPiece_ButRemainsInBuildingState()
         {
             // setup board
-            var board = _boardGenerator.GenerateBoard();
-            board[4][4].CurrentPiece = PieceType.WhiteKing;
-            board[7][7].CurrentPiece = PieceType.BlackKing;
-            board[4][4].BuildTileState = new BuildTileState(PieceType.WhitePawn);
+            var pieceDict = new Dictionary<Position, (PieceType, BuildTileState)>()
+            {
+                {
+                    new Position(4, 4), (PieceType.WhiteKing, new BuildTileState(PieceType.WhitePawn))
+                },
+                {
+                    new Position(7, 7), (PieceType.BlackKing, new BuildTileState())
+                },
+            };
 
-            var initialBoardState = new BoardState(board);
+            var initialBoardState = new BoardState(pieceDict);
 
             //generate initial game state
             _gameStateController.InitializeGame(initialBoardState);
@@ -205,10 +249,10 @@ namespace Tests.UnitTests.Game
             //iterate through game state
             _gameStateController.UpdateGameState(new Position(3, 3), new Position(3, 3)); // pseudo-move
 
-            Assert.That(_gameStateController.CurrentGameState.BoardState.GetTileAt(4,4).BuildTileState.Turns,
+            Assert.That(_gameStateController.CurrentGameState.BoardState.GetTileAt(4, 4).BuildTileState.Turns,
                 Is.EqualTo(0));
             Assert.That(
-                _gameStateController.CurrentGameState.BoardState.GetTileAt(4,4).BuildTileState.BuildingPiece,
+                _gameStateController.CurrentGameState.BoardState.GetTileAt(4, 4).BuildTileState.BuildingPiece,
                 Is.EqualTo(PieceType.WhitePawn));
         }
 
@@ -217,11 +261,17 @@ namespace Tests.UnitTests.Game
         public void BuildStateIsReset_AfterResolving()
         {
             // setup board
-            var board = _boardGenerator.GenerateBoard();
-            board[0][0].CurrentPiece = PieceType.WhiteKing;
-            board[7][7].CurrentPiece = PieceType.BlackKing;
-            board[4][4].BuildTileState = new BuildTileState(0, PieceType.WhitePawn);
-            var initialState = new BoardState(board);
+            var pieceDict = new Dictionary<Position, (PieceType, BuildTileState)>()
+            {
+                {
+                    new Position(0, 0), (PieceType.WhiteKing, new BuildTileState())
+                },
+                {
+                    new Position(7, 7), (PieceType.BlackKing, new BuildTileState())
+                },
+                { new Position(4, 4), (PieceType.NullPiece, new BuildTileState(0, PieceType.WhitePawn)) }
+            };
+            var initialState = new BoardState(pieceDict);
 
             //generate initial game state
             _gameStateController.InitializeGame(initialState);
@@ -230,10 +280,10 @@ namespace Tests.UnitTests.Game
             //iterate through game state
             _gameStateController.UpdateGameState(new Position(0, 0), new Position(1, 1));
 
-            Assert.That(_gameStateController.CurrentGameState.BoardState.GetTileAt(4,4).BuildTileState.Turns,
+            Assert.That(_gameStateController.CurrentGameState.BoardState.GetTileAt(4, 4).BuildTileState.Turns,
                 Is.EqualTo(0));
             Assert.That(
-                _gameStateController.CurrentGameState.BoardState.GetTileAt(4,4).BuildTileState.BuildingPiece,
+                _gameStateController.CurrentGameState.BoardState.GetTileAt(4, 4).BuildTileState.BuildingPiece,
                 Is.EqualTo(PieceType.NullPiece));
         }
 
@@ -241,10 +291,16 @@ namespace Tests.UnitTests.Game
         public void BuildStateWillNotResolve_WhenOpposingTurn()
         {
             // setup board
-            var board = _boardGenerator.GenerateBoard();
-            board[7][7].CurrentPiece = PieceType.WhiteKing;
-            board[0][0].CurrentPiece = PieceType.BlackKing;
-            var initialBoardState = new BoardState(board);
+            var pieceDict = new Dictionary<Position, PieceType>()
+            {
+                {
+                    new Position(7, 7), PieceType.WhiteKing
+                },
+                {
+                    new Position(0, 0), PieceType.BlackKing
+                }
+            };
+            var initialBoardState = new BoardState(pieceDict);
 
             //generate initial game state
             _gameStateController.InitializeGame(initialBoardState);
@@ -254,9 +310,9 @@ namespace Tests.UnitTests.Game
 
             _gameStateController.UpdateGameState(new Position(0, 0), new Position(1, 1));
 
-            Assert.That(_gameStateController.CurrentGameState.BoardState.GetTileAt(4,4).BuildTileState.Turns,
+            Assert.That(_gameStateController.CurrentGameState.BoardState.GetTileAt(4, 4).BuildTileState.Turns,
                 Is.EqualTo(0));
-            Assert.That(_gameStateController.CurrentGameState.BoardState.GetTileAt(4,4).CurrentPiece,
+            Assert.That(_gameStateController.CurrentGameState.BoardState.GetTileAt(4, 4).CurrentPiece,
                 Is.EqualTo(PieceType.NullPiece));
         }
 
@@ -265,11 +321,19 @@ namespace Tests.UnitTests.Game
         public void BuildIsUnblocked_WhenBlockingPieceMoves()
         {
             // setup board
-            var board = _boardGenerator.GenerateBoard();
-            board[4][4].CurrentPiece = PieceType.WhiteKing;
-            board[7][0].CurrentPiece = PieceType.WhitePawn;
-            board[7][7].CurrentPiece = PieceType.BlackKing;
-            var initialBoardState = new BoardState(board);
+            var pieceDict = new Dictionary<Position, PieceType>()
+            {
+                {
+                    new Position(4, 4), PieceType.WhiteKing
+                },
+                {
+                    new Position(7, 0), PieceType.WhitePawn
+                },
+                {
+                    new Position(7, 7), PieceType.BlackKing
+                }
+            };
+            var initialBoardState = new BoardState(pieceDict);
 
             //generate initial game state
             _gameStateController.InitializeGame(initialBoardState);
@@ -279,14 +343,14 @@ namespace Tests.UnitTests.Game
 
             // black turn 
             _gameStateController.UpdateGameState(new Position(7, 7), new Position(7, 6)); // pseudo-move
-            Assert.That(_gameStateController.CurrentGameState.BoardState.GetTileAt(4,4).BuildTileState
+            Assert.That(_gameStateController.CurrentGameState.BoardState.GetTileAt(4, 4).BuildTileState
                             .BuildingPiece ==
                         PieceType.WhitePawn);
 
             // white turn
             _gameStateController.UpdateGameState(new Position(4, 4), new Position(4, 5));
 
-            Assert.That(_gameStateController.CurrentGameState.BoardState.GetTileAt(4,4).CurrentPiece,
+            Assert.That(_gameStateController.CurrentGameState.BoardState.GetTileAt(4, 4).CurrentPiece,
                 Is.EqualTo(PieceType.WhitePawn));
         }
 
@@ -294,13 +358,23 @@ namespace Tests.UnitTests.Game
         public void CheckMate_WithTwoMajorPieces()
         {
             // setup board
-            var board = _boardGenerator.GenerateBoard();
-            board[1][1].CurrentPiece = PieceType.WhiteKing;
-            board[1][6].CurrentPiece = PieceType.WhiteRook;
-            board[0][5].CurrentPiece = PieceType.WhiteQueen;
-            board[6][7].CurrentPiece = PieceType.BlackKing;
+            var pieceDict = new Dictionary<Position, PieceType>()
+            {
+                {
+                    new Position(1, 1), PieceType.WhiteKing
+                },
+                {
+                    new Position(1, 6), PieceType.WhiteRook
+                },
+                {
+                    new Position(0, 5), PieceType.WhiteQueen
+                },
+                {
+                    new Position(6, 7), PieceType.BlackKing
+                }
+            };
 
-            var initialBoardState = new BoardState(board);
+            var initialBoardState = new BoardState(pieceDict);
             _gameStateController.InitializeGame(initialBoardState);
 
             _gameStateController.UpdateGameState(new Position(0, 5), new Position(0, 7));
@@ -318,17 +392,31 @@ namespace Tests.UnitTests.Game
         public void CheckMate_OnBackRank()
         {
             // setup board
-            var board = _boardGenerator.GenerateBoard();
-            board[6][7].CurrentPiece = PieceType.BlackKing;
-            board[5][6].CurrentPiece = PieceType.BlackPawn;
-            board[6][6].CurrentPiece = PieceType.BlackPawn;
-            board[7][6].CurrentPiece = PieceType.BlackPawn;
+            var pieceDict = new Dictionary<Position, PieceType>()
+            {
+                {
+                    new Position(6, 7), PieceType.BlackKing
+                },
+                {
+                    new Position(5, 6), PieceType.BlackPawn
+                },
+                {
+                    new Position(6, 6), PieceType.BlackPawn
+                },
+                {
+                    new Position(7, 6), PieceType.BlackPawn
+                },
 
-            board[2][0].CurrentPiece = PieceType.WhiteRook;
-            board[6][0].CurrentPiece = PieceType.WhiteKing;
+                {
+                    new Position(2, 0), PieceType.WhiteRook
+                },
+                {
+                    new Position(6, 0), PieceType.WhiteKing
+                }
+            };
 
             // initialise game state
-            var initialBoardState = new BoardState(board);
+            var initialBoardState = new BoardState(pieceDict);
             _gameStateController.InitializeGame(initialBoardState);
 
             _gameStateController.UpdateGameState(new Position(2, 0), new Position(2, 7));
@@ -344,14 +432,24 @@ namespace Tests.UnitTests.Game
         public void CheckMate_QueenAndKnight()
         {
             // setup board
-            var board = _boardGenerator.GenerateBoard();
-            board[4][7].CurrentPiece = PieceType.BlackKing;
-            board[5][4].CurrentPiece = PieceType.WhiteKnight;
-            board[7][6].CurrentPiece = PieceType.WhiteQueen;
-            board[6][0].CurrentPiece = PieceType.WhiteKing;
+            var pieceDict = new Dictionary<Position, PieceType>()
+            {
+                {
+                    new Position(4, 7), PieceType.BlackKing
+                },
+                {
+                    new Position(5, 4), PieceType.WhiteKnight
+                },
+                {
+                    new Position(7, 6), PieceType.WhiteQueen
+                },
+                {
+                    new Position(6, 0), PieceType.WhiteKing
+                }
+            };
 
             // initialise game state
-            var initialBoardState = new BoardState(board);
+            var initialBoardState = new BoardState(pieceDict);
             _gameStateController.InitializeGame(initialBoardState);
 
             _gameStateController.UpdateGameState(new Position(7, 6), new Position(4, 6));
@@ -367,18 +465,34 @@ namespace Tests.UnitTests.Game
         public void CheckMate_QueenAndBishop()
         {
             // setup board
-            var board = _boardGenerator.GenerateBoard();
-            board[6][7].CurrentPiece = PieceType.BlackKing;
-            board[5][6].CurrentPiece = PieceType.BlackPawn;
-            board[6][6].CurrentPiece = PieceType.BlackPawn;
-            board[7][6].CurrentPiece = PieceType.BlackPawn;
+            var pieceDict = new Dictionary<Position, PieceType>()
+            {
+                {
+                    new Position(6, 7), PieceType.BlackKing
+                },
+                {
+                    new Position(5, 6), PieceType.BlackPawn
+                },
+                {
+                    new Position(6, 6), PieceType.BlackPawn
+                },
+                {
+                    new Position(7, 6), PieceType.BlackPawn
+                },
 
-            board[2][2].CurrentPiece = PieceType.WhiteQueen;
-            board[1][1].CurrentPiece = PieceType.WhiteBishop;
-            board[6][0].CurrentPiece = PieceType.WhiteKing;
+                {
+                    new Position(2, 2), PieceType.WhiteQueen
+                },
+                {
+                    new Position(1, 1), PieceType.WhiteBishop
+                },
+                {
+                    new Position(6, 0), PieceType.WhiteKing
+                }
+            };
 
             // initialise game state
-            var initialBoardState = new BoardState(board);
+            var initialBoardState = new BoardState(pieceDict);
             _gameStateController.InitializeGame(initialBoardState);
 
             _gameStateController.UpdateGameState(new Position(2, 2), new Position(6, 6));
@@ -394,16 +508,28 @@ namespace Tests.UnitTests.Game
         public void CheckMate_TwoBishop()
         {
             // setup board
-            var board = _boardGenerator.GenerateBoard();
-            board[7][7].CurrentPiece = PieceType.BlackKing;
-            board[7][6].CurrentPiece = PieceType.BlackPawn;
+            var pieceDict = new Dictionary<Position, PieceType>()
+            {
+                {
+                    new Position(7, 7), PieceType.BlackKing
+                },
+                {
+                    new Position(7, 6), PieceType.BlackPawn
+                },
 
-            board[3][4].CurrentPiece = PieceType.WhiteBishop;
-            board[2][4].CurrentPiece = PieceType.WhiteBishop;
-            board[6][0].CurrentPiece = PieceType.WhiteKing;
+                {
+                    new Position(3, 4), PieceType.WhiteBishop
+                },
+                {
+                    new Position(2, 4), PieceType.WhiteBishop
+                },
+                {
+                    new Position(6, 0), PieceType.WhiteKing
+                }
+            };
 
             // initialise game state
-            var initialBoardState = new BoardState(board);
+            var initialBoardState = new BoardState(pieceDict);
             _gameStateController.InitializeGame(initialBoardState);
 
             _gameStateController.UpdateGameState(new Position(2, 4), new Position(3, 3));
@@ -419,19 +545,21 @@ namespace Tests.UnitTests.Game
         public void CheckMate_BishopKnight()
         {
             // setup board
-            var board = _boardGenerator.GenerateBoard();
-            board[6][7].CurrentPiece = PieceType.BlackKing;
-            board[5][6].CurrentPiece = PieceType.BlackPawn;
-            board[6][5].CurrentPiece = PieceType.BlackPawn;
-            board[7][6].CurrentPiece = PieceType.BlackPawn;
-            board[5][7].CurrentPiece = PieceType.BlackRook;
+            var pieceDict = new Dictionary<Position, PieceType>()
+            {
+                { new Position(6, 7), PieceType.BlackKing },
+                { new Position(5, 6), PieceType.BlackPawn },
+                { new Position(6, 5), PieceType.BlackPawn },
+                { new Position(7, 6), PieceType.BlackPawn },
+                { new Position(5, 7), PieceType.BlackRook },
 
-            board[5][5].CurrentPiece = PieceType.WhiteBishop;
-            board[6][3].CurrentPiece = PieceType.WhiteKnight;
-            board[6][0].CurrentPiece = PieceType.WhiteKing;
+                { new Position(5, 5), PieceType.WhiteBishop },
+                { new Position(6, 3), PieceType.WhiteKnight },
+                { new Position(6, 0), PieceType.WhiteKing }
+            };
 
             // initialise game state
-            var initialBoardState = new BoardState(board);
+            var initialBoardState = new BoardState(pieceDict);
             _gameStateController.InitializeGame(initialBoardState);
 
             _gameStateController.UpdateGameState(new Position(6, 3), new Position(7, 5));
@@ -447,16 +575,18 @@ namespace Tests.UnitTests.Game
         public void CheckMate_KingPawn()
         {
             // setup board
-            var board = _boardGenerator.GenerateBoard();
-            board[3][7].CurrentPiece = PieceType.BlackKing;
-            board[7][2].CurrentPiece = PieceType.BlackPawn;
+            var pieceDict = new Dictionary<Position, PieceType>()
+            {
+                { new Position(3, 7), PieceType.BlackKing },
+                { new Position(7, 2), PieceType.BlackPawn },
 
-            board[3][6].CurrentPiece = PieceType.WhitePawn;
-            board[2][5].CurrentPiece = PieceType.WhitePawn;
-            board[3][5].CurrentPiece = PieceType.WhiteKing;
+                { new Position(3, 6), PieceType.WhitePawn },
+                { new Position(2, 5), PieceType.WhitePawn },
+                { new Position(3, 5), PieceType.WhiteKing }
+            };
 
             // initialise game state
-            var initialBoardState = new BoardState(board);
+            var initialBoardState = new BoardState(pieceDict);
             _gameStateController.InitializeGame(initialBoardState);
 
             _gameStateController.UpdateGameState(new Position(2, 5), new Position(2, 6));
@@ -472,17 +602,18 @@ namespace Tests.UnitTests.Game
         public void CheckMate_Smothered()
         {
             // setup board
-            var board = _boardGenerator.GenerateBoard();
-            board[7][7].CurrentPiece = PieceType.BlackKing;
-            board[7][6].CurrentPiece = PieceType.BlackPawn;
-            board[6][6].CurrentPiece = PieceType.BlackPawn;
-            board[6][7].CurrentPiece = PieceType.BlackRook;
-
-            board[6][4].CurrentPiece = PieceType.WhiteKnight;
-            board[3][5].CurrentPiece = PieceType.WhiteKing;
+            var pieceDict = new Dictionary<Position, PieceType>()
+            {
+                { new Position(7, 7), PieceType.BlackKing },
+                { new Position(7, 6), PieceType.BlackPawn },
+                { new Position(6, 6), PieceType.BlackPawn },
+                { new Position(6, 7), PieceType.BlackRook },
+                { new Position(6, 4), PieceType.WhiteKnight },
+                { new Position(3, 5), PieceType.WhiteKing }
+            };
 
             // initialise game state
-            var initialBoardState = new BoardState(board);
+            var initialBoardState = new BoardState(pieceDict);
             _gameStateController.InitializeGame(initialBoardState);
 
             _gameStateController.UpdateGameState(new Position(6, 4), new Position(5, 6));
@@ -498,18 +629,20 @@ namespace Tests.UnitTests.Game
         public void CheckMate_Anastasia()
         {
             // setup board
-            var board = _boardGenerator.GenerateBoard();
-            board[7][6].CurrentPiece = PieceType.BlackKing;
-            board[6][6].CurrentPiece = PieceType.BlackPawn;
-            board[5][6].CurrentPiece = PieceType.BlackPawn;
-            board[5][7].CurrentPiece = PieceType.BlackRook;
+            var pieceDict = new Dictionary<Position, PieceType>()
+            {
+                { new Position(7, 6), PieceType.BlackKing },
+                { new Position(6, 6), PieceType.BlackPawn },
+                { new Position(5, 6), PieceType.BlackPawn },
+                { new Position(5, 7), PieceType.BlackRook },
 
-            board[4][6].CurrentPiece = PieceType.WhiteKnight;
-            board[3][3].CurrentPiece = PieceType.WhiteRook;
-            board[1][1].CurrentPiece = PieceType.WhiteKing;
+                { new Position(4, 6), PieceType.WhiteKnight },
+                { new Position(3, 3), PieceType.WhiteRook },
+                { new Position(1, 1), PieceType.WhiteKing },
+            };
 
             // initialise game state
-            var initialBoardState = new BoardState(board);
+            var initialBoardState = new BoardState(pieceDict);
             _gameStateController.InitializeGame(initialBoardState);
 
             _gameStateController.UpdateGameState(new Position(3, 3), new Position(7, 3));
@@ -525,16 +658,18 @@ namespace Tests.UnitTests.Game
         public void CheckMate_MorphyWithBuild()
         {
             // setup board
-            var board = _boardGenerator.GenerateBoard();
-            board[7][7].CurrentPiece = PieceType.BlackKing;
-            board[7][6].CurrentPiece = PieceType.BlackPawn;
-            board[5][6].CurrentPiece = PieceType.BlackPawn;
+            var pieceDict = new Dictionary<Position, (PieceType, BuildTileState)>()
+            {
+                { new Position(7, 7), (PieceType.BlackKing, new BuildTileState()) },
+                { new Position(7, 6), (PieceType.BlackPawn, new BuildTileState()) },
+                { new Position(5, 6), (PieceType.BlackPawn, new BuildTileState()) },
 
-            board[4][6].CurrentPiece = PieceType.WhiteBishop;
-            board[1][1].CurrentPiece = PieceType.WhiteKing;
-            board[6][0].BuildTileState = new BuildTileState(0, PieceType.WhiteRook);
+                { new Position(4, 6), (PieceType.WhiteBishop, new BuildTileState()) },
+                { new Position(1, 1), (PieceType.WhiteKing, new BuildTileState()) },
+                { new Position(6, 0), (PieceType.NullPiece, new BuildTileState(0, PieceType.WhiteRook)) }
+            };
 
-            var initialBoardState = new BoardState(board);
+            var initialBoardState = new BoardState(pieceDict);
             _gameStateController.InitializeGame(initialBoardState);
 
             _gameStateController.UpdateGameState(new Position(4, 6), new Position(5, 5));

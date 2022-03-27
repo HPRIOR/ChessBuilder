@@ -15,7 +15,6 @@ namespace Bindings.MonoInstallers
 
             // Build
             BuildValidatorInstaller.Install(Container);
-            BuildStateDecrementorInstaller.Install(Container);
             HomeBaseBuildMoveGeneratorInstaller.Install(Container);
 
             //Move

@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Linq;
-using Models.Services.Board;
 using Models.Services.Moves.Interfaces;
 using Models.State.Board;
 using Models.State.PieceState;
@@ -26,12 +25,10 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
             Container.UnbindAll();
         }
 
-        private IBoardGenerator _boardGenerator;
         private IMovesGenerator _movesGenerator;
 
         private void ResolveContainer()
         {
-            _boardGenerator = Container.Resolve<IBoardGenerator>();
             _movesGenerator = Container.Resolve<IMovesGenerator>();
         }
 
@@ -44,10 +41,12 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
         )
         {
             {
-                var board = _boardGenerator.GenerateBoard();
-                board[1][1].CurrentPiece = pieceType;
+                var pieceDict = new Dictionary<Position, PieceType>()
+                {
+                    { new Position(1, 1), pieceType }
+                };
 
-                var boardState = new BoardState(board);
+                var boardState = new BoardState(pieceDict);
                 var moveState =
                     _movesGenerator.GetPossibleMoves(boardState, PieceColour.White);
                 Assert.AreEqual(0, moveState.PossibleMoves.SelectMany(x => x.Value).Count());
@@ -61,11 +60,13 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
             PieceType pieceType
         )
         {
-            var board = _boardGenerator.GenerateBoard();
-            board[7][7].CurrentPiece = PieceType.BlackKing;
-            board[1][1].CurrentPiece = pieceType;
+            var pieceDict = new Dictionary<Position, PieceType>()
+            {
+                { new Position(7, 7), PieceType.BlackKing },
+                { new Position(1, 1), pieceType }
+            };
 
-            var boardState = new BoardState(board);
+            var boardState = new BoardState(pieceDict);
             var moveState =
                 _movesGenerator.GetPossibleMoves(boardState, PieceColour.Black);
             Assert.Greater(moveState.PossibleMoves.SelectMany(x => x.Value).Count(), 0);
@@ -78,10 +79,12 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
             PieceType pieceType
         )
         {
-            var board = _boardGenerator.GenerateBoard();
-            board[1][1].CurrentPiece = pieceType;
+            var pieceDict = new Dictionary<Position, PieceType>()
+            {
+                { new Position(1, 1), pieceType }
+            };
 
-            var boardState = new BoardState(board);
+            var boardState = new BoardState(pieceDict);
             var moveState =
                 _movesGenerator.GetPossibleMoves(boardState, PieceColour.White);
             Assert.Greater(moveState.PossibleMoves.SelectMany(x => x.Value).Count(), 0);
@@ -94,10 +97,12 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
             PieceType pieceType
         )
         {
-            var board = _boardGenerator.GenerateBoard();
-            board[1][1].CurrentPiece = pieceType;
+            var pieceDict = new Dictionary<Position, PieceType>()
+            {
+                { new Position(1, 1), pieceType }
+            };
 
-            var boardState = new BoardState(board);
+            var boardState = new BoardState(pieceDict);
             var moveState =
                 _movesGenerator.GetPossibleMoves(boardState, PieceColour.Black);
             Assert.AreEqual(0, moveState.PossibleMoves.SelectMany(x => x.Value).Count());
@@ -106,12 +111,14 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
         [Test]
         public void WhenCheckedAndNoInterceptAvailable_OnlyKingCanMoveToAvoid()
         {
-            var board = _boardGenerator.GenerateBoard();
-            board[1][6].CurrentPiece = PieceType.BlackKing;
-            board[4][6].CurrentPiece = PieceType.BlackPawn;
-            board[1][1].CurrentPiece = PieceType.WhiteQueen;
+            var pieceDict = new Dictionary<Position, PieceType>()
+            {
+                { new Position(1, 6), PieceType.BlackKing },
+                { new Position(4, 6), PieceType.BlackPawn },
+                { new Position(1, 1), PieceType.WhiteQueen }
+            };
 
-            var boardState = new BoardState(board);
+            var boardState = new BoardState(pieceDict);
 
             var moveState =
                 _movesGenerator.GetPossibleMoves(boardState, PieceColour.Black);
@@ -122,12 +129,14 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
         public void WhenChecked_BlackQueenCanIntercept()
         {
             var blackQueenPosition = new Position(4, 6);
-            var board = _boardGenerator.GenerateBoard();
-            board[1][6].CurrentPiece = PieceType.BlackKing;
-            board[4][6].CurrentPiece = PieceType.BlackQueen;
-            board[1][1].CurrentPiece = PieceType.WhiteQueen;
+            var pieceDict = new Dictionary<Position, PieceType>()
+            {
+                { new Position(1, 6), PieceType.BlackKing },
+                { new Position(4, 6), PieceType.BlackQueen },
+                { new Position(1, 1), PieceType.WhiteQueen }
+            };
 
-            var boardState = new BoardState(board);
+            var boardState = new BoardState(pieceDict);
 
             var moveState =
                 _movesGenerator.GetPossibleMoves(boardState, PieceColour.Black);
@@ -139,12 +148,14 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
         public void WhenChecked_BlackPawnCannotMove(
         )
         {
-            var board = _boardGenerator.GenerateBoard();
-            board[1][6].CurrentPiece = PieceType.BlackKing;
-            board[4][6].CurrentPiece = PieceType.BlackPawn;
-            board[1][1].CurrentPiece = PieceType.WhiteQueen;
+            var pieceDict = new Dictionary<Position, PieceType>()
+            {
+                { new Position(1, 6), PieceType.BlackKing },
+                { new Position(4, 6), PieceType.BlackPawn },
+                { new Position(1, 1), PieceType.WhiteQueen }
+            };
 
-            var boardState = new BoardState(board);
+            var boardState = new BoardState(pieceDict);
 
             var moveState =
                 _movesGenerator.GetPossibleMoves(boardState, PieceColour.Black);
@@ -154,13 +165,15 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
         [Test]
         public void WhenCheckByMoreThanOnePiece_OnlyKingCanMove()
         {
-            var board = _boardGenerator.GenerateBoard();
-            board[1][6].CurrentPiece = PieceType.BlackKing;
-            board[4][6].CurrentPiece = PieceType.BlackQueen;
-            board[1][1].CurrentPiece = PieceType.WhiteQueen;
-            board[6][1].CurrentPiece = PieceType.WhiteQueen;
+            var pieceDict = new Dictionary<Position, PieceType>()
+            {
+                { new Position(1, 6), PieceType.BlackKing },
+                { new Position(4, 6), PieceType.BlackQueen },
+                { new Position(1, 1), PieceType.WhiteQueen },
+                { new Position(6, 1), PieceType.WhiteQueen }
+            };
 
-            var boardState = new BoardState(board);
+            var boardState = new BoardState(pieceDict);
 
             var moveState =
                 _movesGenerator.GetPossibleMoves(boardState, PieceColour.Black);
@@ -175,12 +188,14 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
         [Test]
         public void WhenCheckByMoreThanOnePiece_KingsMovesAreReducesByAll()
         {
-            var board = _boardGenerator.GenerateBoard();
-            board[1][6].CurrentPiece = PieceType.BlackKing;
-            board[1][1].CurrentPiece = PieceType.WhiteQueen;
-            board[6][1].CurrentPiece = PieceType.WhiteQueen;
+            var pieceDict = new Dictionary<Position, PieceType>()
+            {
+                { new Position(1, 6), PieceType.BlackKing },
+                { new Position(1, 1), PieceType.WhiteQueen },
+                { new Position(6, 1), PieceType.WhiteQueen }
+            };
 
-            var boardState = new BoardState(board);
+            var boardState = new BoardState(pieceDict);
 
             var moveState =
                 _movesGenerator.GetPossibleMoves(boardState, PieceColour.Black);
@@ -199,13 +214,15 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
         [Test]
         public void WhenInCheck_OnlyInterceptingMovesAreGiven()
         {
-            var board = _boardGenerator.GenerateBoard();
-            board[0][0].CurrentPiece = PieceType.WhiteKing;
-            board[3][5].CurrentPiece = PieceType.WhiteQueen;
-            board[7][7].CurrentPiece = PieceType.BlackQueen;
+            var pieceDict = new Dictionary<Position, PieceType>()
+            {
+                { new Position(0, 0), PieceType.WhiteKing },
+                { new Position(3, 5), PieceType.WhiteQueen },
+                { new Position(7, 7), PieceType.BlackQueen }
+            };
 
 
-            var boardState = new BoardState(board);
+            var boardState = new BoardState(pieceDict);
 
             var moveState =
                 _movesGenerator.GetPossibleMoves(boardState, PieceColour.White);
@@ -222,13 +239,15 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
         [Test]
         public void WhenInCheck_InterceptingMovesIncludeCheckingPiece()
         {
-            var board = _boardGenerator.GenerateBoard();
-            board[0][0].CurrentPiece = PieceType.WhiteKing;
-            board[3][3].CurrentPiece = PieceType.WhiteQueen;
-            board[1][1].CurrentPiece = PieceType.BlackPawn;
+            var pieceDict = new Dictionary<Position, PieceType>()
+            {
+                { new Position(0, 0), PieceType.WhiteKing },
+                { new Position(3, 3), PieceType.WhiteQueen },
+                { new Position(1, 1), PieceType.BlackPawn }
+            };
 
 
-            var boardState = new BoardState(board);
+            var boardState = new BoardState(pieceDict);
 
             var moveState =
                 _movesGenerator.GetPossibleMoves(boardState, PieceColour.White);
@@ -243,12 +262,14 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
         [Test]
         public void PawnCanCheckKing()
         {
-            var board = _boardGenerator.GenerateBoard();
-            board[0][0].CurrentPiece = PieceType.WhiteKing;
-            board[4][2].CurrentPiece = PieceType.WhiteQueen;
-            board[1][1].CurrentPiece = PieceType.BlackPawn;
+            var pieceDict = new Dictionary<Position, PieceType>()
+            {
+                { new Position(0, 0), PieceType.WhiteKing },
+                { new Position(4, 2), PieceType.WhiteQueen },
+                { new Position(1, 1), PieceType.BlackPawn }
+            };
 
-            var boardState = new BoardState(board);
+            var boardState = new BoardState(pieceDict);
 
             var moveState =
                 _movesGenerator.GetPossibleMoves(boardState, PieceColour.White);
@@ -259,12 +280,13 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
         [Test]
         public void KingCanTakeToAvoidCheck()
         {
-            var board = _boardGenerator.GenerateBoard();
-            board[0][0].CurrentPiece = PieceType.WhiteKing;
-            board[1][1].CurrentPiece = PieceType.BlackKing;
+            var pieceDict = new Dictionary<Position, PieceType>()
+            {
+                { new Position(0, 0), PieceType.WhiteKing },
+                { new Position(1, 1), PieceType.BlackKing }
+            };
 
-
-            var boardState = new BoardState(board);
+            var boardState = new BoardState(pieceDict);
 
             var moveState =
                 _movesGenerator.GetPossibleMoves(boardState, PieceColour.White);
@@ -275,12 +297,13 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
         [Test]
         public void PawnTakingMovesAreTakenFromKingMoves()
         {
-            var board = _boardGenerator.GenerateBoard();
-            board[4][4].CurrentPiece = PieceType.WhiteKing;
-            board[4][6].CurrentPiece = PieceType.BlackPawn;
+            var pieceDict = new Dictionary<Position, PieceType>()
+            {
+                { new Position(4, 4), PieceType.WhiteKing },
+                { new Position(4, 6), PieceType.BlackPawn }
+            };
 
-
-            var boardState = new BoardState(board);
+            var boardState = new BoardState(pieceDict);
 
             var moveState =
                 _movesGenerator.GetPossibleMoves(boardState, PieceColour.White);
@@ -295,12 +318,14 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
         [Test]
         public void WhenInCheck_PawnTakingMovesAreTakenFromKingMoves()
         {
-            var board = _boardGenerator.GenerateBoard();
-            board[4][4].CurrentPiece = PieceType.WhiteKing;
-            board[4][6].CurrentPiece = PieceType.BlackPawn;
-            board[7][4].CurrentPiece = PieceType.BlackRook;
+            var pieceDict = new Dictionary<Position, PieceType>()
+            {
+                { new Position(4, 4), PieceType.WhiteKing },
+                { new Position(4, 6), PieceType.BlackPawn },
+                { new Position(7, 4), PieceType.BlackRook }
+            };
 
-            var boardState = new BoardState(board);
+            var boardState = new BoardState(pieceDict);
 
             var moveState =
                 _movesGenerator.GetPossibleMoves(boardState, PieceColour.White);
@@ -316,13 +341,15 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
         [Test]
         public void WhenInCheck_MoveStateIsCheck()
         {
-            var board = _boardGenerator.GenerateBoard();
-            board[4][4].CurrentPiece = PieceType.WhiteKing;
-            board[4][6].CurrentPiece = PieceType.BlackPawn;
-            board[7][4].CurrentPiece = PieceType.BlackRook;
+            var pieceDict = new Dictionary<Position, PieceType>()
+            {
+                { new Position(4, 4), PieceType.WhiteKing },
+                { new Position(4, 6), PieceType.BlackPawn },
+                { new Position(7, 4), PieceType.BlackRook }
+            };
 
 
-            var boardState = new BoardState(board);
+            var boardState = new BoardState(pieceDict);
 
             var moveState =
                 _movesGenerator.GetPossibleMoves(boardState, PieceColour.White);
@@ -334,12 +361,14 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
         [Test]
         public void WhenNotInCheck_MoveStateIsNot()
         {
-            var board = _boardGenerator.GenerateBoard();
-            board[4][4].CurrentPiece = PieceType.WhiteKing;
-            board[4][6].CurrentPiece = PieceType.BlackPawn;
+            var pieceDict = new Dictionary<Position, PieceType>()
+            {
+                { new Position(4, 4), PieceType.WhiteKing },
+                { new Position(4, 6), PieceType.BlackPawn }
+            };
 
 
-            var boardState = new BoardState(board);
+            var boardState = new BoardState(pieceDict);
 
             var moveState =
                 _movesGenerator.GetPossibleMoves(boardState, PieceColour.White);
@@ -350,13 +379,15 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
         [Test]
         public void KingCannotTakeProtectedPiece()
         {
-            var board = _boardGenerator.GenerateBoard();
-            board[4][4].CurrentPiece = PieceType.WhiteKing;
-            board[4][5].CurrentPiece = PieceType.BlackPawn;
-            board[7][5].CurrentPiece = PieceType.BlackRook;
+            var pieceDict = new Dictionary<Position, PieceType>()
+            {
+                { new Position(4, 4), PieceType.WhiteKing },
+                { new Position(4, 5), PieceType.BlackPawn },
+                { new Position(7, 5), PieceType.BlackRook }
+            };
 
 
-            var boardState = new BoardState(board);
+            var boardState = new BoardState(pieceDict);
 
             var moveState =
                 _movesGenerator.GetPossibleMoves(boardState, PieceColour.White);
@@ -369,13 +400,14 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
         [Test]
         public void RookCanPinPiece()
         {
-            var board = _boardGenerator.GenerateBoard();
-            board[3][4].CurrentPiece = PieceType.WhiteKing;
-            board[4][4].CurrentPiece = PieceType.WhitePawn;
-            board[7][4].CurrentPiece = PieceType.BlackRook;
+            var pieceDict = new Dictionary<Position, PieceType>()
+            {
+                { new Position(3, 4), PieceType.WhiteKing },
+                { new Position(4, 4), PieceType.WhitePawn },
+                { new Position(7, 4), PieceType.BlackRook }
+            };
 
-
-            var boardState = new BoardState(board);
+            var boardState = new BoardState(pieceDict);
 
             var moveState =
                 _movesGenerator.GetPossibleMoves(boardState, PieceColour.White);
@@ -388,13 +420,15 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
         [Test]
         public void QueenCanPinPiece()
         {
-            var board = _boardGenerator.GenerateBoard();
-            board[3][4].CurrentPiece = PieceType.WhiteKing;
-            board[4][4].CurrentPiece = PieceType.WhitePawn;
-            board[7][4].CurrentPiece = PieceType.BlackQueen;
+            var pieceDict = new Dictionary<Position, PieceType>()
+            {
+                { new Position(3, 4), PieceType.WhiteKing },
+                { new Position(4, 4), PieceType.WhitePawn },
+                { new Position(7, 4), PieceType.BlackQueen }
+            };
 
 
-            var boardState = new BoardState(board);
+            var boardState = new BoardState(pieceDict);
 
             var moveState =
                 _movesGenerator.GetPossibleMoves(boardState, PieceColour.White);
@@ -407,13 +441,15 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
         [Test]
         public void BishopCanPinPiece()
         {
-            var board = _boardGenerator.GenerateBoard();
-            board[3][4].CurrentPiece = PieceType.WhiteKing;
-            board[4][3].CurrentPiece = PieceType.WhitePawn;
-            board[7][0].CurrentPiece = PieceType.BlackBishop;
+            var pieceDict = new Dictionary<Position, PieceType>()
+            {
+                { new Position(3, 4), PieceType.WhiteKing },
+                { new Position(4, 3), PieceType.WhitePawn },
+                { new Position(7, 0), PieceType.BlackBishop }
+            };
 
 
-            var boardState = new BoardState(board);
+            var boardState = new BoardState(pieceDict);
 
             var moveState =
                 _movesGenerator.GetPossibleMoves(boardState, PieceColour.White);
@@ -425,13 +461,15 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
         [Test]
         public void WhenPinned_PieceCanTakePinningPiece()
         {
-            var board = _boardGenerator.GenerateBoard();
-            board[3][4].CurrentPiece = PieceType.WhiteKing;
-            board[4][3].CurrentPiece = PieceType.WhiteQueen;
-            board[7][0].CurrentPiece = PieceType.BlackBishop;
+            var pieceDict = new Dictionary<Position, PieceType>()
+            {
+                { new Position(3, 4), PieceType.WhiteKing },
+                { new Position(4, 3), PieceType.WhiteQueen },
+                { new Position(7, 0), PieceType.BlackBishop }
+            };
 
 
-            var boardState = new BoardState(board);
+            var boardState = new BoardState(pieceDict);
 
             var moveState =
                 _movesGenerator.GetPossibleMoves(boardState, PieceColour.White);
@@ -443,14 +481,16 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
         [Test]
         public void PinIsBlockedByFriendInBetween()
         {
-            var board = _boardGenerator.GenerateBoard();
-            board[3][4].CurrentPiece = PieceType.WhiteKing;
-            board[4][3].CurrentPiece = PieceType.WhiteQueen;
-            board[6][1].CurrentPiece = PieceType.BlackBishop;
-            board[7][0].CurrentPiece = PieceType.BlackBishop;
+            var pieceDict = new Dictionary<Position, PieceType>()
+            {
+                { new Position(3, 4), PieceType.WhiteKing },
+                { new Position(4, 3), PieceType.WhiteQueen },
+                { new Position(6, 1), PieceType.BlackBishop },
+                { new Position(7, 0), PieceType.BlackBishop }
+            };
 
 
-            var boardState = new BoardState(board);
+            var boardState = new BoardState(pieceDict);
 
             var moveState =
                 _movesGenerator.GetPossibleMoves(boardState, PieceColour.White);
@@ -462,14 +502,16 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
         [Test]
         public void PinIsBlockedByEnemyInBetween()
         {
-            var board = _boardGenerator.GenerateBoard();
-            board[3][4].CurrentPiece = PieceType.WhiteKing;
-            board[4][3].CurrentPiece = PieceType.WhiteQueen;
-            board[6][1].CurrentPiece = PieceType.WhiteBishop;
-            board[7][0].CurrentPiece = PieceType.BlackBishop;
+            var pieceDict = new Dictionary<Position, PieceType>()
+            {
+                { new Position(3, 4), PieceType.WhiteKing },
+                { new Position(4, 3), PieceType.WhiteQueen },
+                { new Position(6, 1), PieceType.WhiteBishop },
+                { new Position(7, 0), PieceType.BlackBishop }
+            };
 
 
-            var boardState = new BoardState(board);
+            var boardState = new BoardState(pieceDict);
 
             var moveState =
                 _movesGenerator.GetPossibleMoves(boardState, PieceColour.White);
@@ -482,13 +524,15 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
         [Test]
         public void WhenPinned_PieceCanMoveIntoAnotherBlockingPosition()
         {
-            var board = _boardGenerator.GenerateBoard();
-            board[3][4].CurrentPiece = PieceType.WhiteKing;
-            board[4][3].CurrentPiece = PieceType.WhiteQueen;
-            board[7][0].CurrentPiece = PieceType.BlackBishop;
+            var pieceDict = new Dictionary<Position, PieceType>()
+            {
+                { new Position(3, 4), PieceType.WhiteKing },
+                { new Position(4, 3), PieceType.WhiteQueen },
+                { new Position(7, 0), PieceType.BlackBishop }
+            };
 
 
-            var boardState = new BoardState(board);
+            var boardState = new BoardState(pieceDict);
 
             var moveState =
                 _movesGenerator.GetPossibleMoves(boardState, PieceColour.White);
@@ -502,13 +546,14 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
         [Test]
         public void QueenPinnedByEnemyQueen()
         {
-            var board = _boardGenerator.GenerateBoard();
-            board[4][1].CurrentPiece = PieceType.WhiteKing;
-            board[3][2].CurrentPiece = PieceType.WhiteQueen;
-            board[1][4].CurrentPiece = PieceType.BlackQueen;
+            var pieceDict = new Dictionary<Position, PieceType>()
+            {
+                { new Position(4, 1), PieceType.WhiteKing },
+                { new Position(3, 2), PieceType.WhiteQueen },
+                { new Position(1, 4), PieceType.BlackQueen }
+            };
 
-
-            var boardState = new BoardState(board);
+            var boardState = new BoardState(pieceDict);
 
             var moveState =
                 _movesGenerator.GetPossibleMoves(boardState, PieceColour.White);
@@ -523,13 +568,15 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves
         [Test]
         public void WithPieceBehindKingOfPinnedPiece_PieceIsPinned()
         {
-            var board = _boardGenerator.GenerateBoard();
-            board[2][7].CurrentPiece = PieceType.BlackPawn;
-            board[3][6].CurrentPiece = PieceType.BlackKing;
-            board[4][5].CurrentPiece = PieceType.BlackBishop;
-            board[6][3].CurrentPiece = PieceType.WhiteQueen;
+            var pieceDict = new Dictionary<Position, PieceType>()
+            {
+                { new Position(2, 7), PieceType.BlackPawn },
+                { new Position(3, 6), PieceType.BlackKing },
+                { new Position(4, 5), PieceType.BlackBishop },
+                { new Position(6, 3), PieceType.WhiteQueen }
+            };
 
-            var boardState = new BoardState(board);
+            var boardState = new BoardState(pieceDict);
 
             var moveState =
                 _movesGenerator.GetPossibleMoves(boardState, PieceColour.Black);

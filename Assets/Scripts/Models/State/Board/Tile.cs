@@ -13,11 +13,11 @@ namespace Models.State.Board
      * WithPiece will always be called at the end of a players turn: if either player has a build move
      * of 0, it can be built at this stage
      */
-    public struct Tile
+    public readonly struct Tile
     {
-        public BuildTileState BuildTileState;
-        public PieceType CurrentPiece;
-        public Position Position;
+        public readonly BuildTileState BuildTileState;
+        public readonly PieceType CurrentPiece;
+        public readonly Position Position;
 
         public Tile(Position position, PieceType currentPiece, BuildTileState buildTileState = default)
         {

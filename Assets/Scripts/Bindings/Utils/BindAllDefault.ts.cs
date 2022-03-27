@@ -31,7 +31,6 @@ namespace Bindings.Utils
             GameOverEvalInstaller.Install(container);
             GameStateUpdaterInstaller.Install(container);
             GameInitializerInstaller.Install(container);
-            BuildStateDecrementorInstaller.Install(container);
             CheckedStateManagerInstaller.Install(container);
         }
     }

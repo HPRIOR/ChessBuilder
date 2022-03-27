@@ -12,13 +12,36 @@ namespace Models.State.Board
         public BoardState(Tile[][] board)
         {
             _board = board;
-            ActivePieces = new List<Position>();
-            ActiveBuilds = new List<Position>();
-
             GenerateActivePieces();
         }
 
         // slow
+        public BoardState(Dictionary<Position, (PieceType pieceType, BuildTileState buildTileState)> pieceMap)
+        {
+            var board = new Tile[8][];
+            for (var i = 0; i < 8; i++)
+            {
+                board[i] = new Tile[8];
+                for (var j = 0; j < 8; j++)
+                {
+                    var position = new Position(i, j);
+                    var piece = pieceMap.ContainsKey(position) ? pieceMap[position].pieceType : PieceType.NullPiece;
+                    var buildTileState = pieceMap.ContainsKey(position)
+                        ? pieceMap[position].buildTileState
+                        : new BuildTileState(piece);
+
+                    board[i][j] = new Tile(
+                        new Position(i, j),
+                        piece,
+                        buildTileState
+                    );
+                }
+            }
+
+            _board = board;
+            GenerateActivePieces();
+        }
+
         public BoardState(Dictionary<Position, PieceType> pieceMap)
         {
             var board = new Tile[8][];
@@ -29,14 +52,16 @@ namespace Models.State.Board
                 {
                     var position = new Position(i, j);
                     var piece = pieceMap.ContainsKey(position) ? pieceMap[position] : PieceType.NullPiece;
+
                     board[i][j] = new Tile(
                         new Position(i, j),
-                        piece,
-                        new BuildTileState(piece)
+                        piece
                     );
                 }
             }
+
             _board = board;
+            GenerateActivePieces();
         }
 
 
@@ -58,18 +83,20 @@ namespace Models.State.Board
                         new Position(i, j)
                     );
             }
-
             _board = board;
         }
 
-        public List<Position> ActivePieces { get; }
-        public List<Position> ActiveBuilds { get; }
+        public List<Position> ActivePieces { get; private set; }
+        public List<Position> ActiveBuilds { get; private set; }
         public ref Tile GetTileAt(Position pos) => ref _board[pos.X][pos.Y];
         public ref Tile GetTileAt(int x, int y) => ref _board[x][y];
 
 
         private void GenerateActivePieces()
         {
+            ActivePieces = new List<Position>();
+            ActiveBuilds = new List<Position>();
+            
             for (var i = 0; i < 8; i++)
             for (var j = 0; j < 8; j++)
             {

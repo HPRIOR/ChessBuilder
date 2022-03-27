@@ -1,4 +1,5 @@
-﻿using Bindings.Installers.ModelInstallers.Board;
+﻿using System.Collections.Generic;
+using Bindings.Installers.ModelInstallers.Board;
 using Bindings.Installers.ModelInstallers.Move;
 using Models.Services.Moves.Interfaces;
 using Models.State.Board;
@@ -61,8 +62,8 @@ namespace Tests.UnitTests.PossibleMoves.Helpers
         public void WhenPieceColourIsBlack_TilIsMirrored()
         {
             var positionTranslator = _positionTranslatorFactory.Create(PieceColour.Black);
-            var board = new BoardState();
-            board.GetTileAt(7,7).CurrentPiece = PieceType.BlackKnight;
+            var board = new BoardState(new Dictionary<Position, PieceType>
+                { { new Position(7, 7), PieceType.BlackKnight } });
             var mirroredTile = positionTranslator.GetRelativeTileAt(new Position(0, 0), board);
             Assert.AreEqual(PieceType.BlackKnight, mirroredTile.CurrentPiece);
         }
@@ -71,8 +72,8 @@ namespace Tests.UnitTests.PossibleMoves.Helpers
         public void WhenPieceColourIsWhite_TilIsSame()
         {
             var positionTranslator = _positionTranslatorFactory.Create(PieceColour.White);
-            var board = new BoardState();
-            board.GetTileAt(7,7).CurrentPiece = PieceType.BlackKnight;
+            var board = new BoardState(new Dictionary<Position, PieceType>
+                { { new Position(7, 7), PieceType.BlackKnight } });
             var mirroredTile = positionTranslator.GetRelativeTileAt(new Position(7, 7), board);
             Assert.AreEqual(PieceType.BlackKnight, mirroredTile.CurrentPiece);
         }

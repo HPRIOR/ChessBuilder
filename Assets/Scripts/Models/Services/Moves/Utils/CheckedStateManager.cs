@@ -142,6 +142,6 @@ namespace Models.Services.Moves.Utils
         }
 
         private PieceType PieceAt(Position position, BoardState boardState) =>
-            boardState.Board[position.X][position.Y].CurrentPiece;
+            boardState.GetTileAt(position.X,position.Y).CurrentPiece;
     }
 }

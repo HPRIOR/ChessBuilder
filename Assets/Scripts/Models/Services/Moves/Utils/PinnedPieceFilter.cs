@@ -39,7 +39,7 @@ namespace Models.Services.Moves.Utils
         private static bool PieceIsScanner(KeyValuePair<Position, List<Position>> pieceMoves,
             BoardState boardState)
         {
-            var pieceAtBoardPosition = boardState.Board[pieceMoves.Key.X][pieceMoves.Key.Y].CurrentPiece;
+            var pieceAtBoardPosition = boardState.GetTileAt(pieceMoves.Key.X,pieceMoves.Key.Y).CurrentPiece;
             return ScanningPieces.Contains(pieceAtBoardPosition);
         }
 

@@ -52,11 +52,11 @@ namespace Tests.UnitTests.Game.Utils
 
             var boardState = _boardSetup.SetupBoardWith(pieces);
 
-            Assert.That(boardState.Board[1][2].CurrentPiece, Is.EqualTo(PieceType.BlackQueen));
-            Assert.That(boardState.Board[3][3].CurrentPiece, Is.EqualTo(PieceType.BlackKnight));
-            Assert.That(boardState.Board[7][7].CurrentPiece, Is.EqualTo(PieceType.WhiteQueen));
-            Assert.That(boardState.Board[5][5].CurrentPiece, Is.EqualTo(PieceType.WhitePawn));
-            Assert.That(boardState.Board[7][0].CurrentPiece, Is.EqualTo(PieceType.WhiteKnight));
+            Assert.That(boardState.GetTileAt(1,2).CurrentPiece, Is.EqualTo(PieceType.BlackQueen));
+            Assert.That(boardState.GetTileAt(3,3).CurrentPiece, Is.EqualTo(PieceType.BlackKnight));
+            Assert.That(boardState.GetTileAt(7,7).CurrentPiece, Is.EqualTo(PieceType.WhiteQueen));
+            Assert.That(boardState.GetTileAt(5,5).CurrentPiece, Is.EqualTo(PieceType.WhitePawn));
+            Assert.That(boardState.GetTileAt(7,0).CurrentPiece, Is.EqualTo(PieceType.WhiteKnight));
         }
     }
 }

@@ -41,12 +41,10 @@ namespace Models.Services.Game.Implementations
 
         private Position GetWhiteKingPosition(BoardState boardState)
         {
-            var board = boardState.Board;
             for (var i = 0; i < 8; i++)
             for (var j = 0; j < 8; j++)
-                if (board[i][j].CurrentPiece == PieceType.WhiteKing)
-                    return board[i][j].Position;
-
+                if (boardState.GetTileAt(i, j).CurrentPiece == PieceType.WhiteKing)
+                    return new Position(i, j);
             throw new Exception("No white king found during game initialisation");
         }
     }

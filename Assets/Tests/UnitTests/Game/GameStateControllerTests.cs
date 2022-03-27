@@ -120,7 +120,7 @@ namespace Tests.UnitTests.Game
             //Make white turn
             _gameStateController.UpdateGameState(new Position(1, 1), new Position(2, 2));
 
-            Assert.That(_gameStateController.CurrentGameState.BoardState.Board[4][4].CurrentPiece,
+            Assert.That(_gameStateController.CurrentGameState.BoardState.GetTileAt(4,4).CurrentPiece,
                 Is.EqualTo(PieceType.WhitePawn));
         }
 
@@ -139,7 +139,7 @@ namespace Tests.UnitTests.Game
             //generate initial game state
             _gameStateController.InitializeGame(initialBoardState);
 
-            Assert.That(_gameStateController.CurrentGameState.BoardState.Board[4][4].CurrentPiece,
+            Assert.That(_gameStateController.CurrentGameState.BoardState.GetTileAt(4,4).CurrentPiece,
                 Is.EqualTo(PieceType.WhiteKing));
         }
 
@@ -158,7 +158,7 @@ namespace Tests.UnitTests.Game
             //generate initial game state
             _gameStateController.InitializeGame(initialBoardState);
 
-            Assert.That(_gameStateController.CurrentGameState.BoardState.Board[4][4].CurrentPiece,
+            Assert.That(_gameStateController.CurrentGameState.BoardState.GetTileAt(4,4).CurrentPiece,
                 Is.EqualTo(PieceType.BlackKing));
         }
 
@@ -180,10 +180,10 @@ namespace Tests.UnitTests.Game
             // iterate through game state
             _gameStateController.UpdateGameState(new Position(3, 3), new Position(3, 3)); // pseudo-move
 
-            Assert.That(_gameStateController.CurrentGameState.BoardState.Board[4][4].BuildTileState.Turns,
+            Assert.That(_gameStateController.CurrentGameState.BoardState.GetTileAt(4,4).BuildTileState.Turns,
                 Is.EqualTo(0));
             Assert.That(
-                _gameStateController.CurrentGameState.BoardState.Board[4][4].BuildTileState.BuildingPiece,
+                _gameStateController.CurrentGameState.BoardState.GetTileAt(4,4).BuildTileState.BuildingPiece,
                 Is.EqualTo(PieceType.WhitePawn));
         }
 
@@ -205,10 +205,10 @@ namespace Tests.UnitTests.Game
             //iterate through game state
             _gameStateController.UpdateGameState(new Position(3, 3), new Position(3, 3)); // pseudo-move
 
-            Assert.That(_gameStateController.CurrentGameState.BoardState.Board[4][4].BuildTileState.Turns,
+            Assert.That(_gameStateController.CurrentGameState.BoardState.GetTileAt(4,4).BuildTileState.Turns,
                 Is.EqualTo(0));
             Assert.That(
-                _gameStateController.CurrentGameState.BoardState.Board[4][4].BuildTileState.BuildingPiece,
+                _gameStateController.CurrentGameState.BoardState.GetTileAt(4,4).BuildTileState.BuildingPiece,
                 Is.EqualTo(PieceType.WhitePawn));
         }
 
@@ -230,10 +230,10 @@ namespace Tests.UnitTests.Game
             //iterate through game state
             _gameStateController.UpdateGameState(new Position(0, 0), new Position(1, 1));
 
-            Assert.That(_gameStateController.CurrentGameState.BoardState.Board[4][4].BuildTileState.Turns,
+            Assert.That(_gameStateController.CurrentGameState.BoardState.GetTileAt(4,4).BuildTileState.Turns,
                 Is.EqualTo(0));
             Assert.That(
-                _gameStateController.CurrentGameState.BoardState.Board[4][4].BuildTileState.BuildingPiece,
+                _gameStateController.CurrentGameState.BoardState.GetTileAt(4,4).BuildTileState.BuildingPiece,
                 Is.EqualTo(PieceType.NullPiece));
         }
 
@@ -254,9 +254,9 @@ namespace Tests.UnitTests.Game
 
             _gameStateController.UpdateGameState(new Position(0, 0), new Position(1, 1));
 
-            Assert.That(_gameStateController.CurrentGameState.BoardState.Board[4][4].BuildTileState.Turns,
+            Assert.That(_gameStateController.CurrentGameState.BoardState.GetTileAt(4,4).BuildTileState.Turns,
                 Is.EqualTo(0));
-            Assert.That(_gameStateController.CurrentGameState.BoardState.Board[4][4].CurrentPiece,
+            Assert.That(_gameStateController.CurrentGameState.BoardState.GetTileAt(4,4).CurrentPiece,
                 Is.EqualTo(PieceType.NullPiece));
         }
 
@@ -279,14 +279,14 @@ namespace Tests.UnitTests.Game
 
             // black turn 
             _gameStateController.UpdateGameState(new Position(7, 7), new Position(7, 6)); // pseudo-move
-            Assert.That(_gameStateController.CurrentGameState.BoardState.Board[4][4].BuildTileState
+            Assert.That(_gameStateController.CurrentGameState.BoardState.GetTileAt(4,4).BuildTileState
                             .BuildingPiece ==
                         PieceType.WhitePawn);
 
             // white turn
             _gameStateController.UpdateGameState(new Position(4, 4), new Position(4, 5));
 
-            Assert.That(_gameStateController.CurrentGameState.BoardState.Board[4][4].CurrentPiece,
+            Assert.That(_gameStateController.CurrentGameState.BoardState.GetTileAt(4,4).CurrentPiece,
                 Is.EqualTo(PieceType.WhitePawn));
         }
 

@@ -9,11 +9,8 @@ namespace Models.Services.Game.Implementations
     {
         public BoardState SetupBoardWith(IEnumerable<(PieceType piece, Position boardPosition)> pieces)
         {
-            var boardState = new BoardState();
-            var board = boardState.Board;
-            pieces.ToList().ForEach(tup =>
-                board[tup.boardPosition.X][tup.boardPosition.Y].CurrentPiece = tup.piece);
-            return boardState;
+            var pieceDict = pieces.ToDictionary(x => x.boardPosition, x => x.piece);
+            return new BoardState(pieceDict);
         }
     }
 }

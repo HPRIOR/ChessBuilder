@@ -81,7 +81,7 @@ namespace Tests.UnitTests.BoardTests
             var boardState = new BoardState(board);
             BuildStateDecrementor.DecrementBuilds(boardState);
 
-            var sut = boardState.Board[6][6].BuildTileState;
+            var sut = boardState.GetTileAt(6,6).BuildTileState;
             Assert.That(sut.Turns, Is.EqualTo(8));
             Assert.That(sut.BuildingPiece, Is.EqualTo(PieceType.WhiteQueen));
         }

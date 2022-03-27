@@ -19,7 +19,7 @@ namespace Models.State.Board
         public PieceType CurrentPiece;
         public Position Position;
 
-        private Tile(Position position, PieceType currentPiece, BuildTileState buildTileState = default)
+        public Tile(Position position, PieceType currentPiece, BuildTileState buildTileState = default)
         {
             Position = position;
             CurrentPiece = currentPiece;
@@ -35,7 +35,7 @@ namespace Models.State.Board
 
         public Tile Clone() => new Tile(Position, CurrentPiece, BuildTileState);
 
-        public Tile WithPiece(PieceType newPiece, PieceColour turn)
+        public Tile WithPiece(PieceType newPiece)
         {
             var noPieceBeingBuilt = BuildTileState.BuildingPiece == PieceType.NullPiece;
             if (noPieceBeingBuilt)

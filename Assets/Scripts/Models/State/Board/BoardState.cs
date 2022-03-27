@@ -9,6 +9,11 @@ namespace Models.State.Board
     {
         private readonly Tile[][] _board;
 
+        public List<Position> ActivePieces { get; private set; }
+        public List<Position> ActiveBuilds { get; private set; }
+        public ref Tile GetTileAt(Position pos) => ref _board[pos.X][pos.Y];
+        public ref Tile GetTileAt(int x, int y) => ref _board[x][y];
+
         public BoardState(Tile[][] board)
         {
             _board = board;
@@ -83,20 +88,16 @@ namespace Models.State.Board
                         new Position(i, j)
                     );
             }
+
             _board = board;
         }
-
-        public List<Position> ActivePieces { get; private set; }
-        public List<Position> ActiveBuilds { get; private set; }
-        public ref Tile GetTileAt(Position pos) => ref _board[pos.X][pos.Y];
-        public ref Tile GetTileAt(int x, int y) => ref _board[x][y];
 
 
         private void GenerateActivePieces()
         {
             ActivePieces = new List<Position>();
             ActiveBuilds = new List<Position>();
-            
+
             for (var i = 0; i < 8; i++)
             for (var j = 0; j < 8; j++)
             {

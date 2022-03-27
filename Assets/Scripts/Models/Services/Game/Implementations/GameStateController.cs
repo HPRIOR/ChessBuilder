@@ -6,12 +6,11 @@ using Models.State.PieceState;
 
 namespace Models.Services.Game.Implementations
 {
-    
     public sealed class GameStateController : IGameStateController, ITurnEventInvoker
     {
         private readonly GameInitializer _gameInitializer;
         private readonly IGameStateUpdater _gameStateUpdater;
-        
+
 
         public GameStateController(
             IGameStateUpdater gameStateUpdater, GameInitializer gameInitializer
@@ -43,7 +42,7 @@ namespace Models.Services.Game.Implementations
         {
             Turn = NextTurn();
             var previousBoardState = CurrentGameState?.BoardState.Clone();
-            
+
             CurrentGameState = _gameStateUpdater.UpdateGameState(from, to, Turn);
             GameStateChangeEvent?.Invoke(previousBoardState, CurrentGameState.BoardState);
         }
@@ -52,7 +51,7 @@ namespace Models.Services.Game.Implementations
         {
             Turn = NextTurn();
             var previousBoardState = CurrentGameState?.BoardState.Clone();
-            
+
             CurrentGameState = _gameStateUpdater.UpdateGameState(buildPosition, piece, Turn);
             GameStateChangeEvent?.Invoke(previousBoardState, CurrentGameState.BoardState);
         }

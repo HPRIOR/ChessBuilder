@@ -9,11 +9,11 @@ namespace Models.Utils.ExtensionMethods.BoardPosExt
     public static class ScanExtension
     {
         private static IEnumerable<Position> BaseScan(Position position, Direction direction,
-            Predicate<Position> stopScanningPredicate, Action<List<Position>> startFunc = null) 
+            Predicate<Position> stopScanningPredicate, Action<List<Position>> startFunc = null)
         {
             var result = new List<Position>();
             startFunc?.Invoke(result);
-            
+
             var iteratingPosition = position;
 
             while (true)
@@ -33,7 +33,7 @@ namespace Models.Utils.ExtensionMethods.BoardPosExt
             BaseScan(position, direction, PieceCannotMoveTo);
 
         /// <summary>
-        /// Returns positions between two points, excluding the first and second arguments
+        ///     Returns positions between two points, excluding the first and second arguments
         /// </summary>
         /// <param name="start"></param>
         /// <param name="destination"></param>
@@ -50,7 +50,7 @@ namespace Models.Utils.ExtensionMethods.BoardPosExt
 
 
         /// <summary>
-        /// Returns positions between two points, excluding the first argument, including the second
+        ///     Returns positions between two points, excluding the first argument, including the second
         /// </summary>
         /// <param name="start"></param>
         /// <param name="destination"></param>
@@ -66,7 +66,7 @@ namespace Models.Utils.ExtensionMethods.BoardPosExt
         }
 
         /// <summary>
-        /// Returns positions between two points, including first and second arguments
+        ///     Returns positions between two points, including first and second arguments
         /// </summary>
         /// <param name="start"></param>
         /// <param name="destination"></param>
@@ -79,7 +79,7 @@ namespace Models.Utils.ExtensionMethods.BoardPosExt
                 PieceCannotMoveTo(position) || position == destination.Add(Move.In(direction));
 
             void StartScanningAction(List<Position> positions) =>
-                 positions.Add(start);
+                positions.Add(start);
 
             return BaseScan(start, direction, StopScanningPredicate, StartScanningAction);
         }

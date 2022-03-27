@@ -87,10 +87,8 @@ namespace Models.Services.Moves.Utils
                 var position = turnMovePositions[index];
                 var notKingPiece = position != kingPosition;
                 if (notKingPiece)
-                {
                     // keyVal.Value.IntersectWith(positionsBetweenKingAndCheckPiece);
                     turnMoves[position] = turnMoves[position].Intersect(positionsBetweenKingAndCheckPiece).ToList();
-                }
             }
         }
 
@@ -142,6 +140,6 @@ namespace Models.Services.Moves.Utils
         }
 
         private PieceType PieceAt(Position position, BoardState boardState) =>
-            boardState.GetTileAt(position.X,position.Y).CurrentPiece;
+            boardState.GetTileAt(position.X, position.Y).CurrentPiece;
     }
 }

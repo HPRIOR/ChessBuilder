@@ -13,7 +13,7 @@ namespace View.Utils
         {
             if (axis > 7.5) return 7;
             if (axis < 0.5) return 0;
-            return (int) axis;
+            return (int)axis;
         }
     }
 }

@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using Controllers.Interfaces;
 using ModestTree;
-using UnityEngine;
-using View.Interfaces;
 
 namespace Controllers.Commands
 {
@@ -11,24 +9,26 @@ namespace Controllers.Commands
     {
         private readonly Stack<ICommand> _commandHistoryBuffer;
         private readonly Queue<ICommand> _commandQueue;
+
         public CommandInvoker()
         {
             _commandQueue = new Queue<ICommand>();
             _commandHistoryBuffer = new Stack<ICommand>();
         }
-        
+
         public void ExecuteCommand()
         {
             if (_commandQueue.IsEmpty())
                 return;
-            
+
             var command = _commandQueue.Dequeue();
-            if (command.IsValid(peak: false))
+            if (command.IsValid(false))
             {
                 command.Execute();
                 _commandHistoryBuffer.Push(command);
             }
         }
+
         public void AddCommand(ICommand command)
         {
             _commandQueue.Enqueue(command);

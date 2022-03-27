@@ -1,6 +1,4 @@
-﻿using System.Threading.Tasks;
-
-namespace Controllers.Interfaces
+﻿namespace Controllers.Interfaces
 {
     public interface ICommandInvoker
     {

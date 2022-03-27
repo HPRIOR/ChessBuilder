@@ -39,7 +39,7 @@ namespace Models.Services.Moves.Utils
         private static bool PieceIsScanner(KeyValuePair<Position, List<Position>> pieceMoves,
             BoardState boardState)
         {
-            var pieceAtBoardPosition = boardState.GetTileAt(pieceMoves.Key.X,pieceMoves.Key.Y).CurrentPiece;
+            var pieceAtBoardPosition = boardState.GetTileAt(pieceMoves.Key.X, pieceMoves.Key.Y).CurrentPiece;
             return ScanningPieces.Contains(pieceAtBoardPosition);
         }
 
@@ -121,10 +121,7 @@ namespace Models.Services.Moves.Utils
                 }
 
                 var kingIsNextPiece = potentialPinHasBeenFound && position == kingPosition;
-                if (kingIsNextPiece)
-                {
-                    return (true, pinnedPiece, index);
-                }
+                if (kingIsNextPiece) return (true, pinnedPiece, index);
 
                 if (potentialPinHasBeenFound) return (false, new Position(), index); // piece has blocked pin
             }

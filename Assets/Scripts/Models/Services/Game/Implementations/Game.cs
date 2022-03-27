@@ -2,7 +2,6 @@
 using Models.Services.Board;
 using Models.Services.Game.Interfaces;
 using Models.State.Board;
-using Models.State.BuildState;
 using Models.State.PieceState;
 using UnityEngine;
 using Zenject;
@@ -29,7 +28,7 @@ namespace Models.Services.Game.Implementations
 
         private BoardState InitBoard()
         {
-            var piecesDict = new Dictionary<Position, PieceType>()
+            var piecesDict = new Dictionary<Position, PieceType>
             {
                 { new Position(6, 7), PieceType.BlackKing },
                 { new Position(5, 7), PieceType.BlackRook },
@@ -58,7 +57,7 @@ namespace Models.Services.Game.Implementations
                 { new Position(5, 2), PieceType.WhiteKnight },
                 { new Position(7, 2), PieceType.WhitePawn },
                 { new Position(1, 3), PieceType.WhitePawn },
-                { new Position(5, 3), PieceType.WhiteBishop },
+                { new Position(5, 3), PieceType.WhiteBishop }
             };
 
             return new BoardState(piecesDict);

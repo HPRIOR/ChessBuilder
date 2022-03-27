@@ -45,8 +45,8 @@ namespace Models.State.Board
             var canBuild =
                 newBuildState.Turns == 0 &&
                 newBuildState.BuildingPiece != PieceType.NullPiece &&
-                newPiece == PieceType.NullPiece; 
-                // no need to check for player turn here
+                newPiece == PieceType.NullPiece;
+            // no need to check for player turn here
 
             if (canBuild)
                 return new Tile(Position, newBuildState.BuildingPiece);
@@ -72,10 +72,7 @@ namespace Models.State.Board
             return new Tile(Position, CurrentPiece, newBuildState); // decrement build           
         }
 
-        public Tile WithBuild(PieceType newPiece)
-        {
-            return new Tile(Position, CurrentPiece, new BuildTileState(newPiece));
-        }
+        public Tile WithBuild(PieceType newPiece) => new Tile(Position, CurrentPiece, new BuildTileState(newPiece));
 
         public override string ToString() =>
             $"Tile at ({Position.X}, {Position.Y}) containing" +

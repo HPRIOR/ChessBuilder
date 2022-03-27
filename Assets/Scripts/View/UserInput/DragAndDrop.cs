@@ -1,4 +1,3 @@
-using System.Collections;
 using Controllers.Factories;
 using Controllers.Interfaces;
 using UnityEngine;
@@ -17,14 +16,6 @@ namespace View.UserInput
         private MoveCommandFactory _moveCommandFactory;
         private PieceSpawner _piece;
         private SpriteRenderer _spriteRenderer;
-
-
-        [Inject]
-        public void Construct(ICommandInvoker commandInvoker, MoveCommandFactory moveCommandFactory )
-        {
-            _commandInvoker = commandInvoker;
-            _moveCommandFactory = moveCommandFactory;
-        }
 
         private void Start()
         {
@@ -57,9 +48,16 @@ namespace View.UserInput
             _commandInvoker.AddCommand(
                 moveCommand
             );
-            
+
             _isDragging = false;
         }
 
+
+        [Inject]
+        public void Construct(ICommandInvoker commandInvoker, MoveCommandFactory moveCommandFactory)
+        {
+            _commandInvoker = commandInvoker;
+            _moveCommandFactory = moveCommandFactory;
+        }
     }
 }

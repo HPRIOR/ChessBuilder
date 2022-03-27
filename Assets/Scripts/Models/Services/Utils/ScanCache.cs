@@ -30,10 +30,10 @@ namespace Models.Services.Utils
 
 
         /// <summary>
-        /// Returns an array of positions to the end of the board, excluding the first argument.
+        ///     Returns an array of positions to the end of the board, excluding the first argument.
         /// </summary>
         /// <remarks>
-        /// Results are cached rather than computed on method call.
+        ///     Results are cached rather than computed on method call.
         /// </remarks>
         /// <param name="p"></param>
         /// <param name="d"></param>
@@ -47,10 +47,10 @@ namespace Models.Services.Utils
         }
 
         /// <summary>
-        /// Returns array of positions between arguments, excluding the first argument, including second argument.
+        ///     Returns array of positions between arguments, excluding the first argument, including second argument.
         /// </summary>
         /// <remarks>
-        /// Results are cached rather than computed on method call.
+        ///     Results are cached rather than computed on method call.
         /// </remarks>
         /// <param name="p1"></param>
         /// <param name="p2"></param>
@@ -62,10 +62,10 @@ namespace Models.Services.Utils
         }
 
         /// <summary>
-        /// Returns all positions between two points, excluding the input arguments.
+        ///     Returns all positions between two points, excluding the input arguments.
         /// </summary>
         /// <remarks>
-        /// Results are cached rather than computed on method call.
+        ///     Results are cached rather than computed on method call.
         /// </remarks>
         /// <param name="p1"></param>
         /// <param name="p2"></param>

@@ -22,10 +22,7 @@ namespace Models.Services.Moves.Utils
 
         public ref Tile GetRelativeTileAt(Position position, BoardState boardState)
         {
-            if (_pieceColour == PieceColour.White)
-            {
-                return ref boardState.GetTileAt(position);
-            }
+            if (_pieceColour == PieceColour.White) return ref boardState.GetTileAt(position);
 
             return ref boardState.GetTileAt(Math.Abs(position.X - 7), Math.Abs(position.Y - 7));
         }

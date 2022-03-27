@@ -11,7 +11,7 @@ namespace Controllers.Commands
          * arbitrary board states
          */
         public bool ValidateMove(IDictionary<Position, List<Position>> possibleMoves,
-            Position @from, Position destination)
+            Position from, Position destination)
         {
             if (from == destination) return false;
             if (possibleMoves.ContainsKey(from))

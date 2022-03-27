@@ -32,18 +32,18 @@ namespace Models.Utils.ExtensionMethods.BoardPosExt
 
         private static Direction HandleEastWestDirections(Position origin, Position target)
         {
-            if (target.X > origin.X & target.Y == origin.Y)
+            if ((target.X > origin.X) & (target.Y == origin.Y))
                 return Direction.E;
-            if (target.X < origin.X & target.Y == origin.Y)
+            if ((target.X < origin.X) & (target.Y == origin.Y))
                 return Direction.W;
             return Direction.Null;
         }
 
         private static Direction HandleNorthSouthDirections(Position origin, Position target)
         {
-            if (target.Y > origin.Y & target.X == origin.X)
+            if ((target.Y > origin.Y) & (target.X == origin.X))
                 return Direction.N;
-            if (target.Y < origin.Y & target.X == origin.X)
+            if ((target.Y < origin.Y) & (target.X == origin.X))
                 return Direction.S;
             return Direction.Null;
         }

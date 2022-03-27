@@ -13,23 +13,8 @@ namespace View.UserInput
 {
     public class RightClickBuild : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     {
-        private IGameStateController _gameStateController;
-        private PieceBuildSelectorFactory _pieceBuildSelectorFactory;
-        private PieceType _pieceToBuild;
-        private Position _nearestPos;
-        private bool _buildSelectionInstigated;
         private static BuildCommandFactory _buildCommandFactory;
         private static ICommandInvoker _commandInvoker;
-
-        [Inject]
-        public void Construct(ICommandInvoker commandInvoker, IGameStateController gameStateController,
-            BuildCommandFactory buildCommandFactory, PieceBuildSelectorFactory pieceBuildSelectorFactory)
-        {
-            _buildCommandFactory = buildCommandFactory;
-            _commandInvoker = commandInvoker;
-            _gameStateController = gameStateController;
-            _pieceBuildSelectorFactory = pieceBuildSelectorFactory;
-        }
 
         private static readonly PieceType[] BlackSelection =
         {
@@ -42,6 +27,12 @@ namespace View.UserInput
             PieceType.WhiteQueen, PieceType.WhiteRook, PieceType.WhiteKnight, PieceType.WhiteBishop,
             PieceType.WhitePawn
         };
+
+        private bool _buildSelectionInstigated;
+        private IGameStateController _gameStateController;
+        private Position _nearestPos;
+        private PieceBuildSelectorFactory _pieceBuildSelectorFactory;
+        private PieceType _pieceToBuild;
 
 
         public void OnPointerDown(PointerEventData eventData)
@@ -66,6 +57,16 @@ namespace View.UserInput
                 );
                 GameObjectDestroyer.DestroyChildrenOfObjectWithTag("UI");
             }
+        }
+
+        [Inject]
+        public void Construct(ICommandInvoker commandInvoker, IGameStateController gameStateController,
+            BuildCommandFactory buildCommandFactory, PieceBuildSelectorFactory pieceBuildSelectorFactory)
+        {
+            _buildCommandFactory = buildCommandFactory;
+            _commandInvoker = commandInvoker;
+            _gameStateController = gameStateController;
+            _pieceBuildSelectorFactory = pieceBuildSelectorFactory;
         }
 
 

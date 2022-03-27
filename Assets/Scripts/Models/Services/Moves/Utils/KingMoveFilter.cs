@@ -18,10 +18,7 @@ namespace Models.Services.Moves.Utils
                     for (var index = 0; index < keyVal.Value.Count; index++)
                     {
                         var enemyMove = keyVal.Value[index];
-                        if (kingMoves.Contains(enemyMove))
-                        {
-                            kingMoves.Remove(enemyMove);
-                        }
+                        if (kingMoves.Contains(enemyMove)) kingMoves.Remove(enemyMove);
                     }
 
                 turnMoves[kingPosition] = kingMoves.ToList();

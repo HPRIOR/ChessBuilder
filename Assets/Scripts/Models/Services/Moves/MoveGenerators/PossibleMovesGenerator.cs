@@ -9,10 +9,11 @@ namespace Models.Services.Moves.MoveGenerators
     public sealed class MovesGenerator : IMovesGenerator
     {
         private readonly IBoardInfo _boardInfo;
-        private readonly PinnedPieceFilter _pinnedPieceFilter;
         private readonly CheckedStateManager _checkedStateManager;
+        private readonly PinnedPieceFilter _pinnedPieceFilter;
 
-        public MovesGenerator(IBoardInfo boardInfo, PinnedPieceFilter pinnedPieceFilter, CheckedStateManager checkedStateManager)
+        public MovesGenerator(IBoardInfo boardInfo, PinnedPieceFilter pinnedPieceFilter,
+            CheckedStateManager checkedStateManager)
         {
             _boardInfo = boardInfo;
             _pinnedPieceFilter = pinnedPieceFilter;

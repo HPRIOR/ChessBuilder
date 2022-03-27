@@ -19,6 +19,8 @@ namespace Models.Services.Game.Implementations
         private const int MaxBuildPoints = 39;
         private readonly IBuildMoveGenerator _buildMoveGenerator;
         private readonly IGameOverEval _gameOverEval;
+
+        private readonly Stack<GameState> _gameStateHistory = new Stack<GameState>();
         private readonly IMovesGenerator _movesGenerator;
 
         public GameStateUpdater(
@@ -31,8 +33,6 @@ namespace Models.Services.Game.Implementations
             _buildMoveGenerator = buildMoveGenerator;
             _gameOverEval = gameOverEval;
         }
-
-        private readonly Stack<GameState> _gameStateHistory = new Stack<GameState>();
 
         public GameState RevertGameState() =>
             _gameStateHistory.Count > 1 ? _gameStateHistory.Pop() : _gameStateHistory.Peek();
@@ -98,7 +98,7 @@ namespace Models.Services.Game.Implementations
         {
             var activeBuildPositions = boardState.ActiveBuilds.ToArray();
 
-            for (int i = 0; i < activeBuildPositions.Length; i++)
+            for (var i = 0; i < activeBuildPositions.Length; i++)
             {
                 var pos = activeBuildPositions[i];
                 ref var tile = ref boardState.GetTileAt(pos);

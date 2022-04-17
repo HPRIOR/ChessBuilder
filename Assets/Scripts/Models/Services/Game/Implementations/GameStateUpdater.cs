@@ -91,33 +91,6 @@ namespace Models.Services.Game.Implementations
         private PlayerState GetPlayerState(BoardState newBoardState, PieceColour turn)
             => CalculateBuildPoints(turn, newBoardState, MaxBuildPoints);
 
-        private static PieceColour NextTurn(PieceColour turn) =>
-            turn == PieceColour.White ? PieceColour.Black : PieceColour.White;
-
-        private void ResolveBuilds(BoardState boardState, PieceColour turn)
-        {
-            var activeBuildPositions = boardState.ActiveBuilds.ToArray();
-
-            for (var i = 0; i < activeBuildPositions.Length; i++)
-            {
-                var pos = activeBuildPositions[i];
-                ref var tile = ref boardState.GetTileAt(pos);
-                var canBuild = tile.BuildTileState.Turns == 0 &&
-                               tile.BuildTileState.BuildingPiece != PieceType.NullPiece &&
-                               tile.CurrentPiece == PieceType.NullPiece &&
-                               tile.BuildTileState.BuildingPiece.Colour() == turn;
-                if (canBuild)
-                {
-                    // Account for new active piece in active builds and pieces
-                    boardState.ActiveBuilds.Remove(tile.Position);
-                    boardState.ActivePieces.Add(tile.Position);
-
-                    // tile.CurrentPiece = tile.BuildTileState.BuildingPiece;
-                    // tile.BuildTileState = new BuildTileState(); // reset build state
-                }
-            }
-        }
-
         private PlayerState CalculateBuildPoints(PieceColour pieceColour, BoardState boardState,
             int maxPoints)
         {

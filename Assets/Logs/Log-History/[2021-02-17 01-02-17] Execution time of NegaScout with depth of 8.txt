@@ -1,0 +1,4 @@
+Execution time of NegaScout with depth of 8: 
+      1263824 ms 
+      1263 s
+      21 min

@@ -1,0 +1,4 @@
+Execution time of NegaScout with depth of 8 after active piece opt: 
+      1050355 ms 
+      1050 s
+      17.5 m

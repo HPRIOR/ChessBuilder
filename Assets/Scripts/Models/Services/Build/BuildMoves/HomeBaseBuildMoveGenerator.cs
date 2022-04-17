@@ -1,14 +1,13 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using Models.Services.Build.Interfaces;
 using Models.State.Board;
-using Models.State.BuildState;
 using Models.State.PieceState;
 using Models.State.PlayerState;
+using Models.Utils.ExtensionMethods.PieceTypeExt;
 
 namespace Models.Services.Build.BuildMoves
 {
-    internal class HomeBaseBuildMoveGenerator : IBuildMoveGenerator
+    internal sealed class HomeBaseBuildMoveGenerator : IBuildMoveGenerator
     {
         private static readonly HashSet<PieceType> BlackPieces = new HashSet<PieceType>
         {
@@ -28,27 +27,36 @@ namespace Models.Services.Build.BuildMoves
             : new State.BuildState.BuildMoves(GetWhitePositions(), RemovePiecesByCost(playerState, WhitePieces));
 
 
-        private static HashSet<PieceType> RemovePiecesByCost(PlayerState playerState, IEnumerable<PieceType> pieces) =>
-            new HashSet<PieceType>(pieces.Where(piece => BuildPoints.PieceCost[piece] <= playerState.BuildPoints));
+        private static List<PieceType> RemovePiecesByCost(PlayerState playerState,
+            IEnumerable<PieceType> pieces)
+            => GetAvailablePieces(pieces, playerState); // expensive
 
-
-        private static HashSet<Position> GetWhitePositions()
+        private static List<PieceType> GetAvailablePieces(IEnumerable<PieceType> pieces, PlayerState playerState)
         {
-            var result = new HashSet<Position>();
-            for (var y = 0; y < 2; y++)
-            for (var x = 0; x < 8; x++)
-                result.Add(new Position(x, y));
+            var result = new List<PieceType>();
+            foreach (var piece in pieces)
+                if (piece.Value() <= playerState.BuildPoints)
+                    result.Add(piece);
             return result;
         }
 
-
-        private static HashSet<Position> GetBlackPositions()
+        private static List<Position> GetWhitePositions()
         {
-            var result = new HashSet<Position>();
+            var builder = new List<Position>();
+            for (var y = 0; y < 2; y++)
+            for (var x = 0; x < 8; x++)
+                builder.Add(new Position(x, y)); // expensive
+            return builder;
+        }
+
+
+        private static List<Position> GetBlackPositions()
+        {
+            var builder = new List<Position>();
             for (var x = 0; x < 8; x++)
             for (var y = 7; y > 5; y--)
-                result.Add(new Position(x, y));
-            return result;
+                builder.Add(new Position(x, y));
+            return builder;
         }
     }
 }

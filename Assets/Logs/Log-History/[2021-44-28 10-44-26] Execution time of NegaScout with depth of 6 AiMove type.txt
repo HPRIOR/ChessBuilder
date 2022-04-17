@@ -1,0 +1,4 @@
+Execution time of NegaScout with depth of 6 AiMove type: 
+      2966 ms 
+      2 s 
+      0 min

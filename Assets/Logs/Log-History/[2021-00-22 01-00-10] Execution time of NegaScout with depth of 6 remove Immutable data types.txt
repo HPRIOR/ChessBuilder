@@ -1,0 +1,3 @@
+Execution time of NegaScout with depth of 6 remove Immutable data types: 
+      5649 ms 
+      5 s

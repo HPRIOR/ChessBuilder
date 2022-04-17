@@ -44,13 +44,14 @@ namespace View.UserInput
             var currentMousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             var nearestBoardPosition = NearestBoardPosFinder.GetNearestBoardPosition(currentMousePosition);
 
+            var moveCommand = _moveCommandFactory.Create(_piece.Position, nearestBoardPosition);
             _commandInvoker.AddCommand(
-                _moveCommandFactory.Create(
-                    _piece.Position,
-                    nearestBoardPosition)
+                moveCommand
             );
+
             _isDragging = false;
         }
+
 
         [Inject]
         public void Construct(ICommandInvoker commandInvoker, MoveCommandFactory moveCommandFactory)

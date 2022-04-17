@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Models.Services.Interfaces;
+using Models.Services.Moves.Interfaces;
 using Models.Services.Moves.Utils;
 using Models.State.Board;
 using Models.State.PieceState;
@@ -7,7 +7,7 @@ using Zenject;
 
 namespace Models.Services.Moves.MoveGenerators.TurnMoves
 {
-    public class PawnMoves : IPieceMoveGenerator
+    public sealed class PawnMoves : IPieceMoveGenerator
     {
         private readonly IPositionTranslator _positionTranslator;
         private readonly ITileEvaluator _tileEvaluator;
@@ -19,45 +19,44 @@ namespace Models.Services.Moves.MoveGenerators.TurnMoves
             _tileEvaluator = tileEvaluatorFactory.Create(pieceColour);
         }
 
-        // TODO: refactor me
-        public IEnumerable<Position> GetPossiblePieceMoves(Position originPosition, BoardState boardState)
+        public List<Position> GetPossiblePieceMoves(Position originPosition, BoardState boardState)
         {
-            var potentialMoves = new List<Position>();
+            var possibleMoves = new List<Position>();
 
             originPosition = _positionTranslator.GetRelativePosition(originPosition);
 
-            if (originPosition.Y == 7) return potentialMoves; // allow to change piece
+            if (originPosition.Y == 7) return possibleMoves; // allow to change piece
 
             if (_positionTranslator.GetRelativeTileAt(originPosition.Add(Move.In(Direction.N)), boardState).CurrentPiece
-                .Type == PieceType.NullPiece)
-                potentialMoves.Add(
+                == PieceType.NullPiece)
+                possibleMoves.Add(
                     _positionTranslator.GetRelativePosition(originPosition.Add(Move.In(Direction.N)))
                 );
 
             if (originPosition.X > 0)
             {
-                var topLeftTile =
-                    _positionTranslator.GetRelativeTileAt(originPosition.Add(Move.In(Direction.NW)), boardState);
-                if (_tileEvaluator.OpposingPieceIn(topLeftTile))
-                    potentialMoves.Add(
-                        _positionTranslator.GetRelativePosition(originPosition.Add(Move.In(Direction.NW)))
+                ref var topLeftTile =
+                    ref _positionTranslator.GetRelativeTileAt(originPosition.Add(Move.In(Direction.Nw)), boardState);
+                if (_tileEvaluator.OpposingPieceIn(ref topLeftTile))
+                    possibleMoves.Add(
+                        _positionTranslator.GetRelativePosition(originPosition.Add(Move.In(Direction.Nw)))
                     );
             }
 
             if (originPosition.X < 7)
             {
-                var topRightTile =
-                    _positionTranslator.GetRelativeTileAt(originPosition.Add(Move.In(Direction.NE)), boardState);
-                if (_tileEvaluator.OpposingPieceIn(topRightTile))
-                    potentialMoves.Add(
-                        _positionTranslator.GetRelativePosition(originPosition.Add(Move.In(Direction.NE)))
+                ref var topRightTile =
+                    ref _positionTranslator.GetRelativeTileAt(originPosition.Add(Move.In(Direction.Ne)), boardState);
+                if (_tileEvaluator.OpposingPieceIn(ref topRightTile))
+                    possibleMoves.Add(
+                        _positionTranslator.GetRelativePosition(originPosition.Add(Move.In(Direction.Ne)))
                     );
             }
 
-            return potentialMoves;
+            return possibleMoves;
         }
 
-        public class Factory : PlaceholderFactory<PieceColour, PawnMoves>
+        public sealed class Factory : PlaceholderFactory<PieceColour, PawnMoves>
         {
         }
     }

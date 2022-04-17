@@ -1,4 +1,5 @@
-﻿using Controllers.Interfaces;
+﻿using System.Collections;
+using Controllers.Interfaces;
 using UnityEngine;
 using Zenject;
 
@@ -11,6 +12,7 @@ namespace Controllers.Commands
         // Update is called once per frame
         private void Update()
         {
+            StartCoroutine(TryExecuteCommand());
             if (Input.GetKeyDown(KeyCode.LeftArrow)) _commandInvoker.RollBackCommand();
         }
 
@@ -18,6 +20,12 @@ namespace Controllers.Commands
         public void Construct(ICommandInvoker commandInvoker)
         {
             _commandInvoker = commandInvoker;
+        }
+
+        private IEnumerator TryExecuteCommand()
+        {
+            _commandInvoker.ExecuteCommand();
+            yield return null;
         }
     }
 }

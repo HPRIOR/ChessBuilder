@@ -1,0 +1,4 @@
+Execution time of NegaScout with depth of 6 benchmark: 
+      3077 ms 
+      3 s 
+      0 min

@@ -17,13 +17,14 @@ namespace View.Renderers
 
         public void Render(BoardState previousState, BoardState newState)
         {
-            GameObjectDestroyer.DestroyChildrenOfObjectWith("BuildingPieces");
-            var board = newState.Board;
-            foreach (var tile in board)
+            GameObjectDestroyer.DestroyChildrenOfObjectWithTag("BuildingPieces");
+            for (var i = 0; i < 8; i++)
+            for (var j = 0; j < 8; j++)
             {
-                var isBuilding = tile.BuildState.BuildingPiece != PieceType.NullPiece;
+                ref var tile = ref newState.GetTileAt(i, j);
+                var isBuilding = tile.BuildTileState.BuildingPiece != PieceType.NullPiece;
                 if (isBuilding)
-                    _buildingPieceFactory.Create(tile.BuildState, tile.Position);
+                    _buildingPieceFactory.Create(tile.BuildTileState, tile.Position);
             }
         }
     }

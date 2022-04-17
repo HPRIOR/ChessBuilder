@@ -1,0 +1,3 @@
+Execution time of Aspirated AB negamax with depth 3 and prev score of 200: 
+      3669 ms 
+      3 s

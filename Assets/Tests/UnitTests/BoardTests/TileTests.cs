@@ -13,7 +13,7 @@ namespace Tests.UnitTests.BoardTests
         public void TileConstructed_WithNullPiece()
         {
             var tile = new Tile(new Position(1, 1));
-            Assert.That(tile.CurrentPiece.Type, Is.EqualTo(PieceType.NullPiece));
+            Assert.That(tile.CurrentPiece, Is.EqualTo(PieceType.NullPiece));
         }
 
         [Test]
@@ -27,7 +27,7 @@ namespace Tests.UnitTests.BoardTests
         public void TileConstructed_WithCorrectBuildState()
         {
             var tile = new Tile(new Position(1, 1));
-            Assert.That(tile.BuildState, Is.EqualTo(new BuildState()));
+            Assert.That(tile.BuildTileState, Is.EqualTo(new BuildTileState()));
         }
 
         [Test]
@@ -42,7 +42,7 @@ namespace Tests.UnitTests.BoardTests
         [Test]
         public void TileCloned_WithSamePiece()
         {
-            var tile = new Tile(new Position(1, 1)) {CurrentPiece = new Piece(PieceType.BlackBishop)};
+            var tile = new Tile(new Position(1, 1), PieceType.BlackBishop);
             var tileClone = tile.Clone();
 
             Assert.That(tile.CurrentPiece, Is.EqualTo(tileClone.CurrentPiece));
@@ -51,10 +51,10 @@ namespace Tests.UnitTests.BoardTests
         [Test]
         public void TileCloned_WithSameBuildState()
         {
-            var tile = new Tile(new Position(1, 1)) {CurrentPiece = new Piece(PieceType.BlackBishop)};
+            var tile = new Tile(new Position(1, 1), PieceType.BlackBishop);
             var tileClone = tile.Clone();
 
-            Assert.That(tile.BuildState, Is.EqualTo(tileClone.BuildState));
+            Assert.That(tile.BuildTileState, Is.EqualTo(tileClone.BuildTileState));
         }
 
         [Test]
@@ -70,30 +70,30 @@ namespace Tests.UnitTests.BoardTests
         public void TileClonedWithDecrementBuildState_DoesNotChange_IfNullPieceInBuildState()
         {
             var tile = new Tile(new Position(1, 1));
-            var tileClone = tile.CloneWithDecrementBuildState();
+            var tileClone = tile.WithDecrementedBuildState(PieceColour.White);
 
-            Assert.AreEqual(tile.BuildState, tileClone.BuildState);
+            Assert.AreEqual(tile.BuildTileState, tileClone.BuildTileState);
         }
 
 
         [Test]
         public void TileClonedWithDecrementBuildState_Decrements_IfPieceIsBeingBuilt()
         {
-            var tile = new Tile(new Position(1, 1), new BuildState(9, PieceType.WhiteQueen));
-            var tileClone = tile.CloneWithDecrementBuildState();
+            var tile = new Tile(new Position(1, 1), new BuildTileState(9, PieceType.WhiteQueen));
+            var tileClone = tile.WithDecrementedBuildState(PieceColour.White);
 
-            Assert.AreEqual(8, tileClone.BuildState.Turns);
+            Assert.AreEqual(8, tileClone.BuildTileState.Turns);
         }
 
 
         [Test]
         public void TileClonedWithDecrementBuildState_RetainsWaitingBuild_IfPieceIsBeingBuilt_And_FullyDecremented()
         {
-            var tile = new Tile(new Position(1, 1), new BuildState(0, PieceType.WhiteQueen));
-            var tileClone = tile.CloneWithDecrementBuildState();
+            var tile = new Tile(new Position(1, 1), new BuildTileState(0, PieceType.WhiteQueen));
+            var tileClone = tile.WithDecrementedBuildState(PieceColour.White);
 
-            Assert.AreEqual(tile.BuildState.Turns, tileClone.BuildState.Turns);
-            Assert.AreEqual(tile.BuildState.BuildingPiece, tileClone.BuildState.BuildingPiece);
+            Assert.AreEqual(tile.BuildTileState.Turns, tileClone.BuildTileState.Turns);
+            Assert.AreEqual(tile.BuildTileState.BuildingPiece, tileClone.BuildTileState.BuildingPiece);
         }
     }
 }

@@ -1,39 +1,68 @@
-﻿using Models.State.PieceState;
+﻿using Models.State.BuildState;
+using Models.State.PieceState;
+using Models.Utils.ExtensionMethods.PieceTypeExt;
 
 namespace Models.State.Board
 {
-    public class Tile
+    public readonly struct Tile
     {
-        private Tile(Position position, Piece currentPiece, BuildState.BuildState buildState = default)
+        public readonly BuildTileState BuildTileState;
+        public readonly PieceType CurrentPiece;
+        public readonly Position Position;
+
+        public Tile(Position position, PieceType currentPiece, BuildTileState buildTileState = default)
         {
             Position = position;
             CurrentPiece = currentPiece;
-            BuildState = buildState;
+            BuildTileState = buildTileState;
         }
 
-        public Tile(Position position, BuildState.BuildState buildState = default)
+        public Tile(Position position, BuildTileState buildTileState = default)
         {
             Position = position;
-            BuildState = buildState;
-            CurrentPiece = new Piece(PieceType.NullPiece);
+            BuildTileState = buildTileState;
+            CurrentPiece = PieceType.NullPiece;
         }
 
-        public Piece CurrentPiece { get; set; }
-        public Position Position { get; }
-        public BuildState.BuildState BuildState { get; set; }
+        public Tile Clone() => new Tile(Position, CurrentPiece, BuildTileState);
 
-        public Tile Clone() => new Tile(Position, CurrentPiece);
+        private bool CanBuild(BuildTileState buildState, PieceType piece, PieceColour turn) =>
+            buildState.Turns == 0 &&
+            buildState.BuildingPiece != PieceType.NullPiece &&
+            piece == PieceType.NullPiece &&
+            turn.NextTurn() == buildState.BuildingPiece.Colour(); // ensure builds on end of turn
 
-        public Tile CloneWithDecrementBuildState()
+
+        public Tile WithPiece(PieceType newPiece, PieceColour turn)
         {
-            var noPieceBeingBuilt = BuildState.BuildingPiece == PieceType.NullPiece;
+            var noPieceBeingBuilt = BuildTileState.BuildingPiece == PieceType.NullPiece;
+            if (noPieceBeingBuilt)
+                return new Tile(Position, newPiece);
+
+            var newBuildState = BuildTileState.Decrement();
+            var canBuild = CanBuild(newBuildState, newPiece, turn);
+            if (canBuild)
+                return new Tile(Position, newBuildState.BuildingPiece);
+            return new Tile(Position, newPiece, newBuildState); // decrement build
+        }
+
+        public Tile WithDecrementedBuildState(PieceColour turn)
+        {
+            var noPieceBeingBuilt = BuildTileState.BuildingPiece == PieceType.NullPiece;
             if (noPieceBeingBuilt)
                 return new Tile(Position, CurrentPiece);
-            return new Tile(Position, CurrentPiece, BuildState.Decrement()); // decrement build
+
+            var newBuildState = BuildTileState.Decrement();
+            var canBuild = CanBuild(newBuildState, CurrentPiece, turn);
+            if (canBuild)
+                return new Tile(Position, newBuildState.BuildingPiece);
+            return new Tile(Position, CurrentPiece, newBuildState); // decrement build           
         }
+
+        public Tile WithBuild(PieceType newPiece) => new Tile(Position, CurrentPiece, new BuildTileState(newPiece));
 
         public override string ToString() =>
             $"Tile at ({Position.X}, {Position.Y}) containing" +
-            $" {CurrentPiece}";
+            $" {CurrentPiece.ToString()} and building {BuildTileState.BuildingPiece}";
     }
 }

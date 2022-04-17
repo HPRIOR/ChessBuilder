@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Models.Services.Interfaces;
+﻿using System.Collections.Generic;
+using Models.Services.Moves.Interfaces;
 using Models.Services.Moves.Utils;
 using Models.State.Board;
 using Models.State.PieceState;
@@ -9,8 +7,13 @@ using Zenject;
 
 namespace Models.Services.Moves.MoveGenerators.TurnMoves
 {
-    public class KingMoves : IPieceMoveGenerator
+    public sealed class KingMoves : IPieceMoveGenerator
     {
+        private static readonly Direction[] Directions =
+        {
+            Direction.N, Direction.E, Direction.S, Direction.W, Direction.Ne, Direction.Nw, Direction.Se, Direction.Sw
+        };
+
         private readonly IPositionTranslator _positionTranslator;
         private readonly ITileEvaluator _tileEvaluator;
 
@@ -21,27 +24,30 @@ namespace Models.Services.Moves.MoveGenerators.TurnMoves
             _tileEvaluator = tileEvaluatorFactory.Create(pieceColour);
         }
 
-        public IEnumerable<Position> GetPossiblePieceMoves(Position originPosition, BoardState boardState)
+        public List<Position> GetPossiblePieceMoves(Position originPosition, BoardState boardState)
         {
-            var potentialMoves = new List<Position>();
+            var possibleMoves = new List<Position>();
             var relativePosition = _positionTranslator.GetRelativePosition(originPosition);
 
-            Enum.GetValues(typeof(Direction)).Cast<Direction>().ToList().ForEach(direction =>
+            for (var index = 0; index < Directions.Length; index++)
             {
+                var direction = Directions[index];
                 var newPosition = relativePosition.Add(Move.In(direction));
                 var newRelativePosition = _positionTranslator.GetRelativePosition(newPosition);
-                if (0 > newPosition.X || newPosition.X > 7
-                                      || 0 > newPosition.Y || newPosition.Y > 7) return;
-                var potentialMoveTile = _positionTranslator.GetRelativeTileAt(newPosition, boardState);
-                if (_tileEvaluator.OpposingPieceIn(potentialMoveTile) ||
-                    potentialMoveTile.CurrentPiece.Type == PieceType.NullPiece)
-                    potentialMoves.Add(newRelativePosition);
-            });
+                if (!(0 > newPosition.X || newPosition.X > 7
+                                        || 0 > newPosition.Y || newPosition.Y > 7))
+                {
+                    ref var potentialMoveTile = ref _positionTranslator.GetRelativeTileAt(newPosition, boardState);
+                    if (_tileEvaluator.OpposingPieceIn(ref potentialMoveTile) ||
+                        potentialMoveTile.CurrentPiece == PieceType.NullPiece)
+                        possibleMoves.Add(newRelativePosition);
+                }
+            }
 
-            return potentialMoves;
+            return possibleMoves;
         }
 
-        public class Factory : PlaceholderFactory<PieceColour, KingMoves>
+        public sealed class Factory : PlaceholderFactory<PieceColour, KingMoves>
         {
         }
     }

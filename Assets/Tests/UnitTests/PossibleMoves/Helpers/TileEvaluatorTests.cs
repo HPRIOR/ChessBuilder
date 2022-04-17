@@ -1,5 +1,5 @@
 using Bindings.Installers.ModelInstallers.Move;
-using Models.Services.Interfaces;
+using Models.Services.Moves.Interfaces;
 using Models.State.Board;
 using Models.State.PieceState;
 using NUnit.Framework;
@@ -41,8 +41,8 @@ namespace Tests.UnitTests.PossibleMoves.Helpers
         public void Identifies_NoPieceInTile_True()
         {
             var tileEval = _tileEvaluatorFactory.Create(PieceColour.White);
-            var tile = new Tile(new Position(1, 1)) {CurrentPiece = new Piece(PieceType.NullPiece)};
-            Assert.IsTrue(tileEval.NoPieceIn(tile));
+            var tile = new Tile(new Position(1, 1),  PieceType.NullPiece );
+            Assert.IsTrue(tileEval.NoPieceIn(ref tile));
         }
 
         [Test]
@@ -51,41 +51,41 @@ namespace Tests.UnitTests.PossibleMoves.Helpers
         )
         {
             var tileEval = _tileEvaluatorFactory.Create(PieceColour.White);
-            var tile = new Tile(new Position(1, 1)) {CurrentPiece = new Piece(pieceType)};
+            var tile = new Tile(new Position(1, 1), pieceType );
             if (pieceType != PieceType.NullPiece)
-                Assert.IsFalse(tileEval.NoPieceIn(tile));
+                Assert.IsFalse(tileEval.NoPieceIn(ref tile));
         }
 
         [Test]
         public void WithBlackPiece_IdentifiesFriendlyPieceInTile()
         {
             var tileEval = _tileEvaluatorFactory.Create(PieceColour.Black);
-            var tile = new Tile(new Position(1, 1)) {CurrentPiece = new Piece(PieceType.BlackBishop)};
-            Assert.IsTrue(tileEval.FriendlyPieceIn(tile));
+            var tile = new Tile(new Position(1, 1),PieceType.BlackBishop);
+            Assert.IsTrue(tileEval.FriendlyPieceIn(ref tile));
         }
 
         [Test]
         public void WithWhitePiece_IdentifiesFriendlyPieceInTile()
         {
             var tileEval = _tileEvaluatorFactory.Create(PieceColour.White);
-            var tile = new Tile(new Position(1, 1)) {CurrentPiece = new Piece(PieceType.WhiteBishop)};
-            Assert.IsTrue(tileEval.FriendlyPieceIn(tile));
+            var tile = new Tile(new Position(1, 1), PieceType.WhiteBishop);
+            Assert.IsTrue(tileEval.FriendlyPieceIn(ref tile));
         }
 
         [Test]
         public void WithWhitePiece_IdentifiesOpposingPieceInTile()
         {
             var tileEval = _tileEvaluatorFactory.Create(PieceColour.White);
-            var tile = new Tile(new Position(1, 1)) {CurrentPiece = new Piece(PieceType.BlackBishop)};
-            Assert.IsTrue(tileEval.OpposingPieceIn(tile));
+            var tile = new Tile(new Position(1, 1), PieceType.BlackBishop);
+            Assert.IsTrue(tileEval.OpposingPieceIn(ref tile));
         }
 
         [Test]
         public void WithBlackPiece_IdentifiesOpposingPieceInTile()
         {
             var tileEval = _tileEvaluatorFactory.Create(PieceColour.Black);
-            var tile = new Tile(new Position(1, 1)) {CurrentPiece = new Piece(PieceType.WhiteBishop)};
-            Assert.IsTrue(tileEval.OpposingPieceIn(tile));
+            var tile = new Tile(new Position(1, 1), PieceType.WhiteBishop);
+            Assert.IsTrue(tileEval.OpposingPieceIn(ref tile));
         }
     }
 }

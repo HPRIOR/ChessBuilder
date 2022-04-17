@@ -1,5 +1,6 @@
-﻿using Models.Services.Interfaces;
+﻿using Models.Services.Moves.Interfaces;
 using Models.Services.Moves.Utils;
+using Models.Services.Moves.Utils.Scanners;
 using Models.State.PieceState;
 
 namespace Models.Services.Moves.Factories

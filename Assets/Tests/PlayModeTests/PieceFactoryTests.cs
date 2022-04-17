@@ -1,12 +1,13 @@
 using System.Collections;
 using Bindings.Installers.ModelInstallers.Board;
 using Bindings.Installers.ViewInstallers;
-using Models.Services.Interfaces;
+using Models.Services.Moves.Interfaces;
 using Models.State.Board;
 using Models.State.PieceState;
 using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
+using View.Utils;
 using Zenject;
 
 namespace Tests.PlayModeTests
@@ -63,7 +64,7 @@ namespace Tests.PlayModeTests
             CommonInstall();
             var piece = _pieceFactory.CreatePiece(PieceType.WhitePawn, new Position(x, y));
             yield return null;
-            Assert.AreEqual(new Vector2(x + 0.5f, y + 0.5f), piece.Position.Vector);
+            Assert.AreEqual(new Vector2(x + 0.5f, y + 0.5f), piece.Position.GetVector());
         }
     }
 }

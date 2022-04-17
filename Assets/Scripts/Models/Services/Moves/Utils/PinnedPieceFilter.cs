@@ -1,15 +1,16 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Models.Services.Interfaces;
+using Models.Services.Moves.Interfaces;
+using Models.Services.Utils;
 using Models.State.Board;
 using Models.State.PieceState;
-using Models.Utils.ExtensionMethods.BoardPos;
+using Models.Utils.ExtensionMethods.PieceTypeExt;
 
 namespace Models.Services.Moves.Utils
 {
-    public class PinnedPieceFilter
+    public sealed class PinnedPieceFilter
     {
-        private readonly HashSet<PieceType> _scanningPieces = new HashSet<PieceType>
+        private static readonly HashSet<PieceType> ScanningPieces = new HashSet<PieceType>(new PieceTypeComparer())
         {
             PieceType.BlackBishop,
             PieceType.BlackQueen,
@@ -19,87 +20,140 @@ namespace Models.Services.Moves.Utils
             PieceType.WhiteRook
         };
 
+        private static readonly HashSet<Direction> BishopDirections = new HashSet<Direction>(new DirectionComparer())
+        {
+            Direction.Ne, Direction.Nw, Direction.Se, Direction.Sw
+        };
+
+        private static readonly HashSet<Direction> RookDirections = new HashSet<Direction>(new DirectionComparer())
+        {
+            Direction.N, Direction.E, Direction.S, Direction.W
+        };
+
+        private static readonly HashSet<Direction> QueenDirections = new HashSet<Direction>(new DirectionComparer())
+        {
+            Direction.N, Direction.E, Direction.S, Direction.W,
+            Direction.Ne, Direction.Nw, Direction.Se, Direction.Sw
+        };
+
+        private static bool PieceIsScanner(KeyValuePair<Position, List<Position>> pieceMoves,
+            BoardState boardState)
+        {
+            var pieceAtBoardPosition = boardState.GetTileAt(pieceMoves.Key.X, pieceMoves.Key.Y).CurrentPiece;
+            return ScanningPieces.Contains(pieceAtBoardPosition);
+        }
+
+        private static List<Position> GetScanningPiecesMoves(
+            IDictionary<Position, List<Position>> moves, BoardState boardState)
+        {
+            var result = new List<Position>();
+            foreach (var keyVal in moves)
+                if (PieceIsScanner(keyVal, boardState))
+                    result.Add(keyVal.Key);
+            return result;
+        }
+
+        private static bool DirectionIsInPieceMoveRepetitious(Direction direction, Position piecePosition,
+            BoardState boardState)
+        {
+            var pieceType = boardState.GetTileAt(piecePosition).CurrentPiece;
+            switch (pieceType)
+            {
+                case PieceType.BlackBishop:
+                case PieceType.WhiteBishop:
+                    return BishopDirections.Contains(direction);
+                case PieceType.BlackRook:
+                case PieceType.WhiteRook:
+                    return RookDirections.Contains(direction);
+                case PieceType.WhiteQueen:
+                case PieceType.BlackQueen:
+                    return QueenDirections.Contains(direction);
+                default:
+                    return false;
+            }
+        }
+
+        private static bool PieceCanMoveToKing(Position piecePosition, Position kingPosition,
+            BoardState boardState)
+        {
+            var potentialDirectionToKing = DirectionCache.DirectionFrom(piecePosition, kingPosition);
+            var directionExists = potentialDirectionToKing != Direction.Null;
+            return directionExists &&
+                   DirectionIsInPieceMoveRepetitious(potentialDirectionToKing, piecePosition, boardState);
+        }
+
+        private (bool, Position, int) PinExists(IEnumerable<Position> positions, BoardState boardState,
+            PieceColour kingColour, Position kingPosition)
+        {
+            var potentialPinHasBeenFound = false;
+            var pinnedPiece = new Position();
+            var index = 0;
+            foreach (var position in positions)
+            {
+                ref var tile = ref boardState.GetTileAt(position);
+
+                if (index == 0)
+                {
+                    index++;
+                    continue;
+                }
+
+                var pieceType = tile.CurrentPiece;
+                if (pieceType == PieceType.NullPiece)
+                {
+                    index++;
+                    continue;
+                }
+
+                var pieceColour = pieceType.Colour(); // piece is 
+
+                var pieceIsNotTurnColour = !potentialPinHasBeenFound && pieceColour != kingColour;
+                if (pieceIsNotTurnColour)
+                    return (false, new Position(), index); // no pin can occur if enemy blocked enemy
+
+                var firstPieceWhichCouldBePinned = !potentialPinHasBeenFound && pieceColour == kingColour;
+                if (firstPieceWhichCouldBePinned)
+                {
+                    potentialPinHasBeenFound = true;
+                    pinnedPiece = position;
+                    index++;
+                    continue;
+                }
+
+                var kingIsNextPiece = potentialPinHasBeenFound && position == kingPosition;
+                if (kingIsNextPiece) return (true, pinnedPiece, index);
+
+                if (potentialPinHasBeenFound) return (false, new Position(), index); // piece has blocked pin
+            }
+
+            return (false, new Position(), 0);
+        }
 
         public void FilterMoves(IBoardInfo boardInfo, BoardState boardState)
         {
-            var turnMoves = boardInfo.TurnMoves;
-            var enemyScanningMoves = GetScanningPiecesMoves(boardInfo.EnemyMoves, boardState);
             var kingPosition = boardInfo.KingPosition;
-            var turnPiecePosition = new HashSet<Position>(turnMoves.Keys);
-            turnPiecePosition.Remove(kingPosition);
-            foreach (var enemyMoves in enemyScanningMoves)
+            if (kingPosition == new Position(8, 8))
+                return;
+            var kingColour = boardState.GetTileAt(kingPosition).CurrentPiece.Colour();
+            var enemyScanningMoves = GetScanningPiecesMoves(boardInfo.EnemyMoves, boardState);
+            for (var index = 0; index < enemyScanningMoves.Count; index++)
             {
-                var turnPiecesPositionWhichCanBeTaken =
-                    enemyMoves.Value.Intersect(turnPiecePosition).ToList();
-                if (!turnPiecesPositionWhichCanBeTaken.Any()) continue;
-                foreach (var turnPiece in turnPiecesPositionWhichCanBeTaken)
-                    if (DirectionOfPinPointsToKing(kingPosition, turnPiece, enemyMoves.Key))
+                var enemyScanningMove = enemyScanningMoves[index];
+                var pieceCanMoveToKing = PieceCanMoveToKing(enemyScanningMove, kingPosition, boardState);
+                if (pieceCanMoveToKing)
+                {
+                    // avoid allocations here somehow 
+                    var kingThreatMoves = ScanCache.ScanInclusiveTo(enemyScanningMove, kingPosition).ToList();
+                    var (pinExists, pinnedPiecePosition, pinnedPieceIndex) =
+                        PinExists(kingThreatMoves, boardState, kingColour, kingPosition);
+                    if (pinExists)
                     {
-                        if (TheNextPieceIsKing(enemyMoves.Key, turnPiece, kingPosition, boardState))
-                            turnMoves[turnPiece]
-                                .IntersectWith(PossibleEscapeMoves(kingPosition, turnPiece, enemyMoves.Key));
-                        return;
+                        kingThreatMoves.RemoveAt(pinnedPieceIndex);
+                        boardInfo.TurnMoves[pinnedPiecePosition] = boardInfo.TurnMoves[pinnedPiecePosition]
+                            .Intersect(kingThreatMoves).ToList();
                     }
+                }
             }
         }
-
-        private static HashSet<Position> PossibleEscapeMoves(
-            Position kingPosition, Position pinnedPiecePosition, Position pinningPiecePosition)
-        {
-            var positionsBetweenPinAndKing = new HashSet<Position>(kingPosition.ScanTo(pinningPiecePosition));
-            positionsBetweenPinAndKing.Remove(pinnedPiecePosition);
-
-            return positionsBetweenPinAndKing;
-        }
-
-        private static bool DirectionOfPinPointsToKing(Position kingPosition, Position pinnedPosition,
-            Position pinningPosition)
-        {
-            var pinDirection = pinningPosition.DirectionTo(pinnedPosition);
-            var pinnedToKingDirection = pinnedPosition.DirectionTo(kingPosition);
-            return pinDirection == pinnedToKingDirection;
-        }
-
-        private static bool ContainsNonKingPiece(BoardState boardState, Position kingPosition,
-            Position targetPosition)
-        {
-            var (x, y) = (targetPosition.X, targetPosition.Y);
-            return !targetPosition.Equals(kingPosition) &&
-                   boardState.Board[x, y].CurrentPiece.Type != PieceType.NullPiece;
-        }
-
-
-        /*
-         * The order of scanned board positions is wrong, so the logic is incorrect 
-         */
-        private static bool TheNextPieceIsKing(Position enemyPosition, Position turnPiecePosition,
-            Position kingPosition, BoardState boardState)
-        {
-            var scannedBoardPositions =
-                turnPiecePosition.Scan(enemyPosition.DirectionTo(kingPosition));
-            foreach (var position in scannedBoardPositions)
-            {
-                if (position.Equals(kingPosition)) return true;
-
-                if (ContainsNonKingPiece(boardState, kingPosition,
-                    position)) // escape early if piece obstructs possible king 
-                    return false;
-            }
-
-            return false;
-        }
-
-        private bool PieceIsScanner(KeyValuePair<Position, HashSet<Position>> pieceMoves,
-            BoardState boardState)
-        {
-            var pieceAtBoardPosition = boardState.Board[pieceMoves.Key.X, pieceMoves.Key.Y].CurrentPiece.Type;
-            return _scanningPieces.Contains(pieceAtBoardPosition);
-        }
-
-        private IDictionary<Position, HashSet<Position>> GetScanningPiecesMoves(
-            IDictionary<Position, HashSet<Position>> moves, BoardState boardState) =>
-            moves
-                .Where(keyVal => PieceIsScanner(keyVal, boardState))
-                .ToDictionary(keyVal => keyVal.Key, keyVal => keyVal.Value);
     }
 }

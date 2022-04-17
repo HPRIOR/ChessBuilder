@@ -1,0 +1,4 @@
+Execution time of NegaScout with depth of 6 - mac benchmark: 
+      825 ms 
+      0 s 
+      0 min

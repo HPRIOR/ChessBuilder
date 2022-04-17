@@ -1,4 +1,4 @@
-﻿using Game.Implementations;
+﻿using Models.Services.Game.Implementations;
 using Zenject;
 
 namespace Bindings.Installers.GameInstallers

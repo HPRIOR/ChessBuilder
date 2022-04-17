@@ -1,4 +1,4 @@
-﻿using Models.Services.Interfaces;
+﻿using Models.Services.Moves.Interfaces;
 using Models.Services.Moves.Utils;
 using Models.State.Board;
 using Models.State.MoveState;
@@ -6,15 +6,18 @@ using Models.State.PieceState;
 
 namespace Models.Services.Moves.MoveGenerators
 {
-    public class MovesGenerator : IMovesGenerator
+    public sealed class MovesGenerator : IMovesGenerator
     {
         private readonly IBoardInfo _boardInfo;
+        private readonly CheckedStateManager _checkedStateManager;
         private readonly PinnedPieceFilter _pinnedPieceFilter;
 
-        public MovesGenerator(IBoardInfo boardInfo, PinnedPieceFilter pinnedPieceFilter)
+        public MovesGenerator(IBoardInfo boardInfo, PinnedPieceFilter pinnedPieceFilter,
+            CheckedStateManager checkedStateManager)
         {
             _boardInfo = boardInfo;
             _pinnedPieceFilter = pinnedPieceFilter;
+            _checkedStateManager = checkedStateManager;
         }
 
         /// <summary>
@@ -30,24 +33,22 @@ namespace Models.Services.Moves.MoveGenerators
         /// <param name="boardState"></param>
         /// <param name="turn"></param>
         /// <returns></returns>
-        public MoveState GetPossibleMoves(BoardState boardState,
-            PieceColour turn)
+        public MoveState GetPossibleMoves(BoardState boardState, PieceColour turn)
         {
             _boardInfo.EvaluateBoard(boardState, turn);
             var turnMoves = _boardInfo.TurnMoves;
             var enemyMoves = _boardInfo.EnemyMoves;
             var kingPosition = _boardInfo.KingPosition; // will be set to 8,8 by default if no king present (as null)
 
-            var checkManager = new CheckedStateManager(boardState);
 
-            checkManager.EvaluateCheck(enemyMoves, kingPosition);
-            if (checkManager.IsCheck)
-                checkManager.UpdatePossibleMovesWhenInCheck(_boardInfo);
+            _checkedStateManager.EvaluateCheck(enemyMoves, kingPosition);
+            if (_checkedStateManager.IsCheck)
+                _checkedStateManager.UpdatePossibleMovesWhenInCheck(_boardInfo, boardState);
             else
                 KingMoveFilter.RemoveEnemyMovesFromKingMoves(turnMoves, enemyMoves, kingPosition);
 
             _pinnedPieceFilter.FilterMoves(_boardInfo, boardState);
-            return new MoveState(turnMoves, checkManager.IsCheck);
+            return new MoveState(turnMoves, _checkedStateManager.IsCheck);
         }
     }
 }

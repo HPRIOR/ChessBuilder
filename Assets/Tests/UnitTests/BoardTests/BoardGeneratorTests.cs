@@ -1,5 +1,5 @@
 using Bindings.Installers.ModelInstallers.Board;
-using Models.Services.Interfaces;
+using Models.Services.Board;
 using Models.State.PieceState;
 using NUnit.Framework;
 using Zenject;
@@ -38,7 +38,12 @@ namespace Tests.UnitTests.BoardTests
         public void BoardIsGenerated_WithNullPiecesInTiles()
         {
             var board = _boardGenerator.GenerateBoard();
-            foreach (var tile in board) Assert.AreEqual(PieceType.NullPiece, tile.CurrentPiece.Type);
+            for (var i = 0; i < 8; i++)
+            for (var j = 0; j < 8; j++)
+            {
+                var tile = board[i][j];
+                Assert.AreEqual(PieceType.NullPiece, tile.CurrentPiece);
+            }
         }
     }
 }

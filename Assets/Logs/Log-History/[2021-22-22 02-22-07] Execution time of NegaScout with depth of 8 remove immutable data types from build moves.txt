@@ -1,0 +1,4 @@
+Execution time of NegaScout with depth of 8 remove immutable data types from build moves: 
+      238352 ms 
+      238 s
+      3.9 mins!

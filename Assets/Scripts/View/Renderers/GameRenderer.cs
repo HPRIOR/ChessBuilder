@@ -1,4 +1,4 @@
-﻿using Game.Interfaces;
+﻿using Models.Services.Game.Interfaces;
 using UnityEngine;
 using View.Interfaces;
 using Zenject;

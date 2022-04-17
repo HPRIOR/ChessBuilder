@@ -1,0 +1,4 @@
+Execution time of NegaScout with depth of 8 - remove allocation in possible move eval: 
+      27285 ms 
+      27 s 
+      0 min

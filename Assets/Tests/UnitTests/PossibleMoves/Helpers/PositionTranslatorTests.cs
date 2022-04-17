@@ -1,6 +1,7 @@
-﻿using Bindings.Installers.ModelInstallers.Board;
+﻿using System.Collections.Generic;
+using Bindings.Installers.ModelInstallers.Board;
 using Bindings.Installers.ModelInstallers.Move;
-using Models.Services.Interfaces;
+using Models.Services.Moves.Interfaces;
 using Models.State.Board;
 using Models.State.PieceState;
 using NUnit.Framework;
@@ -25,7 +26,6 @@ namespace Tests.UnitTests.PossibleMoves.Helpers
         }
 
         private IPositionTranslatorFactory _positionTranslatorFactory;
-        private IBoardGenerator _boardGenerator;
 
         private void InstallBindings()
         {
@@ -36,7 +36,6 @@ namespace Tests.UnitTests.PossibleMoves.Helpers
         private void ResolveContainer()
         {
             _positionTranslatorFactory = Container.Resolve<IPositionTranslatorFactory>();
-            _boardGenerator = Container.Resolve<IBoardGenerator>();
         }
 
         [Test]
@@ -63,20 +62,20 @@ namespace Tests.UnitTests.PossibleMoves.Helpers
         public void WhenPieceColourIsBlack_TilIsMirrored()
         {
             var positionTranslator = _positionTranslatorFactory.Create(PieceColour.Black);
-            var board = new BoardState();
-            board.Board[7, 7].CurrentPiece = new Piece(PieceType.BlackKnight);
+            var board = new BoardState(new Dictionary<Position, PieceType>
+                { { new Position(7, 7), PieceType.BlackKnight } });
             var mirroredTile = positionTranslator.GetRelativeTileAt(new Position(0, 0), board);
-            Assert.AreEqual(PieceType.BlackKnight, mirroredTile.CurrentPiece.Type);
+            Assert.AreEqual(PieceType.BlackKnight, mirroredTile.CurrentPiece);
         }
 
         [Test]
         public void WhenPieceColourIsWhite_TilIsSame()
         {
             var positionTranslator = _positionTranslatorFactory.Create(PieceColour.White);
-            var board = new BoardState();
-            board.Board[7, 7].CurrentPiece = new Piece(PieceType.BlackKnight);
+            var board = new BoardState(new Dictionary<Position, PieceType>
+                { { new Position(7, 7), PieceType.BlackKnight } });
             var mirroredTile = positionTranslator.GetRelativeTileAt(new Position(7, 7), board);
-            Assert.AreEqual(PieceType.BlackKnight, mirroredTile.CurrentPiece.Type);
+            Assert.AreEqual(PieceType.BlackKnight, mirroredTile.CurrentPiece);
         }
     }
 }

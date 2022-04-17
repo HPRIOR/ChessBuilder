@@ -1,0 +1,4 @@
+Execution time of NegaScout with depth of 8 - Piece comparer in dict: 
+      18982 ms 
+      18 s 
+      0 min

@@ -1,8 +1,11 @@
-﻿using System.Linq;
-using Models.Services.Interfaces;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Models.Services.Board;
+using Models.Services.Moves.Interfaces;
 using Models.State.Board;
 using Models.State.PieceState;
 using NUnit.Framework;
+using NUnit.Framework.Internal;
 using Tests.UnitTests.PossibleMoves.PieceMoves.Utils;
 using Zenject;
 
@@ -48,14 +51,15 @@ namespace Tests.UnitTests.PossibleMoves.Helpers
         public void OnBlackTurn_MovesAreDividedBetweenTurn(
         )
         {
-            var board = _boardGenerator.GenerateBoard();
+            var pieceDict = new Dictionary<Position, PieceType>()
+            {
+                { new Position(1, 1), PieceType.WhiteKing },
+                { new Position(1, 2), PieceType.WhitePawn },
+                { new Position(7, 7), PieceType.BlackKing },
+                { new Position(7, 6), PieceType.BlackPawn }
+            };
 
-            board[1, 1].CurrentPiece = new Piece(PieceType.WhiteKing);
-            board[1, 2].CurrentPiece = new Piece(PieceType.WhitePawn);
-            board[7, 7].CurrentPiece = new Piece(PieceType.BlackKing);
-            board[7, 6].CurrentPiece = new Piece(PieceType.BlackPawn);
-
-            var boardState = new BoardState(board);
+            var boardState = new BoardState(pieceDict);
 
             _boardInfo.EvaluateBoard(boardState, PieceColour.Black);
 
@@ -70,14 +74,16 @@ namespace Tests.UnitTests.PossibleMoves.Helpers
         [Test]
         public void OnWhiteTurn_MovesAreDividedBetweenTurn()
         {
-            var board = _boardGenerator.GenerateBoard();
+            var pieceDict = new Dictionary<Position, PieceType>()
+            {
 
-            board[1, 1].CurrentPiece = new Piece(PieceType.WhiteKing);
-            board[1, 2].CurrentPiece = new Piece(PieceType.WhitePawn);
-            board[7, 7].CurrentPiece = new Piece(PieceType.BlackKing);
-            board[7, 6].CurrentPiece = new Piece(PieceType.BlackPawn);
+                { new Position(1, 1), PieceType.WhiteKing },
+                { new Position(1, 2), PieceType.WhitePawn },
+                { new Position(7, 7), PieceType.BlackKing },
+                { new Position(7, 6), PieceType.BlackPawn }
+            };
 
-            var boardState = new BoardState(board);
+            var boardState = new BoardState(pieceDict);
 
             _boardInfo.EvaluateBoard(boardState, PieceColour.White);
 
@@ -92,14 +98,16 @@ namespace Tests.UnitTests.PossibleMoves.Helpers
         [Test]
         public void OnBlackTurn_FriendlyKingIsFound()
         {
-            var board = _boardGenerator.GenerateBoard();
+            var pieceDict = new Dictionary<Position, PieceType>()
+            {
 
-            board[1, 1].CurrentPiece = new Piece(PieceType.WhiteKing);
-            board[1, 2].CurrentPiece = new Piece(PieceType.WhitePawn);
-            board[7, 7].CurrentPiece = new Piece(PieceType.BlackKing);
-            board[7, 6].CurrentPiece = new Piece(PieceType.BlackPawn);
+                { new Position(1, 1), PieceType.WhiteKing },
+                { new Position(1, 2), PieceType.WhitePawn },
+                { new Position(7, 7), PieceType.BlackKing },
+                { new Position(7, 6), PieceType.BlackPawn }
+            };
 
-            var boardState = new BoardState(board);
+            var boardState = new BoardState(pieceDict);
 
             _boardInfo.EvaluateBoard(boardState, PieceColour.Black);
 
@@ -110,14 +118,16 @@ namespace Tests.UnitTests.PossibleMoves.Helpers
         [Test]
         public void OnWhiteTurn_FriendlyKingIsFound()
         {
-            var board = _boardGenerator.GenerateBoard();
+            var pieceDict = new Dictionary<Position, PieceType>()
+            {
 
-            board[1, 1].CurrentPiece = new Piece(PieceType.WhiteKing);
-            board[1, 2].CurrentPiece = new Piece(PieceType.WhitePawn);
-            board[7, 7].CurrentPiece = new Piece(PieceType.BlackKing);
-            board[7, 6].CurrentPiece = new Piece(PieceType.BlackPawn);
+                { new Position(1, 1), PieceType.WhiteKing },
+                { new Position(1, 2), PieceType.WhitePawn },
+                { new Position(7, 7), PieceType.BlackKing },
+                { new Position(7, 6), PieceType.BlackPawn }
+            };
 
-            var boardState = new BoardState(board);
+            var boardState = new BoardState(pieceDict);
 
             _boardInfo.EvaluateBoard(boardState, PieceColour.White);
 
@@ -127,12 +137,14 @@ namespace Tests.UnitTests.PossibleMoves.Helpers
         [Test]
         public void KingPositionNullIsOutOfBound()
         {
-            var board = _boardGenerator.GenerateBoard();
+            var pieceDict = new Dictionary<Position, PieceType>()
+            {
 
-            board[1, 2].CurrentPiece = new Piece(PieceType.WhitePawn);
-            board[7, 6].CurrentPiece = new Piece(PieceType.BlackPawn);
+                { new Position(1, 2), PieceType.WhitePawn },
+                { new Position(7, 6), PieceType.BlackPawn }
+            };
 
-            var boardState = new BoardState(board);
+            var boardState = new BoardState(pieceDict);
 
             _boardInfo.EvaluateBoard(boardState, PieceColour.White);
 

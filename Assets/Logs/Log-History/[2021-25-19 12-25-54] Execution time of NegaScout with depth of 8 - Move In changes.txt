@@ -1,0 +1,4 @@
+Execution time of NegaScout with depth of 8 - Move In changes: 
+      22836 ms 
+      22 s 
+      0 min

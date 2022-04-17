@@ -1,0 +1,4 @@
+Execution time of AB negamax with depth 8: 
+      1224626 ms 
+      1224 s
+      20 min

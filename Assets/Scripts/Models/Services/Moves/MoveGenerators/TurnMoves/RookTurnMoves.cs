@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
-using Models.Services.Interfaces;
+using Models.Services.Moves.Interfaces;
 using Models.Services.Moves.Utils;
 using Models.State.Board;
 using Models.State.PieceState;
@@ -8,8 +7,9 @@ using Zenject;
 
 namespace Models.Services.Moves.MoveGenerators.TurnMoves
 {
-    public class RookTurnMoves : IPieceMoveGenerator
+    public sealed class RookTurnMoves : IPieceMoveGenerator
     {
+        private static readonly Direction[] Directions = { Direction.N, Direction.E, Direction.S, Direction.W };
         private readonly IBoardScanner _boardScanner;
         private readonly IPositionTranslator _positionTranslator;
 
@@ -20,16 +20,22 @@ namespace Models.Services.Moves.MoveGenerators.TurnMoves
             _positionTranslator = positionTranslatorFactory.Create(pieceColour);
         }
 
-        public IEnumerable<Position> GetPossiblePieceMoves(Position originPosition, BoardState boardState)
+        public List<Position> GetPossiblePieceMoves(Position originPosition, BoardState boardState)
         {
             var relativePosition = _positionTranslator.GetRelativePosition(originPosition);
-            var possibleDirections = new List<Direction> {Direction.N, Direction.E, Direction.S, Direction.W};
 
-            return possibleDirections.SelectMany(direction =>
-                _boardScanner.ScanIn(direction, relativePosition, boardState));
+            var possibleMoves = new List<Position>();
+
+            for (var index = 0; index < Directions.Length; index++)
+            {
+                var direction = Directions[index];
+                _boardScanner.ScanIn(direction, relativePosition, boardState, possibleMoves);
+            }
+
+            return possibleMoves;
         }
 
-        public class Factory : PlaceholderFactory<PieceColour, RookTurnMoves>
+        public sealed class Factory : PlaceholderFactory<PieceColour, RookTurnMoves>
         {
         }
     }

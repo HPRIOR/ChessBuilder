@@ -1,0 +1,3 @@
+Execution time of NegaScout with depth of 6 after mutability: 
+      9929 ms 
+      9 s

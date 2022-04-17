@@ -1,30 +1,42 @@
 ﻿using System;
 using System.Collections.Generic;
 using Controllers.Interfaces;
+using ModestTree;
 
 namespace Controllers.Commands
 {
     public class CommandInvoker : ICommandInvoker
     {
-        private readonly Stack<ICommand> _commandBuffer;
+        private readonly Stack<ICommand> _commandHistoryBuffer;
+        private readonly Queue<ICommand> _commandQueue;
 
         public CommandInvoker()
         {
-            _commandBuffer = new Stack<ICommand>();
+            _commandQueue = new Queue<ICommand>();
+            _commandHistoryBuffer = new Stack<ICommand>();
+        }
+
+        public void ExecuteCommand()
+        {
+            if (_commandQueue.IsEmpty())
+                return;
+
+            var command = _commandQueue.Dequeue();
+            if (command.IsValid(false))
+            {
+                command.Execute();
+                _commandHistoryBuffer.Push(command);
+            }
         }
 
         public void AddCommand(ICommand command)
         {
-            if (command.IsValid())
-            {
-                command.Execute();
-                _commandBuffer.Push(command);
-            }
+            _commandQueue.Enqueue(command);
         }
 
         public void RollBackCommand()
         {
-            if (_commandBuffer.Count > 0) _commandBuffer.Pop().Undo();
+            if (_commandHistoryBuffer.Count > 0) _commandHistoryBuffer.Pop().Undo();
         }
 
         public void UndoCommand()

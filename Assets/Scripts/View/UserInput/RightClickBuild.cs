@@ -1,6 +1,6 @@
 ﻿using Controllers.Factories;
 using Controllers.Interfaces;
-using Game.Interfaces;
+using Models.Services.Game.Interfaces;
 using Models.State.Board;
 using Models.State.PieceState;
 using UnityEngine;
@@ -13,8 +13,8 @@ namespace View.UserInput
 {
     public class RightClickBuild : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     {
-        private static ICommandInvoker _commandInvoker;
         private static BuildCommandFactory _buildCommandFactory;
+        private static ICommandInvoker _commandInvoker;
 
         private static readonly PieceType[] BlackSelection =
         {
@@ -29,7 +29,7 @@ namespace View.UserInput
         };
 
         private bool _buildSelectionInstigated;
-        private IGameState _gameState;
+        private IGameStateController _gameStateController;
         private Position _nearestPos;
         private PieceBuildSelectorFactory _pieceBuildSelectorFactory;
         private PieceType _pieceToBuild;
@@ -39,10 +39,10 @@ namespace View.UserInput
         {
             _nearestPos =
                 NearestBoardPosFinder.GetNearestBoardPosition(eventData.pointerCurrentRaycast.worldPosition);
-            if (_gameState.PossibleBuildMoves.BuildPositions.Contains(_nearestPos))
+            if (_gameStateController.CurrentGameState.PossibleBuildMoves.BuildPositions.Contains(_nearestPos))
             {
-                RenderSelections(_gameState.Turn == PieceColour.Black ? BlackSelection : WhiteSelection,
-                    _nearestPos.Vector);
+                RenderSelections(_gameStateController.Turn == PieceColour.Black ? BlackSelection : WhiteSelection,
+                    _nearestPos.GetVector());
                 _buildSelectionInstigated = true;
             }
         }
@@ -51,32 +51,34 @@ namespace View.UserInput
         {
             if (_buildSelectionInstigated)
             {
+                var buildCommand = _buildCommandFactory.Create(_nearestPos, _pieceToBuild);
                 _commandInvoker.AddCommand(
-                    _buildCommandFactory.Create(_nearestPos, _pieceToBuild)
+                    buildCommand
                 );
-                GameObjectDestroyer.DestroyChildrenOfObjectWith("UI");
+                GameObjectDestroyer.DestroyChildrenOfObjectWithTag("UI");
             }
+        }
+
+        [Inject]
+        public void Construct(ICommandInvoker commandInvoker, IGameStateController gameStateController,
+            BuildCommandFactory buildCommandFactory, PieceBuildSelectorFactory pieceBuildSelectorFactory)
+        {
+            _buildCommandFactory = buildCommandFactory;
+            _commandInvoker = commandInvoker;
+            _gameStateController = gameStateController;
+            _pieceBuildSelectorFactory = pieceBuildSelectorFactory;
         }
 
 
         private void SetPieceCallBack(PieceType pieceType) => _pieceToBuild = pieceType;
 
-        [Inject]
-        public void Construct(ICommandInvoker commandInvoker, IGameState gameState,
-            BuildCommandFactory buildCommandFactory, PieceBuildSelectorFactory pieceBuildSelectorFactory)
-        {
-            _gameState = gameState;
-            _commandInvoker = commandInvoker;
-            _buildCommandFactory = buildCommandFactory;
-            _pieceBuildSelectorFactory = pieceBuildSelectorFactory;
-        }
 
         private void RenderSelections(PieceType[] pieces, Vector3 center)
         {
             var vectors = CircleVectors.VectorPoints(5, 0.75f, center, Vector3.forward);
             for (var i = 0; i < vectors.Length; i++)
             {
-                var canBuild = _gameState.PossibleBuildMoves.BuildPieces.Contains(pieces[i]);
+                var canBuild = _gameStateController.CurrentGameState.PossibleBuildMoves.BuildPieces.Contains(pieces[i]);
                 var pieceBuildSelector =
                     _pieceBuildSelectorFactory.Create(vectors[i], pieces[i], SetPieceCallBack, canBuild);
                 pieceBuildSelector.transform.parent = GameObject.FindGameObjectWithTag("UI").transform;

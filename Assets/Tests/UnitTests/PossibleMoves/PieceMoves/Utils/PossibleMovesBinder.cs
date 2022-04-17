@@ -7,19 +7,20 @@ namespace Tests.UnitTests.PossibleMoves.PieceMoves.Utils
 {
     public static class PossibleMovesBinder
     {
-        public static void InstallBindings(DiContainer Container)
+        public static void InstallBindings(DiContainer container)
         {
-            BoardGeneratorInstaller.Install(Container);
-            PieceFactoryInstaller.Install(Container);
-            MovesGeneratorRepositoryInstaller.Install(Container);
-            TileEvaluatorInstaller.Install(Container);
-            BoardScannerInstaller.Install(Container);
-            PositionTranslatorInstaller.Install(Container);
-            MovesGeneratorInstaller.Install(Container);
-            PossibleMovesFactoryInstaller.Install(Container);
-            BoardInfoInstaller.Install(Container);
-            KingMoveFilterInstaller.Install(Container);
-            PinnedPieceFilterInstaller.Install(Container);
+            BoardGeneratorInstaller.Install(container);
+            PieceFactoryInstaller.Install(container);
+            MovesGeneratorRepositoryInstaller.Install(container);
+            TileEvaluatorInstaller.Install(container);
+            BoardScannerInstaller.Install(container);
+            PositionTranslatorInstaller.Install(container);
+            MovesGeneratorInstaller.Install(container);
+            PossibleMovesFactoryInstaller.Install(container);
+            BoardInfoInstaller.Install(container);
+            KingMoveFilterInstaller.Install(container);
+            PinnedPieceFilterInstaller.Install(container);
+            CheckedStateManagerInstaller.Install(container);
         }
     }
 }

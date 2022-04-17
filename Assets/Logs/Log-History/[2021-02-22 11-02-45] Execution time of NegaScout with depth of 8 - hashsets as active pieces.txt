@@ -1,0 +1,4 @@
+Execution time of NegaScout with depth of 8 - hashsets as active pieces: 
+      16080 ms 
+      16 s 
+      0 min

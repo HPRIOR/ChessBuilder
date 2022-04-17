@@ -3,9 +3,9 @@ using System.Linq;
 using Bindings.Installers.GameInstallers;
 using Bindings.Installers.ModelInstallers.Board;
 using Bindings.Installers.ModelInstallers.Move;
-using Game.Implementations;
-using Models.Services.Interfaces;
+using Models.Services.Game.Implementations;
 using Models.Services.Moves.Factories;
+using Models.Services.Moves.Interfaces;
 using Models.State.Board;
 using Models.State.PieceState;
 using NUnit.Framework;
@@ -13,6 +13,7 @@ using Zenject;
 
 namespace Tests.UnitTests.PossibleMoves.PieceMoves
 {
+    //TODO make assertions with exactly the expected moves 
     [TestFixture]
     public class BishopNonTurnMovesTests : ZenjectUnitTestFixture
     {

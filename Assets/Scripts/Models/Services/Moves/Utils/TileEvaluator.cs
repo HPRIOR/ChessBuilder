@@ -1,11 +1,12 @@
-﻿using Models.Services.Interfaces;
+﻿using Models.Services.Moves.Interfaces;
 using Models.State.Board;
 using Models.State.PieceState;
+using Models.Utils.ExtensionMethods.PieceTypeExt;
 using Zenject;
 
 namespace Models.Services.Moves.Utils
 {
-    public class TileEvaluator : ITileEvaluator
+    public sealed class TileEvaluator : ITileEvaluator
     {
         private readonly PieceColour _pieceColour;
 
@@ -14,15 +15,15 @@ namespace Models.Services.Moves.Utils
             _pieceColour = pieceColour;
         }
 
-        public bool NoPieceIn(Tile tile) => tile.CurrentPiece.Type == PieceType.NullPiece;
+        public bool NoPieceIn(ref Tile tile) => tile.CurrentPiece == PieceType.NullPiece;
 
-        public bool FriendlyPieceIn(Tile tile) => !(tile.CurrentPiece.Type is PieceType.NullPiece) &&
-                                                  tile.CurrentPiece.Colour == _pieceColour;
+        public bool FriendlyPieceIn(ref Tile tile) => !(tile.CurrentPiece is PieceType.NullPiece) &&
+                                                      tile.CurrentPiece.Colour() == _pieceColour;
 
-        public bool OpposingPieceIn(Tile tile) => !(tile.CurrentPiece.Type is PieceType.NullPiece) &&
-                                                  tile.CurrentPiece.Colour != _pieceColour;
+        public bool OpposingPieceIn(ref Tile tile) => !(tile.CurrentPiece is PieceType.NullPiece) &&
+                                                      tile.CurrentPiece.Colour() != _pieceColour;
 
-        public class Factory : PlaceholderFactory<PieceColour, TileEvaluator>
+        public sealed class Factory : PlaceholderFactory<PieceColour, TileEvaluator>
         {
         }
     }

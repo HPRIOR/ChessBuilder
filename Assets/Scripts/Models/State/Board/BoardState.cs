@@ -6,7 +6,6 @@ namespace Models.State.Board
 {
     public sealed class BoardState
     {
-        private readonly Tile[][] _board;
 
         public BoardState(Tile[][] board)
         {
@@ -86,6 +85,7 @@ namespace Models.State.Board
             _board = board;
         }
 
+        private readonly Tile[][] _board;
         public List<Position> ActivePieces { get; private set; }
         public List<Position> ActiveBuilds { get; private set; }
         public ref Tile GetTileAt(Position pos) => ref _board[pos.X][pos.Y];
@@ -133,9 +133,9 @@ namespace Models.State.Board
                 {
                     var movedPiece = _board[from.X][from.Y].CurrentPiece;
                     if (from.X == i && from.Y == j)
-                        newBoard[i][j] = _board[i][j].WithPiece(PieceType.NullPiece);
+                        newBoard[i][j] = _board[i][j].WithPiece(PieceType.NullPiece, turn);
                     else if (destination.X == i && destination.Y == j)
-                        newBoard[i][j] = _board[i][j].WithPiece(movedPiece);
+                        newBoard[i][j] = _board[i][j].WithPiece(movedPiece, turn);
                     else
                         newBoard[i][j] = _board[i][j].WithDecrementedBuildState(turn);
                 }

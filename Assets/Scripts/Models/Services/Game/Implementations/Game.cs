@@ -19,11 +19,11 @@ namespace Models.Services.Game.Implementations
 
         [Inject]
         public void Construct(
-            IGameStateController initStateController,
+            IGameStateController gameStateController,
             IBoardGenerator boardGenerator
         )
         {
-            GameStateController = initStateController;
+            GameStateController = gameStateController;
         }
 
         private BoardState InitBoard()

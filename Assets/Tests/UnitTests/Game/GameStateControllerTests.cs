@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using Bindings.Utils;
-using Models.Services.Board;
 using Models.Services.Game.Interfaces;
 using Models.State.Board;
 using Models.State.BuildState;

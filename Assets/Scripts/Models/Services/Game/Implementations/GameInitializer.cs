@@ -12,8 +12,8 @@ namespace Models.Services.Game.Implementations
 {
     public sealed class GameInitializer
     {
-        private readonly IMovesGeneratorRepository _movesGeneratorRepository;
         private readonly IBuildMoveGenerator _buildMoveGenerator;
+        private readonly IMovesGeneratorRepository _movesGeneratorRepository;
 
         private GameInitializer(IMovesGeneratorRepository movesGeneratorRepository,
             IBuildMoveGenerator buildMoveGenerator)

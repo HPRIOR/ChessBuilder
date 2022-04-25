@@ -6,6 +6,7 @@ namespace Models.State.Board
 {
     public sealed class BoardState
     {
+        private readonly Tile[][] _board;
 
         public BoardState(Tile[][] board)
         {
@@ -85,7 +86,6 @@ namespace Models.State.Board
             _board = board;
         }
 
-        private readonly Tile[][] _board;
         public List<Position> ActivePieces { get; private set; }
         public List<Position> ActiveBuilds { get; private set; }
         public ref Tile GetTileAt(Position pos) => ref _board[pos.X][pos.Y];

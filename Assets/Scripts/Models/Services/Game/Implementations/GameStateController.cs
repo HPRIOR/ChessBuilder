@@ -77,7 +77,6 @@ namespace Models.Services.Game.Implementations
             if (possibleMoves.ContainsKey(from))
                 return possibleMoves[from].Contains(to);
             return false;
-
         }
 
         // TODO pass in GameState rather than board state

@@ -19,7 +19,6 @@ namespace Controllers.Commands
 
             _from = from;
             _destination = destination;
-
         }
 
         public void Execute()

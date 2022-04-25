@@ -1,7 +1,8 @@
 {
   "name": "ScriptAssembly",
   "references": [
-    "Zenject"
+    "Zenject",
+    "Mirror"
   ],
   "includePlatforms": [],
   "excludePlatforms": [],

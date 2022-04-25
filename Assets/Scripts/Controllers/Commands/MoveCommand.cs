@@ -7,15 +7,12 @@ namespace Controllers.Commands
 {
     public class MoveCommand : ICommand
     {
-        private static IMoveValidator _moveValidator;
         private readonly Position _destination;
         private readonly Position _from;
         private readonly IGameStateController _gameStateController;
 
-
         public MoveCommand(Position from,
             Position destination,
-            IMoveValidator moveValidator,
             IGameStateController gameStateController)
         {
             _gameStateController = gameStateController;
@@ -23,7 +20,6 @@ namespace Controllers.Commands
             _from = from;
             _destination = destination;
 
-            _moveValidator = moveValidator;
         }
 
         public void Execute()
@@ -33,10 +29,8 @@ namespace Controllers.Commands
 
         public bool IsValid(bool peak)
         {
-            if (_moveValidator.ValidateMove(_gameStateController.CurrentGameState.PossiblePieceMoves, _from,
-                    _destination))
+            if (_gameStateController.IsValidMove(_from, _destination))
                 return true;
-
 
             if (!peak) _gameStateController.RetainBoardState();
             return false;

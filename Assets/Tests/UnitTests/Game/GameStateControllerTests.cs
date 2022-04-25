@@ -29,7 +29,6 @@ namespace Tests.UnitTests.Game
         }
 
         private IGameStateController _gameStateController;
-        private IBoardGenerator _boardGenerator;
 
         private void InstallBindings()
         {
@@ -39,7 +38,6 @@ namespace Tests.UnitTests.Game
         private void ResolveContainer()
         {
             _gameStateController = Container.Resolve<IGameStateController>();
-            _boardGenerator = Container.Resolve<IBoardGenerator>();
         }
 
         [Test]
@@ -678,6 +676,119 @@ namespace Tests.UnitTests.Game
             _gameStateController.CurrentGameState.PossiblePieceMoves.ToList()
                 .ForEach(turn => Assert.That(turn.Value.Count, Is.EqualTo(0)));
             Assert.That(_gameStateController.CurrentGameState.CheckMate, Is.True);
+        }
+
+        [Test]
+        public void IsValidMove_RejectsIf_FromEqualsDestination()
+        {
+            // setup board
+            var pieceDict = new Dictionary<Position, (PieceType, BuildTileState)>()
+            {
+                { new Position(7, 7), (PieceType.BlackKing, new BuildTileState()) },
+                { new Position(1, 1), (PieceType.WhiteKing, new BuildTileState()) },
+            };
+
+            var initialBoardState = new BoardState(pieceDict);
+            _gameStateController.InitializeGame(initialBoardState);
+
+            var sut = _gameStateController.IsValidMove(new Position(1, 1), new Position(1, 1));
+
+            Assert.That(sut, Is.False);
+        }
+
+        [Test]
+        public void IsValidMove_RejectsIf_NoMovesFound()
+        {
+            // setup board
+            var pieceDict = new Dictionary<Position, (PieceType, BuildTileState)>()
+            {
+                { new Position(7, 7), (PieceType.BlackKing, new BuildTileState()) },
+                { new Position(0, 0), (PieceType.WhiteKing, new BuildTileState()) },
+            };
+
+            var initialBoardState = new BoardState(pieceDict);
+            _gameStateController.InitializeGame(initialBoardState);
+
+            var sut = _gameStateController.IsValidMove(new Position(0, 0), new Position(5, 5));
+
+            Assert.That(sut, Is.False);
+        }
+
+        [Test]
+        public void IsValidMove_AcceptsIf_MovesFound()
+        {
+            // setup board
+            var pieceDict = new Dictionary<Position, (PieceType, BuildTileState)>()
+            {
+                { new Position(7, 7), (PieceType.BlackKing, new BuildTileState()) },
+                { new Position(0, 0), (PieceType.WhiteKing, new BuildTileState()) },
+            };
+
+            var initialBoardState = new BoardState(pieceDict);
+            _gameStateController.InitializeGame(initialBoardState);
+
+            var sut = _gameStateController.IsValidMove(new Position(0, 0), new Position(1, 1));
+
+            Assert.That(sut, Is.True);
+        }
+        
+        /*
+         * Build validation tests rely on the specific implementation of IBuildMoveGenerator.
+         * In this case it is the simple HomeBaseBuildMovesGenerator, which will generate possible
+         * build moves along the players first two rows (according to which players turn it is)
+         */
+        [Test]
+        public void IsValidMove_AcceptsIf_BuildFound()
+        {
+            // setup board
+            var pieceDict = new Dictionary<Position, (PieceType, BuildTileState)>()
+            {
+                { new Position(7, 7), (PieceType.BlackKing, new BuildTileState()) },
+                { new Position(0, 0), (PieceType.WhiteKing, new BuildTileState()) },
+            };
+
+            var initialBoardState = new BoardState(pieceDict);
+            _gameStateController.InitializeGame(initialBoardState);
+
+            var sut = _gameStateController.IsValidMove(new Position(1, 1), PieceType.WhiteQueen);
+
+            Assert.That(sut, Is.True);
+        }
+        
+        [Test]
+        public void IsValidMove_RejectIf_BuildFound()
+        {
+            // setup board
+            var pieceDict = new Dictionary<Position, (PieceType, BuildTileState)>()
+            {
+                { new Position(7, 7), (PieceType.BlackKing, new BuildTileState()) },
+                { new Position(0, 0), (PieceType.WhiteKing, new BuildTileState()) },
+            };
+
+            var initialBoardState = new BoardState(pieceDict);
+            _gameStateController.InitializeGame(initialBoardState);
+
+            var sut = _gameStateController.IsValidMove(new Position(5,5), PieceType.WhiteQueen);
+
+            Assert.That(sut, Is.False);
+        }
+        
+        [Test]
+        public void IsValidMove_Rejects_BuildOnOppositePlayersBase()
+        {
+            // setup board
+            var pieceDict = new Dictionary<Position, (PieceType, BuildTileState)>()
+            {
+                { new Position(7, 7), (PieceType.BlackKing, new BuildTileState()) },
+                { new Position(0, 0), (PieceType.WhiteKing, new BuildTileState()) },
+            };
+
+            var initialBoardState = new BoardState(pieceDict);
+            _gameStateController.InitializeGame(initialBoardState);
+
+            var sut = _gameStateController.IsValidMove(new Position(7,1), PieceType.BlackQueen);
+
+            Assert.That(sut, Is.False);
         }
     }
 }

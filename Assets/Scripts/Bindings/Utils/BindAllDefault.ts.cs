@@ -20,7 +20,6 @@ namespace Bindings.Utils
             TileEvaluatorInstaller.Install(container);
             PositionTranslatorInstaller.Install(container);
             BoardScannerInstaller.Install(container);
-            MoveValidatorInstaller.Install(container);
             PieceFactoryInstaller.Install(container);
             MovesGeneratorInstaller.Install(container);
             MovesGeneratorRepositoryInstaller.Install(container);

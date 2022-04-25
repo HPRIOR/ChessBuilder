@@ -13,5 +13,7 @@ namespace Models.Services.Game.Interfaces
         void UpdateGameState(Position from, Position to);
         void InitializeGame(BoardState boardState);
         void RetainBoardState();
+        bool IsValidMove(Position buildPosition, PieceType piece);
+        bool IsValidMove(Position from, Position to);
     }
 }

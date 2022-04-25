@@ -64,6 +64,22 @@ namespace Models.Services.Game.Implementations
             GameStateChangeEvent?.Invoke(CurrentGameState.BoardState, CurrentGameState.BoardState);
         }
 
+        public bool IsValidMove(Position buildPosition, PieceType piece)
+        {
+            var buildMoves = CurrentGameState.PossibleBuildMoves;
+            return buildMoves.BuildPositions.Contains(buildPosition) && buildMoves.BuildPieces.Contains(piece);
+        }
+
+        public bool IsValidMove(Position from, Position to)
+        {
+            if (from == to) return false;
+            var possibleMoves = CurrentGameState.PossiblePieceMoves;
+            if (possibleMoves.ContainsKey(from))
+                return possibleMoves[from].Contains(to);
+            return false;
+
+        }
+
         // TODO pass in GameState rather than board state
         public event Action<BoardState, BoardState> GameStateChangeEvent;
 

@@ -28,7 +28,6 @@ namespace Bindings.Utils
             PossibleMovesFactoryInstaller.Install(container);
             PinnedPieceFilterInstaller.Install(container);
             GameOverEvalInstaller.Install(container);
-            GameStateUpdaterInstaller.Install(container);
             GameInitializerInstaller.Install(container);
             CheckedStateManagerInstaller.Install(container);
         }

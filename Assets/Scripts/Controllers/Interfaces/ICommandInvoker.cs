@@ -4,9 +4,7 @@
     {
         void AddCommand(ICommand command);
         void ExecuteCommand();
-
         void RollBackCommand();
-
         void UndoCommand();
     }
 }

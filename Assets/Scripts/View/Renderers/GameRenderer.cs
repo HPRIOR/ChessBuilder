@@ -16,8 +16,8 @@ namespace View.Renderers
         private void Awake()
         {
             _boardRenderer.Render();
-            _turnEventInvoker.GameStateChangeEvent += _pieceRenderer.Render;
-            _turnEventInvoker.GameStateChangeEvent += _buildRenderer.Render;
+            _turnEventInvoker.BoardStateChangeEvent += _pieceRenderer.Render;
+            _turnEventInvoker.BoardStateChangeEvent += _buildRenderer.Render;
         }
 
 

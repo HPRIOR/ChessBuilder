@@ -72,7 +72,7 @@ namespace Tests.UnitTests.Game
             void MockFunc(BoardState prev, BoardState newState) => count += 1;
 
             Debug.Assert(turnEventInvoker != null, nameof(turnEventInvoker) + " != null");
-            turnEventInvoker.GameStateChangeEvent += MockFunc;
+            turnEventInvoker.BoardStateChangeEvent += MockFunc;
 
             var pieceDict = new Dictionary<Position, PieceType>()
             {

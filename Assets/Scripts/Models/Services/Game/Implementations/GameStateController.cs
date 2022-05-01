@@ -17,12 +17,11 @@ namespace Models.Services.Game.Implementations
     public sealed class GameStateController : IGameStateController, ITurnEventInvoker
     {
         private const int MaxBuildPoints = 39;
-        private readonly IBuildMoveGenerator _buildMoveGenerator;
         private readonly GameInitializer _gameInitializer;
+        private readonly IBuildMoveGenerator _buildMoveGenerator;
         private readonly IGameOverEval _gameOverEval;
-
-        private readonly Stack<GameState> _gameStateHistory = new Stack<GameState>();
         private readonly IMovesGenerator _movesGenerator;
+        private readonly Stack<GameState> _gameStateHistory = new Stack<GameState>();
 
         public GameStateController(
             IBuildMoveGenerator buildMoveGenerator,
@@ -52,10 +51,12 @@ namespace Models.Services.Game.Implementations
         {
             if (_gameStateHistory.Count > 1)
             {
+                var previousGameState = CurrentGameState;
                 var previousBoardState = CurrentGameState.BoardState;
                 CurrentGameState = _gameStateHistory.Pop();
                 Turn = NextTurn();
-                GameStateChangeEvent?.Invoke(previousBoardState, CurrentGameState.BoardState);
+                BoardStateChangeEvent?.Invoke(previousBoardState, CurrentGameState.BoardState);
+                GameStateChangeEvent?.Invoke(previousGameState, CurrentGameState);
             }
         }
 
@@ -63,19 +64,23 @@ namespace Models.Services.Game.Implementations
         public void UpdateGameState(Position from, Position to)
         {
             Turn = NextTurn();
+            var previousGameState = CurrentGameState;
             var previousBoardState = CurrentGameState?.BoardState.Clone();
 
             CurrentGameState = UpdateGameState(from, to, Turn);
-            GameStateChangeEvent?.Invoke(previousBoardState, CurrentGameState.BoardState);
+            BoardStateChangeEvent?.Invoke(previousBoardState, CurrentGameState.BoardState);
+            GameStateChangeEvent?.Invoke(previousGameState, CurrentGameState);
         }
 
         public void UpdateGameState(Position buildPosition, PieceType piece)
         {
             Turn = NextTurn();
+            var previousGameState = CurrentGameState;
             var previousBoardState = CurrentGameState?.BoardState.Clone();
 
             CurrentGameState = UpdateGameState(buildPosition, piece, Turn);
-            GameStateChangeEvent?.Invoke(previousBoardState, CurrentGameState.BoardState);
+            BoardStateChangeEvent?.Invoke(previousBoardState, CurrentGameState.BoardState);
+            GameStateChangeEvent?.Invoke(previousGameState, CurrentGameState);
         }
 
         /// <summary>
@@ -83,7 +88,8 @@ namespace Models.Services.Game.Implementations
         /// </summary>
         public void RetainBoardState()
         {
-            GameStateChangeEvent?.Invoke(CurrentGameState.BoardState, CurrentGameState.BoardState);
+            BoardStateChangeEvent?.Invoke(CurrentGameState.BoardState, CurrentGameState.BoardState);
+            GameStateChangeEvent?.Invoke(CurrentGameState, CurrentGameState);
         }
 
         public bool IsValidMove(Position buildPosition, PieceType piece)
@@ -101,8 +107,6 @@ namespace Models.Services.Game.Implementations
             return false;
         }
 
-        // TODO pass in GameState rather than board state
-        public event Action<BoardState, BoardState> GameStateChangeEvent;
 
         private GameState UpdateGameState(Position from, Position to, PieceColour turn)
         {
@@ -177,5 +181,7 @@ namespace Models.Services.Game.Implementations
         }
 
         private PieceColour NextTurn() => Turn == PieceColour.White ? PieceColour.Black : PieceColour.White;
+        public event Action<BoardState, BoardState> BoardStateChangeEvent;
+        public event Action<GameState, GameState> GameStateChangeEvent;
     }
 }

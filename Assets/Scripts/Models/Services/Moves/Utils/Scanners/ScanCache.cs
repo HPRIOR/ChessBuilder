@@ -17,8 +17,8 @@ namespace Models.Services.Moves.Utils.Scanners
 
         private static readonly Dictionary<PositionDirection, Position[]> Cache = GetScanPositions();
 
-        public static Span<Position> GetPositionsToEndOfBoard(Position pos, Direction direction) =>
-            Cache[new PositionDirection(pos, direction)].AsSpan();
+        public static Position[] GetPositionsToEndOfBoard(Position pos, Direction direction) =>
+            Cache[new PositionDirection(pos, direction)];
 
         private static Dictionary<PositionDirection, Position[]> GetScanPositions()
         {

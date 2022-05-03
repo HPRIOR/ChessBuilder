@@ -5,7 +5,7 @@ using Zenject;
 
 namespace Controllers.Commands
 {
-    public class InputTester : MonoBehaviour
+    public class CommandInvokerBehaviour : MonoBehaviour
     {
         private ICommandInvoker _commandInvoker;
 

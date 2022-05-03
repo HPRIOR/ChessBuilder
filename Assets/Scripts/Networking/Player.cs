@@ -16,6 +16,9 @@ namespace Networking
         private MoveCommandFactory _moveCommandFactory;
         private BuildCommandFactory _buildCommandFactory;
 
+        /*
+         * ZenAutoInjection used so that normal instantiation by Mirror will inject dependencies
+         */
         [Inject]
         public void Construct(IGameStateController gameStateController, ICommandInvoker commandInvoker,
             MoveCommandFactory moveCommandFactory, BuildCommandFactory buildCommandFactory)

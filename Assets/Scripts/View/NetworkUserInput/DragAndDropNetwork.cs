@@ -13,7 +13,7 @@ namespace View.NetworkUserInput
 {
     // TODO: use UnityEngine.EventSystems.Interfaces.IDragHandler etc
     //  https://docs.unity3d.com/2019.1/Documentation/ScriptReference/EventSystems.IMoveHandler.html
-    public class DragAndDropNetwork : NetworkBehaviour
+    public class DragAndDropNetwork : MonoBehaviour
     {
         private bool _isDragging;
         private PieceSpawner _piece;
@@ -27,7 +27,7 @@ namespace View.NetworkUserInput
             _player = NetworkClient.localPlayer.gameObject.GetComponent<Player>();
         }
 
-        [Client]
+
         private void Update()
         {
             if (_isDragging)
@@ -37,14 +37,12 @@ namespace View.NetworkUserInput
             }
         }
 
-        [Client]
         private void OnMouseDown()
         {
             _spriteRenderer.sortingOrder = 2;
             _isDragging = true;
         }
 
-        [Client]
         private void OnMouseUp()
         {
             _spriteRenderer.sortingOrder = 1;

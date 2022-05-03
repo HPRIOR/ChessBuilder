@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 367804189204216184}
   - component: {fileID: 1031688771885700889}
   - component: {fileID: 4449081892884776722}
-  - component: {fileID: -2266129438440078661}
   m_Layer: 0
   m_Name: PiecePrefab
   m_TagString: Untagged
@@ -138,22 +137,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18e1bf47a5b24b2db33c08d0b7cc7246, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
---- !u!114 &-2266129438440078661
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 113403390612853870}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sceneId: 0
-  serverOnly: 0
-  visible: 0
-  m_AssetId: 5a2f4e857fa4c404d81e17b97fdd6c71
-  hasSpawned: 0

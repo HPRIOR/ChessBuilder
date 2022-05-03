@@ -1,4 +1,3 @@
-using Bindings.Installers.NetworkInstallers;
 using Zenject;
 
 namespace Bindings.MonoInstallers
@@ -7,7 +6,7 @@ namespace Bindings.MonoInstallers
     {
         public override void InstallBindings()
         {
-            PlayerInstaller.Install(Container);
+            
         }
     }
 }

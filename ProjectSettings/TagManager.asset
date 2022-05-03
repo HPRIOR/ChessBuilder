@@ -9,6 +9,9 @@ TagManager:
   - Pieces
   - BuildingPieces
   - UI
+  - RpcServer
+  - CommandInvoker
+  - MoveServer
   layers:
   - Default
   - TransparentFX

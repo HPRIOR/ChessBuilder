@@ -50,8 +50,7 @@ namespace View.NetworkUserInput
             _spriteRenderer.sortingOrder = 1;
             var currentMousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             var nearestBoardPosition = NearestBoardPosFinder.GetNearestBoardPosition(currentMousePosition);
-            Debug.Log("adding command");
-            _player.AddCommand(_piece.Position, nearestBoardPosition);
+            _player.TryAddCommand(_piece.Position, nearestBoardPosition);
             _isDragging = false;
         }
     }

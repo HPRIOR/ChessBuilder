@@ -9,7 +9,11 @@ namespace Controllers.Commands
     {
         private ICommandInvoker _commandInvoker;
 
-        // Update is called once per frame
+        /*
+         * Coroutine needed to ensure TryExecuteCommand invoked once per frame.
+         * Invoking it more than once per frame causes issues with the renderer, which destroys existing
+         * game objects on a rerender
+         */
         private void Update()
         {
             StartCoroutine(TryExecuteCommand());

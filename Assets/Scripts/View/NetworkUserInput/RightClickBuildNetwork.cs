@@ -34,12 +34,15 @@ namespace View.UserInput
         private PieceBuildSelectorFactory _pieceBuildSelectorFactory;
         private PieceType _pieceToBuild;
         private Player _player;
+        private NetworkEvents _networkEvents;
 
 
-        // public void Start()
-        // {
-        //     _player = NetworkClient.localPlayer.gameObject.GetComponent<Player>();
-        // }
+        public void Start()
+        {
+            _networkEvents.RegisterEventCallBack(NetworkEvent.PlayerPrefabReady,
+                () => _player ??= NetworkClient.localPlayer.gameObject.GetComponent<Player>()
+            );
+        }
 
 
         public void OnPointerDown(PointerEventData eventData)
@@ -58,17 +61,19 @@ namespace View.UserInput
         {
             if (_buildSelectionInstigated)
             {
-               _player.TryAddCommand(_nearestPos, _pieceToBuild); 
+                _player.TryAddCommand(_nearestPos, _pieceToBuild);
                 GameObjectDestroyer.DestroyChildrenOfObjectWithTag("UI");
             }
         }
 
         [Inject]
         public void Construct(ICommandInvoker commandInvoker, IGameStateController gameStateController,
-            BuildCommandFactory buildCommandFactory, PieceBuildSelectorFactory pieceBuildSelectorFactory)
+            BuildCommandFactory buildCommandFactory, PieceBuildSelectorFactory pieceBuildSelectorFactory,
+            NetworkEvents networkEvents)
         {
             _gameStateController = gameStateController;
             _pieceBuildSelectorFactory = pieceBuildSelectorFactory;
+            _networkEvents = networkEvents;
         }
 
 

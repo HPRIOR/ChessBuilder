@@ -1,9 +1,6 @@
-using Controllers.Factories;
-using Controllers.Interfaces;
+using System;
 using Mirror;
-using Models.State.Board;
 using Networking;
-using UnityEditor;
 using UnityEngine;
 using View.Prefab.Spawners;
 using View.Utils;
@@ -19,12 +16,38 @@ namespace View.NetworkUserInput
         private PieceSpawner _piece;
         private SpriteRenderer _spriteRenderer;
         private Player _player;
+        private NetworkEvents _networkEvents;
+
+
+        [Inject]
+        public void Construct(NetworkEvents networkEvents)
+        {
+            _networkEvents = networkEvents;
+        }
 
         private void Start()
         {
             _spriteRenderer = GetComponent<SpriteRenderer>();
             _piece = gameObject.GetComponent<PieceSpawner>();
-            _player = NetworkClient.localPlayer.gameObject.GetComponent<Player>();
+            SetupPlayerReference();
+        }
+
+        /// <summary>
+        /// This behaviour is attached to piece objects which are spawned at the very start of the game, and then
+        /// at every subsequent rerender. The network event callback ensures player reference availability on game
+        /// initialisation (sometimes the Player class is not initialised when pieces are first spawned). The
+        /// try/catch allows spawned piece (during rerender) to attempt to establish a reference in a way that won't
+        /// throw an error when the player is not available
+        /// </summary>
+        private void SetupPlayerReference()
+        {
+            try
+            {
+                _player ??= NetworkClient.localPlayer.gameObject.GetComponent<Player>();
+            }
+            catch (NullReferenceException) { }
+            _networkEvents.RegisterEventCallBack(NetworkEvent.PlayerPrefabReady, () =>
+                _player ??= NetworkClient.localPlayer.gameObject.GetComponent<Player>());
         }
 
 

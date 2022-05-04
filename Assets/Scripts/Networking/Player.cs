@@ -1,3 +1,4 @@
+using System;
 using Controllers.Factories;
 using Controllers.Interfaces;
 using Mirror;
@@ -15,22 +16,30 @@ namespace Networking
         private ICommandInvoker _commandInvoker;
         private MoveCommandFactory _moveCommandFactory;
         private BuildCommandFactory _buildCommandFactory;
+        private NetworkEvents _networkEvents;
 
         /*
          * ZenAutoInjection used so that normal instantiation by Mirror will inject dependencies
          */
         [Inject]
         public void Construct(
-            IGameStateController gameStateController, 
+            IGameStateController gameStateController,
             ICommandInvoker commandInvoker,
-            MoveCommandFactory moveCommandFactory, 
-            BuildCommandFactory buildCommandFactory
-            )
+            MoveCommandFactory moveCommandFactory,
+            BuildCommandFactory buildCommandFactory,
+            NetworkEvents networkEvents
+        )
         {
             _gameStateController = gameStateController;
             _commandInvoker = commandInvoker;
             _moveCommandFactory = moveCommandFactory;
             _buildCommandFactory = buildCommandFactory;
+            _networkEvents = networkEvents;
+        }
+
+        public void Start()
+        {
+            _networkEvents.InvokeEvent(NetworkEvent.PlayerPrefabReady);
         }
 
         [Command]

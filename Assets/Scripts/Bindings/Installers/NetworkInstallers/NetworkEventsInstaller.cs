@@ -3,7 +3,7 @@ using Zenject;
 
 namespace Bindings.Installers.NetworkInstallers
 {
-    public class NetworkEventsInstaller: Installer<NetworkEventsInstaller>
+    public class NetworkEventsInstaller : Installer<NetworkEventsInstaller>
     {
         public override void InstallBindings()
         {

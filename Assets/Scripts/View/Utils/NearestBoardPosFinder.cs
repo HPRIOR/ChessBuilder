@@ -6,7 +6,7 @@ namespace View.Utils
     public static class NearestBoardPosFinder
     {
         public static Position GetNearestBoardPosition(Vector2 position) =>
-            new Position(ConvertAxisToNearestBoardIndex(position.x),
+            new(ConvertAxisToNearestBoardIndex(position.x),
                 ConvertAxisToNearestBoardIndex(position.y));
 
         private static int ConvertAxisToNearestBoardIndex(float axis)

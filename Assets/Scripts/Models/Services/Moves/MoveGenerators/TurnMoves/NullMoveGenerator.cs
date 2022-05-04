@@ -6,7 +6,6 @@ namespace Models.Services.Moves.MoveGenerators.TurnMoves
 {
     public sealed class NullMoveGenerator : IPieceMoveGenerator
     {
-        public List<Position> GetPossiblePieceMoves(Position originPosition, BoardState boardState) =>
-            new List<Position>();
+        public List<Position> GetPossiblePieceMoves(Position originPosition, BoardState boardState) => new();
     }
 }

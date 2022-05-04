@@ -6,7 +6,7 @@ namespace Models.Utils.ExtensionMethods.PieceTypeExt
     public static class PieceTypeColour
     {
         private static readonly HashSet<PieceType> BlackPieces =
-            new HashSet<PieceType>(new PieceTypeComparer())
+            new(new PieceTypeComparer())
             {
                 PieceType.BlackBishop,
                 PieceType.BlackKing,

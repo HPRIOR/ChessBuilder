@@ -18,7 +18,7 @@ namespace Models.Services.Moves.Utils
         // could possibly make this data static and return 
         public IDictionary<Position, List<Position>> TurnMoves { get; private set; }
         public IDictionary<Position, List<Position>> EnemyMoves { get; private set; }
-        public Position KingPosition { get; private set; } = new Position(8, 8);
+        public Position KingPosition { get; private set; } = new(8, 8);
 
         public void EvaluateBoard(BoardState boardState, PieceColour turn)
         {

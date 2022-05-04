@@ -4,7 +4,7 @@ namespace Models.State.PieceState
 {
     internal static class PieceColourMap
     {
-        private static readonly HashSet<PieceType> WhitePieces = new HashSet<PieceType>(new PieceTypeComparer())
+        private static readonly HashSet<PieceType> WhitePieces = new(new PieceTypeComparer())
         {
             PieceType.WhiteBishop,
             PieceType.WhiteKnight,

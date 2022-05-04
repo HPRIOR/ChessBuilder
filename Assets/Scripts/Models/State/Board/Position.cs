@@ -15,8 +15,7 @@ namespace Models.State.Board
 
         public override string ToString() => $"{X}, {Y}";
 
-        public Position Add(Position other) =>
-            new Position(X + other.X, Y + other.Y);
+        public Position Add(Position other) => new(X + other.X, Y + other.Y);
 
         public bool Equals(Position other) =>
             other.X == X && other.Y == Y;

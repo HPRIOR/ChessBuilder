@@ -10,7 +10,7 @@ namespace Models.Services.Moves.Utils
 {
     public sealed class PinnedPieceFilter
     {
-        private static readonly HashSet<PieceType> ScanningPieces = new HashSet<PieceType>(new PieceTypeComparer())
+        private static readonly HashSet<PieceType> ScanningPieces = new(new PieceTypeComparer())
         {
             PieceType.BlackBishop,
             PieceType.BlackQueen,
@@ -20,17 +20,17 @@ namespace Models.Services.Moves.Utils
             PieceType.WhiteRook
         };
 
-        private static readonly HashSet<Direction> BishopDirections = new HashSet<Direction>(new DirectionComparer())
+        private static readonly HashSet<Direction> BishopDirections = new(new DirectionComparer())
         {
             Direction.Ne, Direction.Nw, Direction.Se, Direction.Sw
         };
 
-        private static readonly HashSet<Direction> RookDirections = new HashSet<Direction>(new DirectionComparer())
+        private static readonly HashSet<Direction> RookDirections = new(new DirectionComparer())
         {
             Direction.N, Direction.E, Direction.S, Direction.W
         };
 
-        private static readonly HashSet<Direction> QueenDirections = new HashSet<Direction>(new DirectionComparer())
+        private static readonly HashSet<Direction> QueenDirections = new(new DirectionComparer())
         {
             Direction.N, Direction.E, Direction.S, Direction.W,
             Direction.Ne, Direction.Nw, Direction.Se, Direction.Sw

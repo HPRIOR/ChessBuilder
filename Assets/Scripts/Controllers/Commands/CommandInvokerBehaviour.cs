@@ -17,7 +17,7 @@ namespace Controllers.Commands
         private void Update()
         {
             StartCoroutine(TryExecuteCommand());
-            if (Input.GetKeyDown(KeyCode.LeftArrow)) _commandInvoker.RollBackCommand();
+            //if (Input.GetKeyDown(KeyCode.LeftArrow)) _commandInvoker.RollBackCommand();
         }
 
         [Inject]

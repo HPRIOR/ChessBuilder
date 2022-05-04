@@ -1,22 +1,25 @@
-using System;
 using Controllers.Factories;
 using Controllers.Interfaces;
 using Mirror;
 using Models.Services.Game.Interfaces;
 using Models.State.Board;
 using Models.State.PieceState;
-using UnityEngine;
 using Zenject;
 
 namespace Networking
 {
     public class Player : NetworkBehaviour
     {
-        private IGameStateController _gameStateController;
-        private ICommandInvoker _commandInvoker;
-        private MoveCommandFactory _moveCommandFactory;
         private BuildCommandFactory _buildCommandFactory;
+        private ICommandInvoker _commandInvoker;
+        private IGameStateController _gameStateController;
+        private MoveCommandFactory _moveCommandFactory;
         private NetworkEvents _networkEvents;
+
+        public void Start()
+        {
+            _networkEvents.InvokeEvent(NetworkEvent.PlayerPrefabReady);
+        }
 
         /*
          * ZenAutoInjection used so that normal instantiation by Mirror will inject dependencies
@@ -37,35 +40,22 @@ namespace Networking
             _networkEvents = networkEvents;
         }
 
-        public void Start()
-        {
-            _networkEvents.InvokeEvent(NetworkEvent.PlayerPrefabReady);
-        }
-
         [Command]
         public void TryAddCommand(Position start, Position destination)
         {
             if (_gameStateController.IsValidMove(start, destination))
-            {
                 AddCommand(start, destination);
-            }
             else
-            {
                 RetainBoardState();
-            }
         }
 
         [Command]
         public void TryAddCommand(Position start, PieceType pieceType)
         {
             if (_gameStateController.IsValidMove(start, pieceType))
-            {
                 AddCommand(start, pieceType);
-            }
             else
-            {
                 RetainBoardState();
-            }
         }
 
         [ClientRpc]

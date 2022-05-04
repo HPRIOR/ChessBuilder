@@ -17,11 +17,11 @@ namespace Models.Services.Game.Implementations
     public sealed class GameStateController : IGameStateController, ITurnEventInvoker
     {
         private const int MaxBuildPoints = 39;
-        private readonly GameInitializer _gameInitializer;
         private readonly IBuildMoveGenerator _buildMoveGenerator;
+        private readonly GameInitializer _gameInitializer;
         private readonly IGameOverEval _gameOverEval;
+        private readonly Stack<GameState> _gameStateHistory = new();
         private readonly IMovesGenerator _movesGenerator;
-        private readonly Stack<GameState> _gameStateHistory = new Stack<GameState>();
 
         public GameStateController(
             IBuildMoveGenerator buildMoveGenerator,
@@ -107,6 +107,9 @@ namespace Models.Services.Game.Implementations
             return false;
         }
 
+        public event Action<BoardState, BoardState> BoardStateChangeEvent;
+        public event Action<GameState, GameState> GameStateChangeEvent;
+
 
         private GameState UpdateGameState(Position from, Position to, PieceColour turn)
         {
@@ -181,7 +184,5 @@ namespace Models.Services.Game.Implementations
         }
 
         private PieceColour NextTurn() => Turn == PieceColour.White ? PieceColour.Black : PieceColour.White;
-        public event Action<BoardState, BoardState> BoardStateChangeEvent;
-        public event Action<GameState, GameState> GameStateChangeEvent;
     }
 }

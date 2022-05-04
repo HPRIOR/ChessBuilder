@@ -24,7 +24,7 @@ namespace Models.State.Board
             CurrentPiece = PieceType.NullPiece;
         }
 
-        public Tile Clone() => new Tile(Position, CurrentPiece, BuildTileState);
+        public Tile Clone() => new(Position, CurrentPiece, BuildTileState);
 
         private bool CanBuild(BuildTileState buildState, PieceType piece, PieceColour turn) =>
             buildState.Turns == 0 &&
@@ -59,7 +59,7 @@ namespace Models.State.Board
             return new Tile(Position, CurrentPiece, newBuildState); // decrement build           
         }
 
-        public Tile WithBuild(PieceType newPiece) => new Tile(Position, CurrentPiece, new BuildTileState(newPiece));
+        public Tile WithBuild(PieceType newPiece) => new(Position, CurrentPiece, new BuildTileState(newPiece));
 
         public override string ToString() =>
             $"Tile at ({Position.X}, {Position.Y}) containing" +

@@ -1,5 +1,4 @@
-﻿using System;
-using Controllers.Factories;
+﻿using Controllers.Factories;
 using Controllers.Interfaces;
 using Mirror;
 using Models.Services.Game.Interfaces;
@@ -12,7 +11,7 @@ using View.UI.PieceBuildSelector;
 using View.Utils;
 using Zenject;
 
-namespace View.UserInput
+namespace View.NetworkUserInput
 {
     public class RightClickBuildNetwork : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     {
@@ -31,10 +30,10 @@ namespace View.UserInput
         private bool _buildSelectionInstigated;
         private IGameStateController _gameStateController;
         private Position _nearestPos;
+        private NetworkEvents _networkEvents;
         private PieceBuildSelectorFactory _pieceBuildSelectorFactory;
         private PieceType _pieceToBuild;
         private Player _player;
-        private NetworkEvents _networkEvents;
 
 
         public void Start()

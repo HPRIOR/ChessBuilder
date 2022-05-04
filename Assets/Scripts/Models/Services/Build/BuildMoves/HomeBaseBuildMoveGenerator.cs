@@ -9,13 +9,13 @@ namespace Models.Services.Build.BuildMoves
 {
     internal sealed class HomeBaseBuildMoveGenerator : IBuildMoveGenerator
     {
-        private static readonly HashSet<PieceType> BlackPieces = new HashSet<PieceType>
+        private static readonly HashSet<PieceType> BlackPieces = new()
         {
             PieceType.BlackBishop, PieceType.BlackKnight, PieceType.BlackPawn, PieceType.BlackQueen,
             PieceType.BlackRook
         };
 
-        private static readonly HashSet<PieceType> WhitePieces = new HashSet<PieceType>
+        private static readonly HashSet<PieceType> WhitePieces = new()
         {
             PieceType.WhiteBishop, PieceType.WhiteKnight, PieceType.WhitePawn, PieceType.WhiteQueen,
             PieceType.WhiteRook

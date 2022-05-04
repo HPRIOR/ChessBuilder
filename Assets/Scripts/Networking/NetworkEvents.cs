@@ -4,7 +4,7 @@ namespace Networking
 {
     public enum NetworkEvent
     {
-        PlayerPrefabReady,
+        PlayerPrefabReady
     }
 
     public class NetworkEvents
@@ -22,7 +22,7 @@ namespace Networking
                     throw new ArgumentOutOfRangeException(nameof(networkEvent), networkEvent, null);
             }
         }
-        
+
         public void InvokeEvent(NetworkEvent networkEvent)
         {
             switch (networkEvent)
@@ -34,7 +34,5 @@ namespace Networking
                     throw new ArgumentOutOfRangeException(nameof(networkEvent), networkEvent, null);
             }
         }
-        
-
     }
 }

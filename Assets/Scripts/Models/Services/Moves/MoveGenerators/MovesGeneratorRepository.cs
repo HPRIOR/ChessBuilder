@@ -25,7 +25,7 @@ namespace Models.Services.Moves.MoveGenerators
             turnMove ? _pieceMoveGenerators[piece] : _nonMovePieceGenerator[piece];
 
         private Dictionary<PieceType, IPieceMoveGenerator> GetPieceMoveGenerators(bool turnMoveType) =>
-            new Dictionary<PieceType, IPieceMoveGenerator>(new PieceTypeComparer())
+            new(new PieceTypeComparer())
             {
                 { PieceType.BlackPawn, _movesFactory.Create(PieceType.BlackPawn, turnMoveType) },
                 { PieceType.WhitePawn, _movesFactory.Create(PieceType.WhitePawn, turnMoveType) },

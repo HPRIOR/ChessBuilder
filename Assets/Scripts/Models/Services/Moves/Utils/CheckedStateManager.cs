@@ -9,7 +9,7 @@ namespace Models.Services.Moves.Utils
 {
     public sealed class CheckedStateManager : ICheckedStateManager
     {
-        private static readonly HashSet<PieceType> ScanningPieces = new HashSet<PieceType>
+        private static readonly HashSet<PieceType> ScanningPieces = new()
         {
             PieceType.BlackRook,
             PieceType.WhiteRook,

@@ -1,4 +1,3 @@
-using System;
 using Controllers.Factories;
 using Controllers.Interfaces;
 using Mirror;
@@ -6,7 +5,6 @@ using Models.Services.Game.Implementations;
 using Models.Services.Game.Interfaces;
 using Models.State.Board;
 using Models.State.PieceState;
-using UnityEngine;
 using Zenject;
 
 namespace Networking
@@ -15,17 +13,14 @@ namespace Networking
     {
         private BuildCommandFactory _buildCommandFactory;
         private ICommandInvoker _commandInvoker;
+        private GameContext _context;
         private IGameStateController _gameStateController;
         private MoveCommandFactory _moveCommandFactory;
         private NetworkEvents _networkEvents;
-        private GameContext _context;
 
         public void Start()
         {
-            if (isLocalPlayer)
-            {
-                _networkEvents.InvokeEvent(NetworkEvent.PlayerPrefabReady);
-            }
+            if (isLocalPlayer) _networkEvents.InvokeEvent(NetworkEvent.PlayerPrefabReady);
         }
 
         /*
@@ -48,7 +43,7 @@ namespace Networking
             _networkEvents = networkEvents;
             _context = context;
         }
-        
+
         [ClientRpc]
         public void SetPlayerContext(PieceColour pieceColour)
         {
@@ -62,7 +57,7 @@ namespace Networking
         [ClientRpc]
         public void SetGameReady()
         {
-            if(isLocalPlayer)
+            if (isLocalPlayer)
                 _networkEvents.InvokeEvent(NetworkEvent.GameReady);
         }
 
@@ -101,6 +96,5 @@ namespace Networking
         {
             _gameStateController.RetainBoardState();
         }
-
     }
 }

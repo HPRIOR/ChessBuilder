@@ -3,7 +3,7 @@ using Zenject;
 
 namespace Bindings.Installers.GameInstallers
 {
-    public class GameContextInstaller: Installer<GameContextInstaller>
+    public class GameContextInstaller : Installer<GameContextInstaller>
     {
         public override void InstallBindings()
         {

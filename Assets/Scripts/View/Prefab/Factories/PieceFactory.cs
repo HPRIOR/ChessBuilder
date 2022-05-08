@@ -17,12 +17,6 @@ namespace View.Prefab.Factories
         private readonly PieceSpawner.Factory _pieceFactory;
         private GameContext _context;
 
-        [Inject]
-        public void Construct(GameContext context)
-        {
-            _context = context;
-        }
-
         public PieceFactory(PieceSpawner.Factory pieceFactory)
         {
             _pieceFactory = pieceFactory;
@@ -32,10 +26,14 @@ namespace View.Prefab.Factories
         {
             var piece = _pieceFactory.Create(new PieceRenderInfo(pieceType), position);
             if (piece.RenderInfo.PieceType.Colour() != _context.PlayerColour)
-            {
                 Object.Destroy(piece.gameObject.GetComponent<DragAndDropNetwork>());
-            }
             return piece;
+        }
+
+        [Inject]
+        public void Construct(GameContext context)
+        {
+            _context = context;
         }
     }
 }

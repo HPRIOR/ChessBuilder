@@ -1,9 +1,12 @@
+using System;
 using Controllers.Factories;
 using Controllers.Interfaces;
 using Mirror;
+using Models.Services.Game.Implementations;
 using Models.Services.Game.Interfaces;
 using Models.State.Board;
 using Models.State.PieceState;
+using UnityEngine;
 using Zenject;
 
 namespace Networking
@@ -15,14 +18,18 @@ namespace Networking
         private IGameStateController _gameStateController;
         private MoveCommandFactory _moveCommandFactory;
         private NetworkEvents _networkEvents;
+        private GameContext _context;
 
         public void Start()
         {
-            _networkEvents.InvokeEvent(NetworkEvent.PlayerPrefabReady);
+            if (isLocalPlayer)
+            {
+                _networkEvents.InvokeEvent(NetworkEvent.PlayerPrefabReady);
+            }
         }
 
         /*
-         * ZenAutoInjection used so that normal instantiation by Mirror will inject dependencies
+         * ZenAutoInjection used so that prefab instantiation by Mirror will inject dependencies
          */
         [Inject]
         public void Construct(
@@ -30,7 +37,8 @@ namespace Networking
             ICommandInvoker commandInvoker,
             MoveCommandFactory moveCommandFactory,
             BuildCommandFactory buildCommandFactory,
-            NetworkEvents networkEvents
+            NetworkEvents networkEvents,
+            GameContext context
         )
         {
             _gameStateController = gameStateController;
@@ -38,6 +46,24 @@ namespace Networking
             _moveCommandFactory = moveCommandFactory;
             _buildCommandFactory = buildCommandFactory;
             _networkEvents = networkEvents;
+            _context = context;
+        }
+        
+        [ClientRpc]
+        public void SetPlayerContext(PieceColour pieceColour)
+        {
+            if (isLocalPlayer)
+            {
+                _context.PlayerColour = pieceColour;
+                _networkEvents.InvokeEvent(NetworkEvent.ContextReady);
+            }
+        }
+
+        [ClientRpc]
+        public void SetGameReady()
+        {
+            if(isLocalPlayer)
+                _networkEvents.InvokeEvent(NetworkEvent.GameReady);
         }
 
         [Command]
@@ -76,9 +102,5 @@ namespace Networking
             _gameStateController.RetainBoardState();
         }
 
-
-        public class Factory : PlaceholderFactory<Player>
-        {
-        }
     }
 }

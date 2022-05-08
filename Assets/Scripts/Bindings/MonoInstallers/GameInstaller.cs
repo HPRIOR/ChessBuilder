@@ -11,6 +11,7 @@ namespace Bindings.MonoInstallers
             BoardSetupInstaller.Install(Container);
             GameOverEvalInstaller.Install(Container);
             GameInitializerInstaller.Install(Container);
+            GameContextInstaller.Install(Container);
         }
     }
 }

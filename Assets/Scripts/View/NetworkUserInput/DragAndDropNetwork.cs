@@ -68,14 +68,18 @@ namespace View.NetworkUserInput
         {
             try
             {
-                _player ??= NetworkClient.localPlayer.gameObject.GetComponent<Player>();
+                SetupUpPlayer();
             }
             catch (NullReferenceException)
             {
             }
 
-            _networkEvents.RegisterEventCallBack(NetworkEvent.PlayerPrefabReady, () =>
-                _player ??= NetworkClient.localPlayer.gameObject.GetComponent<Player>());
+            _networkEvents.RegisterEventCallBack(NetworkEvent.PlayerPrefabReady, SetupUpPlayer);
+        }
+
+        private void SetupUpPlayer()
+        {
+            _player ??= NetworkClient.localPlayer.gameObject.GetComponent<Player>();
         }
     }
 }

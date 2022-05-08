@@ -22,6 +22,12 @@ namespace View.Prefab.Factories
             _pieceFactory = pieceFactory;
         }
 
+        /// <summary>
+        /// Instantiates a the piece prefab with the SpawnPiece component. Removes DragAndDrop if not the players piece
+        /// </summary>
+        /// <param name="pieceType"></param>
+        /// <param name="position"></param>
+        /// <returns>Interface of spawning script</returns>
         public IPieceSpawner CreatePiece(PieceType pieceType, Position position)
         {
             var piece = _pieceFactory.Create(new PieceRenderInfo(pieceType), position);

@@ -6,6 +6,7 @@ namespace Models.State.BuildState
 {
     public readonly struct BuildMoves
     {
+        // Add representation of colour in build moves
         public BuildMoves(List<Position> buildPositions, List<PieceType> buildPieces)
         {
             BuildPositions = buildPositions;

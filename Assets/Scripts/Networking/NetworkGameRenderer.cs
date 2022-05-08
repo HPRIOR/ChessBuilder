@@ -1,4 +1,5 @@
 ﻿using Models.Services.Game.Interfaces;
+using Networking;
 using UnityEngine;
 using View.Interfaces;
 using Zenject;
@@ -6,19 +7,21 @@ using Zenject;
 // 'View class'  which is subscribed to changes in game state
 namespace View.Renderers
 {
-    public class GameRenderer : MonoBehaviour
+    public class NetworkGameRenderer : MonoBehaviour
     {
         private IRenderer _boardRenderer;
         private IStateChangeRenderer _buildRenderer;
         private IStateChangeRenderer _pieceRenderer;
         private ITurnEventInvoker _turnEventInvoker;
+        private NetworkEvents _networkEvents;
 
         private void Awake()
         {
             _turnEventInvoker.BoardStateChangeEvent += _pieceRenderer.Render;
             _turnEventInvoker.BoardStateChangeEvent += _buildRenderer.Render;
-            
-            _boardRenderer.Render();
+
+            _networkEvents.RegisterEventCallBack(NetworkEvent.ContextReady, () =>
+                _boardRenderer.Render());
         }
 
 
@@ -27,12 +30,14 @@ namespace View.Renderers
             [Inject(Id = "Piece")] IStateChangeRenderer pieceRenderer,
             [Inject(Id = "Build")] IStateChangeRenderer buildRenderer,
             IRenderer boardRenderer,
-            ITurnEventInvoker turnEventInvoker)
+            ITurnEventInvoker turnEventInvoker,
+            NetworkEvents networkEvents)
         {
             _buildRenderer = buildRenderer;
             _pieceRenderer = pieceRenderer;
             _turnEventInvoker = turnEventInvoker;
             _boardRenderer = boardRenderer;
+            _networkEvents = networkEvents;
         }
     }
 }

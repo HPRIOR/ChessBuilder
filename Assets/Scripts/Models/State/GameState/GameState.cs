@@ -8,6 +8,10 @@ namespace Models.State.GameState
 {
     public sealed class GameState : ICloneable
     {
+        public GameState()
+        {
+        }
+
         public GameState(
             bool check,
             bool checkMate,

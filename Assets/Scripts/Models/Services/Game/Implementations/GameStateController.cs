@@ -170,7 +170,7 @@ namespace Models.Services.Game.Implementations
 
             foreach (var pos in activePositions)
             {
-                ref var tile = ref boardState.GetTileAt(pos);
+                var tile = boardState.GetTileAt(pos);
                 var pieceIsOfColourType = tile.CurrentPiece.Colour() == pieceColour &&
                                           tile.CurrentPiece != PieceType.NullPiece;
                 if (pieceIsOfColourType)

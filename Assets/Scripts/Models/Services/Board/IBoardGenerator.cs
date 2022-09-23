@@ -4,6 +4,6 @@ namespace Models.Services.Board
 {
     public interface IBoardGenerator
     {
-        Tile[][] GenerateBoard();
+        Tile[] GenerateBoard();
     }
 }

@@ -41,7 +41,7 @@ namespace Tests.UnitTests.BoardTests
             for (var i = 0; i < 8; i++)
             for (var j = 0; j < 8; j++)
             {
-                var tile = board[i][j];
+                var tile = board[i * 8 + j];
                 Assert.AreEqual(PieceType.NullPiece, tile.CurrentPiece);
             }
         }

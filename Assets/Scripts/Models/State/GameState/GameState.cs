@@ -24,12 +24,12 @@ namespace Models.State.GameState
             BoardState = boardState;
         }
 
-        public BoardState BoardState { get; }
-        public bool Check { get; }
-        public bool CheckMate { get; }
-        public PlayerState.PlayerState PlayerState { get; }
-        public IDictionary<Position, List<Position>> PossiblePieceMoves { get; }
-        public BuildMoves PossibleBuildMoves { get; }
+        public readonly BoardState BoardState;
+        public readonly bool Check;
+        public readonly bool CheckMate;
+        public PlayerState.PlayerState PlayerState;
+        public Dictionary<Position, List<Position>> PossiblePieceMoves { get; }
+        public BuildMoves PossibleBuildMoves;
 
         public object Clone()
         {

@@ -1,11 +1,10 @@
 ﻿using Models.Services.Game.Interfaces;
-using Networking;
 using UnityEngine;
 using View.Interfaces;
 using Zenject;
 
 // 'View class'  which is subscribed to changes in game state
-namespace View.Renderers
+namespace Networking
 {
     public class NetworkGameRenderer : MonoBehaviour
     {

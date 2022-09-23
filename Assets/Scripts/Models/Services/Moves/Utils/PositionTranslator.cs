@@ -20,11 +20,11 @@ namespace Models.Services.Moves.Utils
                 ? originalPosition
                 : new Position(Math.Abs(originalPosition.X - 7), Math.Abs(originalPosition.Y - 7));
 
-        public ref Tile GetRelativeTileAt(Position position, BoardState boardState)
+        public  Tile GetRelativeTileAt(Position position, BoardState boardState)
         {
-            if (_pieceColour == PieceColour.White) return ref boardState.GetTileAt(position);
+            if (_pieceColour == PieceColour.White) return  boardState.GetTileAt(position);
 
-            return ref boardState.GetTileAt(Math.Abs(position.X - 7), Math.Abs(position.Y - 7));
+            return  boardState.GetTileAt(Math.Abs(position.X - 7), Math.Abs(position.Y - 7));
         }
 
         public sealed class Factory : PlaceholderFactory<PieceColour, PositionTranslator>

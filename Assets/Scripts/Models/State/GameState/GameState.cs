@@ -12,7 +12,7 @@ namespace Models.State.GameState
             bool check,
             bool checkMate,
             PlayerState.PlayerState playerState,
-            IDictionary<Position, List<Position>> possiblePieceMoves,
+            Dictionary<Position, List<Position>> possiblePieceMoves,
             BuildMoves possibleBuildMoves,
             BoardState boardState)
         {

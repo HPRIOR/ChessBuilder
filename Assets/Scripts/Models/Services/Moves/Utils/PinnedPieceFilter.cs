@@ -90,7 +90,7 @@ namespace Models.Services.Moves.Utils
             var index = 0;
             foreach (var position in positions)
             {
-                ref var tile = ref boardState.GetTileAt(position);
+                 var tile =  boardState.GetTileAt(position);
 
                 if (index == 0)
                 {

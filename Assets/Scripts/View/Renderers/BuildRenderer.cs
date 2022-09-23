@@ -21,7 +21,7 @@ namespace View.Renderers
             for (var i = 0; i < 8; i++)
             for (var j = 0; j < 8; j++)
             {
-                ref var tile = ref newState.GetTileAt(i, j);
+                var tile = newState.GetTileAt(i, j);
                 var isBuilding = tile.BuildTileState.BuildingPiece != PieceType.NullPiece;
                 if (isBuilding)
                     _buildingPieceFactory.Create(tile.BuildTileState, tile.Position);

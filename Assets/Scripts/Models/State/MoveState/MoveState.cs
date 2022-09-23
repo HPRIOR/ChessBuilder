@@ -8,10 +8,10 @@ namespace Models.State.MoveState
     /// </summary>
     public readonly struct MoveState
     {
-        public IDictionary<Position, List<Position>> PossibleMoves { get; }
+        public Dictionary<Position, List<Position>> PossibleMoves { get; }
         public bool Check { get; }
 
-        public MoveState(IDictionary<Position, List<Position>> possibleMoves, bool check)
+        public MoveState(Dictionary<Position, List<Position>> possibleMoves, bool check)
         {
             PossibleMoves = possibleMoves;
             Check = check;

@@ -35,9 +35,9 @@ namespace Models.Services.Moves.MoveGenerators.TurnMoves
 
             if (originPosition.X > 0)
             {
-                ref var topLeftTile =
-                    ref _positionTranslator.GetRelativeTileAt(originPosition.Add(Move.In(Direction.Nw)), boardState);
-                if (_tileEvaluator.OpposingPieceIn(ref topLeftTile))
+                 var topLeftTile =
+                     _positionTranslator.GetRelativeTileAt(originPosition.Add(Move.In(Direction.Nw)), boardState);
+                if (_tileEvaluator.OpposingPieceIn(topLeftTile))
                     possibleMoves.Add(
                         _positionTranslator.GetRelativePosition(originPosition.Add(Move.In(Direction.Nw)))
                     );
@@ -45,9 +45,9 @@ namespace Models.Services.Moves.MoveGenerators.TurnMoves
 
             if (originPosition.X < 7)
             {
-                ref var topRightTile =
-                    ref _positionTranslator.GetRelativeTileAt(originPosition.Add(Move.In(Direction.Ne)), boardState);
-                if (_tileEvaluator.OpposingPieceIn(ref topRightTile))
+                 var topRightTile =
+                     _positionTranslator.GetRelativeTileAt(originPosition.Add(Move.In(Direction.Ne)), boardState);
+                if (_tileEvaluator.OpposingPieceIn(topRightTile))
                     possibleMoves.Add(
                         _positionTranslator.GetRelativePosition(originPosition.Add(Move.In(Direction.Ne)))
                     );

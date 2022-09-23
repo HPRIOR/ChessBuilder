@@ -15,12 +15,12 @@ namespace Models.Services.Moves.Utils
             _pieceColour = pieceColour;
         }
 
-        public bool NoPieceIn(ref Tile tile) => tile.CurrentPiece == PieceType.NullPiece;
+        public bool NoPieceIn(Tile tile) => tile.CurrentPiece == PieceType.NullPiece;
 
-        public bool FriendlyPieceIn(ref Tile tile) => !(tile.CurrentPiece is PieceType.NullPiece) &&
+        public bool FriendlyPieceIn(Tile tile) => !(tile.CurrentPiece is PieceType.NullPiece) &&
                                                       tile.CurrentPiece.Colour() == _pieceColour;
 
-        public bool OpposingPieceIn(ref Tile tile) => !(tile.CurrentPiece is PieceType.NullPiece) &&
+        public bool OpposingPieceIn(Tile tile) => !(tile.CurrentPiece is PieceType.NullPiece) &&
                                                       tile.CurrentPiece.Colour() != _pieceColour;
 
         public sealed class Factory : PlaceholderFactory<PieceColour, TileEvaluator>

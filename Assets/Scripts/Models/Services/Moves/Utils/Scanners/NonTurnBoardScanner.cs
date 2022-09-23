@@ -47,10 +47,10 @@ namespace Models.Services.Moves.Utils.Scanners
         }
 
         private bool TileContainsOpposingPieceAt(Position relativePosition, BoardState boardState) =>
-            _tileEvaluator.OpposingPieceIn(ref boardState.GetTileAt(relativePosition));
+            _tileEvaluator.OpposingPieceIn(boardState.GetTileAt(relativePosition));
 
         private bool TileContainsFriendlyPieceAt(Position relativePosition, BoardState boardState) =>
-            _tileEvaluator.FriendlyPieceIn(ref boardState.GetTileAt(relativePosition));
+            _tileEvaluator.FriendlyPieceIn(boardState.GetTileAt(relativePosition));
 
         public sealed class Factory : PlaceholderFactory<PieceColour, NonTurnBoardScanner>
         {

@@ -16,8 +16,8 @@ namespace Models.Services.Moves.Utils
         }
 
         // could possibly make this data static and return 
-        public IDictionary<Position, List<Position>> TurnMoves { get; private set; }
-        public IDictionary<Position, List<Position>> EnemyMoves { get; private set; }
+        public Dictionary<Position, List<Position>> TurnMoves { get; private set; }
+        public Dictionary<Position, List<Position>> EnemyMoves { get; private set; }
         public Position KingPosition { get; private set; } = new(8, 8);
 
         public void EvaluateBoard(BoardState boardState, PieceColour turn)
@@ -28,7 +28,7 @@ namespace Models.Services.Moves.Utils
             for (var index = 0; index < boardState.ActivePieces.Count; index++)
             {
                 var pos = boardState.ActivePieces[index];
-                ref var tile = ref boardState.GetTileAt(pos);
+                var tile = boardState.GetTileAt(pos);
                 var currentPiece = tile.CurrentPiece;
                 var playerTurn = currentPiece != PieceType.NullPiece && currentPiece.Colour() == turn;
                 var opponentTurn = currentPiece != PieceType.NullPiece && currentPiece.Colour() != turn;

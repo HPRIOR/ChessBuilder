@@ -6,8 +6,8 @@ namespace Models.Services.Moves.Interfaces
 {
     public interface IBoardInfo
     {
-        IDictionary<Position, List<Position>> TurnMoves { get; }
-        IDictionary<Position, List<Position>> EnemyMoves { get; }
+        Dictionary<Position, List<Position>> TurnMoves { get; }
+        Dictionary<Position, List<Position>> EnemyMoves { get; }
         Position KingPosition { get; }
 
         void EvaluateBoard(BoardState boardState, PieceColour turn);

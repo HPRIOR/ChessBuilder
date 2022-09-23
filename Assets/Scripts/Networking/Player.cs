@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using Controllers.Factories;
 using Controllers.Interfaces;
 using Mirror;
@@ -5,6 +8,8 @@ using Models.Services.Game.Implementations;
 using Models.Services.Game.Interfaces;
 using Models.State.Board;
 using Models.State.PieceState;
+using UnityEngine;
+using UnityEngine.PlayerLoop;
 using Zenject;
 
 namespace Networking
@@ -17,10 +22,30 @@ namespace Networking
         private IGameStateController _gameStateController;
         private MoveCommandFactory _moveCommandFactory;
         private NetworkEvents _networkEvents;
+        private NetworkState _networkState;
+
+        private List<int> _localGameState = new() { 0 };
+
 
         public void Start()
         {
-            if (isLocalPlayer) _networkEvents.InvokeEvent(NetworkEvent.PlayerPrefabReady);
+            if (isLocalPlayer)
+            {
+                _networkEvents.InvokeEvent(NetworkEvent.PlayerPrefabReady);
+            }
+
+            _networkState =
+                GameObject
+                    .FindGameObjectWithTag("NetworkState")
+                    .GetComponent<NetworkState>();
+
+            _networkState.AddCallBack(newState =>
+            {
+                if (isLocalPlayer)
+                {
+                    Debug.Log(newState.BoardState);
+                }
+            });
         }
 
         /*
@@ -61,20 +86,29 @@ namespace Networking
                 _networkEvents.InvokeEvent(NetworkEvent.GameReady);
         }
 
+
         [Command]
         public void TryAddCommand(Position start, Position destination)
         {
             if (_gameStateController.IsValidMove(start, destination))
+            {
                 AddCommand(start, destination);
+                _networkState.UpdateNetworkState(_gameStateController.CurrentGameState);
+            }
             else
+            {
                 RetainBoardState();
+            }
         }
+
 
         [Command]
         public void TryAddCommand(Position start, PieceType pieceType)
         {
             if (_gameStateController.IsValidMove(start, pieceType))
+            {
                 AddCommand(start, pieceType);
+            }
             else
                 RetainBoardState();
         }

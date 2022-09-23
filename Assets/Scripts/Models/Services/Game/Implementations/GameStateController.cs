@@ -13,6 +13,7 @@ using Models.State.MoveState;
 using Models.State.PieceState;
 using Models.State.PlayerState;
 using Models.Utils.ExtensionMethods.PieceTypeExt;
+using UnityEngine;
 
 namespace Models.Services.Game.Implementations
 {
@@ -60,6 +61,18 @@ namespace Models.Services.Game.Implementations
                 BoardStateChangeEvent?.Invoke(previousBoardState, CurrentGameState.BoardState);
                 GameStateChangeEvent?.Invoke(previousGameState, CurrentGameState);
             }
+        }
+
+        public void UpdateGameState(BoardState boardState)
+        {
+            Turn = NextTurn();
+            var previousGameState = CurrentGameState;
+            var previousBoardState = CurrentGameState?.BoardState.Clone();
+
+            CurrentGameState = UpdateGameState(Turn, boardState);
+            
+            BoardStateChangeEvent?.Invoke(previousBoardState, CurrentGameState.BoardState);
+            GameStateChangeEvent?.Invoke(previousGameState, CurrentGameState);
         }
 
 

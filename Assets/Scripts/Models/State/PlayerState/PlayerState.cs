@@ -7,6 +7,6 @@
             BuildPoints = buildPoints;
         }
 
-        public int BuildPoints { get; }
+        public readonly int BuildPoints;
     }
 }

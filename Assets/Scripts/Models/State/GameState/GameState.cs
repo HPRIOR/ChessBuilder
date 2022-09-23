@@ -10,6 +10,13 @@ namespace Models.State.GameState
     {
         public GameState()
         {
+            Check = false;
+            CheckMate = false;
+            PlayerState = new PlayerState.PlayerState();
+            PossibleBuildMoves = new BuildMoves();
+            PossiblePieceMoves = new Dictionary<Position, List<Position>>();
+            BoardState = new BoardState();
+
         }
 
         public GameState(

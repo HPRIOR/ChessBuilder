@@ -13,7 +13,7 @@ namespace Models.State.BuildState
             BuildPieces = buildPieces;
         }
 
-        public List<PieceType> BuildPieces { get; }
-        public List<Position> BuildPositions { get; }
+        public readonly List<PieceType> BuildPieces;
+        public readonly List<Position> BuildPositions;
     }
 }

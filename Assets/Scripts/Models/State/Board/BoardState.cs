@@ -1,13 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using log4net.Appender;
 using Models.State.BuildState;
 using Models.State.PieceState;
+using Models.Utils.ExtensionMethods.PieceTypeExt;
 
 namespace Models.State.Board
 {
     public sealed class BoardState
     {
         public readonly Tile[] Board;
+
+        public Dictionary<int, int> dict { get; } = new Dictionary<int, int>() { { 1, 3 } };
 
         private static int Index(int x, int y) => x * 8 + y;
 
@@ -157,6 +163,24 @@ namespace Models.State.Board
             }
 
             return new BoardState(newBoard, new List<Position>(ActivePieces), new List<Position>(ActiveBuilds));
+        }
+
+
+        public override string ToString()
+        {
+            StringBuilder sb = new StringBuilder();
+            for (var i = 0; i < 8; i++)
+            {
+                var innerSb = new StringBuilder();
+                for (var j = 0; j < 8; j++)
+                {
+                    var index = Index(i, j);
+                    innerSb.Append($"[{Board[index].CurrentPiece.Value()}]");
+                }
+                sb.Append($"{innerSb}\n");
+            }
+
+            return sb.ToString();
         }
     }
 }

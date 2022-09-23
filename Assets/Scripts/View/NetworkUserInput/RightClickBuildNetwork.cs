@@ -1,4 +1,5 @@
-﻿using Controllers.Factories;
+﻿using System;
+using Controllers.Factories;
 using Controllers.Interfaces;
 using Mirror;
 using Models.Services.Game.Interfaces;
@@ -38,6 +39,14 @@ namespace View.NetworkUserInput
 
         public void Start()
         {
+            try
+            {
+                _player ??= NetworkClient.localPlayer.gameObject.GetComponent<Player>();
+            }
+            catch (NullReferenceException)
+            {
+            }
+
             _networkEvents.RegisterEventCallBack(NetworkEvent.PlayerPrefabReady,
                 () => _player ??= NetworkClient.localPlayer.gameObject.GetComponent<Player>()
             );

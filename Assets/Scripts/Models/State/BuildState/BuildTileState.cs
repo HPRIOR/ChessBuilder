@@ -5,8 +5,8 @@ namespace Models.State.BuildState
 {
     public readonly struct BuildTileState
     {
-        public PieceType BuildingPiece { get; }
-        public int Turns { get; }
+        public readonly PieceType BuildingPiece;
+        public readonly int Turns;
 
         // used to instantiate default/null build state, and to decrement build states
         public BuildTileState(int turns = 0, PieceType buildingPiece = default)
